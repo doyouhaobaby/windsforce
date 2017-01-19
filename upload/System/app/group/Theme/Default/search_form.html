@@ -1,0 +1,92 @@
+			<form method="get" action="<!--{:Q::U('group://search/index')}-->" class="search-form">
+				<input type="hidden" name="app" value="group" />
+				<input type="hidden" name="c" value="search" />
+				<input type="hidden" name="a" value="parse" />
+				
+				<!--<include file="Core_Extend::template('search_menu','home')" />-->
+
+				<input class="width_500 search-input global_searchkey" name="key" id="key" placeholder="<!--<lang package='__COMMON_LANG__@Common'>-->请输入搜索内容<!--</lang>-->" x-webkit-speech value="<!--{$sKey}-->" />&nbsp;
+				<!--{if $GLOBALS['_option_']['search_fulltext']==1}-->
+				<select name='search_type' id="search-type" style="width:80px;height: 45px;padding: 10px 10px;font-size: 14px;">
+					<option value="title"><!--<lang package='Template'>-->标题<!--</lang>--></option>
+					<option value="fulltext"><!--<lang package='Template'>-->全文<!--</lang>--></option>
+				</select>&nbsp;
+				<!--{/if}-->
+				<button class="btn" type="submit"><!--<lang package='__COMMON_LANG__@Common'>-->搜索<!--</lang>--></button>&nbsp;
+				<span onclick="showDiv('search_option')" style="cursor:pointer;" ><!--<lang package='Template'>-->高级选项<!--</lang>--></span>
+
+				<div class="tips" style="text-align:left;margin-top:15px;">
+					<!--<lang package='Template'>-->关键字中可使用通配符 “*”<!--</lang>--><br/>
+					<!--<lang package='Template'>-->匹配多个关键字全部, 可用空格或 “AND” 连接. 如 bbs AND php<!--</lang>--><br/>
+					<!--<lang package='Template'>-->匹配多个关键字其中部分, 可用 “|” 或 “OR” 连接. 如 bbs OR php<!--</lang>--><br/>
+				</div>
+
+				<div id="search_option" style="display: none;text-align:left;">
+					<h4><!--<lang package='Template'>-->搜索选项<!--</lang>--></h4>
+					<table cellspacing="0" cellpadding="0" class="table" style="margin-top:15px;">
+						<tr>
+							<td width="110px"><!--<lang package='Template'>-->作者<!--</lang>--></td>
+							<td><input type="text" id="search-name" name="search_name" size="45" maxlength="40" value="" />
+								<span class="help-block"><!--<lang package='Template'>-->作者可以为注册用户名或者注册用户ID。<!--</lang>--></span>
+							</td>
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->帖子范围<!--</lang>--></td>
+							<td><input type="radio" class="input-short" name="search_filter" value="all" checked="checked"/><!--<lang package='Template'>-->全部帖子<!--</lang>-->&nbsp;
+								<input type="radio" class="input-short" name="search_filter" value="digest" /><!--<lang package='Template'>-->精华帖子<!--</lang>-->&nbsp;
+								<input type="radio" class="input-short" name="search_filter" value="top" /><!--<lang package='Template'>-->置顶帖子<!--</lang>-->
+							</td>
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->搜索时间<!--</lang>--></td>
+							<td><select id="search_date" name="search_date" >
+									<option value="0"><!--<lang package='Template'>-->全部时间<!--</lang>--></option>
+									<option value="86400">1 <!--<lang package='Template'>-->天<!--</lang>--></option>
+									<option value="172800">2 <!--<lang package='Template'>-->天<!--</lang>--></option>
+									<option value="604800">1 <!--<lang package='Template'>-->周<!--</lang>--></option>
+									<option value="2592000">1 <!--<lang package='Template'>-->个月<!--</lang>--></option>
+									<option value="7776000">3 <!--<lang package='Template'>-->个月<!--</lang>--></option>
+									<option value="15552000">6 <!--<lang package='Template'>-->个月<!--</lang>--></option>
+									<option value="31536000">1 <!--<lang package='Template'>-->年<!--</lang>--></option>
+								</select>
+								<p>
+									<input type="radio" class="input-short" name="search_date_before" value="0" checked="checked" /><!--<lang package='Template'>-->以内<!--</lang>-->&nbsp;
+									<input type="radio" class="input-short" name="search_date_before" value="1" /><!--<lang package='Template'>-->以前<!--</lang>-->
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->排序类型<!--</lang>--></td>
+							<td><select id="search_orderby1" name="search_orderby1" >
+									<option value="create_dateline" selected="selected"><!--<lang package='Template'>-->发布时间<!--</lang>--></option>
+									<option value="update_dateline"><!--<lang package='Template'>-->更新时间<!--</lang>--></option>
+									<option value="commentnum"><!--<lang package='Template'>-->评论数量<!--</lang>--></option>
+									<option value="viewnum"><!--<lang package='Template'>-->浏览次数<!--</lang>--></option>
+								</select>
+								<p>
+									<input type="radio" class="input-short" name="search_orderby_ascdesc" value="asc" /><!--<lang package='Template'>-->按升序排列<!--</lang>-->&nbsp;
+									<input type="radio" class="input-short" name="search_orderby_ascdesc" value="desc" checked="checked" /><!--<lang package='Template'>-->按降序排列<!--</lang>-->
+								</p>
+							</td>
+						</tr>
+					</table>
+
+					<hr/>
+
+					<h4><!--<lang package='Template'>-->便捷搜索<!--</lang>--></h4>
+					<table cellspacing="4" cellpadding="0" width="100%" class="table" style="margin-top:15px;">
+						<tr>
+							<td><a href="<!--{:Q::U('group://search/parse?search_date=3600&searchsubmit=yes')}-->">1 <!--<lang package='Template'>-->小时以内的帖子<!--</lang>--></a></td>
+							<td><a href="<!--{:Q::U('group://search/parse?search_date=14400&searchsubmit=yes')}-->">4 <!--<lang package='Template'>-->小时以内的帖子<!--</lang>--></a></td>
+							<td><a href="<!--{:Q::U('group://search/parse?search_date=28800&searchsubmit=yes')}-->">8 <!--<lang package='Template'>-->小时以内的帖子<!--</lang>--></a></td>
+							<td><a href="<!--{:Q::U('group://search/parse?search_date=86400&searchsubmit=yes')}-->">24 <!--<lang package='Template'>-->小时以内的帖子<!--</lang>--></a></td>
+						</tr>
+						<tr>
+							<td><a href="<!--{:Q::U('group://search/parse?search_date=604800&searchsubmit=yes')}-->">1 <!--<lang package='Template'>-->周内帖子<!--</lang>--></a></td>
+							<td><a href="<!--{:Q::U('group://search/parse?search_date=2592000&searchsubmit=yes')}-->">1 <!--<lang package='Template'>-->月内帖子<!--</lang>--></a></td>
+							<td><a href="<!--{:Q::U('group://search/parse?search_date=15552000&searchsubmit=yes')}-->">6 <!--<lang package='Template'>-->月内帖子<!--</lang>--></a></td>
+							<td><a href="<!--{:Q::U('group://search/parse?search_date=31536000&searchsubmit=yes')}-->">1 <!--<lang package='Template'>-->年内帖子<!--</lang>--></a></td>
+						</tr>
+					</table>
+				</div>
+			</form>

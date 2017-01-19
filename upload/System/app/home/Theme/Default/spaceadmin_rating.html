@@ -1,0 +1,79 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('home://spaceadmin/index')}-->"><!--<lang package='Template'>-->用户资料<!--</lang>--></a> <span class="divider">/</span></li>
+			<li><!--<lang package='Template'>-->积分<!--</lang>--></li>
+		</ul>
+	</div>
+	
+	<div class="container_12 container_box">
+		<!--<include file="spaceadmin+menu" />-->
+		
+		<div class="grid_12">
+			<!--<include file="spaceadmin+ratingmenu" />-->
+				
+			<div class="tips">
+				<h5><a href="<!--{:Q::U('home://space@?id='.$arrUserInfo['user_id'])}-->"><!--{$arrUserInfo['user_name']}--></a>&nbsp;(<!--<lang package='Template'>-->当前积分<!--</lang>-->&nbsp;<!--{$nUserscore}-->)</h5>
+				<div class="current_ratinginfo">
+					<!--<lang package='__COMMON_LANG__@Common'>-->等级名字<!--</lang>-->&nbsp;<span class="badge"><!--{$arrRatinginfo['rating_name']}--></span>,<!--<lang package='__COMMON_LANG__@Common'>-->距离下一个等级<!--</lang>-->&nbsp;<span class="badge"><!--{$arrRatinginfo['next_rating']['rating_name']}--></span>&nbsp;<!--<lang package='__COMMON_LANG__@Common'>-->还差<!--</lang>-->&nbsp;<span class="badge badge-success"><!--{$arrRatinginfo['next_needscore']}--></span>&nbsp;<!--<lang package='__COMMON_LANG__@Common'>-->积分<!--</lang>-->
+				</div>
+				<p>
+					<div class="progress">
+						<div class="bar" style="width: <!--{$arrRatinginfo['next_progress']}-->%;"></div>
+					</div>
+				</p>
+				<div><img src="<!--{$arrRatinginfo['rating_icon']}-->"/></div>
+			</div>
+			<p><a href="<!--{:Q::U('home://space/ratings')}-->"><!--<lang package='Template'>-->了解等级规则<!--</lang>--></a></p>
+
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th><!--<lang package='Template'>-->积分类型<!--</lang>--></th>
+						<th><!--<lang package='Template'>-->积分数量<!--</lang>--></th>
+					</tr>
+				</thead>
+				<tbody>
+					<!--<foreach for=arrAvailableExtendCredits key=nAvailableExtendCredit value=arrAvailableExtendCredit>-->
+					<tr>
+						<td><!--{$arrAvailableExtendCredit['title']}--></td>
+						<td><span class="badge <!--{if $nAvailableExtendCredit==2}-->badge-success<!--{/if}-->"><!--{$arrUserInfo['usercount_extendcredit'.$nAvailableExtendCredit]}--></span></td>
+					</tr>
+				</tbody>
+				<!--</foreach>-->
+			</table>
+
+			<p><h5><!--<lang package='Template'>-->最近积分记录<!--</lang>--></h5></p>
+
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th><!--<lang package='Template'>-->操作<!--</lang>--></th>
+						<th><!--<lang package='Template'>-->积分变更<!--</lang>--></th>
+						<th><!--<lang package='Template'>-->详情<!--</lang>--></th>
+						<th><!--<lang package='Template'>-->变更时间<!--</lang>--></th>
+					</tr>
+				</thead>
+				<tbody>
+					<!--{if !empty($arrCreditlogs)}-->
+					<!--<foreach for=arrCreditlogs value=arrCreditlog>-->
+					<tr>
+						<td><!--{$arrCreditlog['creditoperation_title']}--></td>
+						<td><!--<lang package='Template'>-->金钱<!--</lang>-->&nbsp;<!--{$arrCreditlog['creditlog_extcredits2']}--></td>
+						<td><!--<lang package='Template'>-->与<!--</lang>-->&nbsp;<a href="<!--{:Q::U('home://space@?id='.$arrCreditlog['creditlog_relatedid'])}-->" target="_blank"><!--{$arrCreditlog['user_name']}--></a>&nbsp;<!--<lang package='Template'>-->进行<!--</lang>--><!--{$arrCreditlog['creditoperation_title']}--></td>
+						<td><!--{$arrCreditlog['create_dateline']|Core_Extend+timeFormat}--></td>
+					</tr>
+					<!--</foreach>-->
+					<!--{d*else}-->
+					<tr>
+						<td colspan="4"><!--<lang package='Template'>-->暂时没有发现任何积分记录<!--</lang>--></td>
+					</tr>
+					<!--{/if}-->
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

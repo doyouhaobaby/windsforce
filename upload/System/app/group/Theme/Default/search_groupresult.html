@@ -1,0 +1,44 @@
+<!--<include file="Core_Extend::template('search_resultheader','home')" />-->
+
+			<!--<include file="search+groupform" />-->
+
+			<div class="tips">
+				<!--<lang package='__COMMON_LANG__@Common'>-->结果: 找到<!--</lang>--> “<!--{$sKey}-->” <!--<lang package='__COMMON_LANG__@Common'>-->相关内容<!--</lang>-->&nbsp;<em class="Sys-special_color"><!--{$nTotalGroupnum}--></em>&nbsp;<!--<lang package='__COMMON_LANG__@Common'>-->个<!--</lang>-->
+			</div>
+
+			<!--{if !empty($arrGroups)}-->
+			<ul class="groups">
+				<!--<foreach for=arrGroups value=arrGroup>-->
+				<li>
+					<a href="<!--{:Group_Extend::getGroupurl($arrGroup)}-->" class="grouplist_pic">
+						<img src="<!--{:Group_Extend::getGroupIcon($arrGroup)}-->" alt="<!--{$arrGroup['group_nikename']}-->" width="48" height="48" class="thumbnail need_lazyload"/>
+					</a>
+					<div class="grouplist_txt">
+						<h3><a href="<!--{:Group_Extend::getGroupurl($arrGroup)}-->" style="<!--{if $arrGroup['group_color']}-->color:<!--{$arrGroup['group_color']}-->;<!--{/if}-->" title="<!--{$arrGroup['group_nikename']}-->"><!--{$arrGroup['group_nikename']|C+subString=0,15}--></a><!--{if $arrGroup['group_totaltodaynum']}-->&nbsp;<span class="grouplist_todaynum" title="<!--<lang package='Template'>-->今日发帖量<!--</lang>-->">(<!--{$arrGroup['group_totaltodaynum']}-->)</span><!--{/if}--></h3>
+						<!--{if $arrGroup['group_isrecommend']}-->
+						<span>&nbsp;<img title="<!--<lang package='Template'>-->推荐<!--</lang>-->" src="<!--{:Appt::path('group_recommend_mini.gif','group')}-->" /></span>
+						<!--{/if}-->
+						<!--{if !in_array($arrGroup['group_id'],$arrGroupuser)}-->
+						&nbsp;<span id="listgroup_<!--{$arrGroup['group_id']}-->" class="commonjoinleave_group"><a href="javascript:void(0);" onclick="joinGroup(<!--{$arrGroup['group_id']}-->,'listgroup_<!--{$arrGroup['group_id']}-->');">+</a></span>
+						<!--{d*else}-->
+						&nbsp;<span id="listgroup_<!--{$arrGroup['group_id']}-->" class="commonjoinleave_group"><a href="javascript:void(0);" onclick="leaveGroup(<!--{$arrGroup['group_id']}-->,'listgroup_<!--{$arrGroup['group_id']}-->');">-</a></span>
+						<!--{/if}-->
+						<div class="grouplist_num">
+							<span title="<!--<lang package='Template'>-->主题数<!--</lang>-->"><!--<lang package='Template'>-->主题<!--</lang>-->&nbsp;<!--{$arrGroup['group_topicnum']}--></span>,&nbsp;&nbsp;
+							<span title="<!--<lang package='Template'>-->帖子数<!--</lang>-->"><!--<lang package='Template'>-->帖子<!--</lang>-->&nbsp;<!--{$arrGroup['group_topiccomment']}--></span>,&nbsp;&nbsp;
+							<span title="<!--<lang package='Template'>-->成员数<!--</lang>-->"><!--<lang package='Template'>-->成员<!--</lang>-->&nbsp;<!--{$arrGroup['group_usernum']}--></span>
+						</div>
+						<p class="grouplist_description"><!--{$arrGroup['group_listdescription']|C+subString=0,15}--></p>
+					</div>
+				</li>
+				<!--</foreach>-->
+			</ul>
+			<!--{d*else}-->
+			<p><!--<lang package='__COMMON_LANG__@Common'>-->对不起，没有找到匹配结果。<!--</lang>--></p>
+			<!--{/if}-->
+
+			<!--{$sPageNavbar}-->
+		</div>
+	</div>
+
+<!--<include file="Core_Extend::template('search_footer','home')" />-->

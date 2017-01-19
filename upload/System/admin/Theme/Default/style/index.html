@@ -1,0 +1,244 @@
+<!--<include file="public+header" />-->
+
+<link rel="stylesheet" type="text/css" href="<!--{:Q::U('misc/index?type=css&file=theme',array('rand'=>C::randString(4)),true)}-->"/>
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->已安装主题列表<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->已安装主题列表<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--> & <!--<lang package='Template'>-->更新CSS 缓存<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->在这里你可以看到当前已经安装的主题列表<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->重置操作将会读取它对应的模板套系中的默认XML配置文件来恢复数据<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->预览图和行背景突出的是当前的设置的主题<!--</lang>--></li>
+					<li class="message-display common-message-display" style="list-style:none;"><a href="javascript:void(0);" onclick="messageDisplay();"><!--<lang package='Template'>-->展开更多<!--</lang>-->&gt;&gt;</a></li>
+					<div class="message_display none">
+						<li><!--<lang package='Template'>-->如果你修改了主题，但是主题没有立刻生效，请在这里更新主题Css 缓存<!--</lang>--></li>
+						<li style="list-style:none;" class="common_message_display"><a href="javascript:void(0);" onclick="messageDisplay();"><!--<lang package='Template'>-->收起<!--</lang>-->&lt;&lt;&lt;&lt;</a></li>
+					</div>
+				</ul>
+			</div>
+
+			<div class="module_content">
+				<form method='get' action="<!--{:Q::U( 'style/index' )}-->" class="quick_search">
+					<table cellspacing="3" cellpadding="3">
+						<tr>
+							<th><!--<lang package='Template'>-->编号<!--</lang>--></th>
+							<td><input type="text" name="style_id" title="<!--<lang package='Template'>-->编号<!--</lang>-->" value="<!--{:Q::G('style_id')}-->" onkeyup="this.value = this.value.replace(/[^-0-9]/g, '');" />
+							</td>
+							<th><!--<lang package='Template'>-->结果排序<!--</lang>--></th>
+							<td>
+								<select name="order_">
+									<option value="" <!--{if !Q+G('order_')}-->selected<!--{/if}-->><!--<lang package='Template'>-->排序字段<!--</lang>--></option>
+									<option value="style_id" <!--{if Q+G('order_')=='style_id'}-->selected<!--{/if}-->><!--<lang package='Template'>-->编号<!--</lang>--></option>
+									<option value="style_name" <!--{if Q+G('order_')=='style_name'}-->selected<!--{/if}-->><!--<lang package='Template'>-->主题名字<!--</lang>--></option>
+									<option value="theme_id" <!--{if Q+G('order_')=='theme_id'}-->selected<!--{/if}-->><!--<lang package='Template'>-->模板系<!--</lang>--></option>
+								</select>
+								<select name="sort_">
+									<option value="" <!--{if !Q+G('sort_')}-->selected<!--{/if}-->><!--<lang package='Template'>-->默认排序<!--</lang>--></option>
+									<option value="desc" <!--{if Q+G('sort_')=='desc'}-->selected<!--{/if}-->><!--<lang package='Template'>-->递增<!--</lang>--></option>
+									<option value="asc" <!--{if Q+G('sort_')=='asc'}-->selected<!--{/if}-->><!--<lang package='Template'>-->递减<!--</lang>--></option>
+								</select>
+								<select name="perpage">
+									<option value="" <!--{if !Q+G('perpage')}-->selected<!--{/if}-->><!--<lang package='Template'>-->默认每页数量<!--</lang>--></option>
+									<option value="10" <!--{if Q+G('perpage')==10}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(10)</option>
+									<option value="20" <!--{if Q+G('perpage')==20}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(20)</option>
+									<option value="50" <!--{if Q+G('perpage')==50}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(50)</option>
+									<option value="100" <!--{if Q+G('perpage')==100}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(100)</option>
+									<option value="200" <!--{if Q+G('perpage')==200}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(200)</option>
+									<option value="500" <!--{if Q+G('perpage')==500}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(500)</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th><!--<lang package='Template'>-->模板系<!--</lang>-->(ID)</th>
+							<td><input type="text" name="theme_id" title="<!--<lang package='Template'>-->模板系<!--</lang>-->" value="<!--{:Q::G('theme_id')}-->" onkeyup="this.value = this.value.replace(/[^-0-9]/g, '');" />
+							</td>
+							<th><!--<lang package='Template'>-->状态<!--</lang>--></th>
+							<td><select name="style_status">
+									<option value="" <!--{if !isset($nIsStatus)}-->selected<!--{/if}-->><!--<lang package='Template'>-->全部<!--</lang>--></option>
+									<option value="1" <!--{if isset($nIsStatus) && $nIsStatus==1}-->selected<!--{/if}-->><!--<lang package='Template'>-->已审<!--</lang>--></option>
+									<option value="0" <!--{if isset($nIsStatus) && $nIsStatus===0}-->selected<!--{/if}-->><!--<lang package='Template'>-->待审<!--</lang>--></option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<input type="text" name="style_name" title="<!--<lang package='Template'>-->主题名字<!--</lang>-->" value="<!--{:Q::G('style_name')}-->" class="quicksearch_text">
+								&nbsp;<input type="submit" id="" value="<!--<lang package='Template'>-->查询<!--</lang>-->" onclick="" class="alt_btn">
+							</td>
+						</tr>
+					</table>
+					<!--{if isset($bIsRecycleList)}-->
+					<input type="hidden" name="recycle_" value="1"/>
+					<!--{/if}-->
+					<input type="hidden" name="c" value="<!--{:MODULE_NAME}-->"/>
+					<input type="hidden" name="a" value="<!--{:ACTION_NAME}-->"/>
+				</form>
+			</div>
+
+			<form action="<!--{:Q::U('style/update_css')}-->" method="post">
+				<footer>
+					<div class="submit_link">
+						<input type="submit" id="submit_button" value="<!--<lang package='Template'>-->更新CSS 缓存<!--</lang>-->" class="alt_btn">
+					</div>
+				</footer>
+			</form>
+		</article>
+
+		<!--{if Q+G('showcurrent')==1}-->
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->当前安装的主题<!--</lang>--></h3>
+			</header>
+			<div class="module_content">
+				<!--{if !empty($oCurstyle['style_id'])}-->
+				<table class="tablesorter" cellspacing="0">
+					<thead>
+						<tr>
+							<th colspan="2"><!--<lang package='Template'>-->当前主题预览<!--</lang>--></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td rowspan="7" width="320px">
+								<a href="<!--{:Core_Extend::getStylePreview($oCurstyle['style_id'],'large')}-->" target="_blank">
+									<img src="<!--{:Core_Extend::getStylePreview($oCurstyle['style_id'])}-->" style="border: 1px solid #ebf1f2;"/>
+								</a>
+							</td>
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->主题名字<!--</lang>--> (<!--{$oCurstyle['style_name']}-->@<!--{$oCurstyle['style_id']}-->) | <!--{:ThemeModel::getThemenameById($oCurstyle['theme_id'])}-->@<!--{$oCurstyle['theme_id']}--></td>
+						</tr>
+						<tr>
+							<td>
+								<div style="background:<!--{$oCurstylevarMenuhoverbgcolor['stylevar_substitute']}-->;cursor:pointer;margin:5px;width:300px;height:50px;overflow:hidden;border: 1px solid #ccc" title="<!--<lang package='Template'>-->主题颜色属性<!--</lang>-->">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td><a href="<!--{:Q::U('style/edit?id='.$oCurstyle['style_id'])}-->"><!--<lang package='Template'>-->主题DIY<!--</lang>--></a></td>
+						</tr>
+						<tr>
+							<td><a href="<!--{:Q::U('style/export?id='.$oCurstyle['style_id'])}-->"><!--<lang package='Template'>-->导出<!--</lang>--></a></td>
+						</tr>
+						<tr>
+							<td><a href="<!--{:Q::U('style/copy_style?id='.$oCurstyle['style_id'])}-->"><!--<lang package='Template'>-->复制<!--</lang>--></a></td>
+						</tr>
+						<tr>
+							<td><a href="<!--{:Q::U('style/reset_style?id='.$oCurstyle['style_id'])}-->"><!--<lang package='Template'>-->重置<!--</lang>--></a></td>
+						</tr>
+					</tbody>
+				</table>
+				<!--{d*else}-->
+				<!--<lang package='Template'>-->当前主题被禁止或者不存在<!--</lang>--> <a href="<!--{:Q::U('style/repaire?id='.$nCurrentStyleid)}-->"><!--<lang package='Template'>-->立刻修复<!--</lang>--></a>
+				<!--{/if}-->
+			</div>
+		</article>
+		<!--{/if}-->
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><a href="<!--{:Q::U(MODULE_NAME.'/index')}-->" title="<!--<lang package='Template'>-->已安装主题列表<!--</lang>-->"><!--<lang package='Template'>-->已安装主题列表<!--</lang>--></a>
+				<!--{if isset($bIsRecycleList)}-->&nbsp;<sup><a href="<!--{:Q::U(MODULE_NAME.'/index?recycle_=1')}-->" title="<!--<lang package='Template'>-->回收站<!--</lang>-->" style="color:red;">[<!--<lang package='Template'>-->回收站<!--</lang>-->]</a></sup>
+					<!--{/if}-->
+				<!--{if !Q+G('showcurrent') && !isset($bIsRecycleList)}-->
+				&nbsp;<sup><a href="<!--{:Q::U(MODULE_NAME.'/index?showcurrent=1')}-->" title="<!--<lang package='Template'>-->当前安装的主题<!--</lang>-->" style="color:green;">[<!--<lang package='Template'>-->当前安装的主题<!--</lang>-->]</a></sup>
+				<!--{/if}-->
+			</h3>
+				<ul class="tabs">
+					<li><a href="<!--{:Q::U('style/import')}-->"><!--<lang package='Template'>-->导入<!--</lang>--></a></li>
+					<li class="active"><a href="<!--{:Q::U('style/install')}-->"><!--<lang package='Template'>-->安装新主题<!--</lang>-->(<!--{$nNewinstalledNum}-->)</a></li>
+					<li><a href="<!--{:Q::U('style/admin')}-->"><!--<lang package='Template'>-->后台主题<!--</lang>--></a></li>
+					<!--{if isset($bIsRecycleList)}-->
+					<li><a class="tab_clearrecycle" href="javascript:void(0);" onclick="clearRecycle()"><!--<lang package='Template'>-->清空回收站<!--</lang>--></a></li>
+					<!--{/if}-->
+					<li><a class="tab_add" href="javascript:void(0);" onclick="add()"><!--<lang package='Template'>-->新增<!--</lang>--></a></li>
+					<li><a class="tab_edit" href="javascript:void(0);" onclick="edit()"><!--<lang package='Template'>-->编辑<!--</lang>--></a></li>
+					<li><a class="tab_delete" href="javascript:void(0);" onclick="foreverdel()"><!--<lang package='Template'>-->删除<!--</lang>--></a></li>
+					<li><!--{if isset($bIsRecycleList)}-->
+						<a class="tab_list" href="<!--{:Q::U(MODULE_NAME.'/index')}-->" title="<!--<lang package='Template'>-->列表<!--</lang>-->"><img src="<!--{:At::path('icn_list.png')}-->"/></a>
+						<!--{d*else}-->
+						<a class="tab_recycle" href="<!--{:Q::U(MODULE_NAME.'/index?recycle_=1')}-->" title="<!--<lang package='Template'>-->回收站<!--</lang>-->"><img src="<!--{:At::path('icn_recycle.png')}-->"/></a>
+						<!--{/if}-->
+					</li>
+				</ul>
+			</header>
+			<div class="module_content">
+				<table class="tablesorter" cellspacing="0" id="checkList">
+					<thead>
+						<tr>
+							<th width="20"><input type="checkbox" onclick="checkAll('checkList')"></th>
+							<th width="85"><a href="javascript:sortBy('style_id','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('style_id')}-->><!--<lang package='Template'>-->编号<!--</lang>--></a></th> 
+							<th colspan="2"><a href="javascript:sortBy('style_name','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('style_name')}-->><!--<lang package='Template'>-->主题名字<!--</lang>--></a></th>
+							<th width="180"><a href="javascript:sortBy('theme_id','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('template_id')}-->><!--<lang package='Template'>-->模板系<!--</lang>--></a></th>
+							<th width="50"><a href="javascript:sortBy('style_status','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('style_status')}-->><!--<lang package='Template'>-->状态<!--</lang>--></a></th>
+							<th width="150"><!--<lang package='Template'>-->操作<!--</lang>--></th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--{if is_array($arrLists)}-->
+						<!--<foreach for=arrLists>-->
+						<tr id="datalist-<!--{$value:style_id}-->" <!--{if $value['style_id']==$nCurrentStyleid}-->class="warning"<!--{/if}-->>
+							<td><input type="checkbox" name="key" value="<!--{$value:style_id}-->" <!--{if $value['style_id']==1}-->disabled="disabled"<!--{/if}-->></td>
+							<td><!--{$value:style_id}--></td>
+							<td width="150"><a href="<!--{:Core_Extend::getStylePreview($value['style_id'],'large')}-->" target="_blank">
+									<img src="<!--{:Core_Extend::getStylePreview($value['style_id'],'mini')}-->" style="border: 1px solid #ebf1f2;"/>
+								</a>
+								<div style="margin-top:5px;text-align:left;">
+									<!--{if $value['style_id']==$nCurrentStyleid}-->
+									<!--<lang package='Template'>-->主题已经启用<!--</lang>-->
+									<!--{elseif !$value['style_status']}-->
+									<!--<lang package='Template'>-->主题尚未启用<!--</lang>-->
+									<!--{d*else}-->
+									<a href="<!--{:Q::U('style/set_style?id='.$value['style_id'])}-->"><!--<lang package='Template'>-->启用此主题<!--</lang>--></a>
+									<!--{/if}-->
+								</div>
+							</td>
+							<td><!--{$value:style_name}-->
+								<div class="row-actions">
+									<span class='edit'><a href="javascript:edit('<!--{$value:style_id}-->')" title="<!--<lang package='Template'>-->主题DIY<!--</lang>-->" style="font-weight:normal;"><!--<lang package='Template'>-->编辑<!--</lang>--></a>|</span>
+									<span class='hide'><!--<if condition="$value:style_status eq 1" >--><a href="javascript:forbid('<!--{$value:style_id}-->')" style="font-weight:normal;"><!--<lang package='Template'>-->禁用<!--</lang>--></a><!--<else/>--><a href="javascript:resume('<!--{$value:style_id}-->')" style="font-weight:normal;"><!--<lang package='Template'>-->恢复<!--</lang>--></a><!--</if>--></span>
+								</div>
+							</td>
+							<td><!--{:ThemeModel::getThemenameById($value['theme_id'])}-->@<!--{$value['theme_id']}--></td>
+							<td><!--{:Admin_Extend::getStatus($value->style_status)}--></td>
+							<td><!--{if $value:style_status==1}-->
+								<a href="javascript:forbid('<!--{$value:style_id}-->')"><input type="image" src="<!--{:At::path('icn_trash.png')}-->" title="<!--<lang package='Template'>-->禁用<!--</lang>-->"></a>
+								<!--{d*else}--><a href="javascript:resume('<!--{$value:style_id}-->')"><input type="image" src="<!--{:At::path('icn_jump_back.png')}-->" title="<!--<lang package='Template'>-->恢复<!--</lang>-->"></a>
+								<!--{/if}-->&nbsp;<a href="javascript:edit('<!--{$value:style_id}-->')"><input type="image" src="<!--{:At::path('icn_edit.png')}-->" title="<!--<lang package='Template'>-->主题DIY<!--</lang>-->"></a>
+								&nbsp;<br/><a href="<!--{:Q::U('style/export?id='.$value['style_id'])}-->"><!--<lang package='Template'>-->导出<!--</lang>--></a>
+								&nbsp;<a href="<!--{:Q::U('style/copy_style?id='.$value['style_id'])}-->"><!--<lang package='Template'>-->复制<!--</lang>--></a>
+								&nbsp;<a href="<!--{:Q::U('style/reset_style?id='.$value['style_id'])}-->"><!--<lang package='Template'>-->重置<!--</lang>--></a>
+								&nbsp;<a href="javascript:foreverdel<!--{if isset($bIsRecycleList)}-->Deep<!--{/if}-->('<!--{$value:style_id}-->')"><!--{if isset($bIsRecycleList)}--><!--<lang package='Template'>-->彻底删除<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->删除<!--</lang>--><!--{/if}--></a>
+							</td>
+						</tr>
+						<!--</foreach>-->
+						<!--{d*else}-->
+						<tr>
+							<td colspan="7"><!--<lang package='Template'>-->暂时没有发现任何记录<!--</lang>--></td>
+						</tr>
+						<!--{/if}-->
+					</tbody>
+				</table>
+			</div>
+			
+			<div class="module_content operate_box">
+				<div class="left">
+					<!--{$sPageNavbar}-->
+				</div>
+				<div class="right operate" style="text-align:right;">
+					<!--{if isset($bIsRecycleList)}--><input type="button" name="clear_recycle" value="<!--<lang package='Template'>-->清空回收站<!--</lang>-->" onclick="clearRecycle()">&nbsp;<!--{/if}-->
+					<input type="button" name="add" value="<!--<lang package='Template'>-->新增<!--</lang>-->" onclick="add()" class="alt_btn">&nbsp;
+					<input type="button" name="edit" value="<!--<lang package='Template'>-->编辑<!--</lang>-->" onclick="edit()" class="alt_btn">&nbsp;
+					<input type="button" name="delete" value="<!--{if isset($bIsRecycleList)}--><!--<lang package='Template'>-->彻底删除<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->删除<!--</lang>--><!--{/if}-->" onclick="foreverdel<!--{if isset($bIsRecycleList)}-->Deep<!--{/if}-->()" class="alt_btn">
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</article>
+
+<!--<include file="public+footer">-->

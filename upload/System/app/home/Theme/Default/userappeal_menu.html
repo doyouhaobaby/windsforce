@@ -1,0 +1,16 @@
+		<div class="grid_12">
+			<table class="table table-bordered">
+				<tbody>
+					<tr>
+						<td width="25%" <!--{if ACTION_NAME==="index"}-->class="tips"<!--{/if}-->><!--<lang package='Template'>-->用户申诉<!--</lang>--></td>
+						<td width="25%" <!--{if ACTION_NAME==="step2"}-->class="tips"<!--{/if}-->><!--<lang package='Template'>-->填写联系方式<!--</lang>--></td>
+						<td width="25%" <!--{if ACTION_NAME==="step3"}-->class="tips"<!--{/if}-->><!--<lang package='Template'>-->填写申诉资料<!--</lang>--></td>
+						<td width="25%" <!--{if ACTION_NAME==="step4"}-->class="tips"<!--{/if}-->><!--<lang package='Template'>-->获取申诉回执编号<!--</lang>--></td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="progress progress-striped active">
+				<div class="bar" style="width: <!--{:Home_Extend::getProgress()}-->%;"></div>
+			</div>
+		</div>
+		<div class="clearfix"></div>

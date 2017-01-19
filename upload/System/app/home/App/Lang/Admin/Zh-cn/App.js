@@ -1,0 +1,1 @@
+/** QeePHP Lang File, Do not to modify it! */var arrApp=new Array();// 内容arrApp['你确定要放弃正在编辑的评论?']='你确定要放弃正在编辑的评论?';arrApp['查看']='查看';arrApp['回复']='回复';arrApp['收起']='收起';arrApp['用户关键字不能为空']='用户关键字不能为空';arrApp['用户标签不能为空']='用户标签不能为空';arrApp['用户关键字不能为空']='用户关键字不能为空';arrApp['弹出播放']='弹出播放';

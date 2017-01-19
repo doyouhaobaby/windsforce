@@ -1,0 +1,56 @@
+<!--<include file="public+ffheader">-->
+
+<!--{style}-->
+	html{overflow:hidden;}
+	body{overflow-y:hidden;}
+<!--{/style}-->
+
+	<header id="header">
+		<hgroup>
+			<table id="header" width="100%" height="50px" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+				<tbody>
+					<tr>
+						<td width="125" align="left" valign="top" class="header-title">
+							<a href="javascript:void(0);" onClick="currentClass(0);parent.menu.location=Q.U( 'public/fmenu?title=<!--<lang package='Template'>-->首页<!--</lang>-->' );parent.main.location='<!--{:Q::U('public/fmain')}-->';return false;">
+								<img src="<!--{:At::path('logo-admin.gif')}-->" height="45" border="0" />
+							</a>
+						</td>
+						<td id="header-links" valign="top">
+							<!--<lang package='Template'>-->当前登录用户<!--</lang>-->&nbsp;
+							<b><img src="<!--{:At::path('write.gif')}-->" width="12" height="12" border="0" alt="" align="absmiddle"><a href="<!--{:Q::U('public/information')}-->" title="<!--<lang package='Template'>-->修改资料<!--</lang>-->" ><!--{$sUserName}--></a></b>&nbsp; 
+							<img src="<!--{:At::path('error.gif')}-->" width="12" height="12" border="0" alt="" align="absmiddle"><a href="<!--{:Q::U('public/logout')}-->" target="_top">[<!--<lang package='Template'>-->安全退出<!--</lang>-->]</a>&nbsp; 
+							<img src="<!--{:At::path('home.gif')}-->" width="12" height="12" border="0" alt="" align="absmiddle"><a href="<!--{:__ROOT__}-->/" target="_blank"><!--<lang package='Template'>-->站点首页<!--</lang>--></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</hgroup>
+		<div id="menu-div">
+			<ul>
+				<li class="fix-spacel">&nbsp;</li>
+				<li><span><a href="javascript:void(0);" onClick="currentClass(0);parent.menu.location=Q.U( 'public/fmenu?title=<!--<lang package='Template'>-->首页<!--</lang>-->' );parent.main.location='<!--{:Q::U('public/fmain')}-->';return false;"><!--<lang package='Template'>-->首页<!--</lang>--></a></span></li>
+				<!--<foreach for=arrListMenu>-->
+				<li><span><a href="javascript:void(0);" onClick="currentClass(<!--{$i}-->);parent.menu.location=Q.U( 'public/fmenu?tag=<!--{$value['nodegroup_id']}-->&title=<!--{$value['nodegroup_title']|Q+L='Template'}-->' );return false;"><!--{$value['nodegroup_title']|Q+L='Template'}--></a></span></li>
+				<!--</foreach>-->
+				<li class="fix-spacer">&nbsp;</li>
+			</ul>
+			<br class="clear" />
+		</div>
+	</header>
+
+	<!--{script}-->
+	function currentClass(n){
+		var lis = document.getElementsByTagName('span');
+		for(var i = 0; i < lis.length; i++){
+			lis[i].className = '';
+		}
+		lis[n].className = 'current';
+	}
+	<!--{if Q+G('currentid','G')>0}-->
+	currentClass(<!--{:Q::G('currentid','G')}-->);
+	<!--{d*else}-->
+	currentClass(0);
+	<!--{/if}-->
+	<!--{/script}-->
+
+<!--<include file="public+fffooter">-->

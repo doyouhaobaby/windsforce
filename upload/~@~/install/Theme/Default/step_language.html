@@ -1,0 +1,43 @@
+<include file="common+header">
+		
+	<ul class="breadcrumb">
+		<li><a href="{:__APP__}" title="<lang package='Template/Default/Common'>主页</lang>"><lang package='Template/Default/Common'>主页</lang></a>&nbsp;<span class="divider">/</span></li>
+		<li>Select Language | WINDSFORCE-{:WINDSFORCE_SERVER_VERSION} - {:WINDSFORCE_SERVER_RELEASE}</li>
+	</ul>
+
+	<div class="hero-unit">
+		<h1>Wind<span style="color:red;">s</span>Force</h1>
+		<p>风动社区 (To Make Prowerful APP)</p>
+		<p><a class="btn btn-success btn-large" href="http://windsforce.114.ms" target="_blank">Learn more &raquo;</a></p>
+	</div>
+
+	<div class="row">
+		<div class="span12">
+			<h2>The preview</h2>
+			<p><img src="{:__TMPLPUB__}/Images/preview.jpg" /></p>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="span12">
+			<h2>Please select your language!</h2>
+			<p>{~$sLangCookieName=$GLOBALS['_commonConfig_']['COOKIE_LANG_TEMPLATE_INCLUDE_APPNAME']===true?APP_NAME.'_language':'language'}
+				<select name="lang-dropdown" onchange="document.location.href=this.options[this.selectedIndex].value;">
+					<option value="">-- Please select your language --</option>
+					<foreach for=arrInstallLangs value=sInstallLangs>
+					<option value="?l={$sInstallLangs|strtolower}" {if strtolower(QEEPHP+cookie($sLangCookieName))==strtolower($sInstallLangs)}selected{/if}>{$sInstallLangs}</option>
+					</foreach>
+				</select>
+			</p>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="span12">
+			<div class="well">
+				<p><input type='button' value='Next' class='btn btn-success' onclick="window.location.href='{:Q::U( 'public/select' )}'"/></p>
+			</div>
+		</div>
+	</div>
+
+<include file="common+footer">

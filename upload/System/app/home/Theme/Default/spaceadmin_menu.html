@@ -1,0 +1,15 @@
+		<div class="grid_12">
+			<div class="nav_tabcontainer nav_tab">
+				<ul>
+					<li <!--{if ACTION_NAME==='index'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://spaceadmin/index')}-->"><!--<lang package='Template'>-->基本信息<!--</lang>--></a></li>
+					<li <!--{if in_array(ACTION_NAME,array('rating','creditlog','creditrule','creditrulelog','transfer','exchange'))}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://spaceadmin/rating')}-->"><!--<lang package='Template'>-->积分<!--</lang>--></a></li>
+					<li <!--{if in_array(ACTION_NAME,array('avatar','avatar_upload'))}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://spaceadmin/avatar')}-->"><!--<lang package='Template'>-->修改头像<!--</lang>--></a></li>
+					<li <!--{if ACTION_NAME==='verifyemail'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://spaceadmin/verifyemail')}-->"><!--<lang package='Template'>-->Email验证<!--</lang>--></a></li>
+					<li <!--{if ACTION_NAME==='password'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://spaceadmin/password')}-->"><!--<lang package='Template'>-->修改密码<!--</lang>--></a></li>
+					<li <!--{if ACTION_NAME==='socia'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://spaceadmin/socia')}-->"><!--<lang package='Template'>-->社会化帐号<!--</lang>--></a></li>
+					<li <!--{if ACTION_NAME==='promotion'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://spaceadmin/promotion')}-->"><!--<lang package='Template'>-->访问推广<!--</lang>--></a></li>
+					<li <!--{if ACTION_NAME==='tag'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://spaceadmin/tag')}-->"><!--<lang package='Template'>-->用户标签<!--</lang>--></a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="clearfix"></div>

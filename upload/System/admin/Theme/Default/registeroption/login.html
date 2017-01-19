@@ -1,0 +1,70 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+function option(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'update...' );
+	$("#submit_button").attr("disabled", false);
+	$('.validate')(0).submit();
+}
+
+checkForm(option);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->登陆安全设置<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->登陆安全设置<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->注册设置<!--</lang>--></h3>
+				<ul class="tabs">
+					<li><a href="<!--{:Q::U('registeroption/index')}-->"><!--<lang package='Template'>-->注册设置<!--</lang>--></a></li>
+					<li class="active"><a href="<!--{:Q::U('registeroption/login')}-->"><!--<lang package='Template'>-->登陆安全设置<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="<!--{:Q::U('registeroption/update_option')}-->" method="post" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="remember_time"><!--<lang package='Template'>-->登陆默认COOKIE有效期<!--</lang>--></label>
+						<select name="options[remember_time]" id="remember_time">
+							<option value="0" <!--{if $arrOptions['remember_time']==0}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->及时<!--</lang>--></option>
+							<option value="3600" <!--{if $arrOptions['remember_time']==3600}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一小时<!--</lang>--></option>
+							<option value="86400" <!--{if $arrOptions['remember_time']==86400}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一天<!--</lang>--></option>
+							<option value="604800" <!--{if $arrOptions['remember_time']==604800}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一星期<!--</lang>--></option>
+							<option value="2592000" <!--{if $arrOptions['remember_time']==2592000}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一月<!--</lang>--></option>
+							<option value="31536000" <!--{if $arrOptions['remember_time']==31536000}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一年<!--</lang>--></option>
+						</select>
+						<div class="description"><!--<lang package='Template'>-->你可以在前台登陆的时候看到这里的设置效果<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="getpassword_expired"><!--<lang package='Template'>-->获取密码链接过期时间<!--</lang>--></label>
+						 <input type="text" name="options[getpassword_expired]" id="getpassword_expired" value="<!--{$arrOptions['getpassword_expired']}-->" class="{required:true,digits:true,min: 3600}">
+						<div class="description input_tips"><!--<lang package='Template'>-->过期时间单位为s,尽量将过期时间设置短一些,如3600<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="appeal_expired"><!--<lang package='Template'>-->申诉获取密码链接过期时间<!--</lang>--></label>
+						 <input type="text" name="options[appeal_expired]" id="appeal_expired" value="<!--{$arrOptions['appeal_expired']}-->" class="{required:true,digits:true,min: 3600}">
+						<div class="description input_tips"><!--<lang package='Template'>-->过期时间单位为s,尽量将过期时间设置短一些,如3600<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="verifyemail_expired"><!--<lang package='Template'>-->Email验证链接过期时间<!--</lang>--></label>
+						 <input type="text" name="options[verifyemail_expired]" id="verifyemail_expired" value="<!--{$arrOptions['verifyemail_expired']}-->" class="{required:true,digits:true,min: 3600}">
+						<div class="description input_tips"><!--<lang package='Template'>-->过期时间单位为s,尽量将过期时间设置短一些,如3600<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input id="submit_button" type="submit" class="alt_btn" value="<!--<lang package='Template'>-->发布<!--</lang>-->" />
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->" />
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

@@ -1,0 +1,49 @@
+			<!--{if $nDialog==1}-->
+			<form class="form-inline" method="post" id="attachmentcategoryAdd" name="attachmentcategoryAdd" action="<!--{:Q::U('home://attachment/dialog_editattachmentcategorysave')}-->">
+			<!--{/if}-->
+				<div style="width:450px;;">
+					<div id="result" class="none"></div>
+					
+					<table width='100%' class="table" align="left">
+						<thead>
+							<th width="100px"><!--<lang package='Template'>-->专辑项<!--</lang>--></th>
+							<th><!--<lang package='Template'>-->专辑值<!--</lang>--></th>
+						</thead>
+						<tbody>
+							<tr>
+								<td valign="top"><!--<lang package='Template'>-->专辑排序<!--</lang>--></td>
+								<td><input type="text" name="attachmentcategory_sort" id="attachmentcategory_sort" class="span4" size="20" value="<!--{$oAttachmentcategory['attachmentcategory_sort']}-->" /></td>
+							</tr>
+							<tr>
+								<td valign="top"><!--<lang package='Template'>-->专辑名字<!--</lang>--><em class="red">*</em></td>
+								<td><input type="text" name="attachmentcategory_name" id="attachmentcategory_name" size="20" value="<!--{$oAttachmentcategory['attachmentcategory_name']}-->" class="span4"/></td>
+							</tr>
+							<tr>
+								<td valign="top"><!--<lang package='Template'>-->专辑封面<!--</lang>-->&nbsp;<span class="red" style="cursor:pointer;" onclick="$('#attachmentcategory_cover').val('');">x</span></td>
+								<td><input type="text" name="attachmentcategory_cover" id="attachmentcategory_cover" class="span4" size="20" value="<!--{$oAttachmentcategory['attachmentcategory_cover']}-->" readonly="true"/>
+									<p><!--<lang package='Template'>-->专辑封面为一个附件的ID值,最好是图片附件<!--</lang>--></p>
+								</td>
+							</tr>
+							<tr>
+								<td valign="top"><!--<lang package='Template'>-->专辑描述<!--</lang>--></td>
+								<td><textarea name="attachmentcategory_description" id="attachmentcategory_description" class="span4" size="20" rows="5"><!--{$oAttachmentcategory['attachmentcategory_description']}--></textarea></td>
+							</tr>
+							<!--{if $nDialog==1}-->
+							<tr>
+								<td></td>
+								<td>
+									<input type="hidden" name="dialog" value="1">
+									<input type="hidden" name="function" value="<!--{$sFunction}-->">
+									<input type="hidden" name="filetype" value="<!--{$nFiletype}-->">
+									<input type="hidden" name="full" value="<!--{$nFull}-->">
+									<button type="submit" class="btn"><!--<lang package='Template'>-->更新专辑<!--</lang>--></button>
+								</td>
+							</tr>
+							<!--{/if}-->
+						</tbody>
+					</table>
+					<input value="<!--{$oAttachmentcategory['attachmentcategory_id']}-->" type="hidden" name="attachmentcategory_id" id="attachmentcategory_id">
+				</div>
+			<!--{if $nDialog==1}-->
+			</form>
+			<!--{/if}-->

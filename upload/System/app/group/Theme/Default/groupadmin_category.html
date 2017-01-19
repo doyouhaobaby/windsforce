@@ -1,0 +1,65 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{~$sNewtopic=$GLOBALS['_cache_']['group_option']['newtopic_default']==1?'newtopic':'index'}-->
+
+<!--{script}-->
+function deleteGroupcategory(id,category_id){
+	if(!id || !category_id){
+		windsforceAlert(Q.L('请选择操作项','Common'),'',3);
+		return false;
+	}
+
+	windsforceConfirm(Q.L('确实要永久删除选择项吗？','Common'),function(){
+		Q.AjaxSend(Q.U('group://groupadmin/category_delete?gid='+id+'&cid='+category_id),'ajax=1','',completeDelete);
+	});
+}
+
+function completeDelete(data,status){
+	if(status==1){
+		setTimeout("window.location.replace(_SELF_);",1000);
+	}
+}
+<!--{/script}-->
+
+		<div class="container_12">
+			<ul class="breadcrumb">
+				<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+				<li><a href="<!--{:Q::U('group://public/index')}-->" title="<!--<lang package='Template'>-->小组<!--</lang>-->"><!--<lang package='Template'>-->小组<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+				<li><a href="<!--{:Group_Extend::getGroupurl($arrGroup)}-->"><!--{$arrGroup.group_nikename}--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+				<li><!--<lang package='Template'>-->小组分类设置<!--</lang>--></li>
+			</ul>
+		</div>
+
+		<div class="container_12 container_box">
+			<!--<include file="group+header" />-->
+			<!--<include file="groupadmin+menu" />-->
+			
+			<div class="grid_12" >
+				<form action="<!--{:Q::U('group://groupadmin/category_update')}-->" method="post" id="groupAdd" class="form-horizontal" style="margin-top:20px;">
+					<div class="control-group">
+						<label class="control-label" for="group_category"><!--<lang package='Template'>-->群组分类<!--</lang>--></label>
+						<div class="controls">
+							<select name="groupcategory_id" id="groupcategory_id" >
+								<option value="0" <!--{if 0==$arrGroup['groupcategory_id']}-->selected<!--{/if}-->>- <!--<lang package='Template'>-->未分类<!--</lang>--> -</option>
+								<!--<foreach for=arrGroupCategorys value=arrGroupCategory>-->
+								<option value="<!--{$arrGroupCategory['groupcategory_id']}-->" <!--{if $arrGroupCategory['groupcategory_id']==$arrGroup['groupcategory_id']}-->selected<!--{/if}-->>- <!--{$arrGroupCategory['groupcategory_name']}--></option>
+									<!--<foreach for="arrGroupCategory['child']" value=arrChildGroupCategory>-->
+								<option value="<!--{$arrChildGroupCategory['groupcategory_id']}-->" <!--{if $arrChildGroupCategory['groupcategory_id']==$arrGroup['groupcategory_id']}-->selected<!--{/if}-->>--- <!--{$arrChildGroupCategory['groupcategory_name']}--></option>
+									<!--</foreach>-->
+								<!--</foreach>-->
+							</select>
+							<p class="help-block"><!--<lang package='Template'>-->小组的分类，方便管理，小组分类可以有多个<!--</lang>--></p>
+						</div>
+					</div>
+					<div class="control-group">
+						<div class="controls">
+							<input type="hidden" name="gid" value="<!--{$arrGroup.group_id}-->">
+							<button type="submit" class="btn"><!--<lang package='Template'>-->更新<!--</lang>--></button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

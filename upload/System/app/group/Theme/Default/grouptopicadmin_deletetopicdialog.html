@@ -1,0 +1,12 @@
+	<!--<include file="grouptopicadmin+header" />-->
+		
+		<p style="font-weight:bold;color:red;"><!--<lang package='Template'>-->您确认要删除选择的主题么?<!--</lang>--></p>
+
+		<p><!--{if $GLOBALS['_cache_']['group_option']['group_deletetopic_recyclebin']==1}-->
+			<div class="tips"><!--<lang package='Template'>-->系统启用了主题回收站功能，删除的帖子将会被放置到回收站<!--</lang>--></div>
+			<!--{d*else}-->
+			<div class="tips"><!--<lang package='Template'>-->系统尚未启用主题回收站功能，主题将会被直接删除<!--</lang>--></div>
+			<!--{/if}-->
+		</p>
+
+	<!--<include file="grouptopicadmin+footer" />-->

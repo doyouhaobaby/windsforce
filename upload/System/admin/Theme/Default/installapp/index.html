@@ -1,0 +1,62 @@
+<!--<include file="public+header" />-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->安装新应用<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->安装新应用<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->在这里你可以安装应用，部分应用可能会向数据库写入数据，安装时要特别注意<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->虽然有些系统应用不安装也一样使用，但是这样却没有后台管理，请都安装一下<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+		
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->安装新应用<!--</lang>--></h3>
+				<ul class="tabs">
+					<li class="active"><a href="<!--{:Q::U('app/index')}-->"><!--<lang package='Template'>-->应用列表<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<div class="module_content">
+				<!--{if !empty($arrApps)}-->
+				<table class="tablesorter" cellspacing="0" id="checkList">
+					<thead>
+						<tr>
+							<th><!--<lang package='Template'>-->APP名称<!--</lang>--></th>
+							<th width="70"><!--<lang package='Template'>-->版本<!--</lang>--></th>
+							<th width="150"><!--<lang package='Template'>-->作者<!--</lang>--></th>
+							<th width="120"><!--<lang package='Template'>-->安装<!--</lang>--></th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--<foreach for=arrApps>-->
+						<tr id="datalist-<!--{$key}-->">
+							<td><img height="40" align="left" width="40" style="margin: 0pt 5px 0pt 0px;" src="<!--{$value['app']['logo']}-->"/>
+								<!--{$value['app']['name']}--><br/>
+								<span><!--{$value['app']['identifier']}--></span>
+							</td>
+							<td><!--{$value['app']['version']}--></td>
+							<td><!--{if $value['app']['authorurl']}-->
+								<a href="<!--{$value['app']['authorurl']}-->" target="_blank"><!--{$value['app']['author']}--></a>
+								<!--{d*else}-->
+								<!--{$value['app']['author']}-->
+								<!--{/if}-->
+							</td>
+							<td><a href="<!--{:Q::U('installapp/import_app?name='.$value['app']['identifier'])}-->"><!--<lang package='Template'>-->安装<!--</lang>--></a>&nbsp;(<a href="<!--{:Q::U('languageoption/index')}-->" title="<!--<lang package='Template'>-->修改语言包<!--</lang>-->"><!--{$sLanguage}--></a>)</td>
+						</tr>
+						<!--</foreach>-->
+					</tbody> 
+				</table>
+				<!--{d*else}-->
+				<p><!--<lang package='Template'>-->没有发现需要安装的新应用<!--</lang>--></p>
+				<!--{/if}-->
+			</div>
+		</article>
+
+<!--<include file="public+footer">-->

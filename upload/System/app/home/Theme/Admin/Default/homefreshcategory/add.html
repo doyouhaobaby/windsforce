@@ -1,0 +1,56 @@
+<!--<include file="public+header">-->
+
+<!--{script}-->
+checkForm(SubmitFormCheckform);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<if condition="isset( $_GET['value'] )" >--><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->编辑文章类型<!--</lang>--><!--<else/>--><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->添加文章类型<!--</lang>--><!--</if>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<if condition="isset( $_GET['value'] )" >--><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->编辑文章类型<!--</lang>-->_<!--{$_GET['value']}--><!--<else/>--><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->添加文章类型<!--</lang>--><!--</if>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->文章归类可以方便我们以后检索<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<if condition="isset( $_GET['value'] )" >--><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->编辑文章类型<!--</lang>--><!--<else/>--><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->添加文章类型<!--</lang>--><!--</if>--></h3>
+				<ul class="tabs">
+					<li class="active"><a href="<!--{:Admin_Extend::base(array('controller'=>'homefreshcategory'))}-->"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->文章类型列表<!--</lang>--></a></li>
+					<li><a href="<!--{:Admin_Extend::base()}-->"><!--<lang package='Template'>-->应用入口<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="" method="post" id="homefreshcategoryAdd" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="homefreshcategory_sort"><!--<lang package='Template'>-->序号<!--</lang>--></label>
+						<input type="text" name="homefreshcategory_sort" id="homefreshcategory_sort" size="40" value="<!--<if condition="isset( $oValue ) && $oValue:homefreshcategory_sort">--><!--{$oValue:homefreshcategory_sort}--><!--<else/>-->0<!--</if>-->" class="{required:true,digits:true,min:0,max:999}"/>
+						<div class="description input_tips"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->文章类型序号，用于排列文章类型顺序<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="homefreshcategory_name"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->文章类型名<!--</lang>--></label>
+						<input type="text" name="homefreshcategory_name" id="homefreshcategory_name" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:homefreshcategory_name}--><!--</if>-->" class="{required:true}"/>
+						<div class="description input_tips"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->文章类型名必须，且最大长度为32个字符<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="hidden" name="ajax" value="1">
+						<input type="hidden" name="value" id="value" value="<!--<if condition="isset( $_GET['value'] )">--><!--{$_GET['value']}--><!--</if>-->"/>
+						<input type="submit" id="submit_button" value="" class="alt_btn">
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->">
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

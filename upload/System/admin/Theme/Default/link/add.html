@@ -1,0 +1,87 @@
+<!--<include file="public+header">-->
+
+<!--{script}-->
+checkForm(SubmitFormCheckform);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<if condition="empty( $nId )" >--><!--<lang package='Template'>-->添加链接<!--</lang>--><!--<else/>--><!--<lang package='Template'>-->编辑链接<!--</lang>--><!--</if>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<if condition="empty( $nId )" >--><!--<lang package='Template'>-->添加链接<!--</lang>--><!--<else/>--><!--<lang package='Template'>-->编辑链接<!--</lang>-->_<!--{$nId}--><!--</if>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->您可以在这里添加或编辑链接，链接名不能为空。<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->链接图像和URL地址均支持{*}风格值，其中*表示能够正确运行的PHP代码，如{Q::U('home://public/login')}<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->当采用{*}风格值的时候，如果*表示的PHP代码不能正常运行，前台将引发致命错误<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<if condition="empty( $nId )" >--><!--<lang package='Template'>-->添加链接<!--</lang>--><!--<else/>--><!--<lang package='Template'>-->编辑链接<!--</lang>--><!--</if>--></h3>
+				<ul class="tabs">
+					<li class="active"><a href="<!--{:Q::U('link/index')}-->"><!--<lang package='Template'>-->链接列表<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="" method="post" id="linkAdd" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="link_sort"><!--<lang package='Template'>-->序号<!--</lang>--></label>
+						<input type="text" name="link_sort" id="link_sort" size="40" value="<!--<if condition="isset( $oValue ) && $oValue:link_sort">--><!--{$oValue:link_sort}--><!--<else/>-->0<!--</if>-->" class="{required:true,digits:true,min:0,max:999}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->链接序号，用于排列链接顺序<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="link_name"><!--<lang package='Template'>-->链接名字<!--</lang>--></label>
+						<input type="text" name="link_name" id="link_name" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:link_name}--><!--</if>-->" class="{required:true}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->链接的名字，不能为空<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="link_status"><!--<lang package='Template'>-->状态<!--</lang>--></label>
+						<select class="field" name="link_status">
+							<option value="1" <!--<if condition="!isset( $oValue ) || ( isset( $oValue ) && $oValue:link_status==1)">-->selected<!--</if>-->><!--<lang package='Template'>-->启用<!--</lang>--></option>
+							<option value="0" <!--<if condition="isset( $oValue ) && $oValue:link_status==0">-->selected<!--</if>--> ><!--<lang package='Template'>-->禁用<!--</lang>--></option>
+							<option value="9" <!--<if condition="isset( $oValue ) && $oValue:link_status==9">-->selected<!--</if>-->><!--<lang package='Template'>-->回收站<!--</lang>--></option>
+						</select>
+						<div class="description"><!--<lang package='Template'>-->链接状态，决定链接是否在前台显示。<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="link_url"><!--<lang package='Template'>-->链接 URL<!--</lang>--></label>
+						<input type="text" name="link_url" id="link_url" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:link_url}--><!--</if>-->" class="{required:true}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->接的URL 地址，不能为空。<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="link_logo"><!--<lang package='Template'>-->链接 LOGO<!--</lang>--></label>
+						<input type="text" name="link_logo" id="link_logo" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:link_logo}--><!--</if>-->"/>
+						<div class="description">
+							<!--<lang package='Template'>-->链接的Logo 地址，可以为空。<!--</lang>-->
+							<!--{if isset( $oValue ) && $oValue['link_logo']}-->
+							<br/><img src="<!--{$oValue['link_logo']|Core_Extend+getEvalValue}-->" />
+							<!--{/if}-->
+						</div>
+					</fieldset>
+					<fieldset>
+						<label for="link_description"><!--<lang package='Template'>-->链接描述<!--</lang>--></label>
+						<input type="text" name="link_description" id="link_description" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:link_description}--><!--</if>-->"/>
+						<div class="description"><!--<lang package='Template'>-->对链接进行描述，出现在链接标题上。<!--</lang>--></div>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="hidden" name="ajax" value="1">
+						<input type="hidden" name="id" id="id" value="<!--<if condition="isset( $nId )">--><!--{$nId}--><!--</if>-->"/>
+						<input type="submit" id="submit_button" value="" class="alt_btn">
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->">
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

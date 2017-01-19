@@ -1,0 +1,114 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{:Core_Extend::emotion()}-->
+<!--{:Core_Extend::validate()}-->
+
+<!--{script}-->
+var nHomefreshviewcomment=1;
+var nDisplayCommentSeccode=0;
+<!--{/script}-->
+
+<script src="<!--{:__PUBLIC__}-->/js/jquery/jquery.insertcontent.js"></script>
+<script src="<!--{:__PUBLIC__}-->/js/jquery/autoresize/jquery.autoresize.js"></script>
+<script src="<!--{:__APPPUB__}-->/Js/comment.js"></script>
+<script src="<!--{:__APPPUB__}-->/Js/homefresh.js"></script>
+
+<!--{script}-->
+$(function(){
+	$('.homefreshcomment_content,.homefreshcomment-content,.homefresh-content').emotionsToHtml();
+	
+	$('#homefreshcomment_content').autoResize({
+		onResize:function(){
+			$(this).css({opacity:0.8});
+		},
+		animateCallback:function(){
+			$(this).css({opacity:1});
+		},
+		animateDuration:300,
+		extraSpace:0,
+		min:'100px'
+	});
+
+	$(".face-icon").jqfaceedit({txtAreaObj:$("#homefreshcomment_content"),textareaid:'homefreshcomment_content',containerObj:$('#emotion_parentcontainer'),top:25,left:-27});
+});
+
+function showEmotion(){
+	$(".face-icon").jqfaceedit({txtAreaObj:$("#homefreshcomment_content"),textareaid:'homefreshcomment_content',containerObj:$('#emotion_parentcontainer'),top:25,left:-27});
+}
+
+sCurrentTextareaContent='homefreshcomment_content';
+
+checkForm(commentSubmit);
+<!--{/script}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('home://ucenter/index')}-->"><!--<lang package='Template'>-->个人中心<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->新鲜事<!--</lang>--></li>
+		</ul>
+	</div>
+		
+	<div class="container_12 container_box">
+		<div class="grid_12">
+			<div class="message-box">
+				<!--<if condition="Q+G('page') lt 2">-->
+				<div class="homefresh-header">
+					<a href="<!--{:Q::U('home://space@?id='.$arrHomefresh['user_id'])}-->" class="homefresh-author-avatar">
+						<img src="<!--{:Core_Extend::avatar($arrHomefresh['user_id'],'middle')}-->" class="thumbnail" width="80px" height="80px"/>
+					</a>
+					<ul>
+						<li>
+							<h3><!--{$arrHomefresh['homefresh_title']}--><!--{:Core_Extend::newData($arrHomefresh['create_dateline'],true)}--></h3>
+						</li>
+						<li><!--{$arrHomefresh['user_id']|Core_Extend+getUsericon}-->&nbsp;<a href="<!--{:Q::U('home://space@?id='.$arrHomefresh['user_id'])}-->"><!--{$arrHomefresh['user_name']}--></a>&nbsp;<!--<lang package='Template'>-->于<!--</lang>--><span class="homefresh-time"><!--{$arrHomefresh['create_dateline']|Core_Extend+timeFormat}--></span><!--<lang package='__COMMON_LANG__@Common'>-->发布<!--</lang>-->&nbsp;<span class="pipe">|</span>&nbsp;
+						<!--<lang package='Template'>-->已被阅读<!--</lang>-->&nbsp;<span><!--{$arrHomefresh['homefresh_viewnum']}--></span>&nbsp;<!--<lang package='Template'>-->次<!--</lang>-->
+						</li>
+						<li>
+							<!--<lang package='Template'>-->积分等级<!--</lang>-->&nbsp;<a href="<!--{:Q::U('home://space@?id='.$arrHomefresh['user_id'].'&type=rating')}-->" ><!--{$arrRatinginfo['rating_name']}--></a>
+							<span class="userrating_tips" tips="<!--<lang package='__COMMON_LANG__@Common'>-->当前积分<!--</lang>-->&nbsp;<!--{arrHomefresh['usercount_extendcredit1']}-->,<!--<lang package='__COMMON_LANG__@Common'>-->等级名字<!--</lang>-->&nbsp;<!--{$arrRatinginfo['rating_name']}-->,<!--<lang package='__COMMON_LANG__@Common'>-->距离下一个等级<!--</lang>-->&nbsp;<!--{$arrRatinginfo['next_rating']['rating_name']}-->&nbsp;<!--<lang package='__COMMON_LANG__@Common'>-->还差<!--</lang>-->&nbsp;<!--{$arrRatinginfo['next_needscore']}-->&nbsp;<!--<lang package='__COMMON_LANG__@Common'>-->积分<!--</lang>-->"><img src="<!--{$arrRatinginfo['rating_icon']}-->" style="position:relative;top:-2px;" />
+							</span>
+							<!--{if !empty($arrHomefresh['homefreshcategory_name'])}-->
+							&nbsp;<span class="pipe">|</span>&nbsp;
+							<a href="<!--{:Q::U('home://list@?page=[page:1]&cid='.$arrHomefresh['homefreshcategory_id'])}-->"><!--{$arrHomefresh['homefreshcategory_name']}--></a>
+							<!--{/if}-->
+							<!--{if Home_Extend+checkHomefreshedit($arrHomefresh)}-->
+							&nbsp;<span class="pipe">|</span>&nbsp;
+							<a href="<!--{:Q::U('home://ucenter/edit?id='.$arrHomefresh['homefresh_id'])}-->" class="Sys-special_color_deep">[<!--<lang package='Template'>-->编辑<!--</lang>-->]</a>
+							<!--{/if}-->
+						</li>
+					</ul>
+				</div>
+				
+				<article>
+					<div class="homefresh-content" style="background:none;margin-bottom:15px;">
+						<!--{if $sHomefreshAttribute}-->
+						<div class="homefresh-attribute"><!--{$sHomefreshAttribute}--></div>
+						<!--{/if}-->
+						<!--{if $arrHomefresh['homefresh_thumb']}-->
+						<div class="homefresh-thumb"><img src="<!--{:Attachment_Extend::getPrefix()}--><!--{$arrHomefresh['homefresh_thumb']}-->" class="need_lazyload" /></div>
+						<!--{/if}-->
+						<!--{$arrHomefresh['homefresh_message']|Core_Extend+ubb}-->
+					</div>
+				</article>
+				<!--<if condition="$arrHomefresh['user_sign']">-->
+				<div class="common_usersign">
+					<!--{$arrHomefresh['user_sign']|Core_Extend+usersign}-->
+				</div>
+				<!--</if>-->
+				<div class="common_share">
+					<!--{:Core_Extend::share()}-->
+				</div>
+				<!--</if>-->
+				<div class="clearfix"></div>
+
+				<!--{# 评论列表}-->
+				<!--<include file="homefresh+commentlist" />-->
+
+				<!--{# 评论表单}-->
+				<!--<include file="homefresh+commentform" />-->
+			</div>
+		</div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

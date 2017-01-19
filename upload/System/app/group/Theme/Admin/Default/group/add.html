@@ -1,0 +1,194 @@
+<!--<include file="public+header">-->
+
+<!--{:Core_Extend::editorInclude()}-->
+<!--{:Core_Extend::emotion()}-->
+
+<script type="text/javascript" src="<!--{:__PUBLIC__}-->/js/bigcolorpicker/js/jquery.bigcolorpicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="<!--{:__PUBLIC__}-->/js/bigcolorpicker/css/jquery.bigcolorpicker.css"/>
+
+<!--{script}-->
+$(function(){
+	editor=loadEditor('group_description');
+	$(".face-icon").jqfaceedit({txtAreaObj:editor,containerObj:$('#emotion_parentcontainer'),top:25,left:-27});
+	$("img[f='color-img']").bigColorpicker(function(el,color){
+		var id=$(el).attr("data-target");
+		$("#"+id).val(color);
+		$("#"+id).css({"color":color});
+	});
+});
+
+currentBeforeFun=function(){
+	$('#group_description').val(editor.html());
+};
+
+<!--{if $_GET['action']=='add'}-->
+currentAfterFun=function(data,status){
+	setTimeout(function(){window.location.href=Q.U('app/config?controller=group&action=edit&id=<!--{$_GET['id']}-->&value='+data.group_id);},1000);
+};
+<!--{/if}-->
+
+checkForm(SubmitFormCheckform);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<if condition="isset( $_GET['value'] )">--><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->编辑群组<!--</lang>--><!--<else/>--><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->添加群组<!--</lang>--><!--</if>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<if condition="isset( $_GET['value'] )">--><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->编辑群组<!--</lang>-->_<!--{$_GET['value']}--><!--<else/>--><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->添加群组<!--</lang>--><!--</if>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->添加群组的时候可以为群组指定一个分类<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<if condition="isset( $_GET['value'] )">--><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->编辑群组<!--</lang>--><!--<else/>--><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->添加群组<!--</lang>--><!--</if>--></h3>
+				<ul class="tabs">
+					<!--{if isset( $oValue )}-->
+					<li><a href="<!--{:Admin_Extend::base(array('controller'=>'group','action'=>'headerbg','value'=>$oValue['group_id']))}-->"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->群组头部背景<!--</lang>--></a></li>
+					<li><a href="<!--{:Admin_Extend::base(array('controller'=>'group','action'=>'icon','value'=>$oValue['group_id']))}-->"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->群组图标<!--</lang>--></a></li>
+					<li><a href="<!--{:Admin_Extend::base(array('controller'=>'group','action'=>'groupcategory','value'=>$oValue['group_id']))}-->"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->群组分类<!--</lang>--></a></li>
+					<li><a href="<!--{:Admin_Extend::base(array('controller'=>'group','action'=>'topiccategory','value'=>$oValue['group_id']))}-->"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->帖子分类<!--</lang>--></a></li>
+					<li><a href="<!--{:Admin_Extend::base(array('controller'=>'group','action'=>'user','value'=>$oValue['group_id']))}-->"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->用户列表<!--</lang>--></a></li>
+					<!--{/if}-->
+					<li class="active"><a href="<!--{:Admin_Extend::index(array('controller'=>'group'))}-->"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->群组列表<!--</lang>--></a></li>
+					<li><a href="<!--{:Admin_Extend::base()}-->"><!--<lang package='Template'>-->应用入口<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="" method="post" id="groupAdd" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="group_nikename"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组别名<!--</lang>--></label>
+						<input type="text" name="group_nikename" id="group_nikename" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:group_nikename}--><!--</if>-->" class="{required:true}"/>
+						<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->群组别名是相对于小组名的一种昵称，且最大长度为32个字符<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="group_name"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组名字<!--</lang>--></label>
+						<input type="text" name="group_name" id="group_name" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:group_name}--><!--</if>-->" class="{required:true,stringCheckTwo:true,remote:'<!--{:Admin_Extend::base(array('controller'=>'group','action'=>'check_name'),isset( $oValue )?'value='.$oValue['group_id']:'')}-->',messages:{remote:'<!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组名字重复<!--</lang>-->'}}"/>
+						<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组名字只能是由英文，数字和下划线组成，且最大长度为32个字符<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="group_color"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组标题颜色<!--</lang>--></label>
+						<p><input class="left" type="text" name="group_color" id="group_color" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:group_color}--><!--</if>-->" style="color:<!--<if condition="isset( $oValue )">--><!--{$oValue:group_color}--><!--</if>-->"/>
+							<img src='<!--{:__PUBLIC__}-->/images/common/ico_color.gif' align='absmiddle' border='0' f="color-img" data-target="group_color"/>
+						</p>
+						<div class="description"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->突出显示某些小组，高亮<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="group_listdescription"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组列表简介<!--</lang>--></label>
+						<input type="text" name="group_listdescription" id="group_listdescription" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:group_listdescription}--><!--</if>-->" class="{required:true}"/>
+						<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组列表简介是小组列表一个简短的介绍，且最大长度为300个字符<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<!--{if !isset( $oValue )}-->
+					<fieldset>
+						<label for="groupcategory_id"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组分类<!--</lang>--></label>
+						<select name="groupcategory_id" id="groupcategory_id" >
+							<option value="0">- <!--<lang package='Template'>-->未分类<!--</lang>--> -</option>
+							<!--{~$arrGroupcategory=$oGroupcategoryTree->getChilds()}-->
+							<!--<foreach for=arrGroupcategory value=nCId>-->
+							<option value="<!--{$nCId}-->">|<!--{$oGroupcategoryTree:getLayer( $nCId, '--' )}--><!--{$oGroupcategoryTree:getValue( $nCId )}--></option>
+							<!--</foreach>-->
+						</select>
+						<div class="description"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组的分类，方便管理<!--</lang>--></div>
+					</fieldset>
+					<!--{/if}-->
+					<fieldset>
+						<label for="group_description"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组简介<!--</lang>--></label>
+						<div id="grouptopiccommentcontent-media-box" class="common-media-box">
+							<a href="javascript:void(0);" class="face-icon icon_add_face" ><!--<lang package='Template'>-->表情<!--</lang>--></a> 
+							<a href="javascript:void(0);" onclick="globalAddattachment('insertAttachment_');" class="icon_add_img"><!--<lang package='Template'>-->媒体<!--</lang>--></a>
+							<a href="javascript:void(0);" onclick="addVideo('insertVideo_');" class="icon_add_video" ><!--<lang package='Template'>-->视频<!--</lang>--></a>
+							<a href="javascript:void(0);" onclick="addMusic('insertMusic_');" class="icon_add_music"><!--<lang package='Template'>-->音乐<!--</lang>--></a>
+						</div>
+						<p id="emotion_parentcontainer">
+							<textarea name="group_description" id="group_description" style="width:750px;height:300px;visibility:hidden;"><!--<if condition="isset( $oValue )">--><!--{$oValue:group_description|htmlspecialchars}--><!--</if>--></textarea>
+						</p>
+						<div class="description"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->详细的小组简介可以让人更好地了解小组的功能<!--</lang>-->&nbsp;<a href="<!--{:Core_Extend::windsforceOuter('app=home&c=misc&a=ubb')}-->" target="_blank"><!--<lang package='__COMMON_LANG__@Common'>-->查看内容支持的UBB代码<!--</lang>--></a></div>
+					</fieldset>
+					<!--{if isset( $oValue )}-->
+					<fieldset>
+						<label for="group_joinway"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->加入方式<!--</lang>--></label>
+						<input <!--{if $oValue['group_joinway']==0}-->checked="select"<!--{/if}--> name="group_joinway" type="radio" class="input-short" value="0" /><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->自由加入<!--</lang>-->
+						<input <!--{if $oValue['group_joinway']==1}-->checked="select"<!--{/if}--> name="group_joinway" type="radio" class="input-short" value="1" /><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->禁止加入<!--</lang>-->
+						<div class="description"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->群组一旦设置为禁止加入，那么将无法加入会员<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="group_ispost"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->发帖方式<!--</lang>--></label>
+						<input <!--{if $oValue['group_ispost']==0}-->checked="select"<!--{/if}--> type="radio" class="input-short" name="group_ispost" value="0" /><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->允许会员发帖<!--</lang>-->
+						<input <!--{if $oValue['group_ispost']==1}-->checked="select"<!--{/if}--> type="radio" class="input-short" name="group_ispost" value="1" /><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->不允许会员发帖<!--</lang>-->
+						<input <!--{if $oValue['group_ispost']==2}-->checked="select"<!--{/if}--> type="radio" class="input-short" name="group_ispost" value="2" /><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->自由发帖<!--</lang>-->
+						<div class="description"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->如果发贴方式设置为自由发贴，那么不用加入小组也可以发贴<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="group_isopen"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->浏览权限<!--</lang>--></label>
+						<input <!--{if $oValue['group_isopen']==1}-->checked="select"<!--{/if}--> name="group_isopen" type="radio" class="input-short" value="1" /><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->完全开放<!--</lang>-->
+						<input <!--{if $oValue['group_isopen']==0}-->checked="select"<!--{/if}--> name="group_isopen" type="radio" class="input-short" value="0" /><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->仅组员<!--</lang>-->
+						<div class="description"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->开启浏览权限后，只有组员才能够访问<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="group_audittopic"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->发布帖子是否审核<!--</lang>--></label>
+						<input <!--{if $oValue['group_audittopic']==1}-->checked="select"<!--{/if}--> name="group_audittopic" type="radio" class="input-short" value="1" /><!--<lang package='Template'>-->是<!--</lang>-->
+						<input <!--{if $oValue['group_audittopic']==0}-->checked="select"<!--{/if}--> name="group_audittopic" type="radio" class="input-short" value="0" /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->发贴审核的话，只有通过管理人员审核后才能够看到帖子<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="group_auditcomment"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->发布回帖是否审核<!--</lang>--></label>
+						<input <!--{if $oValue['group_auditcomment']==1}-->checked="select"<!--{/if}--> name="group_auditcomment" type="radio" class="input-short" value="1" /><!--<lang package='Template'>-->是<!--</lang>-->
+						<input <!--{if $oValue['group_auditcomment']==0}-->checked="select"<!--{/if}--> name="group_auditcomment" type="radio" class="input-short" value="0" /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->回帖审核的话，只有通过管理人员审核后才能够看到回帖<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="group_roleleader"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->组长<!--</lang>--></label>
+						<input type="text" name="group_roleleader" id="group_roleleader" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:group_roleleader}--><!--</if>-->" class="{required:true}"/>
+						<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->自定义角色组长名字<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="group_roleadmin"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->管理员<!--</lang>--></label>
+						<input type="text" name="group_roleadmin" id="group_roleadmin" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:group_roleadmin}--><!--</if>-->" class="{required:true}"/>
+						<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->自定义角色管理员名字<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="group_roleuser"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->成员<!--</lang>--></label>
+						<input type="text" name="group_roleuser" id="group_roleuser" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:group_roleuser}--><!--</if>-->" class="{required:true}"/>
+						<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->自定义角色成员名字<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="group_isrecommend"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->是否推荐<!--</lang>--></label>
+						<select class="field" name="group_isrecommend" id="group_isrecommend">
+							<option value="1" <!--<if condition="isset( $oValue ) && $oValue:group_isrecommend==1">-->selected<!--</if>-->><!--<lang package='Template'>-->是<!--</lang>--></option>
+							<option value="0" <!--<if condition="!isset( $oValue ) || ( isset( $oValue ) && $oValue:group_isrecommend==0)">-->selected<!--</if>--> ><!--<lang package='Template'>-->否<!--</lang>--></option>
+						</select>
+					</fieldset>
+					<!--{/if}-->
+					<fieldset>
+						<label for="group_status"><!--<lang package='Template'>-->状态<!--</lang>--></label>
+						<select class="field" name="group_status" id="group_status">
+							<option value="1" <!--<if condition="!isset( $oValue ) || ( isset( $oValue ) && $oValue:group_status==1)">-->selected<!--</if>-->><!--<lang package='Template'>-->启用<!--</lang>--></option>
+							<option value="0" <!--<if condition="isset( $oValue ) && $oValue:group_status==0">-->selected<!--</if>--> ><!--<lang package='Template'>-->禁用<!--</lang>--></option>
+							<option value="9" <!--<if condition="isset( $oValue ) && $oValue:group_status==9">-->selected<!--</if>-->><!--<lang package='Template'>-->回收站<!--</lang>--></option>
+						</select>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="hidden" name="ajax" value="1">
+						<input type="hidden" name="value" id="value" value="<!--<if condition="isset( $_GET['value'] )">--><!--{$_GET['value']}--><!--</if>-->"/>
+						<input type="submit" id="submit_button" value="" class="alt_btn">
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->">
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

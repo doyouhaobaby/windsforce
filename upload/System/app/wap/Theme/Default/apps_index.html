@@ -1,0 +1,14 @@
+<!--<include file="header">-->
+
+	<div id="content">
+		<div class="apps_box">
+			<!--<foreach for=arrAppinfos value=arrAppinfo>-->
+			<a href="<!--{:Q::U($arrAppinfo['app_identifier'].'://wap/index')}-->"><!--{$arrAppinfo['app_name']}--></a>
+			<!--{if count($arrAppinfos)!=$i}-->
+			<span class="pipe">|</span>
+			<!--{/if}-->
+			<!--</foreach>-->
+		</div>
+	</div>
+
+<!--<include file="footer">-->

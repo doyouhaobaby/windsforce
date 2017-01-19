@@ -1,0 +1,120 @@
+<!--<include file="public+header">-->
+
+<!--{script}-->
+function deleteGroupuser(nGroupid,nUserid){
+	windsforceConfirm(Q.L('确实要永久删除选择项吗？','Common'),function(){
+		Q.AjaxSend('<!--{:Admin_Extend::base(array('controller'=>'group','action'=>'delete_groupuser'))}-->','gid='+nGroupid+'&uid='+nUserid+'&ajax=1','',completeDelete);
+	});
+}
+
+function completeDelete(data,status){
+	if(status==1){
+		setTimeout("window.location.replace(_SELF_);",1000);
+	}
+}
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->群组用户<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->群组用户<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->在这里我们可以管理小组的用户，包括设置小组的创始人和管理员等等<!--</lang>--></li>
+					<li><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->注意，一个用户在一个小组里面只能拥有一种身份，小组组长，管理员或者会员<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->群组用户<!--</lang>--></h3>
+				<ul class="tabs">
+					<li class="active"><a href="<!--{:Admin_Extend::base(array('controller'=>'group','action'=>'user','value'=>$oGroup['group_id']))}-->"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->群组用户<!--</lang>--></a></li>
+					<li><a href="<!--{:Admin_Extend::base(array('controller'=>'group','action'=>'edit','value'=>$oGroup['group_id']))}-->"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->返回群组<!--</lang>--></a></li>
+					<li><a href="<!--{:Admin_Extend::index(array('controller'=>'group'))}-->"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->群组列表<!--</lang>--></a></li>
+					<li><a href="<!--{:Admin_Extend::base()}-->"><!--<lang package='Template'>-->应用入口<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form enctype="multipart/form-data" action="<!--{:Admin_Extend::base(array('controller'=>'group','action'=>'user_add'))}-->" method="post" id="groupIcon">
+				<div class="module_content">
+					<fieldset>
+						<label for="leader_userid"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组组长<!--</lang>--></label>
+						<input type="text" name="leader_userid" id="leader_userid" size="40" value="<!--{$sGroupleader}-->"/>
+						<div class="description"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->这里为小组的组长，例如1,2,3表示用户ID为1,2,3三个用户为本小组的组长<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<div style="padding:10px 15px;">
+							<!--{if !empty($arrGroupleaders)}-->
+							<!--<foreach for=arrGroupleaders value=arrGroupleader>-->
+							<div class="left user_box"><img src="<!--{:Core_Extend::avatar( $arrGroupleader['user_id'],'small' )}-->" width="48px" height="48px" title="<!--{$arrGroupleader['user_name']}-->"/>
+								<br/>
+								<a href="<!--{:Core_Extend::windsforceOuter('app=home&c=space&a=index&id='.$arrGroupleader['user_id'])}-->" target="_blank" title="<!--{$arrGroupleader['user_name']}-->"><!--{$arrGroupleader['user_name']|C+subString=0,3}--></a>&nbsp;(<!--{$arrGroupleader['user_id']}-->)<br/>
+								<a href="javascript:void(0);" onclick="deleteGroupuser('<!--{$arrGroupleader['group_id']}-->','<!--{$arrGroupleader['user_id']}-->');"><!--<lang package='Template'>-->删除<!--</lang>--></a>
+							</div>
+							<!--</foreach>-->
+							<!--{d*else}-->
+							<!--<lang package='Template'>-->暂时没有发现任何记录<!--</lang>-->
+							<!--{/if}-->
+						</div>
+					</fieldset>
+					<fieldset>
+						<label for="admin_userid"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组管理员<!--</lang>--></label>
+						<input type="text" name="admin_userid" id="admin_userid" size="40" value="<!--{$sGroupadmin}-->"/>
+						<div class="description"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->这里为小组的管理员，设置跟上面的小组组长一样<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<div style="padding:10px 15px;">
+							<!--{if !empty($arrGroupadmins)}-->
+							<!--<foreach for=arrGroupadmins value=arrGroupadmin>-->
+							<div class="left user_box"><img src="<!--{:Core_Extend::avatar( $arrGroupadmin['user_id'],'small' )}-->" width="48px" height="48px" title="<!--{$arrGroupadmin['user_name']}-->"/>
+								<br/>
+								<a href="<!--{:Core_Extend::windsforceOuter('app=home&c=space&a=index&id='.$arrGroupadmin['user_id'])}-->" target="_blank" title="<!--{$arrGroupadmin['user_name']}-->"><!--{$arrGroupadmin['user_name']|C+subString=0,3}--></a>&nbsp;(<!--{$arrGroupadmin['user_id']}-->)<br/>
+								<a href="javascript:void(0);" onclick="deleteGroupuser('<!--{$arrGroupadmin['group_id']}-->','<!--{$arrGroupadmin['user_id']}-->');"><!--<lang package='Template'>-->删除<!--</lang>--></a>
+							</div>
+							<!--</foreach>-->
+							<!--{d*else}-->
+							<!--<lang package='Template'>-->暂时没有发现任何记录<!--</lang>-->
+							<!--{/if}-->
+						</div>
+					</fieldset>
+					<fieldset>
+						<label for="admin_userid"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组会员<!--</lang>--></label>
+						<input type="text" name="user_userid" id="user_userid" size="40" value=""/>
+						<div class="description"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->这里为小组的会员员，注意，这里仅仅为添加新会员<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<div style="padding:10px 15px;">
+							<!--{if !empty($arrGroupusers)}-->
+							<!--<foreach for=arrGroupusers value=arrGroupuser>-->
+							<div class="left user_box"><img src="<!--{:Core_Extend::avatar( $arrGroupuser['user_id'],'small' )}-->" width="48px" height="48px" title="<!--{$arrGroupuser['user_name']}-->"/>
+								<br/>
+								<a href="<!--{:Core_Extend::windsforceOuter('app=home&c=space&a=index&id='.$arrGroupuser['user_id'])}-->" target="_blank" title="<!--{$arrGroupuser['user_name']}-->"><!--{$arrGroupuser['user_name']|C+subString=0,3}--></a>&nbsp;(<!--{$arrGroupuser['user_id']}-->)<br/>
+								<a href="javascript:void(0);" onclick="deleteGroupuser('<!--{$arrGroupuser['group_id']}-->','<!--{$arrGroupuser['user_id']}-->');"><!--<lang package='Template'>-->删除<!--</lang>--></a>
+							</div>
+							<!--</foreach>-->
+							<!--{d*else}-->
+							<!--<lang package='Template'>-->暂时没有发现任何记录<!--</lang>-->
+							<!--{/if}-->
+							
+							<div style="padding:10px 0px;" class="clear">
+								<!--{$sPageNavbar}-->
+							</div>
+						</div>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="hidden" name="value" id="value" value="<!--{$oGroup['group_id']}-->"/>
+						<input type="submit"  value="<!--<lang package='Template'>-->发布<!--</lang>-->" class="alt_btn">
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->">
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

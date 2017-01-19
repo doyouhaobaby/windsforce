@@ -1,0 +1,297 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{:Core_Extend::validate()}-->
+
+<!--{script}-->
+var nDisplaySeccode='<!--{$nDisplaySeccode}-->';
+
+function setGrouptopicstyle(nStyle){
+	Q.AjaxSend(Q.U('group://grouptopic/set_grouptopicstyle?style='+nStyle),'','',completeSet);
+}
+
+function completeSet(data,status){
+	if(status==1){
+		setTimeout("window.location.replace(_SELF_);",1000);
+	}
+}
+
+function grouptopicComment(nTid,nCid){
+	oCommentNewtopics=windsforceAjax(Q.U('group://grouptopic/commenttopic_dialog?tid='+nTid+(nCid?'&cid='+nCid:'')),'<!--<lang package='Template'>-->参与/回复帖子<!--</lang>-->','',completeCommenttopic,'',700,100);
+}
+
+function completeCommenttopic(data,status){
+	if(addGrouptopiccomment()==false){
+		return false;
+	}
+
+	if(status==1){
+		setTimeout(function(){window.location.href=data.url;},1000);
+	}
+
+	return true;
+}
+
+function grouptopiceditComment(nCid){
+	oEditcommentNewtopics=windsforceAjax(Q.U('group://grouptopic/editcommenttopic_dialog?cid='+nCid),'<!--<lang package='Template'>-->编辑帖子<!--</lang>-->','',completeEditcommenttopic,'',700,100);
+}
+
+function completeEditcommenttopic(data,status){
+	if(addGrouptopiccomment()==false){
+		return false;
+	}
+
+	if(status==1){
+		setTimeout(function(){window.location.href=data.url;},1000);
+	}
+
+	return true;
+}
+
+function notWork(){
+	windsforceAlert('This is a Bug !');
+	return false;
+}
+<!--{/script}-->
+
+<!--{if Groupadmin_Extend+checkCommentadminRbac($arrGrouptopic) || Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic) || Groupadmin_Extend+checkTopicmove()}-->
+<script src="<!--{:__APPPUB__}-->/Js/moderator.js"></script>
+<script type="text/javascript" src="<!--{:__PUBLIC__}-->/js/calendar/datepicker/WdatePicker.js"></script>
+<!--{/if}-->
+
+<script src="<!--{:__PUBLIC__}-->/js/jquery/autoresize/jquery.autoresize.js"></script>
+
+<!--{:Core_Extend::editorInclude()}-->
+<!--{:Core_Extend::emotion()}-->
+
+<!--{script}-->
+$(function(){
+	<!--{if $GLOBALS['___login___']!==false && $arrGrouptopic['grouptopic_iscomment']==1 && $arrGrouptopic['grouptopic_isclose']=='0'}-->
+	editorSimple=loadEditorThin('simple_grouptopiccomment_message');
+	$(".face-icon").jqfaceedit({txtAreaObj:editorSimple,containerObj:$('#emotion_parentcontainer'),top:25,left:-27});
+
+	$('.grouptopiccomment_quickmessage').autoResize({
+		onResize:function(){
+			$(this).css({opacity:0.8});
+		},
+		animateCallback:function(){
+			$(this).css({opacity:1});
+		},
+		animateDuration:300,
+		extraSpace:0,
+		min:'80px'
+	});
+	<!--{/if}-->
+	
+	$("#grouptopiccomment_quickmessage").focus(function(){
+		$("#grouptopiccomment_reply").css("display","block");
+	});
+
+	$('.grouptopiccontent_box').emotionsToHtml();
+});
+
+function closeQuickreplay(){
+	$("#grouptopiccomment_reply").css("display","none");
+}
+
+function addGrouptopiccommentquick(){
+	var sCommentMessage=$("#grouptopiccomment_quickmessage").val();
+	var sCommentName=$("#grouptopiccomment_quickname").val();
+	var sCommentSeccode=$("#grouptopiccomment_seccode").val();
+
+	if(nDisplaySeccode==1){
+		var seccode=$('#grouptopiccomment_seccode').val();
+		if(!seccode){
+			windsforceAlert(Q.L('验证码不能为空','Common'),Q.L('评论发生错误','Common'),3);
+			return false;
+		}
+
+		if(windsforceAjaxhtml(Q.U('home://public/validate_seccode?seccode='+encodeURIComponent(seccode)),-1)=='false'){
+			windsforceAlert(Q.L('验证码错误','Common'),Q.L('评论发生错误','Common'),3);
+			return false;
+		}
+	}
+	
+	if(!sCommentMessage){
+		windsforceAlert('<!--<lang package='Template'>-->回复内容不能为空<!--</lang>-->','',3);
+		return false;
+	}
+
+	$("#grouptopiccommentquick_button").attr("disabled", "disabled");
+	$("#grouptopiccommentquick_button").val( '<!--<lang package='Template'>-->回复<!--</lang>-->...' );
+
+	var sParameter="ajax=1&grouptopiccomment_message="+encodeURIComponent(sCommentMessage)+"&tid="+<!--{$arrGrouptopic['grouptopic_id']}-->+'&grouptopiccomment_name='+encodeURIComponent(sCommentName)+'&seccode='+encodeURIComponent(sCommentSeccode);
+
+	Q.AjaxSend('<!--{:Q::U('group://grouptopic/add_reply')}-->',sParameter,'',function(data,status){
+		$("#grouptopiccommentquick_button").attr("disabled", false);
+		$("#grouptopiccommentquick_button").val( '<!--<lang package='Template'>-->回复<!--</lang>-->' );
+		if(status==1){
+			setTimeout(function(){window.location.href=data.url;},1000);
+		}
+	});
+}
+
+function addGrouptopiccommentSimple(){
+	sGrouptopiccommentmessage=$.trim(editorSimple.html());
+	$('#simple_grouptopiccomment_message').val(sGrouptopiccommentmessage);
+
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( '<!--<lang package='Template'>-->发布<!--</lang>-->...' );
+
+	if(!sGrouptopiccommentmessage){
+		windsforceAlert('<!--<lang package='Template'>-->回复内容不能为空<!--</lang>-->','',3);
+		$("#submit_button").attr("disabled", false);
+		$("#submit_button").val( '<!--<lang package='Template'>-->发布<!--</lang>-->' );
+		return false;
+	}
+
+	$('#simple_comment').val('1');
+
+	Q.AjaxSubmit("grouptopiccomment_form",'<!--{:Q::U('group://grouptopic/add_reply')}-->','',function(data,status){
+		$('#simple_comment').val('0');
+		$("#submit_button").attr("disabled", false);
+		$("#submit_button").val( '<!--<lang package='Template'>-->发布<!--</lang>-->' );
+		if(status==1){
+			setTimeout(function(){window.location.href=data.url;},1000);
+		}
+	});
+}
+
+function insertGrouptopicattachmentSimple(nAttachmentid){
+	insertAttachment(editorSimple,nAttachmentid);
+}
+
+function insertGrouptopicvideoSimple(sContent){
+	insertVideo(editorSimple,sContent);
+}
+
+function insertGrouptopicmusicSimple(sContent){
+	insertMusic(editorSimple,sContent);
+}
+
+function readTopic(nId){
+	var sUrl=Q.U('group://grouptopic/readtopic?id='+nId);
+	var sHtml='<iframe id="iframedialog_readtopic" name="iframedialog_readtopic" frameborder="0" style="margin: 0;width: 700px; height: 500px;overflow-x:hidden;margin:0;padding:0;" src="'+sUrl+'"></iframe>';
+	windsforceAlert(sHtml,'<!--<lang package='Template'>-->阅读模式<!--</lang>-->','','','',700,500,1);
+}
+
+function topicLove(nId){
+	oLovetopics=windsforceAjax(Q.U('group://grouptopic/love?id='+nId),'<!--<lang package='Template'>-->喜欢帖子<!--</lang>-->','',completeLovetopic,'',400,100);
+}
+
+function completeLovetopic(){
+	Q.AjaxSubmit("topicloveform",'<!--{:Q::U('group://grouptopic/love_add')}-->','result',function(data,status){
+		if(status==1){
+			setTimeout("window.location.replace(_SELF_);",1000);
+			return true;
+		}
+	});
+	
+	return false;
+}
+
+checkForm(addGrouptopiccommentSimple);
+
+var nGroupid=parseInt('<!--{$arrGrouptopic['group_id']}-->'),nGrouptopicid=parseInt('<!--{$arrGrouptopic['grouptopic_id']}-->');
+<!--{/script}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('group://public/index')}-->" title="<!--<lang package='Template'>-->小组<!--</lang>-->"><!--<lang package='Template'>-->小组<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Group_Extend::getGroupurl($arrGrouptopic)}-->"><!--{$arrGrouptopic['group_nikename']}--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->查看帖子<!--</lang>--></li>
+		</ul>
+	</div>
+
+<!--{if Groupadmin_Extend+checkCommentadminRbac($arrGrouptopic)}-->
+<form method="post" autocomplete="off" name="modActionsBox" id="modActionsBox">
+</form>
+
+<div id="modActionSelect" class="commonbox_mini commonbox_mini_gray" style="display:none;z-index:350;">
+	<h2 class="title"><!--<lang package='Template'>-->选中<!--</lang>-->&nbsp;<strong id="modActionSelectnum"></strong>&nbsp;<!--<lang package='Template'>-->篇<!--</lang>--></h2>
+	<div class="modActionSelectcontent">
+		<!--{if Groupadmin_Extend+checkCommentadminRbac($arrGrouptopic,array('group@grouptopicadmin@auditcomment'))}-->
+		<a href="javascript:void(0);" onclick="modCommentaudit();"><!--<lang package='Template'>-->审核<!--</lang>--></a>
+		<span class="pipe">|</span>
+		<!--{/if}-->
+		<!--{if Groupadmin_Extend+checkCommentadminRbac($arrGrouptopic,array('group@grouptopicadmin@hidecomment'))}-->
+		<a href="javascript:void(0);" onclick="modCommenthide();"><!--<lang package='Template'>-->屏蔽<!--</lang>--></a>
+		<span class="pipe">|</span>
+		<!--{/if}-->
+		<!--{if Groupadmin_Extend+checkCommentadminRbac($arrGrouptopic,array('group@grouptopicadmin@deletecomment'))}-->
+		<a href="javascript:void(0);" onclick="modCommentdelete();"><!--<lang package='Template'>-->删除<!--</lang>--></a>
+		<span class="pipe">|</span>
+		<!--{/if}-->
+		<!--{if Groupadmin_Extend+checkCommentadminRbac($arrGrouptopic,array('group@grouptopicadmin@stickreplycomment'))}-->
+		<a href="javascript:void(0);" onclick="modCommentstickreply();"><!--<lang package='Template'>-->置顶<!--</lang>--></a>
+		<!--{/if}-->
+	</div>
+</div>
+<!--{/if}-->
+
+	<div class="container_12 container_box">
+		<!--<include file="group+header" />-->
+			
+		<!--{if Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic) || Groupadmin_Extend+checkTopicmove()}-->
+		<div class="grid_12">
+			<div style="margin-bottom:15px;">
+				<!--{if Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic,array('group@grouptopicadmin@deletetopic'))}-->
+				<a onclick="modTopicdelete();" href="javascript:void(0);"><!--<lang package='Template'>-->删除主题<!--</lang>--></a>
+				<span class="pipe">|</span>
+				<!--{/if}-->
+				<!--{if Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic,array('group@grouptopicadmin@closetopic'))}-->
+				<!--{if $arrGrouptopic['grouptopic_isclose']=='0'}-->
+				<a onclick="modTopicclose(1);" href="javascript:void(0);"><!--<lang package='Template'>-->关闭<!--</lang>--></a>
+				<!--{d*else}-->
+				<a onclick="modTopicclose(0);" href="javascript:void(0);"><!--<lang package='Template'>-->打开<!--</lang>--></a>
+				<!--{/if}-->
+				<span class="pipe">|</span>
+				<!--{/if}-->
+				<!--{if Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic,array('group@grouptopicadmin@sticktopic'))}-->
+				<a onclick="modTopicstick(<!--{if $arrGrouptopic['grouptopic_sticktopic']>0}--><!--{$arrGrouptopic['grouptopic_sticktopic']}--><!--{d*else}-->0<!--{/if}-->);" href="javascript:void(0);"><!--<lang package='Template'>-->置顶<!--</lang>--></a>
+				<span class="pipe">|</span>
+				<!--{/if}-->
+				<!--{if Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic,array('group@grouptopicadmin@digesttopic'))}-->
+				<a onclick="modTopicdigest(<!--{if $arrGrouptopic['grouptopic_addtodigest']>0}--><!--{$arrGrouptopic['grouptopic_addtodigest']}--><!--{d*else}-->0<!--{/if}-->);" href="javascript:void(0);"><!--<lang package='Template'>-->精华<!--</lang>--></a>
+				<span class="pipe">|</span>
+				<!--{/if}-->
+				<!--{if Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic,array('group@grouptopicadmin@recommendtopic'))}-->
+				<a onclick="modTopicrecommend(<!--{if $arrGrouptopic['grouptopic_isrecommend']>0}--><!--{$arrGrouptopic['grouptopic_isrecommend']}--><!--{d*else}-->0<!--{/if}-->);" href="javascript:void(0);"><!--<lang package='Template'>-->推荐<!--</lang>--></a>
+				<span class="pipe">|</span>
+				<!--{/if}-->
+				<!--{if Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic,array('group@grouptopicadmin@hidetopic'))}-->
+				<!--{if $arrGrouptopic['grouptopic_isshow']=='0'}-->
+				<a onclick="modTopicstatus(1);" href="javascript:void(0);"><!--<lang package='Template'>-->显示<!--</lang>--></a>
+				<!--{d*else}-->
+				<a onclick="modTopicstatus(0);" href="javascript:void(0);"><!--<lang package='Template'>-->隐藏<!--</lang>--></a>
+				<!--{/if}-->
+				<span class="pipe">|</span>
+				<!--{/if}-->
+				<!--{if Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic,array('group@grouptopicadmin@categorytopic'))}-->
+				<a onclick="modTopiccategory(<!--{$arrGrouptopic['grouptopiccategory_id']}-->);" href="javascript:void(0);"><!--<lang package='Template'>-->分类<!--</lang>--></a>
+				<span class="pipe">|</span>
+				<!--{/if}-->
+				<!--{if Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic,array('group@grouptopicadmin@tagtopic'))}-->
+				<a onclick="modTopictag();" href="javascript:void(0);"><!--<lang package='Template'>-->标签<!--</lang>--></a>
+				<span class="pipe">|</span>
+				<!--{/if}-->
+				<!--{if Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic,array('group@grouptopicadmin@colortopic'))}-->
+				<a onclick="modTopiccolor();" href="javascript:void(0);"><!--<lang package='Template'>-->高亮<!--</lang>--></a>
+				<span class="pipe">|</span>
+				<!--{/if}-->
+				<!--{if Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic,array('group@grouptopicadmin@uptopic'))}-->
+				<a onclick="modTopicup();" href="javascript:void(0);"><!--<lang package='Template'>-->提升下沉<!--</lang>--></a>
+				<span class="pipe">|</span>
+				<!--{/if}-->
+				<!--{if Groupadmin_Extend+checkTopicmove()}-->
+				<a onclick="modTopicmove();" href="javascript:void(0);"><!--<lang package='Template'>-->帖子移动<!--</lang>--></a>
+				<span class="pipe">|</span>
+				<!--{/if}-->
+				<!--{if Core_Extend+isAdmin()}-->
+				<img src="<!--{:Appt::path('recyclebin.gif')}-->" style="position:relative;top:-2px;"/>&nbsp;
+				<a href="<!--{:Core_Extend::adminUrl('app/config?id=3&controller=grouptopiccomment&tid='.$arrGrouptopic['grouptopic_id'].'&recycle_=1')}-->" target="_blank"><!--<lang package='Template'>-->回帖回收站<!--</lang>--></a>&nbsp;<span><a href="<!--{:Core_Extend::adminUrl('app/config?id=3&controller=grouptopiccomment&tid='.$arrGrouptopic['grouptopic_id'].'&recycle_=1')}-->" target="_blank" <!--{if $nTotalRecyclebinComment>0}-->style="color:red;font-weight:bold;"<!--{/if}-->>(<!--{$nTotalRecyclebinComment}-->)</a></span>
+				<!--{/if}-->
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<!--{/if}-->

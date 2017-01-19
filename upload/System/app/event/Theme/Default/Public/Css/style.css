@@ -1,0 +1,46 @@
+/*
+File Name: style.css
+File Type: 不必需
+Description: Event应用模块CSS
+*/
+
+/**===============================
+           首页
+================================*/
+[CURSCRIPT=event::public::index,event::ucenter::index,event::ucenter::join,event::ucenter::attention]
+/* 活动列表 */
+.event_list_box{}
+.event_list_box ul {width: 630px;list-style: none outside none; margin: 0; padding: 0;}
+.event_list_box li {float: left; margin-right: 17px; overflow: hidden; padding-bottom: 20px; padding-top: 10px; width: 295px;list-style: none outside none; }
+.event_list_content {height: 195px;position: relative;width: 295px;}
+.event_list_contentpic {height: 195px; overflow: hidden;width: 295px;}
+.event_list_contentpic img {width: 300px;}
+.event_list_description {background: none repeat scroll 0 0 #000000; height: 24px; left: 0; line-height: 24px; opacity: 0.75; overflow: hidden; position: absolute;text-overflow: ellipsis; top: 171px; white-space: nowrap; width: 295px;}
+.event_list_attention {color: #FFFFFF; float: left;line-height: 24px; padding-left: 4px;}
+.event_list_attentionnum {color: #5FC403;font-family: Tahoma;font-size: 14px; font-weight: bold;line-height: 24px;}
+.event_list_endtime {color: #FFFFFF;float: right;padding-right: 4px;}
+.event_list_title {color: #666666; font-size: 14px; line-height: 24px; overflow: hidden; padding-top: 10px; text-overflow: ellipsis; white-space: nowrap;width: 295px;}
+.event_list_address {overflow: hidden;padding-top: 5px;width: 295px;height: 22px;line-height: 22px;color:#A3A3A3;}
+
+/* 操作工具条 */
+.event_toolbar{color:#999;padding:0 3px;}
+.event_toolbar .btn{background:orange;}
+.event_toolbar a.btn:hover{text-decoration:underline;background:red;}
+[/CURSCRIPT]
+
+/**===============================
+           首页
+================================*/
+[CURSCRIPT=event::public::index]
+/* 活动分类 */
+.eventcategory-mod {margin-bottom: 15px;}
+.eventcategory-mod:after {clear: both;content: " ";display: block;}
+.eventcategory-inlinelist {font-size: 0;}
+.eventcategory-catsboard {background: none repeat scroll 0 0 #F6F5F2;padding: 9px;}
+.eventcategory-catsboard .entry {line-height: 1.95;margin: 7px;width: 100%;}
+.eventcategory-catsboard h5 {margin-bottom: 9px;}
+.eventcategory-mod, .eventcategory-inlinelist li {display: inline-block;font-size: 12px;vertical-align: top;}
+.eventcategory-catsboard .entry a {border-radius: 1px 1px 1px 1px;display: inline-block;line-height: 1.4em;padding: 0 3px;}
+.eventcategory-mod ol,.eventcategory-mod ul {list-style-position: outside;margin-left: 0;}
+.current_category a,.current_childcategory a{background:#FFF;}
+[/CURSCRIPT]

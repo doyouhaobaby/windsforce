@@ -1,0 +1,11 @@
+		<div class="grid_12">
+			<div class="nav_tabcontainer nav_tab">
+				<ul>
+					<li <!--{if $sType==''}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('group://space@?id='.$nId)}-->"><!--<lang package='Template'>-->首页<!--</lang>--></a></li>
+					<li <!--{if $sType=='comment'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('group://space@?id='.$nId.'&type=comment')}-->"><!--<lang package='Template'>-->我的回帖<!--</lang>--></a></li>
+					<li <!--{if $sType=='group'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('group://space@?id='.$nId.'&type=group')}-->"><!--<lang package='Template'>-->我的小组<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('home://space@?id='.$nId)}-->"><!--<lang package='Template'>-->返回个人空间<!--</lang>--></a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="clearfix"></div>

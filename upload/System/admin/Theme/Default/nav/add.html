@@ -1,0 +1,131 @@
+<!--<include file="public+header">-->
+
+<!--{script}-->
+checkForm(SubmitFormCheckform);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<if condition="empty( $nId )" >--><!--<lang package='Template'>-->添加菜单<!--</lang>--><!--<else/>--><!--<lang package='Template'>-->编辑菜单<!--</lang>--><!--</if>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<if condition="empty( $nId )" >--><!--<lang package='Template'>-->添加菜单<!--</lang>-->_<!--{$nLocation}--><!--<else/>--><!--<lang package='Template'>-->编辑菜单<!--</lang>-->_<!--{$nId}--><!--</if>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->在这里你可以添加菜单，编辑已有菜单<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->注意，内置菜单有些项是无法编辑的<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->内置菜单的URL使用框架内置的URL规则，其它的使用常规URL<!--</lang>--></li>
+					<li class="message-display common-message-display" style="list-style:none;"><a href="javascript:void(0);" onclick="messageDisplay();"><!--<lang package='Template'>-->展开更多<!--</lang>-->&gt;&gt;</a></li>
+					<div class="message_display none">
+						<li><!--<lang package='Template'>-->导航链接支持{*}风格值，其中*表示能够正确运行的PHP代码，如{Q::U('home://public/login')}<!--</lang>--></li>
+						<li><!--<lang package='Template'>-->当采用{*}风格值的时候，如果*表示的PHP代码不能正常运行，前台将引发致命错误<!--</lang>--></li>
+						<li style="list-style:none;" class="common_message_display"><a href="javascript:void(0);" onclick="messageDisplay();"><!--<lang package='Template'>-->收起<!--</lang>-->&lt;&lt;&lt;&lt;</a></li>
+					</div>
+				</ul>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<if condition="empty( $nId )" >--><!--<lang package='Template'>-->添加菜单<!--</lang>--><!--<else/>--><!--<lang package='Template'>-->编辑菜单<!--</lang>--><!--</if>-->&nbsp;-&nbsp;<!--{if $nLocation==1}--><!--<lang package='Template'>-->头部导航<!--</lang>--><!--{elseif $nLocation==2}--><!--<lang package='Template'>-->底部导航<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->主导航<!--</lang>--><!--{/if}--></h3>
+				<ul class="tabs">
+					<!--{~$nLocation=(isset($oValue)?$oValue['nav_location']:$nLocation)}-->
+					<!--{if $nLocation==1}-->
+					<li class="active"><a href="<!--{:Q::U('nav/index?location=1')}-->"><!--<lang package='Template'>-->头部导航<!--</lang>--></a></li>
+					<!--{elseif $nLocation==2}-->
+					<li class="active"><a href="<!--{:Q::U('nav/index?location=2')}-->"><!--<lang package='Template'>-->底部导航<!--</lang>--></a></li>
+					<!--{d*else}-->
+					<li class="active"><a href="<!--{:Q::U('nav/index')}-->"><!--<lang package='Template'>-->主导航<!--</lang>--></a></li>
+					<!--{/if}-->
+				</ul>
+			</header>
+			<form action="" method="post" id="navAdd" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="nav_sort"><!--<lang package='Template'>-->序号<!--</lang>--></label>
+						<input type="text" name="nav_sort" id="nav_sort" size="40" value="<!--<if condition="isset( $oValue ) && $oValue:nav_sort">--><!--{$oValue:nav_sort}--><!--<else/>-->0<!--</if>-->" class="{required:true,digits:true,min:0,max:300}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->导航序号，用于排列导航顺序<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="nav_name"><!--<lang package='Template'>-->导航名称<!--</lang>--></label>
+						<input type="text" name="nav_name" id="nav_name" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:nav_name}--><!--</if>-->" required/>
+						<div class="description input_tips"><!--<lang package='Template'>-->导航的名字，如群组<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<!--{if (!isset($oValue) && $nLocation==0) || (isset($oValue) && !$oValue['nav_location'])}-->
+					<fieldset>
+						<label for="nav_parentid"><!--<lang package='Template'>-->导航位置<!--</lang>--></label>
+						<select name="nav_parentid" id="nav_parentid">
+							<option value="0" <!--<if condition="!isset($oValue) || (isset( $oValue ) && !$oValue['nav_parentid'])">-->selected<!--</if>-->><!--<lang package='Template'>-->主导航<!--</lang>--></option>
+							<!--<foreach for=arrNavs>-->
+							<!--{if !isset($oValue) || (isset($oValue) && $oValue['nav_id']!=$value['nav_id'])}-->
+							<option value="<!--{$value['nav_id']}-->" <!--{if isset( $oValue ) && $value['nav_id']==$oValue->nav_parentid}-->selected<!--{/if}-->><!--{$value['nav_name']}--></option>
+							<!--{/if}-->
+							<!--</foreach>-->
+						</select>
+						<div class="description"><!--<lang package='Template'>-->设置此导航的位于哪个主导航下面<!--</lang>--></div>
+					</fieldset>
+					<!--{/if}-->
+					<fieldset>
+						<label for="nav_title"><!--<lang package='Template'>-->导航说明<!--</lang>--></label>
+						<input type="text" name="nav_title" id="nav_title" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:nav_title}--><!--</if>-->"/>
+						<div class="description"><!--<lang package='Template'>-->导航的说明会在鼠标移动到其上面时显示<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="nav_status"><!--<lang package='Template'>-->状态<!--</lang>--></label>
+						<select name="nav_status">
+							<option value="1" <!--<if condition="!isset( $oValue ) || ( isset( $oValue ) && $oValue:nav_status==1)">-->selected<!--</if>-->><!--<lang package='Template'>-->启用<!--</lang>--></option>
+							<option value="0" <!--<if condition="isset( $oValue ) && $oValue:nav_status eq 0">-->selected<!--</if>-->><!--<lang package='Template'>-->禁用<!--</lang>--></option>
+							<option value="9" <!--<if condition="isset( $oValue ) && $oValue:nav_status==9">-->selected<!--</if>-->><!--<lang package='Template'>-->回收站<!--</lang>--></option>
+						</select>
+						<div class="description"><!--<lang package='Template'>-->是否启用菜单，启用菜单才能够使用<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="nav_url"><!--<lang package='Template'>-->导航链接<!--</lang>--></label>
+						<input type="text" name="nav_url" id="nav_url" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:nav_url}--><!--</if>-->" <!--{if isset($oValue) &&  !$oValue['nav_type']}-->readonly="true"<!--{/if}--> required/>
+						<div class="description input_tips"><!--<lang package='Template'>-->设置导航的链接，可填写站内、站外的链接地址<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label><!--<lang package='Template'>-->导航字体样式<!--</lang>--></label>
+						<input type="checkbox" name="style[0]" value="1" <!--{if isset($arrStyle[0]) && $arrStyle[0]=='1'}-->checked<!--{/if}--> style="position:relative;top:3px;"><span style="text-decoration: underline;"><!--<lang package='Template'>-->下划线<!--</lang>--></span>&nbsp;
+						<input type="checkbox" name="style[1]" value="1" <!--{if isset($arrStyle[1]) && $arrStyle[1]=='1'}-->checked<!--{/if}--> style="position:relative;top:3px;"><em style="font-style: italic;position:relative;top:1px;"><!--<lang package='Template'>-->斜体<!--</lang>--></em>&nbsp;
+						<input type="checkbox" name="style[2]" value="1" <!--{if isset($arrStyle[2]) && $arrStyle[2]=='1'}-->checked<!--{/if}--> style="position:relative;top:3px;"><strong style="font-weight: bold; color: #666;"><!--<lang package='Template'>-->粗体<!--</lang>--></strong>
+						<div class="description"><!--<lang package='Template'>-->导航文字的几种修饰<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label><!--<lang package='Template'>-->导航字体颜色<!--</lang>--></label>
+						<input type="radio" name="nav_color" value="0" <!--<if condition="!isset($oValue) || (isset( $oValue ) && !$oValue['nav_color'])">-->checked<!--</if>-->><span style="color: LINK;">Default</span>
+						<input type="radio" name="nav_color" value="1" <!--<if condition="isset($oValue) && $oValue['nav_color']=='1'">-->checked<!--</if>-->><span style="color: Red;">Red</span>
+						<input type="radio" name="nav_color" value="2" <!--<if condition="isset($oValue) && $oValue['nav_color']=='2'">-->checked<!--</if>-->><span style="color: Orange;">Orange</span>
+						<input type="radio" name="nav_color" value="3" <!--<if condition="isset($oValue) && $oValue['nav_color']=='3'">-->checked<!--</if>-->><span style="color: Yellow;">Yellow</span>
+						<input type="radio" name="nav_color" value="4" <!--<if condition="isset($oValue) && $oValue['nav_color']=='4'">-->checked<!--</if>-->><span style="color: Green;">Green</span>
+						<input type="radio" name="nav_color" value="5" <!--<if condition="isset($oValue) && $oValue['nav_color']=='5'">-->checked<!--</if>-->><span style="color: Cyan;">Cyan</span>
+						<input type="radio" name="nav_color" value="6" <!--<if condition="isset($oValue) && $oValue['nav_color']=='6'">-->checked<!--</if>-->><span style="color: Blue;">Blue</span>
+						<input type="radio" name="nav_color" value="7" <!--<if condition="isset($oValue) && $oValue['nav_color']=='7'">-->checked<!--</if>-->><span style="color: Purple;">Purple</span>
+						<input type="radio" name="nav_color" value="8" <!--<if condition="isset($oValue) && $oValue['nav_color']=='8'">-->checked<!--</if>-->><span style="color: Gray;">Gray</span>
+						<div class="description"><!--<lang package='Template'>-->导航天文字高亮修饰<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label><!--<lang package='Template'>-->导航打开方式<!--</lang>--></label>
+						<input type="radio" name="nav_target" value="0" <!--<if condition="!isset($oValue) || (isset( $oValue ) && !$oValue['nav_target'])">-->checked<!--</if>-->><!--<lang package='Template'>-->在本窗口打开<!--</lang>-->
+						<input type="radio" name="nav_target" value="1" <!--<if condition="isset($oValue) && $oValue['nav_target']=='1'">-->checked<!--</if>-->><!--<lang package='Template'>-->在新窗口打开<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->根据URL链接状况进行选择<!--</lang>--></div>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="hidden" name="ajax" value="1">
+						<input type="hidden" name="id" id="id" value="<!--<if condition="isset( $nId )">--><!--{$nId}--><!--</if>-->"/>
+						<input type="hidden" name="nav_location" id="nav_location" value="<!--{$nLocation}-->"/>
+						<input type="submit" id="submit_button" value="" class="alt_btn">
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->">
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

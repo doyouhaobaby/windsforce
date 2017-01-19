@@ -1,0 +1,13 @@
+	<!--<include file="grouptopicadmin+header" />-->
+		
+		<p style="font-weight:bold;color:red;"><!--<lang package='Template'>-->您确认要删除选择的回帖么?<!--</lang>--></p>
+		<input type="hidden" name="grouptopiccomments" value="<!--{$sGrouptopiccomments}-->">
+
+		<p><!--{if $GLOBALS['_cache_']['group_option']['group_deletecomment_recyclebin']==1}-->
+			<div class="tips"><!--<lang package='Template'>-->系统启用了回帖回收站功能，删除的回帖将会被放置到回收站<!--</lang>--></div>
+			<!--{d*else}-->
+			<div class="tips"><!--<lang package='Template'>-->系统尚未启用回帖回收站功能，回帖将会被直接删除<!--</lang>--></div>
+			<!--{/if}-->
+		</p>
+
+	<!--<include file="grouptopicadmin+footer" />-->

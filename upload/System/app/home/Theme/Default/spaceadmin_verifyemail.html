@@ -1,0 +1,45 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{script}-->
+function revify(){
+	window.location.href="<!--{:Q::U('home://spaceadmin/dorevifyemail')}-->";
+}
+
+function deleteVerifyemail(){
+	windsforceConfirm('<!--<lang package='Template'>-->你确定要删除Email验证信息？<!--</lang>-->',function(){
+		window.location.href="<!--{:Q::U('home://spaceadmin/unrevifyemail')}-->";
+	});
+}
+<!--{/script}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('home://spaceadmin/index')}-->"><!--<lang package='Template'>-->用户资料<!--</lang>--></a> <span class="divider">/</span></li>
+			<li><!--<lang package='Template'>-->Email验证<!--</lang>--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+		<!--<include file="spaceadmin+menu" />-->
+
+		<div class="grid_12">
+			<div class="tips">
+				<!--<lang package='Template'>-->注意修改电子邮件需要重新验证数据<!--</lang>-->
+			</div>
+			<!--{if $arrUserlogin['user_isverify']==0}-->
+			<p><!--<lang package='Template'>-->系统有部分功能可能需要通过邮件验证才能够使用<!--</lang>--></p>
+			<p><input type="text" class="input-xlarge left" value="<!--{$arrUserlogin['user_email']}-->" size="50" readonly style="display:inline;"/>&nbsp;
+				<button type="button" class="btn btn-small" type="submit" onclick="revify();"><!--<lang package='Template'>-->开始验证<!--</lang>--></button>
+			</p>
+			<!--{if $bSendemail===true}-->
+			<p><span style="color:red;font-weight:bold;"><!--<lang package='Template'>-->你似乎已经发送了验证邮件，请前往邮箱查看<!--</lang>--></span></p>
+			<!--{/if}-->
+			<!--{d*else}-->
+			<p><span style="color:green;font-weight:bold;"><!--<lang package='Template'>-->恭喜你已通过邮件验证<!--</lang>--></span>&nbsp;(<!--{$arrUserlogin['user_email']}-->)&nbsp;<a style="color:red;" href="javascript:void(0);" onclick="deleteVerifyemail();"><!--<lang package='Template'>-->删除验证信息<!--</lang>--></a></p>
+			<!--{/if}-->
+			<p><!--<lang package='Template'>-->老的电子邮件失效或者不正确，我想要更改电子邮件<!--</lang>-->&nbsp;<a href="<!--{:Q::U('home://spaceadmin/index?do=info')}-->"><!--<lang package='Template'>-->立刻修改<!--</lang>--></a></p>
+		</div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

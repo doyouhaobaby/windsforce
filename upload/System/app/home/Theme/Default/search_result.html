@@ -1,0 +1,76 @@
+<!--<include file="search+resultheader" />-->
+
+<script src="<!--{:__APPPUB__}-->/Js/homefresh.js"></script>
+<!--{:Core_Extend::emotion()}-->
+
+<!--{script}-->
+$(function(){
+	$('.homefresh-content').emotionsToHtml();
+});
+<!--{/script}-->
+	
+				<!--<include file="search+form" />-->
+
+				<!--{if !empty($arrHomefreshs)}-->
+				<table class="table">
+					<colgroup>
+						<col width="70px"></col>
+						<col></col>
+					</colgroup>
+					<thead>
+						<tr>
+							<td colspan="2">
+								<!--<lang package='__COMMON_LANG__@Common'>-->结果: 找到<!--</lang>--> “<!--{$sKey}-->” <!--<lang package='__COMMON_LANG__@Common'>-->相关内容<!--</lang>--> <!--{$nTotalHomefreshnum}--> <!--<lang package='__COMMON_LANG__@Common'>-->个<!--</lang>-->
+							</td>
+						</tr>
+					</thead>
+					<tbody id="homefreshlist_box">
+						<!--<foreach for=arrHomefreshs value=arrHomefresh>-->
+						<tr id="homefreshlist_item_<!--{$arrHomefresh['homefresh_id']}-->">
+							<td style="width:48px;">
+								<div style="text-align:center;">
+									<a href="<!--{:Q::U('home://space@?id='.$arrHomefresh['user_id'])}-->"><img src="<!--{:Core_Extend::avatar($arrHomefresh['user_id'],'small')}-->" width="48px" height="48px" class="thumbnail" /></a>
+								</div>
+							</td>
+							<td>
+								<p class="homefresh-title"><a href="<!--{:Home_Extend::getHomefreshLink($arrHomefresh)}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->阅读全文<!--</lang>-->" target="_blank"><!--{$arrHomefresh['homefresh_title']}--></a></p>
+								<div class="homefresh-pubtime"><!--{$arrHomefresh['user_id']|Core_Extend+getUsericon}-->&nbsp;<a href="<!--{:Q::U('home://space@?id='.$arrHomefresh['user_id'])}-->" class="bind_hover_card" bm_user_id="<!--{$arrHomefresh['user_id']}-->"><!--{$arrHomefresh['user_name']}--></a>&nbsp;<!--<lang package='Template'>-->于<!--</lang>-->&nbsp;<!--{$arrHomefresh['create_dateline']|Core_Extend+timeFormat}-->&nbsp;<!--<lang package='Template'>-->发布<!--</lang>-->
+								</div>
+								<div class="homefresh-content">
+									<!--{~$sHomefreshAttribute=Home_Extend::parse($arrHomefresh['homefresh_attribute'],$arrHomefresh['homefresh_type'],$arrHomefresh['homefresh_id'])}-->
+									<!--{if $sHomefreshAttribute}-->
+									<div class="homefresh-attribute"><!--{$sHomefreshAttribute}--></div>
+									<!--{/if}-->
+									<!--{if $arrHomefresh['homefresh_thumb']}-->
+									<div class="homefresh-thumb"><img src="<!--{:Attachment_Extend::getPrefix()}--><!--{$arrHomefresh['homefresh_thumb']}-->" class="need_lazyload" /></div>
+									<!--{/if}-->
+									<div><!--{$arrHomefresh['homefresh_message']|Core_Extend+subString=500,false,1,true,false}--></div>
+									<div class="clearfix"></div>
+								</div>
+								<!--{if !empty($arrHomefresh['homefreshcategory_name'])}-->
+								<div class="homefresh-left">
+									<a href="<!--{:Q::U('home://list@?page=[page:1]&cid='.$arrHomefresh['homefreshcategory_id'])}-->" class="common_tag"><!--{$arrHomefresh['homefreshcategory_name']}--></a>
+								</div>
+								<!--{/if}-->
+								<div class="homefresh-count">
+									<a href="javascript:void(0);" onclick="goodnum('<!--{$arrHomefresh['homefresh_id']}-->');"><!--<lang package='__COMMON_LANG__@Common'>-->赞<!--</lang>-->(<span id="goodnum_<!--{$arrHomefresh['homefresh_id']}-->" <!--{if in_array($arrHomefresh['homefresh_id'],$arrGoodCookie)}-->class="goodnum_click"<!--{/if}-->><!--{$arrHomefresh['homefresh_goodnum']}--></span>)</a>
+									<span class="pipe">|</span>
+									<a href="<!--{:Home_Extend::getHomefreshLink($arrHomefresh)}-->#comments"><!--<lang package='__COMMON_LANG__@Common'>-->评论<!--</lang>-->(<span id="homefreshcomment_<!--{$arrHomefresh['homefresh_id']}-->"><!--{$arrHomefresh['homefresh_commentnum']}--></span>)</a>
+									<span class="pipe">|</span>
+									<a href="<!--{:Home_Extend::getHomefreshLink($arrHomefresh)}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->阅读全文<!--</lang>-->" target="_blank"><!--<lang package='Template'>-->查看<!--</lang>-->(<!--{$arrHomefresh['homefresh_viewnum']}-->)</a>
+								</div>
+							</td>
+						</tr>
+						<!--</foreach>-->
+					</tbody>
+				</table>
+				<!--{d*else}-->
+				<p><!--<lang package='__COMMON_LANG__@Common'>-->对不起，没有找到匹配结果。<!--</lang>--></p>
+				<!--{/if}-->
+	
+				<!--{$sPageNavbar}-->
+			</div>
+		</div>
+	</div>
+
+<!--<include file="search+footer" />-->

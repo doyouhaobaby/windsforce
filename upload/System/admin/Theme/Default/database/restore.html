@@ -1,0 +1,155 @@
+<!--<include file="public+header">-->
+
+<!--{script}-->
+function importFileConfrim(){
+	if(confirm('<!--<lang package='Template'>-->你确定要导入选中数据吗？<!--</lang>-->')){
+		$WF( 'upload_sql').submit();
+	}
+}
+
+function deleteFileConfrim(){
+	if(confirm('<!--<lang package='Template'>-->你确定要删除选中数据吗？<!--</lang>-->')){
+		$WF( 'sqlList').submit();
+	}
+}
+
+function importOneFileConfrim(sFile){
+	if(confirm('<!--<lang package='Template'>-->你确定要导入选中数据吗？<!--</lang>-->')){
+		window.location.href=sFile;
+	}
+}
+
+function rowClick(obj){
+	var row=obj.parentNode.parentNode;
+	var tbl=row.parentNode.parentNode;
+	var test=false;
+	var img='';
+
+	if(obj.src.substr(obj.src.lastIndexOf('/')+1)=="menu_minus.gif"){
+		obj.src="<!--{:At::path('menu_plus.gif')}-->";
+	}else{
+		obj.src="<!--{:At::path('menu_minus.gif')}-->";
+	}
+
+	for(i=0;i< tbl.rows.length;i++){
+		var cell=tbl.rows[i].cells[1];
+		if(cell && cell.childNodes[0].src){
+			img=cell.childNodes[0].src.substr(cell.childNodes[0].src.lastIndexOf('/')+1);
+		}else{
+			img='';
+		}
+
+		if (test && img){
+			if(img=="menu_arrow.gif"){
+				tbl.rows[i].style.display=tbl.rows[i].style.display!='none'?'none':(Q.Browser.Ie)?'block':'table-row';
+			}else{
+				test=false;
+			}
+		}
+
+		if(tbl.rows[i]==row){
+			test=true;
+		}
+	}
+}
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->数据库恢复<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->数据库恢复<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->这里你可以管理你的数据库备份文件，你可以恢复数据库，也可以删除数据库备份文件<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->恢复数据将会覆盖当前数据库，请谨慎操作，以免损害数据库<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->数据库恢复<!--</lang>--></h3>
+				<ul class="tabs">
+					<li><a href="<!--{:Q::U('database/index')}-->"><!--<lang package='Template'>-->数据库备份<!--</lang>--></a></li>
+					<li class="active"><a href="<!--{:Q::U('database/runsql')}-->"><!--<lang package='Template'>-->运行SQL语句<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('database/optimize')}-->"><!--<lang package='Template'>-->数据库优化<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="<!--{:Q::U('database/upload_sql')}-->" method="post" id="upload_sql" enctype="multipart/form-data" name="upload_sql" >
+				<div class="module_content">
+					<fieldset>
+						<label><!--<lang package='Template'>-->本地上传恢复备份<!--</lang>--></label>
+						<input type="file" name="sqlfile" size="50">
+						<div class="description"><!--<lang package='Template'>-->这里的数据库备份文件必须是WindsForce生成的备份格式<!--</lang>--></div>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="button" class="alt_btn" value="<!--<lang package='Template'>-->上传并执行sql语句<!--</lang>-->" onclick="importFileConfrim()" />
+					</div>
+				</footer>
+			</form>
+		</article>
+		
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->备份文件列表<!--</lang>--></h3></header>
+			<form action="<!--{:Q::U('database/remove')}-->" method="post" id="sqlList" name="sqlList" >
+				<div class="module_content">
+					<table class="tablesorter" cellspacing="0" id="checkList">
+						<thead>
+							<tr>
+								<th width="50"><input onclick="checkAll('checkList')" type="checkbox"></th>
+								<th><!--<lang package='Template'>-->文件名<!--</lang>--></th>
+								<th width="110"><!--<lang package='Template'>-->时间<!--</lang>--></th>
+								<th width="90"><!--<lang package='Template'>-->大小<!--</lang>--></th>
+								<th width="70"><!--<lang package='Template'>-->卷<!--</lang>--></th>
+								<th width="60"><!--<lang package='Template'>-->操作<!--</lang>--></th>
+							</tr>
+						</thead>
+						<tbody>
+							<!--{if !empty($arrList)}-->
+							<!--<foreach for=arrList>-->
+							<tr <!--{if $value['mark']==2}-->style="display:none;"<!--{/if}-->>
+								<td><input type="checkbox" name="file[]" value="<!--{$value['name']}-->" /></td>
+								<td><!--{if $value['mark']==1}-->
+									<img onClick="rowClick(this)" src="<!--{:At::path('menu_plus.gif')}-->">&nbsp;
+									<!--{elseif $value['mark'] == 2}-->
+									<img src="<!--{:At::path('menu_arrow.gif')}-->">&nbsp;
+									<!--{/if}-->
+									<a href="<!--{:__ROOT__}-->/user/database/<!--{$value['name']}-->"><!--{$value['name']}--></a>
+									<div class="row-actions">
+										<span class='hide'><a href="<!--{:__ROOT__}-->/user/database/<!--{$value['name']}-->"><!--<lang package='Template'>-->查看<!--</lang>--></a></span>
+									</div>
+								</td>
+								<td><!--{$value['add_time']}--></td>
+								<td><!--{$value['file_size']}--></td>
+								<td>vol:<!--{$value['vol']}--></td>
+								<td><!--{if $value['mark']==1 || $value['mark']=='0'}-->
+									<a onclick="importOneFileConfrim('<!--{:Q::U('database/import?file_name='.$value['name'])}-->');" href="javascript:void(0);">[<!--<lang package='Template'>-->导入<!--</lang>-->]</a>
+									<!--{d*else}-->
+									&nbsp;
+									<!--{/if}-->
+								</td>
+							</tr>
+							<!--</foreach>-->
+							<!--{d*else}-->
+							<tr>
+								<td colspan="6"><!--<lang package='Template'>-->暂时没有发现任何记录<!--</lang>--></td>
+							</tr>
+							<!--{/if}-->
+						</tbody> 
+					</table>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="button" value="<!--<lang package='Template'>-->删除备份文件<!--</lang>-->" class="alt_btn" onclick="deleteFileConfrim()"/>
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

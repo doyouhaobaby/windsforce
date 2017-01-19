@@ -1,0 +1,14 @@
+		<div style="width:500px;">
+			<div class="nav_tabcontainer nav_tab" style="margin-top:-25px;">
+				<ul>
+					<li <!--{if in_array(ACTION_NAME,array('dialog_add','attachmentinfo'))}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://attachment/dialog_add?dialog=1&function='.$sFunction.'&filetype='.$nFiletype.'&full='.$nFull.'&multi='.$nMulti)}-->"><!--<lang package='Template'>-->上传附件<!--</lang>--></a></li>
+					<li <!--{if ACTION_NAME==='lists'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://attachment/lists?dialog=1&function='.$sFunction.'&filetype='.$nFiletype.'&full='.$nFull.'&multi='.$nMulti)}-->"><!--<lang package='Template'>-->我的附件<!--</lang>--></a>
+					</li>
+					<!--{if $nMulti==1 && ACTION_NAME==='lists'}-->
+					<li><a href="javascript:void(0);" onclick="javascript:parent.<!--{$sFunction}-->(getCheckboxValue());" title="批量插入"><img src="<!--{:__PUBLIC__}-->/images/common/insert.png" style="padding-top:6px;"/></a></li>
+					<!--{/if}-->
+					<li <!--{if in_array(ACTION_NAME,array('index','edit_attachmentcategory'))}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://attachment/index?dialog=1&function='.$sFunction.'&filetype='.$nFiletype.'&full='.$nFull.'&multi='.$nMulti)}-->"><!--<lang package='Template'>-->我的专辑<!--</lang>--></a></li>
+					<li <!--{if ACTION_NAME==='dialog_addattachmentcategory'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://attachment/dialog_addattachmentcategory?dialog=1&function='.$sFunction.'&filetype='.$nFiletype.'&full='.$nFull.'&multi='.$nMulti)}-->">+<!--<lang package='Template'>-->新建专辑<!--</lang>--></a></li>
+				</ul>
+			</div>
+		</div>

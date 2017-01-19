@@ -1,0 +1,289 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{style}-->
+#birthdistrictbox select,#residedistrictbox select{ width:100px;margin-bottom:5px;}
+<!--{/style}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->查找好友<!--</lang>--></li>
+		</ul>
+	</div>
+	
+	<div class="container_12 container_box">
+		<!--<include file="friend+menu" />-->
+
+		<div class="grid_10">
+			<div class="well">
+				<h4><!--<lang package='Template'>-->高级方式查找<!--</lang>--></h4>
+			</div>
+			
+			<div class="nav_tabcontainer nav_tab">
+				<ul class="need_clicktab">
+					<!--<foreach for=arrInfoMenus key=sInfoMenuKey value=sInfoMenu>-->
+					<!--{~$sInfoMenuKey=$sInfoMenuKey==''?'base':$sInfoMenuKey}-->
+					<li <!--{if $sInfoMenuKey=='base'}-->class="active"<!--{/if}-->><a href="javascript:void(0);"><!--{$sInfoMenu}--></a></li>
+					<!--</foreach>-->
+				</ul>
+			</div>
+			
+			<form method="get" id="userSearch" name="userSearch" action="<!--{:__APP__}-->">
+				<input type="hidden" name="app" value="home" />
+				<input type="hidden" name="c" value="friend" />
+				<input type="hidden" name="a" value="searchresult" />
+				<fieldset>
+					<div class="tips">
+						<div class="control-group">
+							<label class="control-label" for="user_name"><!--<lang package='Template'>-->用户名<!--</lang>--></label>
+							<div class="controls">
+								<p><input class="input-xlarge" name="user_name" id="user_name" type="text" value=""></p>
+								<label class="checkbox">
+									<input type="checkbox" class="input-short" name="username_precision" id="username_precision" value="1"><!--<lang package='Template'>-->精确搜索<!--</lang>-->
+								</label>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label"><!--<lang package='Template'>-->用户ID<!--</lang>--></label>
+							<div class="controls">
+								<input class="input-xlarge" name="user_id" id="user_id" type="text">
+								<span class="help-inline"><!--<lang package='Template'>-->用户 ID使用英文逗号进行分割，例如1,2,3<!--</lang>--></span>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="user_startage"><!--<lang package='Template'>-->年龄段<!--</lang>--></label>
+							<div class="controls">
+								<input type="text" name="user_startage" id="user_startage" value="" size="10" style="width: 114px;" />&nbsp;~ 
+								<input type="text" name="user_endage" id="user_endage" value="" size="10" style="width: 114px;" />
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label"><!--<lang package='Template'>-->上传头像<!--</lang>--></label>
+							<div class="controls">
+								<label class="checkbox">
+									<input type="checkbox" class="input-short" name="user_avatar" id="user_avatar" value="1">
+									<!--<lang package='Template'>-->已经上传头像<!--</lang>-->
+								</label>
+							</div>
+						</div>
+					</div>
+					<div id="needTabContent" class="tab-content">
+						<div class="tab-pane fade in active" id="base">
+							<p>
+								<!--<foreach for=arrBases value=sBase>-->
+								<!--{if array_key_exists($sBase,$arrUserprofilesettingDatas) && 
+										$arrUserprofilesettingDatas[$sBase]['userprofilesetting_allowsearch']==1}-->
+								<!--{if $sBase=='userprofile_gender'}-->
+								<div class="control-group">
+									<label class="control-label" for="userprofile_gender"><!--{$arrUserprofilesettingDatas['userprofile_gender']['userprofilesetting_title']}--></label>
+									<div class="controls">
+										<select id="userprofile_gender" name="userprofile_gender">
+											<option value="0"><!--<lang package='Template'>-->任意<!--</lang>--></option>
+											<option value="1"><!--{:Profile_Extend::getGender(1)}--></option>
+											<option value="2"><!--{:Profile_Extend::getGender(2)}--></option>
+										</select>
+									</div>
+								</div>
+								<!--{elseif $sBase=='userprofile_birthday'}-->
+								<div class="control-group">
+									<label class="control-label" for="userprofile_birthday"><!--{$arrUserprofilesettingDatas['userprofile_birthday']['userprofilesetting_title']}--></label>
+									<div class="controls">
+										<select name="userprofile_birthyear" id="userprofile_birthyear" style="width:80px;" onchange="showYearmonthday('userprofile_birthday','userprofile_birthmonth','userprofile_birthyear');">
+											<option value=""><!--<lang package='__COMMON_LANG__@Common'>-->年<!--</lang>--></option>
+											<!--<for start='0' end='100' var='nBirthyear'>-->
+											<!--{~$nTheNowYear=$nNowYear-$nBirthyear}-->
+											<option value="<!--{$nTheNowYear}-->"><!--{$nTheNowYear}--></option>
+											<!--</for>-->
+										</select>&nbsp;&nbsp;
+										<select name="userprofile_birthmonth" id="userprofile_birthmonth" style="width:60px;" onchange="showYearmonthday('userprofile_birthday','userprofile_birthmonth','userprofile_birthyear');">
+											<option value=""><!--<lang package='__COMMON_LANG__@Common'>-->月<!--</lang>--></option>
+											<!--<for start='1' end='12' var='nBirthmonth'>-->
+											<option value="<!--{$nBirthmonth}-->"><!--{$nBirthmonth}--></option>
+											<!--</for>-->
+										</select>&nbsp;&nbsp;
+										<select name="userprofile_birthday" id="userprofile_birthday" style="width:60px;">
+											<option value=""><!--<lang package='__COMMON_LANG__@Common'>-->日<!--</lang>--></option>
+											<!--<for start='1' end='$nNowDays' var='nBirthday'>-->
+											<option value="<!--{$nBirthday}-->"><!--{$nBirthday}--></option>
+											<!--</for>-->
+										</select>
+									</div>
+								</div>
+								<!--{elseif $sBase=='userprofile_birthcity'}-->
+								<div class="control-group">
+									<label class="control-label" for="userprofile_birthcity"><!--{$arrUserprofilesettingDatas['userprofile_birthcity']['userprofilesetting_title']}--></label>
+									<div class="controls">
+										<!--{$sDirthDistrict}-->
+									</div>
+								</div>
+								<!--{elseif $sBase=='userprofile_residecity'}-->
+								<div class="control-group">
+									<label class="control-label" for="userprofile_residecity"><!--{$arrUserprofilesettingDatas['userprofile_residecity']['userprofilesetting_title']}--></label>
+									<div class="controls">
+										<!--{$sResideDistrict}-->
+									</div>
+								</div>
+								<!--{elseif $sBase=='userprofile_bloodtype'}-->
+								<div class="control-group">
+									<label class="control-label" for="userprofile_bloodtype"><!--{$arrUserprofilesettingDatas['userprofile_bloodtype']['userprofilesetting_title']}--></label>
+									<div class="controls">
+										<select name="userprofile_bloodtype">
+											<option value="A">A</option>
+											<option value="B">B</option>
+											<option value="AB">AB</option>
+											<option value="O">O</option><option value="<!--<lang package='Template'>-->其它<!--</lang>-->"><!--<lang package='Template'>-->其它<!--</lang>--></option>
+										</select>
+									</div>
+								</div>
+								<!--{d*else}-->
+								<div class="control-group">
+									<label class="control-label" for="<!--{$sBase}-->"><!--{$arrUserprofilesettingDatas[$sBase]['userprofilesetting_title']}--></label>
+									<div class="controls">
+										<input class="input-xlarge" type="text" name="<!--{$sBase}-->" id="<!--{$sBase}-->" size="40" value="" />
+									</div>
+								</div>
+								<!--{/if}-->
+								<!--{/if}-->
+								<!--</foreach>-->
+
+								<!--<for start='1' end='8' var='nCustomFieldId'>-->
+								<!--{~$sCustomField='userprofile_field'.$nCustomFieldId}-->
+								<!--{if array_key_exists($sCustomField,$arrUserprofilesettingDatas) && 
+										$arrUserprofilesettingDatas[$sCustomField]['userprofilesetting_allowsearch']==1}-->
+								<div class="control-group">
+									<label class="control-label" for="<!--{$sCustomField}-->"><!--{$arrUserprofilesettingDatas[$sCustomField]['userprofilesetting_title']}--></label>
+									<div class="controls">
+										<input class="input-xlarge" type="text" name="<!--{$sCustomField}-->" id="<!--{$sCustomField}-->" size="40" value="" />
+									</div>
+								</div>
+								<!--{/if}-->
+								<!--</for>-->
+							</p>
+						</div>
+						<div class="tab-pane fade" id="contact" style="display:none">
+							<p>
+								<!--<foreach for=arrContacts value=sContact>-->
+								<!--{if array_key_exists($sContact,$arrUserprofilesettingDatas) && 
+										$arrUserprofilesettingDatas[$sContact]['userprofilesetting_allowsearch']==1}-->
+								<div class="control-group">
+									<label class="control-label" for="<!--{$sContact}-->"><!--{$arrUserprofilesettingDatas[$sContact]['userprofilesetting_title']}--></label>
+									<div class="controls">
+										<input class="input-xlarge" type="text" name="<!--{$sContact}-->" id="<!--{$sContact}-->" size="40" value="" />
+									</div>
+								</div>
+								<!--{/if}-->
+								<!--</foreach>-->
+							</p>
+						</div>
+						<div class="tab-pane fade" id="edu" style="display:none">
+							<p>
+								<!--<foreach for=arrEdus value=sEdu>-->
+								<!--{if array_key_exists($sEdu,$arrUserprofilesettingDatas) && 
+										$arrUserprofilesettingDatas[$sEdu]['userprofilesetting_allowsearch']==1}-->
+								<!--{if $sEdu=='userprofile_nowschool'}-->
+								<div class="control-group">
+									<label class="control-label" for="userprofile_nowschool"><!--{$arrUserprofilesettingDatas['userprofile_nowschool']['userprofilesetting_title']}--></label>
+									<div class="controls">
+										<select name="userprofile_nowschool">
+											<option value="<!--<lang package='Template'>-->博士<!--</lang>-->"><!--<lang package='Template'>-->博士<!--</lang>--></option>
+											<option value="<!--<lang package='Template'>-->硕士<!--</lang>-->"><!--<lang package='Template'>-->硕士<!--</lang>--></option>
+											<option value="<!--<lang package='Template'>-->本科<!--</lang>-->"><!--<lang package='Template'>-->本科<!--</lang>--></option>
+											<option value="<!--<lang package='Template'>-->专科<!--</lang>-->"><!--<lang package='Template'>-->专科<!--</lang>--></option>
+											<option value="<!--<lang package='Template'>-->高中<!--</lang>-->"><!--<lang package='Template'>-->高中<!--</lang>--></option>
+											<option value="<!--<lang package='Template'>-->初中<!--</lang>-->"><!--<lang package='Template'>-->初中<!--</lang>--></option>
+											<option value="<!--<lang package='Template'>-->小学<!--</lang>-->"><!--<lang package='Template'>-->小学<!--</lang>--></option>
+											<option value="<!--<lang package='Template'>-->幼儿班<!--</lang>-->"><!--<lang package='Template'>-->幼儿班<!--</lang>--></option>
+											<option value="<!--<lang package='Template'>-->其它<!--</lang>-->"><!--<lang package='Template'>-->其它<!--</lang>--></option>
+											<option value="<!--<lang package='Template'>-->工作<!--</lang>-->"><!--<lang package='Template'>-->工作<!--</lang>--></option>
+										</select>
+									</div>
+								</div>
+								<!--{elseif $sEdu=='userprofile_education'}-->
+								<div class="control-group">
+									<label class="control-label" for="userprofile_education"><!--{$arrUserprofilesettingDatas['userprofile_education']['userprofilesetting_title']}--></label>
+									<div class="controls">
+										<select name="userprofile_education">
+											<option value="<!--<lang package='Template'>-->博士<!--</lang>-->"><!--<lang package='Template'>-->博士<!--</lang>--></option>
+											<option value="<!--<lang package='Template'>-->硕士<!--</lang>-->"><!--<lang package='Template'>-->硕士<!--</lang>--></option>
+											<option value="<!--<lang package='Template'>-->本科<!--</lang>-->"><!--<lang package='Template'>-->本科<!--</lang>--></option>
+											<option value="<!--<lang package='Template'>-->专科<!--</lang>-->"><!--<lang package='Template'>-->专科<!--</lang>--></option>
+											<option value="<!--<lang package='Template'>-->中学<!--</lang>-->"><!--<lang package='Template'>-->中学<!--</lang>--></option>
+											<option value="<!--<lang package='Template'>-->小学<!--</lang>-->"><!--<lang package='Template'>-->小学<!--</lang>--></option>
+											<option value="<!--<lang package='Template'>-->其它<!--</lang>-->"><!--<lang package='Template'>-->其它<!--</lang>--></option>
+										</select>
+									</div>
+								</div>
+								<!--{d*else}-->
+								<div class="control-group">
+									<label class="control-label" for="<!--{$sEdu}-->"><!--{$arrUserprofilesettingDatas[$sEdu]['userprofilesetting_title']}--></label>
+									<div class="controls">
+										<input class="input-xlarge" type="text" name="<!--{$sEdu}-->" id="<!--{$sEdu}-->" size="40" value="" />
+									</div>
+								</div>
+								<!--{/if}-->
+								<!--{/if}-->
+								<!--</foreach>-->
+							</p>
+						</div>
+						<div class="tab-pane fade" id="work" style="display:none">
+							<p>
+								<!--<foreach for=arrWorks value=sWork>-->
+								<!--{if array_key_exists($sWork,$arrUserprofilesettingDatas) && 
+										$arrUserprofilesettingDatas[$sWork]['userprofilesetting_allowsearch']==1}-->
+								<div class="control-group">
+									<label class="control-label" for="<!--{$sWork}-->"><!--{$arrUserprofilesettingDatas[$sWork]['userprofilesetting_title']}--></label>
+									<div class="controls">
+										<input class="input-xlarge" type="text" name="<!--{$sWork}-->" id="<!--{$sWork}-->" size="40" value="" />
+									</div>
+								</div>
+								<!--{/if}-->
+								<!--</foreach>-->
+							</p>
+						</div>
+						<div class="tab-pane fade" id="info" style="display:none">
+							<p>
+								<!--<foreach for=arrInfos value=sInfo>-->
+								<!--{if array_key_exists($sInfo,$arrUserprofilesettingDatas) && 
+										$arrUserprofilesettingDatas[$sInfo]['userprofilesetting_allowsearch']==1}-->
+								<!--{if $sInfo=='userprofile_idcardtype'}-->
+								<div class="control-group">
+									<label class="control-label" for="userprofile_idcardtype"><!--{$arrUserprofilesettingDatas['userprofile_idcardtype']['userprofilesetting_title']}--></label>
+									<div class="controls">
+										<select name="userprofile_idcardtype">
+											<option value="<!--<lang package='Template'>-->身份证<!--</lang>-->"><!--<lang package='Template'>-->身份证<!--</lang>--></option>
+											<option value="<!--<lang package='Template'>-->护照<!--</lang>-->"><!--<lang package='Template'>-->护照<!--</lang>--></option>
+											<option value="<!--<lang package='Template'>-->驾驶证<!--</lang>-->"><!--<lang package='Template'>-->驾驶证<!--</lang>--></option>
+										</select>
+									</div>
+								</div>
+								<!--{elseif in_array($sInfo,array('userprofile_bio','userprofile_interest'))}-->
+								<div class="control-group">
+									<label class="control-label" for="<!--{$sInfo}-->"><!--{$arrUserprofilesettingDatas[$sInfo]['userprofilesetting_title']}--></label>
+									<div class="controls">
+										<textarea class="input-xlarge" name="<!--{$sInfo}-->" id="<!--{$sInfo}-->" rows="5" style="width:400px;"></textarea>
+									</div>
+								</div>
+								<!--{d*else}-->
+								<div class="control-group">
+									<label class="control-label" for="<!--{$sInfo}-->"><!--{$arrUserprofilesettingDatas[$sInfo]['userprofilesetting_title']}--></label>
+									<div class="controls">
+										<input class="input-xlarge" type="text" name="<!--{$sInfo}-->" id="<!--{$sInfo}-->" size="40" value="" />
+									</div>
+								</div>
+								<!--{/if}-->
+								<!--{/if}-->
+								<!--</foreach>-->
+							</p>
+						</div>
+					</div>
+					<div>
+						<button type="submit" class="btn"><!--<lang package='Template'>-->查找<!--</lang>--></button>&nbsp;
+						<a class="btn" href="<!--{:Q::U('home://friend/index')}-->"><!--<lang package='Template'>-->返回好友列表<!--</lang>--></a>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+		
+<!--<include file="Core_Extend::template('footer')" />-->

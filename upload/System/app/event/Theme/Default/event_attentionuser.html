@@ -1,0 +1,36 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('event://public/index')}-->" title="<!--<lang package='Template'>-->活动<!--</lang>-->"><!--<lang package='Template'>-->活动<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--{$arrEvent['event_title']}--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+		<div class="grid_8">
+			<h3 class="event_title" style="margin-bottom:10px;" title="<!--{$arrEvent['event_title']}-->"><!--{$arrEvent['event_title']|C+subString=0,35}--></h3>
+			
+			<!--<include file="event+menu" />-->
+
+			<div class="userlist">
+				<!--{if !empty($arrEventuserLists)}-->
+				<!--<foreach for=arrEventuserLists value=arrEventuser>-->
+				<div class="user smalluser">
+					<a href="<!--{:Q::U('home://space@?id='.$arrEventuser['user_id'])}-->"><img src="<!--{:Core_Extend::avatar( $arrEventuser['user_id'],'small' )}-->" width="100%" title="<!--<lang package='Template'>-->活动成员<!--</lang>-->&nbsp;<!--{$arrEventuser['user_name']}--> - <!--<lang package='Template'>-->创建时间<!--</lang>-->&nbsp;<!--{$arrEventuser['create_dateline']|Core_Extend+timeFormat}-->" alt="<!--<lang package='Template'>-->活动成员<!--</lang>-->&nbsp;<!--{$arrEventuser['user_name']}-->" class="need_lazyload"></a>
+					<a class="need_tips" tips="<!--<lang package='Template'>-->活动成员<!--</lang>-->&nbsp;<!--{$arrEventuser['user_name']}-->&nbsp;,&nbsp;<!--<lang package='Template'>-->创建时间<!--</lang>-->&nbsp;<!--{$arrEventuser['create_dateline']|Core_Extend+timeFormat}-->" href="<!--{:Q::U('home://space@?id='.$arrEventuser['user_id'])}-->"><!--{:C::subString($arrEventuser['user_name'],0,3)}--></a>
+				</div>
+				<!--</foreach>-->
+				<!--{d*else}-->
+				<p><!--<lang package='Template'>-->暂时没有发现任何活动成员<!--</lang>--></p>
+				<!--{/if}-->
+			</div>
+
+			<!--{$sPageNavbar}-->
+		</div>
+
+		<!--<include file="event+sidebar" />-->
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

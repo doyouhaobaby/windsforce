@@ -1,0 +1,86 @@
+/*
+File Name: windsforce.css
+File Type: 必需
+Description: 系统数据库支持CSS样式
+*/
+
+/**===============================
+           系统所有主题元素CSS，方便重写和调用
+================================*/
+.WindsforceSystem-header_border_width,.WindsforceSystem-1{border-width:{HEADER_BORDER_WIDTH};}/* 1 */
+.WindsforceSystem-header_border_color,.WindsforceSystem-2{border-color:{HEADER_BORDER_COLOR};}/* 2 */
+.WindsforceSystem-header_text_color,.WindsforceSystem-3{color:{HEADER_TEXT_COLOR};}/* 3 */
+.WindsforceSystem-footer_text_color,.WindsforceSystem-4{color:{FOOTER_TEXT_COLOR};}/* 4 */
+
+.WindsforceSystem-normal_font,.WindsforceSystem5{font-family:{NORMAL_FONT};}/* 5 */
+.WindsforceSystem-normal_fontsize,.WindsforceSystem-6{font-size:{NORMAL_FONTSIZE};}/* 6 */
+.WindsforceSystem-small_font,.WindsforceSystem-7{font-family:{SMALL_FONT};}/* 7 */
+.WindsforceSystem-small_fontsize,.WindsforceSystem-8{font-size:{SMALL_FONTSIZE};}/* 8 */
+.WindsforceSystem-big_font,.WindsforceSystem-9{font-family:{BIG_FONT};}/* 9 */
+.WindsforceSystem-big_fontsize,.WindsforceSystem-10{font-size:{BIG_FONTSIZE};}/* 10 */
+
+.WindsforceSystem-normal_color,.WindsforceSystem-11{color:{NORMAL_COLOR};}/* 11 */
+.WindsforceSystem-medium_textcolor,.WindsforceSystem-12{color:{MEDIUM_TEXTCOLOR};}/* 12 */
+.WindsforceSystem-light_textcolor,.WindsforceSystem-13{color:{LIGHT_TEXTCOLOR};}/* 13 */
+.WindsforceSystem-link_color,.WindsforceSystem-14{color:{LINK_COLOR};}/* 14 */
+.WindsforceSystem-link_color a,.WindsforceSystem-14 a{color:{LINK_COLOR};}/* 14 - 2 */
+.WindsforceSystem-highlightlink_color,.WindsforceSystem-15{color:{HIGHLIGHTLINK_COLOR};}/* 15 */
+
+.WindsforceSystem-wrap_table_width,.WindsforceSystem-16{width:{WRAP_TABLE_WIDTH};}/* 16 */
+.WindsforceSystem-wrap_table_bg,.WindsforceSystem-17{background-color:{WRAP_TABLE_BG};}/* 17 */
+.WindsforceSystem-wrap_border_width,.WindsforceSystem-18{border-width:{WRAP_BORDER_WIDTH};}/* 18 */
+.WindsforceSystem-wrap_border_color,.WindsforceSystem-19{border-color:{WRAP_BORDER_COLOR};}/* 19 */
+
+.WindsforceSystem-content_fontsize,.WindsforceSystem-20{font-size:{CONTENT_FONTSIZE};}/* 20 */
+.WindsforceSystem-content_big_size,.WindsforceSystem-21{font-size:{CONTENT_BIG_SIZE};}/* 21 */
+.WindsforceSystem-content_width,.WindsforceSystem-22{width:{CONTENT_WIDTH};}/* 22 */
+.WindsforceSystem-content_separate_color,.WindsforceSystem-23{color:{CONTENT_SEPARATE_COLOR};}/* 23 */
+.WindsforceSystem-content_separate_color-border,.WindsforceSystem-24{border-color:{CONTENT_SEPARATE_COLOR};}/* 24 */
+.WindsforceSystem-content_separate_color-bg,.WindsforceSystem-25{background-color:{CONTENT_SEPARATE_COLOR};}/* 25 */
+
+.WindsforceSystem-menu_border_color,.WindsforceSystem-26{border-color:{MENU_BORDER_COLOR};}/* 26 */
+.WindsforceSystem-menu_text_color,.WindsforceSystem-27{color:{MENU_TEXT_COLOR};}/* 27 */
+.WindsforceSystem-menu_hover_bg_color,.WindsforceSystem-28{background-color:{MENU_HOVER_BG_COLOR};}/* 28 */
+.WindsforceSystem-menu_hover_text_color,.WindsforceSystem-29{color:{MENU_HOVER_TEXT_COLOR};}/* 29 */
+
+.WindsforceSystem-input_border,.WindsforceSystem-30{border-color:{INPUT_BORDER};}/* 30 */
+.WindsforceSystem-input_border_dark_color,.WindsforceSystem-31{border-color:{INPUT_BORDER_DARK_COLOR};}/* 31 */
+.WindsforceSystem-input_bg,.WindsforceSystem-32{background-color:{INPUT_BG};}/* 32 */
+
+.WindsforceSystem-drop_menu_border,.WindsforceSystem-33{border-color:{DROP_MENU_BORDER};}/* 33 */
+
+.WindsforceSystem-interval_line_color,.WindsforceSystem-34{color:{INTERVAL_LINE_COLOR};}/* 34 */
+.WindsforceSystem-interval_line_color-border,.WindsforceSystem-35{border-color:{INTERVAL_LINE_COLOR};}/* 35 */
+.WindsforceSystem-interval_line_color-bg,.WindsforceSystem-36{background-color:{INTERVAL_LINE_COLOR};}/* 36 */
+.WindsforceSystem-common_background_color,.WindsforceSystem-37{background-color:{COMMON_BACKGROUND_COLOR};}/* 37 */
+.WindsforceSystem-special_border,.WindsforceSystem-38{border-color:{SPECIAL_BORDER};}/* 38 */
+.WindsforceSystem-special_bg,.WindsforceSystem-39{background-color:{SPECIAL_BG};}/* 39 */
+.WindsforceSystem-interleave_color,.WindsforceSystem-40{background-color:{INTERLEAVE_COLOR};}/* 40 */
+.WindsforceSystem-noticetext_color,.WindsforceSystem-41{color:{NOTICETEXT_COLOR};}/* 41 */
+.WindsforceSystem-noticetext_border_color,.WindsforceSystem-42{border-color:{NOTICETEXT_BORDER_COLOR};}/* 42 */
+
+.WindsforceSystem-menu_bg_color,.WindsforceSystem-43{background-color:{MENU_BG_COLOR};}/* 43 */
+.WindsforceSystem-menu_bg_img,.WindsforceSystem-44{background-image:{MENU_BG_IMG};}/* 44 */
+.WindsforceSystem-header_bg_color,.WindsforceSystem-45{background-color:{HEADER_BG_COLOR};}/* 45 */
+.WindsforceSystem-header_bg_img,.WindsforceSystem-46{background-image:{HEADER_BG_IMG};}/* 46 */
+.WindsforceSystem-side_bg_color,.WindsforceSystem-47{background-color:{SIDE_BG_COLOR};}/* 47 */
+.WindsforceSystem-side_bg_img,.WindsforceSystem-48{background-image:{SIDE_BG_IMG};}/* 48 */
+.WindsforceSystem-bg_color,.WindsforceSystem-49{background-color:{BG_COLOR};}/* 49 */
+.WindsforceSystem-bg_img,.WindsforceSystem-50{background-image:{BG_IMG};}/* 50 */
+.WindsforceSystem-drop_menu_bg_color,.WindsforceSystem-51{background-color:{DROP_MENU_BG_COLOR};}/* 51 */
+.WindsforceSystem-drop_menu_bg_img,.WindsforceSystem-52{background-image:{DROP_MENU_BG_IMG};}/* 52 */
+.WindsforceSystem-footer_bg_color,.WindsforceSystem-53{background-color:{FOOTER_BG_COLOR};}/* 53 */
+.WindsforceSystem-footer_bg_img,.WindsforceSystem-54{background-image:{FOOTER_BG_IMG};}/* 54 */
+.WindsforceSystem-float_bg_color,.WindsforceSystem-55{background-color:{FLOAT_BG_COLOR};}/* 55 */
+.WindsforceSystem-float_bg_img,.WindsforceSystem-56{background-image:{FLOAT_BG_IMG};}/* 56 */
+.WindsforceSystem-float_mask_bg_color,.WindsforceSystem-57{background-color:{FLOAT_MASK_BG_COLOR};}/* 57 */
+.WindsforceSystem-float_mask_bg_img,.WindsforceSystem-58{background-image:{FLOAT_MASK_BG_IMG};}/* 58 */
+
+.WindsforceSystem-menu_bg_code,.WindsforceSystem-59{{MENU_BG_CODE};}/* 59 */
+.WindsforceSystem-header_bg_code,.WindsforceSystem-60{{HEADER_BG_CODE};}/* 60 */
+.WindsforceSystem-side_bg_code,.WindsforceSystem-61{{SIDE_BG_CODE};}/* 61 */
+.WindsforceSystem-bg_code,.WindsforceSystem-62{{BG_CODE};}/* 62 */
+.WindsforceSystem-drop_menu_bg_code,.WindsforceSystem-63{{DROP_MENU_BG_CODE};}/* 63 */
+.WindsforceSystem-footer_bg_code,.WindsforceSystem-64{{FOOTER_BG_CODE};}/* 64 */
+.WindsforceSystem-float_bg_code,.WindsforceSystem-65{{FLOAT_BG_CODE};}/* 65 */
+.WindsforceSystem-float_mask_bg_code,.WindsforceSystem-66{{FLOAT_MASK_BG_CODE};}/* 66 */

@@ -1,0 +1,29 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->应用列表<!--</lang>-->&nbsp;(<b><!--{$nApps}--></b>)</li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+		<div class="grid_12">
+			<ul class="thumbnails">
+				<!--<foreach for=arrAppinfos value=arrAppinfo>-->
+				<li class="grid_3">
+					<div class="thumbnail">
+						<img src="<!--{:__ROOT__}-->/System/app/<!--{$arrAppinfo['logo']}-->" class="left">
+						<div class="apps_info">
+							<h5><a href="<!--{:Q::U($arrAppinfo['app_identifier'].'://public/index',array(),$arrAppinfo['app_identifier']=='wap'?true:false)}-->"><!--{$arrAppinfo['app_name']}--></a>&nbsp;(<!--{$arrAppinfo['app_identifier']}-->)</h5>
+							<p><!--{$arrAppinfo['app_description']}--></p>
+						</div>
+					</div>
+				</li>
+				<!--</foreach>-->
+			</ul>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

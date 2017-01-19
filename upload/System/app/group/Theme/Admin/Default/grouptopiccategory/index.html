@@ -1,0 +1,156 @@
+<!--<include file="public+header" />-->
+
+<!--{~$sCalendarLang=Core_Extend::calendar()}-->
+<script type="text/javascript" src="<!--{:__PUBLIC__}-->/js/calendar/datepicker/WdatePicker.js"></script>
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->帖子分类<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->帖子分类<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->在这里可以管理系统所有的帖子分类<!--</lang>--></li>
+				</ul>
+			</div>
+
+			<div class="module_content">
+				<form method='get' action="<!--{:Q::U( 'app/config' )}-->" class="quick_search">
+					<table cellspacing="3" cellpadding="3">
+						<tr>
+							<th><!--<lang package='Template'>-->编号<!--</lang>--></th>
+							<td><input type="text" name="grouptopiccategory_id" title="<!--<lang package='Template'>-->编号<!--</lang>-->" value="<!--{:Q::G('grouptopiccategory_id')}-->" onkeyup="this.value = this.value.replace(/[^-0-9]/g, '');" />
+							</td>
+							<th><!--<lang package='Template'>-->结果排序<!--</lang>--></th>
+							<td>
+								<select name="order_">
+									<option value="" <!--{if !Q+G('order_')}-->selected<!--{/if}-->><!--<lang package='Template'>-->排序字段<!--</lang>--></option>
+									<option value="grouptopiccategory_id" <!--{if Q+G('order_')=='grouptopiccategory_id'}-->selected<!--{/if}-->><!--<lang package='Template'>-->编号<!--</lang>--></option>
+									<option value="grouptopiccategory_sort" <!--{if Q+G('order_')=='grouptopiccategory_sort'}-->selected<!--{/if}-->><!--<lang package='Template'>-->序号<!--</lang>--></option>
+									<option value="create_dateline" <!--{if Q+G('order_')=='create_dateline'}-->selected<!--{/if}-->><!--<lang package='Template'>-->添加时间<!--</lang>--></option>
+									<option value="grouptopiccategory_name" <!--{if Q+G('order_')=='grouptopiccategory_name'}-->selected<!--{/if}-->><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->帖子分类名<!--</lang>--></option>
+									<option value="grouptopiccategory_topicnum" <!--{if Q+G('order_')=='grouptopiccategory_topicnum'}-->selected<!--{/if}-->><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->帖子统计<!--</lang>--></option>
+								</select>
+								<select name="sort_">
+									<option value="" <!--{if !Q+G('sort_')}-->selected<!--{/if}-->><!--<lang package='Template'>-->默认排序<!--</lang>--></option>
+									<option value="desc" <!--{if Q+G('sort_')=='desc'}-->selected<!--{/if}-->><!--<lang package='Template'>-->递增<!--</lang>--></option>
+									<option value="asc" <!--{if Q+G('sort_')=='asc'}-->selected<!--{/if}-->><!--<lang package='Template'>-->递减<!--</lang>--></option>
+								</select>
+								<select name="perpage">
+									<option value="" <!--{if !Q+G('perpage')}-->selected<!--{/if}-->><!--<lang package='Template'>-->默认每页数量<!--</lang>--></option>
+									<option value="10" <!--{if Q+G('perpage')==10}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(10)</option>
+									<option value="20" <!--{if Q+G('perpage')==20}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(20)</option>
+									<option value="50" <!--{if Q+G('perpage')==50}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(50)</option>
+									<option value="100" <!--{if Q+G('perpage')==100}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(100)</option>
+									<option value="200" <!--{if Q+G('perpage')==200}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(200)</option>
+									<option value="500" <!--{if Q+G('perpage')==500}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(500)</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->帖子统计<!--</lang>-->(EGT)</th>
+							<td>
+								<input type="text" name="grouptopiccategory_topicnum" title="<!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->帖子统计<!--</lang>-->" value="<!--{:Q::G('grouptopiccategory_topicnum')}-->" onkeyup="this.value = this.value.replace(/[^-0-9]/g, '');" />
+							</td>
+							<th><!--<lang package='Template'>-->添加时间<!--</lang>--></th>
+							<td>
+								<input type="text" id="start_time" name="start_time" value="<!--{:Q::G('start_time')}-->" onfocus="WdatePicker({el:'start_time',skin:'ext',lang:'<!--{$sCalendarLang}-->',dateFmt:'yyyy-MM-dd'})">
+								&nbsp;~&nbsp;
+								<input type="text" id="end_time" name="end_time" value="<!--{:Q::G('end_time')}-->"  onfocus="WdatePicker({el:'end_time',skin:'ext',lang:'<!--{$sCalendarLang}-->',dateFmt:'yyyy-MM-dd'})">
+							</td>
+						</tr>
+						<tr>
+							<th><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组<!--</lang>--></th>
+							<td>
+								<input type="text" name="group_nikename" title="<!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组<!--</lang>-->" value="<!--{:Q::G('group_nikename')}-->"/>
+							</td>
+							<th><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组<!--</lang>-->(ID)</th>
+							<td>
+								<input type="text" name="group_id" title="<!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组<!--</lang>-->" value="<!--{:Q::G('group_id')}-->" onkeyup="this.value = this.value.replace(/[^-0-9]/g, '');" />
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<input type="text" name="grouptopiccategory_name" title="<!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->帖子分类名<!--</lang>-->" value="<!--{:Q::G('grouptopiccategory_name')}-->" class="quicksearch_text">
+								&nbsp;<input type="submit" id="" value="<!--<lang package='Template'>-->查询<!--</lang>-->" onclick="" class="alt_btn">
+							</td>
+						</tr>
+					</table>
+					<input type="hidden" name="c" value="<!--{:MODULE_NAME}-->"/>
+					<input type="hidden" name="a" value="<!--{:ACTION_NAME}-->"/>
+					<input type="hidden" name="id" value="<!--{$_GET['id']}-->"/>
+					<input type="hidden" name="controller" value="grouptopiccategory"/>
+				</form>
+			</div>
+		</article>
+		
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><a href="<!--{:Admin_Extend::base(array('controller'=>'grouptopiccategory'))}-->"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->帖子分类<!--</lang>--></a></h3>
+				<ul class="tabs">
+					<li class="active"><a href="<!--{:Admin_Extend::base()}-->"><!--<lang package='Template'>-->应用入口<!--</lang>--></a></li>
+					<li><a class="tab_edit" href="javascript:void(0);" onclick="editApp('<!--{$_GET['id']}-->','grouptopiccategory')"><!--<lang package='Template'>-->编辑<!--</lang>--></a></li>
+					<li><a class="tab_delete" href="javascript:void(0);" onclick="foreverdelAppDeep('<!--{$_GET['id']}-->','grouptopiccategory')"><!--<lang package='Template'>-->彻底删除<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<div class="module_content">
+				<table class="tablesorter" cellspacing="0" id="checkList">
+					<thead>
+						<tr>
+							<th width="20"><input type="checkbox" class="input-short" onclick="checkAll('checkList')"></th>
+							<th width="85"><a href="<!--{:Admin_Extend::soryBy('grouptopiccategory_id',$sSortByUrl,array('controller'=>'grouptopiccategory'))}-->" <!--{:Admin_Extend::sortField('grouptopiccategory_id')}-->><!--<lang package='Template'>-->编号<!--</lang>--></a></th>
+							<th><a href="<!--{:Admin_Extend::soryBy('grouptopiccategory_name',$sSortByUrl,array('controller'=>'grouptopiccategory'))}-->" <!--{:Admin_Extend::sortField('grouptopiccategory_name')}-->><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->帖子分类名<!--</lang>--></a></th>
+							<th width="280"><a href="<!--{:Admin_Extend::soryBy('group_id',$sSortByUrl,array('controller'=>'grouptopiccategory'))}-->" <!--{:Admin_Extend::sortField('group_id')}-->><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->群组名字<!--</lang>--></a></th>
+							<th width="90"><a href="<!--{:Admin_Extend::soryBy('grouptopiccategory_topicnum',$sSortByUrl,array('controller'=>'grouptopiccategory'))}-->" <!--{:Admin_Extend::sortField('grouptopiccategory_topicnum')}-->><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->帖子统计<!--</lang>--></a></th>
+							<th width="100px"><a href="<!--{:Admin_Extend::soryBy('create_dateline',$sSortByUrl,array('controller'=>'grouptopiccategory'))}-->" <!--{:Admin_Extend::sortField('create_dateline')}-->><!--<lang package='Template'>-->添加时间<!--</lang>--></a></th>
+							<th width="70"><a href="<!--{:Admin_Extend::soryBy('grouptopiccategory_sort',$sSortByUrl,array('controller'=>'grouptopiccategory'))}-->" <!--{:Admin_Extend::sortField('grouptopiccategory_sort')}-->><!--<lang package='Template'>-->序号<!--</lang>--></a></th>
+							<th width="40"><!--<lang package='Template'>-->操作<!--</lang>--></th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--{if !empty($arrLists)}-->
+						<!--<foreach for=arrLists>-->
+						<tr id="datalist-<!--{$value.grouptopiccategory_id}-->">
+							<td><input type="checkbox" class="input-short" name="key" value="<!--{$value.grouptopiccategory_id}-->"></td>
+							<td><!--{$value.grouptopiccategory_id}--></td>
+							<td><a href="javascript:editApp('<!--{$_GET['id']}-->','grouptopiccategory','<!--{$value.grouptopiccategory_id}-->')"><!--{$value.grouptopiccategory_name}--></a>
+								<div class="row-actions">
+									<span class='edit'><a href="javascript:editApp('<!--{$_GET['id']}-->','grouptopiccategory','<!--{$value.grouptopiccategory_id}-->')"><!--<lang package='Template'>-->编辑<!--</lang>--></a>|</span>
+									<span class='delete'><a href="javascript:foreverdelAppDeep('<!--{$_GET['id']}-->','grouptopiccategory','<!--{$value.grouptopiccategory_id}-->')"><!--<lang package='Template'>-->彻底删除<!--</lang>--></a></span>
+									</span>
+								</div>
+							</td>
+							<td><a href="<!--{:Admin_Extend::base(array('controller'=>'grouptopiccategory','group_id'=>$value['group_id']))}-->"><!--{$value['group_name']}--> - <!--{$value['group_nikename']}--></a></td>
+							<td><!--{$value.grouptopiccategory_topicnum}--></td>
+							<td><span class="<!--{:Admin_Extend::dateColor($value['create_dateline'])}-->"><!--{$value['create_dateline']|date='Y-m-d',**}--></span><br/>
+								<span class="smallDatecolor"><!--{$value['create_dateline']|date='H:i',**}--></span>
+							</td>
+							<td class="pointer" title="<!--<lang package='Template'>-->点击修改数据<!--</lang>-->" id="grouptopiccategory_sort_<!--{$value.grouptopiccategory_id}-->" onClick="clickToInputApp('grouptopiccategory_sort','<!--{$value.grouptopiccategory_id}-->','<!--{$_GET['id']}-->','grouptopiccategory')"><!--{$value.grouptopiccategory_sort}--></td>
+							<td><a href="javascript:editApp('<!--{$_GET['id']}-->','grouptopiccategory','<!--{$value.grouptopiccategory_id}-->')"><input type="image" src="<!--{:At::path('icn_edit.png')}-->" title="<!--<lang package='Template'>-->编辑<!--</lang>-->"></a></td>
+						</tr>
+						<!--</foreach>-->
+						<!--{d*else}-->
+						<tr>
+							<td colspan="8"><!--<lang package='Template'>-->暂时没有发现任何记录<!--</lang>--></td>
+						</tr>
+						<!--{/if}-->
+					</tbody>
+				</table>
+			</div>
+
+			<div class="module_content operate_box">
+				<div class="left">
+					<!--{$sPageNavbar}-->
+				</div>
+				<div class="right operate" style="text-align:right;">
+					<input type="button" name="edit" value="<!--<lang package='Template'>-->编辑<!--</lang>-->" onclick="editApp('<!--{$_GET['id']}-->','grouptopiccategory')" class="alt_btn">&nbsp;
+					<input type="button" name="delete" value="<!--<lang package='Template'>-->彻底删除<!--</lang>-->" onclick="foreverdelAppDeep('<!--{$_GET['id']}-->','grouptopiccategory')" class="alt_btn">
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</article>
+
+<!--<include file="public+footer">-->

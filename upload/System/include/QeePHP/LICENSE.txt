@@ -1,0 +1,15 @@
+﻿
+QeePHP License:（BSD）
+---------------------------------
+This is a free software,you can do it in any way.
+
+About Us:
+---------------------------------
+Home：http://qeephp.114.ms
+BBS： http://www.114.ms/app/group/gid/qeephp.html
+
+Last updated 2014/10/05 By 635750556@qq.com
+
+Copyright (C) 2010 - 2099 WindsForce Team. (http://qeephp.114.ms)
+---------------------------------
+All rights reserved.

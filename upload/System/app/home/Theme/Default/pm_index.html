@@ -1,0 +1,184 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{script}-->
+function deleteMyPm(id){
+	windsforceConfirm(Q.L('确实要永久删除选择项吗？','Common'),function(){
+		Q.AjaxSend(Q.U('home://pm/del_my_one_pm?id='+id),'','',completeDelete);
+	});
+}
+
+function deletePm(id,userid){
+	windsforceConfirm(Q.L('确实要永久删除选择项吗？','Common'),function(){
+		Q.AjaxSend(Q.U('home://pm/del_one_pm?id='+id+'&uid='+userid),'','',completeDelete);
+	});
+}
+
+function completeDelete(data,status){
+	if(status==1){
+		setTimeout("window.location.replace(_SELF_);",1000);
+	}
+}
+
+function deletePms(){
+	windsforceConfirm(Q.L('确实要永久删除选择项吗？','Common'),function(){
+		$WF('pmform').submit();
+	});
+
+	return false;
+}
+
+function readPms(){
+	$WF('pmform').submit();
+
+	return false;
+}
+
+function deleteMyPms(){
+	windsforceConfirm(Q.L('确实要永久删除选择项吗？','Common'),function(){
+		$WF('pmform').submit();
+	});
+
+	return false;
+}
+
+function deleteSystemPms(){
+	windsforceConfirm(Q.L('确实要永久删除选择项吗？','Common'),function(){
+		Q.AjaxSubmit('pmform','<!--{:Q::U('home://pm/delete_systempm?ajax=1')}-->','',function(data,status){ 
+			if(status==1){
+				setTimeout("window.location.replace(_SELF_);",1000);
+			}
+		});
+	});
+
+	return false;
+}
+<!--{/script}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->短消息<!--</lang>--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+		<!--<include file="pmnotice+menu" />-->
+
+		<div class="grid_10">
+			<!--<include file="pm+menu" />-->
+
+			<form method="post" name="pmform" id="pmform" action="<!--{$sFormAction}-->" class="form-inline">
+				<div id="checkList">
+					<!--{if !in_array($sType,array('system','my','systemnew'))}-->
+					<div style="margin: 5px 0px 0px 0px;">
+						<span class="right">
+							<input type="checkbox" class="input-short" id="chkall" name="chkall" onclick="checkAll('checkList')" style="display:inline;">&nbsp;<!--<lang package='__COMMON_LANG__@Common'>-->全选<!--</lang>-->
+							<span class="pipe">|</span>
+							<span class="label label-warning"><a href="javascript:void(0);" onclick="deletePms();return false;"><!--<lang package='__COMMON_LANG__@Common'>-->删除<!--</lang>--></a></span>
+						</span>
+					</div>
+					<!--{/if}-->
+
+					<!--{if in_array($sType,array('system','systemnew'))}-->
+					<div style="margin: 5px 0px 0px 0px;">
+						<span class="right">
+							<input type="checkbox" class="input-short" id="chkall" name="chkall" onclick="checkAll('checkList')">&nbsp;<!--<lang package='__COMMON_LANG__@Common'>-->全选<!--</lang>-->
+							<span class="pipe">|</span>
+							<span><a href="javascript:void(0);" onclick="readPms();return false;"><!--<lang package='Template'>-->标为已读<!--</lang>--></a></span>
+							<span class="pipe">|</span>
+							<span class="label label-warning"><a href="javascript:void(0);" onclick="deleteSystemPms();return false;"><!--<lang package='__COMMON_LANG__@Common'>-->删除<!--</lang>--></a></span>
+						</span>
+					</div>
+					<!--{/if}-->
+
+					<!--{if $sType=='my'}-->
+					<div style="margin: 5px 0px 0px 0px;">
+						<span class="right">
+							<input type="checkbox" class="input-short" id="chkall" name="chkall" onclick="checkAll('checkList')">&nbsp;<!--<lang package='__COMMON_LANG__@Common'>-->全选<!--</lang>-->
+							<span class="pipe">|</span>
+							<span class="label"><a href="javascript:void(0);" onclick="deleteMyPms();return false;"><!--<lang package='__COMMON_LANG__@Common'>-->删除<!--</lang>--></a></span>
+						</span>
+					</div>
+					<!--{/if}-->
+					
+					<p><!--<lang package='Template'>-->短消息<!--</lang>--></p>
+					
+					<!--{if !empty($arrPmLists)}-->
+					<table class="table table-striped">
+						<colgroup>
+							<col width="70px"></col>
+							<col width="*"></col>
+							<col width="60px"></col>
+						</colgroup>
+						<tbody>
+							<!--<foreach for=arrPmLists value=arrPm>-->
+							<!--{~$sEven=$key%2==0?'pmlist-even':'pmlist-odd'}-->
+							<!--{if $arrPm['pm_type']=='user'}-->
+							<tr id="pm_<!--{$arrPm['pm_id']}-->" class="<!--{$sEven}-->">
+								<td width="70px">
+									<a href="<!--{:Q::U('home://space@?id='.$arrPm['pm_msgfromid'])}-->" target="_blank">
+										<img src="<!--{:Core_Extend::avatar($arrPm['pm_msgfromid'],'small')}-->" width="48px" height="48px" class="thumbnail need_lazyload" />
+									</a>
+								</td>
+								<td>
+									<!--{if $arrPm['pm_subject']}-->
+									<a href="<!--{:Q::U('home://pm/show?id='.$arrPm['pm_id'].($sType=='my'?'&muid':'&uid=').$arrPm['pm_msgfromid'])}-->"><h5><!--{$arrPm['pm_subject']}--></h5></a>
+									<!--{/if}-->
+									<p class="pm-cite"><a href="<!--{:Q::U('home://space@?id='.$arrPm['pm_msgfromid'])}-->" target="_blank"><!--{$arrPm['pm_msgfrom']}--></a>
+									<!--{if $sType=='my'}-->
+									&nbsp;-&nbsp;<a href="<!--{:Q::U('home://space@?id='.$arrPm['pm_msgtoid'])}-->" target="_blank"><!--{:Core_Extend::getUsernameById($arrPm['pm_msgtoid'])}--></a>
+									<!--{/if}-->
+									&nbsp;<em><!--{$arrPm['create_dateline']|Core_Extend+timeFormat}--></em>
+									<!--{if $sType!='my' && $arrPm['pm_isread']==0}-->
+									&nbsp;<img src="<!--{:__PUBLIC__}-->/images/common/notice_newpm.gif" title="<!--<lang package='Template'>-->未读短消息<!--</lang>-->"/>
+									<!--{/if}-->
+									<!--{if $sType=='my' && $arrPm['pm_status']==0}-->
+									&nbsp;<i class="icon-remove-circle"></i>&nbsp;<!--<lang package='Template'>-->已删<!--</lang>-->
+									<!--{/if}-->
+									</p>
+									<p class="pm-summary">
+										<!--{$arrPm['pm_message']|C+subString=0,$GLOBALS['_cache_']['home_option']['pm_list_substring_num']|Pm_Extend+ubb}-->
+									</p>
+									<p class="pm-more"><a href="<!--{:Q::U('home://pm/show?id='.$arrPm['pm_id'].($sType=='my'?'&muid=':'&uid=').$arrPm['pm_msgfromid'])}-->"><!--<lang package='Template'>-->查看消息<!--</lang>--></a>
+										<!--{if $sType!='my'}-->
+										<span class="pipe">|</span><a href="<!--{:Q::U('home://pm/pmnew?pmid='.$arrPm['pm_id'].'&uid='.$arrPm['pm_msgfromid'])}-->"><!--<lang package='Template'>-->回复<!--</lang>--></a><!--{/if}-->
+									</p>
+								</td>
+								<td><!--{if $sType!='my'}--><p><a href="javascript:void(0);" id="pmd_<!--{$arrPm['pm_id']}-->" onclick="deletePm('<!--{$arrPm['pm_id']}-->','<!--{$arrPm['pm_msgfromid']}-->');return false;" title="<!--<lang package='__COMMON_LANG__@Common'>-->删除<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->删除<!--</lang>--></a></p><!--{d*else}--><p><a href="javascript:void(0);" id="pmd_<!--{$arrPm['pm_id']}-->" onclick="deleteMyPm('<!--{$arrPm['pm_id']}-->');return false;" title="<!--<lang package='__COMMON_LANG__@Common'>-->删除<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->删除<!--</lang>--></a></p>
+									<!--{/if}-->
+									<p><input name="pmid[]" type="checkbox" class="input-short" value="<!--{$arrPm['pm_id']}-->" /></p>
+								</td>
+							</tr>
+							<!--{d*else}-->
+							<tr id="pm_<!--{$arrPm['pm_id']}-->" class="<!--{$sEven}-->">
+								<td width="70px"><img src="<!--{:__PUBLIC__}-->/images/common/pm.gif" /></td>
+								<td>
+									<!--{if $arrPm['pm_subject']}--><a href="<!--{:Q::U('home://pm/show?id='.$arrPm['pm_id'])}-->"><h5><!--{$arrPm['pm_subject']}--></h5></a><!--{/if}-->
+									<p class="pm-cite"><a href="<!--{:Q::U('home://space@?id='.$arrPm['pm_msgfromid'])}-->" target="_blank"><!--{$arrPm['pm_msgfrom']}--></a>&nbsp;<!--<lang package='Template'>-->发布<!--</lang>-->&nbsp;<em><!--{$arrPm['create_dateline']|Core_Extend+timeFormat}--></em><!--{if !in_array($arrPm['pm_id'],$arrReadPms)}-->&nbsp;<img src="<!--{:__PUBLIC__}-->/images/common/notice_newpm.gif" title="<!--<lang package='Template'>-->未读短消息<!--</lang>-->"/><!--{/if}--></p>
+									<p class="pm-summary">
+									<!--{$arrPm['pm_message']|C+subString=0,$GLOBALS['_cache_']['home_option']['pm_list_substring_num']|Pm_Extend+ubb}-->
+									</p>
+									<p class="pm-more"><a href="<!--{:Q::U('home://pm/show?id='.$arrPm['pm_id'])}-->"><!--<lang package='Template'>-->查看消息<!--</lang>--></a></p>
+								</td>
+								<!--{if in_array($sType,array('system','systemnew'))}-->
+								<td>
+									<p><input name="pmid[]" type="checkbox" class="input-short" value="<!--{$arrPm['pm_id']}-->" /></p>
+								</td>
+								<!--{d*else}-->
+								<td></td>
+								<!--{/if}-->
+							</tr>
+							<!--{/if}-->
+							<!--</foreach>-->
+						</tbody>
+					</table>
+					<!--{/if}-->
+				</div>
+			</form>
+
+			<!--{$sPageNavbar}-->
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

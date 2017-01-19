@@ -1,0 +1,10 @@
+			<div class="nav_tabcontainer nav_tab">
+				<ul>
+					<li <!--{if $sType==''}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://space@?id='.$nId)}-->"><!--<lang package='Template'>-->基本信息<!--</lang>--></a></li>
+					<li <!--{if $sType=='rating'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://space@?id='.$nId.'&type=rating')}-->"><!--<lang package='Template'>-->积分<!--</lang>--></a></li>
+					<li <!--{if $sType=='feed'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://space@?id='.$nId.'&type=feed')}-->"><!--<lang package='Template'>-->用户动态<!--</lang>--></a></li>
+					<li <!--{if $sType=='guestbook'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://space@?id='.$nId.'&type=guestbook')}-->"><!--<lang package='Template'>-->留言板<!--</lang>--></a></li>
+					<li <!--{if $sType=='apps'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://space@?id='.$nId.'&type=apps')}-->"><img src="<!--{:__ROOT__}-->/System/app/logo_small.png" width="17" height="17" />&nbsp;<!--<lang package='Template'>-->应用个人空间<!--</lang>--></a></li>
+				</ul>
+			</div>
+			<div class="clearfix"></div>

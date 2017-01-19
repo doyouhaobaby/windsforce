@@ -1,0 +1,62 @@
+<!--{:Core_Extend::validate()}-->
+<script src="<!--{:__APPPUB__}-->/Js/register.js"></script>
+
+				<form class="form-horizontal" method='post' name="register_form" id="register_form">
+					<fieldset>
+						<div class="control-group">
+							<div class="controls">
+								<div id="result" class="none"></div>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="user_name"><!--<lang package='Template'>-->用户名<!--</lang>--><em class="red">*</em></label>
+							<div class="controls">
+								<input class="input-xlarge" id="user_name" name="user_name" type="text" value="">
+								<p class="input_errortips"></p>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="user_nikename"><!--<lang package='Template'>-->用户昵称<!--</lang>--></label>
+							<div class="controls">
+								<input class="input-xlarge" id="user_nikename" name="user_nikename" type="text" value="">
+								<p class="input_errortips"></p>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="user_name"><!--<lang package='Template'>-->密码<!--</lang>--><em class="red">*</em></label>
+							<div class="controls">
+								<input class="input-xlarge" type="password" id="user_password" name="user_password" value="">
+								<p class="input_errortips"></p>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="user_name_confirm"><!--<lang package='Template'>-->确认密码<!--</lang>--><em class="red">*</em></label>
+							<div class="controls">
+								<input class="input-xlarge" type="password" id="user_password_confirm" name="user_password_confirm" value="">
+								<p class="input_errortips"></p>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="user_email">Email<em class="red">*</em></label>
+							<div class="controls">
+								<input class="input-xlarge" id="user_email" name="user_email" type="text" value="" <!--{if !$nDisplaySeccode}-->onkeypress="submitKeycode(event,registerSubmit);"<!--{/if}-->>
+								<p class="input_errortips"></p>
+							</div>
+						</div>
+						<!--{if $nDisplaySeccode==1}-->
+						<div class="control-group">
+							<label class="control-label" for="seccode"><!--<lang package='__COMMON_LANG__@Common'>-->验证码<!--</lang>--><em class="red">*</em></label>
+							<div class="controls">
+								<input name="seccode" id="seccode" type="text" class="input-small {required:true,remote:Q.U('home://public/validate_seccode'),messages:{remote:'<!--<lang package='__COMMON_LANG__@Common'>-->验证码错误<!--</lang>-->'}} left" value="" onkeypress="submitKeycode(event,registerSubmit);">&nbsp;
+								<span class="validate_seccode"><span class="input_errortips"></span></span>
+								<p class="help-block" style="clear:both;padding-top:10px;"><span id="seccodeImage"><img style="cursor:pointer" onclick="updateSeccode()" src="<!--{:Q::U('home://public/seccode')}-->" /></span></p>
+							</div>
+						</div>
+						<!--{/if}-->
+						<div class="form-actions">
+							<input type="hidden" name="referer" value="<!--{$sReferer}-->">
+							<input type="hidden" name="ajax" value="1">
+							<button name="register_submit" type="submit" class="btn btn-large width_300" id="register_submit"><!--<lang package='__COMMON_LANG__@Common'>-->注册<!--</lang>--></button>
+						</div>
+					</fieldset>
+				</form>

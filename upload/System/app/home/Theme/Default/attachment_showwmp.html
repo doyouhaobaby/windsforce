@@ -1,0 +1,17 @@
+			<div class="show_wmp">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th><img src="<!--{$sAttachmentIcon}-->">&nbsp;<!--<lang package='Template'>-->Windows Media Player文件<!--</lang>--></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="background:none;">
+								<a href="javascript:playmedia('player_<!--{$arrAttachment['attachment_id']}-->','wmp','<!--{:Attachment_Extend::getAttachmenturl($arrAttachment)}-->','600','405','');updateDownload('<!--{$arrAttachment['attachment_id']}-->');"><!--{$arrAttachment['attachment_name']}--></a>
+								<div id="player_<!--{$arrAttachment['attachment_id']}-->" style="display: none;"></div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>

@@ -1,0 +1,82 @@
+<!--<include file="public+header">-->
+
+<!--{:Core_Extend::editorInclude()}-->
+<!--{:Core_Extend::emotion()}-->
+
+<!--{script}-->
+$(function(){
+	editor=loadEditor('homesite_content');
+	$(".face-icon").jqfaceedit({txtAreaObj:editor,containerObj:$('#emotion_parentcontainer'),top:25,left:-27});
+});
+
+currentBeforeFun=function(){
+	$('#homesite_content').val(editor.html());
+};
+
+checkForm(SubmitFormCheckform);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<if condition="isset( $_GET['value'] )">--><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->编辑站点信息<!--</lang>--><!--<else/>--><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->添加站点信息<!--</lang>--><!--</if>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<if condition="isset( $_GET['value'] )">--><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->编辑站点信息<!--</lang>-->_<!--{$_GET['value']}--><!--<else/>--><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->添加站点信息<!--</lang>--><!--</if>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+				<div class="module_content">
+					<ul>
+						<li><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->系统有几个默认的站点信息,你还可以额外添加<!--</lang>--></li>
+					</ul>
+				</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<if condition="isset( $_GET['value'] )">--><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->编辑站点信息<!--</lang>--><!--<else/>--><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->添加站点信息<!--</lang>--><!--</if>--></h3>
+				<ul class="tabs">
+					<li class="active"><a href="<!--{:Admin_Extend::index(array('controller'=>'homesite'))}-->"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->站点信息列表<!--</lang>--></a></li>
+					<li><a href="<!--{:Admin_Extend::base()}-->"><!--<lang package='Template'>-->应用入口<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="" method="post" id="homesiteAdd" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="homesite_nikename"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->站点信息别名<!--</lang>--></label>
+						<input type="text" name="homesite_nikename" id="homesite_nikename" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:homesite_nikename}--><!--</if>-->" class="{required:true}"/>
+						<div class="description input_tips"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->站点信息别名用于显示，最大字符为32<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="homesite_name"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->站点信息名字<!--</lang>--></label>
+						<input type="text" name="homesite_name" id="homesite_name" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:homesite_name}--><!--</if>-->" <!--{if isset($oValue) && $TheController:is_system_homesite($oValue['homesite_id'])}-->readonly="true"<!--{/if}--> class="{required:true,stringCheckTwo:true,remote:'<!--{:Admin_Extend::base(array('controller'=>'homesite','action'=>'check_name'),isset( $oValue )?'value='.$oValue['homesite_id']:'')}-->',messages:{remote:'<!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->站点信息名字重复<!--</lang>-->'}}"/>
+						<div class="description input_tips"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->站点信息名字具有唯一性，最大字符为32<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="homesite_content"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->站点信息内容<!--</lang>--></label>
+						<div id="homesitecontent-media-box" class="common-media-box">
+							<a href="javascript:void(0);" class="face-icon icon_add_face" ><!--<lang package='Template'>-->表情<!--</lang>--></a> 
+							<a href="javascript:void(0);" onclick="globalAddattachment('insertAttachment_');" class="icon_add_img"><!--<lang package='Template'>-->媒体<!--</lang>--></a>
+							<a href="javascript:void(0);" onclick="addVideo('insertVideo_');" class="icon_add_video" ><!--<lang package='Template'>-->视频<!--</lang>--></a>
+							<a href="javascript:void(0);" onclick="addMusic('insertMusic_');" class="icon_add_music"><!--<lang package='Template'>-->音乐<!--</lang>--></a>
+						</div>
+						<p id="emotion_parentcontainer">
+							<textarea name="homesite_content" id="homesite_content" style="width:750px;height:<!--{:Core_Extend::getEditor()}-->px;visibility:hidden;"><!--<if condition="isset( $oValue )">--><!--{$oValue:homesite_content|htmlspecialchars}--><!--</if>--></textarea>
+						</p>
+						<div class="description"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->站点信息的详细内容，请更具自己网站的性质进行适当的修改<!--</lang>-->&nbsp;<a href="<!--{:Core_Extend::windsforceOuter('app=home&c=misc&a=ubb')}-->" target="_blank"><!--<lang package='__COMMON_LANG__@Common'>-->查看内容支持的UBB代码<!--</lang>--></a><br/>
+						<!--<lang package='Template'>-->系统变量替换: {site_name} 网站标题,{site_description} 网站描述,{site_url} 站点信息,{time} 当前时间,{user_name} 登录用户,{user_nikename} 登录用户昵称,{admin_email} 系统管理员邮箱<!--</lang>--></div>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="hidden" name="ajax" value="1">
+						<input type="hidden" name="value" id="value" value="<!--<if condition="isset( $_GET['value'] )">--><!--{$_GET['value']}--><!--</if>-->"/>
+						<input type="submit" id="submit_button" value="" class="alt_btn">
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->">
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

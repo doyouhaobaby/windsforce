@@ -1,0 +1,259 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+$(document).ready(function(){
+	$("#groupoption_tab ul").idTabs();
+});
+
+function option(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'update...' );
+	$("#submit_button").attr("disabled", false);
+	$('.validate')(0).submit();
+}
+
+checkForm(option);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->群组配置<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->群组配置<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->群组配置<!--</lang>--></h3>
+				<ul class="tabs">
+					<li><a href="<!--{:Admin_Extend::base(array('controller'=>'group'))}-->"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->群组列表<!--</lang>--></a></li>
+					<li><a href="<!--{:Admin_Extend::base(array('controller'=>'grouptopic'))}-->"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->帖子列表<!--</lang>--></a></li>
+					<li><a href="<!--{:Admin_Extend::base(array('controller'=>'grouptopiccomment'))}-->"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->回帖列表<!--</lang>--></a></li>
+					<li><a href="<!--{:Admin_Extend::base(array('controller'=>'grouptopictag'))}-->"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->标签列表<!--</lang>--></a></li>
+					<li><a href="<!--{:Admin_Extend::base(array('controller'=>'groupcategory'))}-->"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->群组分类列表<!--</lang>--></a></li>
+					<li><a href="<!--{:Admin_Extend::base(array('controller'=>'grouptopiccategory'))}-->"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->帖子分类列表<!--</lang>--></a></li>
+					<li class="active"><a href="<!--{:Admin_Extend::base()}-->"><!--<lang package='Template'>-->应用入口<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('app/index')}-->"><!--<lang package='Template'>-->应用列表<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="<!--{:Q::U('app/config?id='.$nId.'&action=update_option')}-->" method="post" class="validate">
+				<div class="module_content"></div>
+				<div class="module_content">
+					<!--<include file="Admin_Extend::template('group','groupoption/menu')" />-->
+					
+					<div id="groupoption_tab" class="windsforce_tab">
+						<div class="windsforce_tabtitlebox">
+							<ul class="windsforce_tabtitle">
+								<li><a href="#tab1"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->基本<!--</lang>--></a></li>
+								<li><a href="#tab2"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->新帖<!--</lang>--></a></li>
+								<li><a href="#tab3"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组<!--</lang>--></a></li>
+								<li><a href="#tab4"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->界面<!--</lang>--></a></li>
+								<li><a href="#tab5"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->具体小组<!--</lang>--></a></li>
+								<li><a href="#tab6"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->个人空间<!--</lang>--></a></li>
+								<li><a href="#tab7"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->标签<!--</lang>--></a></li>
+							</ul>
+						</div>
+						<div id="tab1" class="windsforce_tabcontent">
+							<fieldset class="fieldset_bordernone">
+								<label for="group_hottopic_num"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->群组首页热门帖子数量<!--</lang>--></label>
+								<input type="text" name="options[group_hottopic_num]" id="group_hottopic_num" size="60" value="<!--{$arrOptions['group_hottopic_num']}-->" class="{required:true,digits:true,min: 2,max:50}"/>
+								<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->热门帖子可以提高会员互动性，跟随流行热门话题<!--</lang>-->
+								</div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="group_hottopic_date"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->群组热门帖子调用时间<!--</lang>--></label>
+								<select name="options[group_hottopic_date]" id="group_hottopic_date">
+									<option value="3600" <!--{if $arrOptions['group_hottopic_date']==3600}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一小时<!--</lang>--></option>
+									<option value="86400" <!--{if $arrOptions['group_hottopic_date']==86400}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一天<!--</lang>--></option>
+									<option value="604800" <!--{if $arrOptions['group_hottopic_date']==604800}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一星期<!--</lang>--></option>
+									<option value="2592000" <!--{if $arrOptions['group_hottopic_date']==2592000}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一月<!--</lang>--></option>
+									<option value="31536000" <!--{if $arrOptions['group_hottopic_date']==31536000}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一年<!--</lang>--></option>
+								</select>
+								<div class="description"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->这里的时间为热门帖子调用时间，如果为一星期，那么热门帖子只会从当前一个星期中取出<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="group_thumbtopic_num"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->群组首页缩略图帖子数量<!--</lang>--></label>
+								<input type="text" name="options[group_thumbtopic_num]" id="group_thumbtopic_num" size="60" value="<!--{$arrOptions['group_thumbtopic_num']}-->" class="{required:true,digits:true,min: 2,max:50}"/>
+								<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->图文帖子更能够吸引访客注意<!--</lang>-->
+								</div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="group_thumbtopic_date"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->群组图片帖子调用时间<!--</lang>--></label>
+								<select name="options[group_thumbtopic_date]" id="group_thumbtopic_date">
+									<option value="3600" <!--{if $arrOptions['group_thumbtopic_date']==3600}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一小时<!--</lang>--></option>
+									<option value="86400" <!--{if $arrOptions['group_thumbtopic_date']==86400}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一天<!--</lang>--></option>
+									<option value="604800" <!--{if $arrOptions['group_thumbtopic_date']==604800}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一星期<!--</lang>--></option>
+									<option value="2592000" <!--{if $arrOptions['group_thumbtopic_date']==2592000}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一月<!--</lang>--></option>
+									<option value="31536000" <!--{if $arrOptions['group_thumbtopic_date']==31536000}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一年<!--</lang>--></option>
+								</select>
+								<div class="description"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->这里的时间为图片帖子调用时间，如果为一星期，那么图片帖子只会从当前一个星期中取出<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="index_systemrecommendtopic_num"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->群组首页系统推荐帖子帖子数量<!--</lang>--></label>
+								<input type="text" name="options[index_systemrecommendtopic_num]" id="index_systemrecommendtopic_num" size="60" value="<!--{$arrOptions['index_systemrecommendtopic_num']}-->" class="{required:true,digits:true,min: 2,max:50}"/>
+								<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->推荐帖子可以用来展示一些非常棒的帖子<!--</lang>-->
+								</div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="index_groupadminretopic_num"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->群组首页组长推荐帖子帖子数量<!--</lang>--></label>
+								<input type="text" name="options[index_groupadminretopic_num]" id="index_groupadminretopic_num" size="60" value="<!--{$arrOptions['index_groupadminretopic_num']}-->" class="{required:true,digits:true,min: 2,max:50}"/>
+								<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->推荐帖子可以用来展示一些非常棒的帖子<!--</lang>-->
+								</div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="index_newgroupnum"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->首页最新小组数量<!--</lang>--></label>
+								<input type="text" name="options[index_newgroupnum]" id="index_newgroupnum" size="60" value="<!--{$arrOptions['index_newgroupnum']}-->" class="{required:true,digits:true,min: 2,max:50}"/>
+								<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->根据网站的运营空间设置<!--</lang>-->
+								</div>
+								<p class="input_errortips"></p>
+							</fieldset>
+						</div>
+						<div id="tab2" class="windsforce_tabcontent">
+							<fieldset class="fieldset_bordernone">
+								<label for="group_indextopicnum"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->新帖首页每页帖子分页数量<!--</lang>--></label>
+								<input type="text" name="options[group_indextopicnum]" id="group_indextopicnum" size="60" value="<!--{$arrOptions['group_indextopicnum']}-->" class="{required:true,digits:true,min: 2,max:50}"/>
+								<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->这里是小组应用首页对应的帖子列表分页数量<!--</lang>-->
+								</div>
+								<p class="input_errortips"></p>
+							</fieldset>
+						</div>
+						<div id="tab3" class="windsforce_tabcontent">
+							<fieldset class="fieldset_bordernone">
+								<label for="group_grouplistnum"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组页面小组列表分页数量<!--</lang>--></label>
+								<input type="text" name="options[group_grouplistnum]" id="group_grouplistnum" size="60" value="<!--{$arrOptions['group_grouplistnum']}-->" class="{required:true,digits:true,min: 2,max:50}"/>
+								<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->这个可以稍微设置多一点，可以展示更多<!--</lang>-->
+								</div>
+								<p class="input_errortips"></p>
+							</fieldset>
+						</div>
+						<div id="tab4" class="windsforce_tabcontent">
+							<fieldset class="fieldset_bordernone">
+								<label for="newtopic_default"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->新帖是否为默认首页<!--</lang>--></label>
+								<select name="options[newtopic_default]" id="newtopic_default">
+									<option value="1" <!--{if $arrOptions['newtopic_default']==1}-->selected<!--{/if}-->><!--<lang package='Template'>-->是<!--</lang>--></option>
+									<option value="0" <!--{if $arrOptions['newtopic_default']==0}-->selected<!--{/if}-->><!--<lang package='Template'>-->否<!--</lang>--></option>
+								</select>
+								<div class="description"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->这个根据用户习惯来选择<!--</lang>-->
+								</div>
+							</fieldset>
+							<fieldset>
+								<label for="group_grouptopicstyle_on"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->帖子浏览界面切换浏览风格菜单是否显示<!--</lang>--></label>
+								<select name="options[group_grouptopicstyle_on]" id="group_grouptopicside_on">
+									<option value="0" <!--{if $arrOptions['group_grouptopicstyle_on']==0}-->selected<!--{/if}-->><!--<lang package='Template'>-->否<!--</lang>--></option>
+									<option value="1" <!--{if $arrOptions['group_grouptopicstyle_on']==1}-->selected<!--{/if}-->><!--<lang package='Template'>-->是<!--</lang>--></option>
+								</select>
+								<div class="description"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->关闭后，用户将无法设置帖子的浏览风格<!--</lang>-->
+								</div>
+							</fieldset>
+							<fieldset>
+								<label for="group_grouptopicstyle"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->帖子浏览界面展示风格<!--</lang>--></label>
+								<select name="options[group_grouptopicstyle]" id="group_grouptopicstyle">
+									<option value="1" <!--{if $arrOptions['group_grouptopicstyle']==1}-->selected<!--{/if}-->><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->传统BBS<!--</lang>--></option>
+									<option value="2" <!--{if $arrOptions['group_grouptopicstyle']==2}-->selected<!--{/if}-->><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组新风格<!--</lang>--></option>
+								</select>
+								<div class="description"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->这个根据用户习惯来选择<!--</lang>-->
+								</div>
+							</fieldset>
+						</div>
+						<div id="tab5" class="windsforce_tabcontent">
+							<fieldset class="fieldset_bordernone">
+								<label for="group_listusernum"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组成员页面分页数量<!--</lang>--></label>
+								<input type="text" name="options[group_listusernum]" id="group_listusernum" size="60" value="<!--{$arrOptions['group_listusernum']}-->" class="{required:true,digits:true,min: 2,max:100}"/>
+								<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->这个可以适当设置大一点<!--</lang>-->
+								</div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="onegroup_thumbtopic_num"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组浏览首页最新图片帖子数量<!--</lang>--></label>
+								<input type="text" name="options[onegroup_thumbtopic_num]" id="onegroup_thumbtopic_num" size="60" value="<!--{$arrOptions['onegroup_thumbtopic_num']}-->" class="{required:true,digits:true,min: 2,max:50}"/>
+								<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->这个可以设置小一点<!--</lang>-->
+								</div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="group_listtopicnum"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->具体某个小组每页帖子分页数量<!--</lang>--></label>
+								<input type="text" name="options[group_listtopicnum]" id="group_listtopicnum" size="60" value="<!--{$arrOptions['group_listtopicnum']}-->" class="{required:true,digits:true,min: 2,max:50}"/>
+								<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->这里是进入小组后对应的帖子列表分页数量<!--</lang>-->
+								</div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="grouptopic_listcommentnum"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->浏览帖子页面回帖分页数量<!--</lang>--></label>
+								<input type="text" name="options[grouptopic_listcommentnum]" id="grouptopic_listcommentnum" size="60" value="<!--{$arrOptions['grouptopic_listcommentnum']}-->" class="{required:true,digits:true,min: 2,max:50}"/>
+								<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->这个不要设置过大或者过小<!--</lang>-->
+								</div>
+								<p class="input_errortips"></p>
+							</fieldset>
+						</div>
+						<div id="tab6" class="windsforce_tabcontent">
+							<fieldset class="fieldset_bordernone">
+								<label for="group_space_listtopicnum"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->个人空间帖子分页数量<!--</lang>--></label>
+								<input type="text" name="options[group_space_listtopicnum]" id="group_space_listtopicnum" size="60" value="<!--{$arrOptions['group_space_listtopicnum']}-->" class="{required:true,digits:true,min: 2,max:50}"/>
+								<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->这个不要设置过大或者过小<!--</lang>-->
+								</div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="group_space_listcommentnum"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->个人空间回帖分页数量<!--</lang>--></label>
+								<input type="text" name="options[group_space_listcommentnum]" id="group_space_listcommentnum" size="60" value="<!--{$arrOptions['group_space_listcommentnum']}-->" class="{required:true,digits:true,min: 2,max:50}"/>
+								<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->这个不要设置过大或者过小<!--</lang>-->
+								</div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="group_ucenter_listtopicnum"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组个人中心帖子分页数量<!--</lang>--></label>
+								<input type="text" name="options[group_ucenter_listtopicnum]" id="group_ucenter_listtopicnum" size="60" value="<!--{$arrOptions['group_ucenter_listtopicnum']}-->" class="{required:true,digits:true,min: 2,max:50}"/>
+								<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->这个可以设置大一点，个人中心可以展示更多的帖子<!--</lang>-->
+								</div>
+								<p class="input_errortips"></p>
+							</fieldset>
+						</div>
+						<div id="tab7" class="windsforce_tabcontent">
+							<fieldset class="fieldset_bordernone">
+								<label for="group_hottag_num"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->通用热门标签数量<!--</lang>--></label>
+								<input type="text" name="options[group_hottag_num]" id="group_hottag_num" size="60" value="<!--{$arrOptions['group_hottag_num']}-->" class="{required:true,digits:true,min: 2,max:50}"/>
+								<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->这个可以稍微设置多一点，可以展示更多<!--</lang>-->
+								</div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="group_hottag_date"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->热门标签调用时间<!--</lang>--></label>
+								<select name="options[group_hottag_date]" id="group_hottag_date">
+									<option value="3600" <!--{if $arrOptions['group_hottag_date']==3600}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一小时<!--</lang>--></option>
+									<option value="86400" <!--{if $arrOptions['group_hottag_date']==86400}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一天<!--</lang>--></option>
+									<option value="604800" <!--{if $arrOptions['group_hottag_date']==604800}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一星期<!--</lang>--></option>
+									<option value="2592000" <!--{if $arrOptions['group_hottag_date']==2592000}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一月<!--</lang>--></option>
+									<option value="31536000" <!--{if $arrOptions['group_hottag_date']==31536000}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一年<!--</lang>--></option>
+								</select>
+								<div class="description"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->这里的时间为热门标签调用时间，如果为一星期，那么热门帖子只会从当前一个星期中取出<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="group_tag_listnum"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->标签列表分页数量<!--</lang>--></label>
+								<input type="text" name="options[group_tag_listnum]" id="group_tag_listnum" size="60" value="<!--{$arrOptions['group_tag_listnum']}-->" class="{required:true,digits:true,min: 2,max:300}"/>
+								<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->这个可以稍微设置多一点，可以展示更多<!--</lang>-->
+								</div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="group_tag_listtopicnum"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->标签查找到的帖子分页数量<!--</lang>--></label>
+								<input type="text" name="options[group_tag_listtopicnum]" id="group_tag_listtopicnum" size="60" value="<!--{$arrOptions['group_tag_listtopicnum']}-->" class="{required:true,digits:true,min: 2,max:50}"/>
+								<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->这个不用设置过多<!--</lang>-->
+								</div>
+								<p class="input_errortips"></p>
+							</fieldset>
+						</div>
+					</div>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input id="submit_button" type="submit" class="alt_btn" value="<!--<lang package='Template'>-->发布<!--</lang>-->" />
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->" />
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

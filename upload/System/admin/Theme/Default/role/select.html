@@ -1,0 +1,31 @@
+<td valign="top">
+	<select name="group" id="group" size="15" style="width:150px;height:200px;">
+		<option value="0"><!--<lang package='Template'>-->无上级组<!--</lang>--></option>
+		<!--<foreach for=arrList>-->
+		<option value="<!--{$value['role_id']}-->"><!--{$value['role_name']}--></option>
+		<!--</foreach>-->
+	</select>
+</td>
+<td>
+	<input type="hidden" name="node_level" id="node_level" value="0">
+	<input type="hidden" name="node_parentid" id="node_parentid" value="0">
+	<p><input type="button" value="<!--<lang package='Template'>-->确定<!--</lang>-->" onclick="ok()" class="alt_btn" /></p>
+	<p><input type="button" value="<!--<lang package='Template'>-->取消<!--</lang>-->" onclick="ok(false)" class="alt_btn" /></p>
+</td>
+<!--{script}-->
+function ok(val){
+	if(val!=false){
+		var obj = $WF('group');
+		optionObj = obj.getElementsByTagName('option');
+		var j=0;
+		for(var i=0;i < optionObj.length;i++){
+			if (optionObj[i].selected==true){
+				$('#parentRoleName').val(optionObj[i].text);
+				$('#role_parentid').val(optionObj[i].value);
+				j++;
+			}
+		}
+	}
+	$("#ajaxSelect").css('display','none');
+}
+<!--{/script}-->

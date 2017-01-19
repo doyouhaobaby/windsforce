@@ -1,0 +1,18 @@
+<!--<include file="header">-->
+
+<style type="text/css" id="internalStyle">
+.space_box{}
+</style>
+
+	<div id="content">
+		<div class="space_box light_box">
+			<p style="padding-bottom:5px;"><!--<lang package='Template'>-->用户名<!--</lang>-->&nbsp;<!--{$arrUserInfo.user_name}-->@<!--{$arrUserInfo.user_id}--></p>
+			<p style="padding-bottom:5px;"><!--<lang package='Template'>-->性别<!--</lang>-->&nbsp;<!--{:Profile_Extend::getGender($arrUserInfo['userprofile_gender'])}--></p>
+			<p style="padding-bottom:5px;"><!--{$arrUserInfo['create_dateline']|Core_Extend+timeFormat}-->&nbsp;<!--<lang package='Template'>-->注册<!--</lang>--></p>
+			<p style="padding-bottom:5px;"><!--<lang package='Template'>-->最后登录<!--</lang>-->&nbsp;<!--{$arrUserInfo['user_lastlogintime']|Core_Extend+timeFormat}--></p>
+		</div>
+
+		<div class="link"><a href="<!--{:Q::U('wap://public/index')}-->"><!--<lang package='__COMMON_LANG__@Common'>-->返回首页<!--</lang>--></a></div>
+	</div>
+
+<!--<include file="footer">-->

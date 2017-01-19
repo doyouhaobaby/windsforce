@@ -1,0 +1,224 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+function child(id){
+	window.location.href=Q.U('index?node_parentid='+id);
+}
+
+function changeNodegroup(oObj,id){
+	var keyValue;
+	var nodegroup_id=oObj.value;
+	if(id){
+		keyValue=id;
+	}else{
+		keyValue=getSelectValues();
+	}
+	
+	if(!keyValue){
+		windsforceAlert(Q.L('请选择操作项','Common'),'',3);
+		return false;
+	}
+	
+	window.location.href=Q.U('change_nodegroup?id='+keyValue+'&nodegroup_id='+nodegroup_id);
+}
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->节点列表<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->节点列表<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<h4 class="alert_info"><!--<if condition="isset( $sNodeName )">--><!--{$sNodeName}--><!--</if>--><!--{if $nNodeLevel==1}--><!--<lang package='Template'>-->应用<!--</lang>--><!--{elseif $nNodeLevel==2}--><!--<lang package='Template'>-->模块<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->操作<!--</lang>--><!--{/if}--><!--<lang package='Template'>-->列表<!--</lang>--></h4>
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->WindsForce采用基于角色的权限认证体系(RBAC)来管理用户访问权限<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->节点在RBAC系统中属于资源容器，里面储存了资源的层级关系<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->节点的最高级别为应用<!--</lang>--></li>
+					<li class="message-display common-message-display" style="list-style:none;"><a href="javascript:void(0);" onclick="messageDisplay();"><!--<lang package='Template'>-->展开更多<!--</lang>-->&gt;&gt;</a></li>
+					<div class="message_display none">
+						<li><!--<lang package='Template'>-->应用的下面有模块，模块下面有操作方法<!--</lang>--></li>
+						<li><!--<lang package='Template'>-->(应用+模块+方法) 构成一个完整的资源链，我们可以通过比对来进行访问控制<!--</lang>--></li>
+						<li style="list-style:none;" class="common_message_display"><a href="javascript:void(0);" onclick="messageDisplay();"><!--<lang package='Template'>-->收起<!--</lang>-->&lt;&lt;&lt;&lt;</a></li>
+					</div>
+				</ul>
+			</div>
+			<div class="module_content">
+				<form method='get' action="<!--{:Q::U( 'node/index' )}-->" class="quick_search">
+					<table cellspacing="3" cellpadding="3">
+						<tr>
+							<th><!--<lang package='Template'>-->状态<!--</lang>--></th>
+							<td><select name="node_status">
+									<option value="" <!--{if !isset($nIsStatus)}-->selected<!--{/if}-->><!--<lang package='Template'>-->全部<!--</lang>--></option>
+									<option value="1" <!--{if isset($nIsStatus) && $nIsStatus==1}-->selected<!--{/if}-->><!--<lang package='Template'>-->已审<!--</lang>--></option>
+									<option value="0" <!--{if isset($nIsStatus) && $nIsStatus===0}-->selected<!--{/if}-->><!--<lang package='Template'>-->待审<!--</lang>--></option>
+								</select>
+							</td>
+							<th><!--<lang package='Template'>-->结果排序<!--</lang>--></th>
+							<td>
+								<select name="order_">
+									<option value="" <!--{if !Q+G('order_')}-->selected<!--{/if}-->><!--<lang package='Template'>-->排序字段<!--</lang>--></option>
+									<option value="node_id" <!--{if Q+G('order_')=='node_id'}-->selected<!--{/if}-->><!--<lang package='Template'>-->编号<!--</lang>--></option>
+									<option value="node_sort" <!--{if Q+G('order_')=='node_sort'}-->selected<!--{/if}-->><!--<lang package='Template'>-->序号<!--</lang>--></option>
+									<option value="node_status" <!--{if Q+G('order_')=='node_status'}-->selected<!--{/if}-->><!--<lang package='Template'>-->状态<!--</lang>--></option>
+									<option value="create_dateline" <!--{if Q+G('order_')=='create_dateline'}-->selected<!--{/if}-->><!--<lang package='Template'>-->添加时间<!--</lang>--></option>
+									<option value="node_title" <!--{if Q+G('order_')=='node_title'}-->selected<!--{/if}-->><!--<lang package='Template'>-->显示名<!--</lang>--></option>
+									<option value="node_name" <!--{if Q+G('order_')=='node_name'}-->selected<!--{/if}-->><!--<lang package='Template'>-->名称<!--</lang>--></option>
+								</select>
+								<select name="sort_">
+									<option value="" <!--{if !Q+G('sort_')}-->selected<!--{/if}-->><!--<lang package='Template'>-->默认排序<!--</lang>--></option>
+									<option value="desc" <!--{if Q+G('sort_')=='desc'}-->selected<!--{/if}-->><!--<lang package='Template'>-->递增<!--</lang>--></option>
+									<option value="asc" <!--{if Q+G('sort_')=='asc'}-->selected<!--{/if}-->><!--<lang package='Template'>-->递减<!--</lang>--></option>
+								</select>
+								<select name="perpage">
+									<option value="" <!--{if !Q+G('perpage')}-->selected<!--{/if}-->><!--<lang package='Template'>-->默认每页数量<!--</lang>--></option>
+									<option value="10" <!--{if Q+G('perpage')==10}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(10)</option>
+									<option value="20" <!--{if Q+G('perpage')==20}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(20)</option>
+									<option value="50" <!--{if Q+G('perpage')==50}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(50)</option>
+									<option value="100" <!--{if Q+G('perpage')==100}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(100)</option>
+									<option value="200" <!--{if Q+G('perpage')==200}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(200)</option>
+									<option value="500" <!--{if Q+G('perpage')==500}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(500)</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th><!--<lang package='Template'>-->分组<!--</lang>--></th>
+							<td>
+								<select name="nodegroup_id" id="nodegroup_id">
+									<option value="" <!--{if Q+G('nodegroup_id')===null || Q+G('nodegroup_id')==''}-->selected<!--{/if}-->><!--<lang package='Template'>-->选择分组<!--</lang>--></option>
+									<!--<volist name="arrNodegroup" id="value">-->
+									<option value="<!--{$value['nodegroup_id']}-->" <!--{if isset($_GET['nodegroup_id']) && $_GET['nodegroup_id']!='' && $_GET['nodegroup_id']==$value['nodegroup_id']}-->selected<!--{/if}-->><!--{$value['nodegroup_title']}--></option>
+									<!--</volist>-->
+								</select>
+							</td>
+							<th><!--<lang package='Template'>-->显示名<!--</lang>--></th>
+							<td><input type="text" name="node_title" title="<!--<lang package='Template'>-->显示名<!--</lang>-->" value="<!--{:Q::G('node_title')}-->"></td>
+						</tr>
+						<tr>
+							<th><!--<lang package='Template'>-->编号<!--</lang>--></th>
+							<td><input type="text" name="node_id" title="<!--<lang package='Template'>-->编号<!--</lang>-->" value="<!--{:Q::G('node_id')}-->" onkeyup="this.value = this.value.replace(/[^-0-9]/g, '');" />
+							</td>
+							<td colspan="2">
+								<input type="text" name="node_name" title="<!--<lang package='Template'>-->节点名字<!--</lang>-->" value="<!--{:Q::G('node_name')}-->" class="quicksearch_text">
+								&nbsp;<input type="submit" id="" value="<!--<lang package='Template'>-->查询<!--</lang>-->" onclick="" class="alt_btn">
+							</td>
+						</tr>
+					</table>
+					<!--{if isset($bIsRecycleList)}-->
+					<input type="hidden" name="recycle_" value="1"/>
+					<!--{/if}-->
+					<input type="hidden" name="search" value="1"/>
+					<input type="hidden" name="c" value="<!--{:MODULE_NAME}-->"/>
+					<input type="hidden" name="a" value="<!--{:ACTION_NAME}-->"/>
+				</form>
+			</div>
+		</article>
+		
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><a href="<!--{:Q::U('node/index')}-->"><!--<lang package='Template'>-->节点列表<!--</lang>--></a>
+					<!--{if isset($bIsRecycleList)}-->&nbsp;<sup><a href="<!--{:Q::U(MODULE_NAME.'/index?recycle_=1')}-->" title="<!--<lang package='Template'>-->回收站<!--</lang>-->" style="color:red;">[<!--<lang package='Template'>-->回收站<!--</lang>-->]</a></sup>
+					<!--{/if}-->
+				</h3>
+				<ul class="tabs">
+					<!--<volist name="arrNodegroup" id="value">-->
+						<li class="<!--{if isset($_GET['nodegroup_id']) && ($_GET['nodegroup_id']===$value['nodegroup_id'] || (!$_GET['nodegroup_id']) && !$value['nodegroup_id'])}-->active<!--{/if}-->"><a href="<!--{:Q::U('node/index?nodegroup_id='.$value['nodegroup_id'] )}-->"><!--{$value['nodegroup_title']}--></a></li>
+					<!--</volist>-->
+					<li class="<!--{if !isset($_GET['nodegroup_id'])}-->active<!--{/if}-->"><a href="<!--{:Q::U('node/index')}-->"><!--<lang package='Template'>-->所有<!--</lang>--></a></li>
+					<!--{ifQ+C('APP_DEVELOP')}-->
+					<!--{if isset($bIsRecycleList)}-->
+					<li><a class="tab_clearrecycle" href="javascript:void(0);" onclick="clearRecycle()"><!--<lang package='Template'>-->清空回收站<!--</lang>--></a></li>
+					<!--{/if}-->
+					<li><a class="tab_add" href="javascript:void(0);" onclick="add()"><!--<lang package='Template'>-->新增<!--</lang>--></a></li>
+					<li><a class="tab_edit" href="javascript:void(0);" onclick="edit()"><!--<lang package='Template'>-->编辑<!--</lang>--></a></li>
+					<li><a href="javascript:void(0);" onclick="sort()"><!--<lang package='Template'>-->排序<!--</lang>--></a></li>
+					<li><a class="tab_delete" href="javascript:void(0);" onclick="foreverdel<!--{if isset($bIsRecycleList)}-->Deep<!--{/if}-->()"><!--{if isset($bIsRecycleList)}--><!--<lang package='Template'>-->彻底删除<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->删除<!--</lang>--><!--{/if}--></a></li>
+					<!--{/if}-->
+					<li><!--{if isset($bIsRecycleList)}-->
+						<a class="tab_list" href="<!--{:Q::U(MODULE_NAME.'/index')}-->" title="<!--<lang package='Template'>-->列表<!--</lang>-->"><img src="<!--{:At::path('icn_list.png')}-->"/></a>
+						<!--{d*else}-->
+						<a class="tab_recycle" href="<!--{:Q::U(MODULE_NAME.'/index?recycle_=1')}-->" title="<!--<lang package='Template'>-->回收站<!--</lang>-->"><img src="<!--{:At::path('icn_recycle.png')}-->"/></a>
+						<!--{/if}-->
+					</li>
+				</ul>
+			</header>
+			<div class="module_content">
+				<table class="tablesorter" cellspacing="0" id="checkList">
+					<thead> 
+						<tr> 
+							<th width="20px"><input type="checkbox" onclick="checkAll('checkList')"></th> 
+							<th width="85px"><a href="javascript:sortBy('node_id','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('node_id')}-->><!--<lang package='Template'>-->编号<!--</lang>--></a></th>
+							<th width="180px"><a href="javascript:sortBy('node_title','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('node_title')}-->><!--<lang package='Template'>-->显示名<!--</lang>--></a></th>
+							<th><a href="javascript:sortBy('node_name','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('node_name')}-->><!--<lang package='Template'>-->名称<!--</lang>--></a></th>
+							<th width="110px"><a href="javascript:sortBy('nodegroup_id','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('nodegroup_id')}-->><!--<lang package='Template'>-->分组<!--</lang>--></a></th>
+							<th width="90px"><a href="javascript:sortBy('node_sort','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('node_sort')}-->><!--<lang package='Template'>-->序号<!--</lang>--></a></th>
+							<th width="50px"><a href="javascript:sortBy('node_status','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('node_status')}-->><!--<lang package='Template'>-->状态<!--</lang>--></a></th>
+							<!--{ifQ+C('APP_DEVELOP')}-->
+							<th width="70px"><!--<lang package='Template'>-->操作<!--</lang>--></th>
+							<!--{/if}-->
+						</tr>
+					</thead>
+					<tbody>
+						<!--{if !empty($arrLists)}-->
+						<!--<foreach for=arrLists>-->
+						<tr id="datalist-<!--{$value.node_id}-->">
+							<td><input type="checkbox" name="key" value="<!--{$value.node_id}-->" <!--{if $TheController->is_system_node($value['node_id'])}-->disabled="disabled"<!--{/if}-->></td>
+							<td><!--{$value.node_id}--></td>
+							<td><a href="javascript:edit('<!--{$value.node_id}-->')"><!--{$value.node_title}--></a>
+								<!--{ifQ+C('APP_DEVELOP')}-->
+								<div class="row-actions">
+									<span class='edit'><a href="javascript:edit('<!--{$value.node_id}-->')"><!--<lang package='Template'>-->编辑<!--</lang>--></a>|</span>
+									<span class='delete'><a href="javascript:foreverdel<!--{if isset($bIsRecycleList)}-->Deep<!--{/if}-->('<!--{$value.node_id}-->');"><!--{if isset($bIsRecycleList)}--><!--<lang package='Template'>-->彻底删除<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->删除<!--</lang>--><!--{/if}--></a>|</span>
+									<span class='hide'><!--<if condition="$value['node_status'] eq 1" >--><a href="javascript:forbid('<!--{$value.node_id}-->')"><!--<lang package='Template'>-->禁用<!--</lang>--></a><!--<else/>--><a href="javascript:resume('<!--{$value.node_id}-->')"><!--<lang package='Template'>-->恢复<!--</lang>--></a><!--</if>--></span>
+								</div>
+								<!--{/if}-->
+							</td>
+							<td><a href="javascript:child('<!--{$value.node_id}-->')"><!--{$value.node_name}--></a></td>
+							<td><!--<if condition="!empty( $value.nodegroup_name )">--><a href="<!--{:Q::U('node/index?nodegroup_id='.$value['nodegroup_id'])}-->"><!--{$value.nodegroup_title}-->-<!--{$value.nodegroup_name}--></a><!--<else/>--><!--<lang package='Template'>-->未分组<!--</lang>--><!--</if>--></td>
+							<td class="pointer" title="<!--<lang package='Template'>-->点击修改数据<!--</lang>-->" id="node_sort_<!--{$value.node_id}-->" onClick="clickToInput('node_sort','<!--{$value.node_id}-->')"><!--{$value.node_sort}--></td>
+							<td><!--{:Admin_Extend::getStatus($value['node_status'])}--></td>
+							<!--{ifQ+C('APP_DEVELOP')}-->
+							<td><!--{if $value['node_status']==1}-->
+								<a href="javascript:forbid('<!--{$value.node_id}-->')"><input type="image" src="<!--{:At::path('icn_trash.png')}-->" title="<!--<lang package='Template'>-->禁用<!--</lang>-->"></a>
+								<!--{d*else}--><a href="javascript:resume('<!--{$value.node_id}-->')"><input type="image" src="<!--{:At::path('icn_jump_back.png')}-->" title="<!--<lang package='Template'>-->恢复<!--</lang>-->"></a>
+								<!--{/if}-->&nbsp;<a href="javascript:edit('<!--{$value.node_id}-->')"><input type="image" src="<!--{:At::path('icn_edit.png')}-->" title="<!--<lang package='Template'>-->编辑<!--</lang>-->"></a>
+							</td>
+							<!--{/if}-->
+						</tr>
+						<!--</foreach>-->
+						<!--{d*else}-->
+						<tr>
+							<td colspan="<!--{ifQ+C('APP_DEVELOP')}-->8<!--{d*else}-->7<!--{/if}-->"><!--<lang package='Template'>-->暂时没有发现任何记录<!--</lang>--></td>
+						</tr>
+						<!--{/if}-->
+					</tbody>
+				</table>
+			</div>
+
+			<div class="module_content operate_box">
+				<div class="left">
+					<!--{$sPageNavbar}-->
+				</div>
+				<!--{ifQ+C('APP_DEVELOP')}-->
+				<div class="right operate" style="text-align:right;width:450px;">
+					<!--{if isset($bIsRecycleList)}--><input type="button" name="clear_recycle" value="<!--<lang package='Template'>-->清空回收站<!--</lang>-->" onclick="clearRecycle()">&nbsp;<!--{/if}-->
+					<input type="button" name="add" value="<!--<lang package='Template'>-->新增<!--</lang>-->" onclick="add()" class="alt_btn">&nbsp;
+					<input type="button" name="edit" value="<!--<lang package='Template'>-->编辑<!--</lang>-->" onclick="edit()" class="alt_btn">&nbsp;
+					<input type="button" name="delete" value="<!--{if isset($bIsRecycleList)}--><!--<lang package='Template'>-->彻底删除<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->删除<!--</lang>--><!--{/if}-->" onclick="foreverdel<!--{if isset($bIsRecycleList)}-->Deep<!--{/if}-->()" class="alt_btn">&nbsp;
+					<input type="button" name="sort" value="<!--<lang package='Template'>-->排序<!--</lang>-->" onclick="sort()" class="alt_btn">&nbsp;
+					<select name="rolegroup" id="rolegroup" onChange="changeNodegroup(this);">
+						<option value="0">-<!--<lang package='Template'>-->移动节点分组<!--</lang>-->-</option>
+						<!--<volist name="arrNodegroup" id="value">-->
+						<option value="<!--{$value['nodegroup_id']}-->" <!--{if isset($_GET['nodegroup_id']) && ($_GET['nodegroup_id']===$value['nodegroup_id'] || (!$_GET['nodegroup_id']) && !$value['nodegroup_id'])}-->selected<!--{/if}-->><!--{$value['nodegroup_title']}--></option>
+						<!--</volist>-->
+					</select>
+				</div>
+				<!--{/if}-->
+				<div class="clearfix"></div>
+			</div>
+		</article>
+		
+
+<!--<include file="public+footer">-->

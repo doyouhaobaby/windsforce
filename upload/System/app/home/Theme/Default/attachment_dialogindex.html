@@ -1,0 +1,34 @@
+<!--<include file="Core_Extend::template('cheader')" />-->
+
+<!--{style}-->
+html,body{background:none;}
+<!--{/style}-->
+
+	<div style="width:500px;">
+		<!--<include file="attachment+dialogmenu" />-->
+
+		<div style="width:500px;">
+			<!--{if !empty($arrAttachmentcategorys)}-->
+			<ul class="thumbnails">
+				<!--<foreach for=arrAttachmentcategorys value=oAttachmentcategory>-->
+				<li style="width:110px;" id="attachmentcategory_item_<!--{$oAttachmentcategory['attachmentcategory_id']}-->">
+					<div class="thumbnail">
+						<div class="img dialogattachmentcategory_thumb">
+							<a href="<!--{:Q::U('home://attachment/lists?cid='.$oAttachmentcategory['attachmentcategory_id'].'&dialog=1&function='.$sFunction.'&filetype='.$nFiletype.'&full='.$nFull.'&multi='.$nMulti)}-->">
+								<img src="<!--{:Attachment_Extend::getAttachmentcategoryPreview($oAttachmentcategory)}-->" alt="<!--{$oAttachmentcategory['attachmentcategory_name']}-->" height="90px" width="85px">
+							</a>
+						</div>
+						<div class="caption" style="text-align:center;margin:auto;">
+							<p><a class="btn btn-mini" href="<!--{:Q::U('home://attachment/dialog_add?cid='.$oAttachmentcategory['attachmentcategory_id'].'&dialog=1&function='.$sFunction.'&filetype='.$nFiletype.'&full='.$nFull.'&multi='.$nMulti)}-->"><!--<lang package='Template'>-->上传<!--</lang>--></a>&nbsp;
+								<a class="btn btn-mini" href="<!--{:Q::U('home://attachment/edit_attachmentcategory?id='.$oAttachmentcategory['attachmentcategory_id'].'&dialog=1&function='.$sFunction.'&filetype='.$nFiletype.'&full='.$nFull.'&multi='.$nMulti)}-->"><!--<lang package='Template'>-->编辑<!--</lang>--></a>
+							</p>
+						</div>
+					</div>
+				</li>
+				<!--</foreach>-->
+			</ul>
+			<!--{/if}-->
+			<div style="margin:auto;text-align:center;"><!--{$sPageNavbar}--></div>
+		</div>
+
+<!--<include file="Core_Extend::template('cfooter')" />-->

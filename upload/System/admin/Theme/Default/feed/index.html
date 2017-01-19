@@ -1,0 +1,149 @@
+<!--<include file="public+header" />-->
+
+<!--{~$sCalendarLang=Core_Extend::calendar()}-->
+<script type="text/javascript" src="<!--{:__PUBLIC__}-->/js/calendar/datepicker/WdatePicker.js"></script>
+
+<!--{:Core_Extend::emotion()}-->
+
+<!--{script}-->
+$(function(){
+	$('.feed-content').emotionsToHtml();
+});
+<!--{/script}-->
+
+<!--{style}-->
+.feed_title{}
+.feed_content{color: #505050;padding: 5px 15px 5px 0px;}
+.feed_action{padding: 3px 0px;font-size:12px;}
+.feed_action a{padding:1px 5px;background-color:#ccc;color:#505050;-moz-border-radius: 2px;-khtml-border-radius: 2px;-webkit-border-radius: 2px;border-radius: 2px;}
+.feed_quote{background: url("<!--{:__TMPLPUB__}-->/Images/quotel.gif") no-repeat scroll left 4px transparent;margin: 8px 0 0 0px;overflow: hidden;padding: 0 24px 5px 15px;width: auto;word-wrap: break-word;
+}
+.feed_quote .feed_quoteinfo{color: #999999;background: url("<!--{:__TMPLPUB__}-->/Images/quoter.gif") no-repeat scroll right bottom transparent;display: inline-block;padding-right: 15px;}
+<!--{/style}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->用户动态列表<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->用户动态列表<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->这里为用户动态数据，注意,如果没有必要请不要删除用户的数据<!--</lang>--></li>
+				</ul>
+			</div>
+			<div class="module_content">
+				<form method='get' action="<!--{:Q::U( 'feed/index' )}-->" class="quick_search">
+					<table cellspacing="3" cellpadding="3">
+						<tr>
+							<th><!--<lang package='Template'>-->编号<!--</lang>--></th>
+							<td><input type="text" name="feed_id" title="<!--<lang package='Template'>-->编号<!--</lang>-->" value="<!--{:Q::G('feed_id')}-->" onkeyup="this.value = this.value.replace(/[^-0-9]/g, '');" />
+							</td>
+							<th><!--<lang package='Template'>-->结果排序<!--</lang>--></th>
+							<td>
+								<select name="order_">
+									<option value="" <!--{if !Q+G('order_')}-->selected<!--{/if}-->><!--<lang package='Template'>-->排序字段<!--</lang>--></option>
+									<option value="feed_id" <!--{if Q+G('order_')=='feed_id'}-->selected<!--{/if}-->><!--<lang package='Template'>-->编号<!--</lang>--></option>
+									<option value="create_dateline" <!--{if Q+G('order_')=='create_dateline'}-->selected<!--{/if}-->><!--<lang package='Template'>-->添加时间<!--</lang>--></option>
+									<option value="user_id" <!--{if Q+G('order_')=='user_id'}-->selected<!--{/if}-->><!--<lang package='Template'>-->用户<!--</lang>--></option>
+								</select>
+								<select name="sort_">
+									<option value="" <!--{if !Q+G('sort_')}-->selected<!--{/if}-->><!--<lang package='Template'>-->默认排序<!--</lang>--></option>
+									<option value="desc" <!--{if Q+G('sort_')=='desc'}-->selected<!--{/if}-->><!--<lang package='Template'>-->递增<!--</lang>--></option>
+									<option value="asc" <!--{if Q+G('sort_')=='asc'}-->selected<!--{/if}-->><!--<lang package='Template'>-->递减<!--</lang>--></option>
+								</select>
+								<select name="perpage">
+									<option value="" <!--{if !Q+G('perpage')}-->selected<!--{/if}-->><!--<lang package='Template'>-->默认每页数量<!--</lang>--></option>
+									<option value="10" <!--{if Q+G('perpage')==10}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(10)</option>
+									<option value="20" <!--{if Q+G('perpage')==20}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(20)</option>
+									<option value="50" <!--{if Q+G('perpage')==50}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(50)</option>
+									<option value="100" <!--{if Q+G('perpage')==100}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(100)</option>
+									<option value="200" <!--{if Q+G('perpage')==200}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(200)</option>
+									<option value="500" <!--{if Q+G('perpage')==500}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(500)</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th><!--<lang package='Template'>-->用户<!--</lang>-->(UID)</th>
+							<td><input type="text" name="user_id" title="<!--<lang package='Template'>-->用户<!--</lang>-->" value="<!--{:Q::G('user_id')}-->" onkeyup="this.value = this.value.replace(/[^-0-9]/g, '');" /></td>
+							<th><!--<lang package='Template'>-->添加时间<!--</lang>--></th>
+							<td>
+								<input type="text" id="start_time" name="start_time" value="<!--{:Q::G('start_time')}-->" onfocus="WdatePicker({el:'start_time',skin:'ext',lang:'<!--{$sCalendarLang}-->',dateFmt:'yyyy-MM-dd'})">
+								&nbsp;~&nbsp;
+								<input type="text" id="end_time" name="end_time" value="<!--{:Q::G('end_time')}-->"  onfocus="WdatePicker({el:'end_time',skin:'ext',lang:'<!--{$sCalendarLang}-->',dateFmt:'yyyy-MM-dd'})">
+							</td>
+						</tr>
+						<tr>
+							<th><!--<lang package='Template'>-->用户<!--</lang>--></th>
+							<td><input type="text" name="feed_username" title="<!--<lang package='Template'>-->用户<!--</lang>-->" value="<!--{:Q::G('feed_username')}-->"/>
+							</td>
+							<td colspan="2">
+								<input type="text" name="feed_data" title="<!--<lang package='Template'>-->动态内容<!--</lang>-->" value="<!--{:Q::G('feed_data')}-->" class="quicksearch_text">
+								&nbsp;<input type="submit" id="" value="<!--<lang package='Template'>-->查询<!--</lang>-->" onclick="" class="alt_btn">
+							</td>
+						</tr>
+					</table>
+					<input type="hidden" name="c" value="<!--{:MODULE_NAME}-->"/>
+					<input type="hidden" name="a" value="<!--{:ACTION_NAME}-->"/>
+				</form>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><a href="<!--{:Q::U('feed/index')}-->"><!--<lang package='Template'>-->用户动态列表<!--</lang>--></a></h3>
+				<ul class="tabs">
+					<li><a class="tab_delete" href="javascript:void(0);" onclick="foreverdelDeep()"><!--<lang package='Template'>-->彻底删除<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<div class="module_content">
+				<table class="tablesorter" cellspacing="0" id="checkList">
+					<thead>
+						<tr>
+							<th width="20px"><input type="checkbox" onclick="checkAll('checkList')"></th> 
+							<th width="85px"><a href="javascript:sortBy('feed_id','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('feed_id')}-->><!--<lang package='Template'>-->编号<!--</lang>--></a></th> 
+							<th width="110px"><a href="javascript:sortBy('user_id','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('user_id')}-->><!--<lang package='Template'>-->用户<!--</lang>--></a></th>
+							<th><!--<lang package='Template'>-->动态内容<!--</lang>--></th>
+							<th width="90px"><a href="javascript:sortBy('create_dateline','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('create_dateline')}-->><!--<lang package='Template'>-->添加时间<!--</lang>--></a></th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--{if is_array($arrLists)}-->
+						<!--<foreach for=arrLists>-->
+						<tr id="datalist-<!--{$value['feed_id']}-->">
+							<td><input type="checkbox" name="key" value="<!--{$value['feed_id']}-->"></td>
+							<td><!--{$value['feed_id']}--></td>
+							<td><!--{$value['feed_username']}-->
+								<div class="row-actions">
+									<span class='view'><a href="<!--{:Q::U('feed/show?id='.$value['feed_id'])}-->"><!--<lang package='Template'>-->查看<!--</lang>--></a>|</span>
+									<span class='delete'><a href="javascript:foreverdelDeep('<!--{$value['feed_id']}-->');"><!--<lang package='Template'>-->彻底删除<!--</lang>--></a></span>
+								</div>
+							</td>
+							<td><div class="feed-content"><!--{$TheController:feedContent($value)|Core_Extend+ubb=false}--></div>
+							</td>
+							<td><span class="<!--{:Admin_Extend::dateColor($value['create_dateline'])}-->"><!--{$value['create_dateline']|date='Y-m-d',**}--></span><br/>
+								<span class="smallDatecolor"><!--{$value['create_dateline']|date='H:i',**}--></span>
+							</td>
+						</tr>
+						<!--</foreach>-->
+						<!--{d*else}-->
+						<tr>
+							<td colspan="5"><!--<lang package='Template'>-->暂时没有发现任何记录<!--</lang>--></td>
+						</tr>
+						<!--{/if}-->
+					</tbody>
+				</table>
+			</div>
+
+			<div class="module_content operate_box">
+				<div class="left"><!--{$sPageNavbar}--></div>
+				<div class="right operate" style="text-align:right;">
+					<input type="button" name="delete" value="<!--<lang package='Template'>-->彻底删除<!--</lang>-->" onclick="foreverdelDeep()" class="alt_btn">
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</article>
+
+<!--<include file="public+footer">-->

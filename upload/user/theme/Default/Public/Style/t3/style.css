@@ -1,0 +1,78 @@
+/*
+[name]橙[/name]
+[iconbgcolor]#ff6600[/iconbgcolor]
+Description: WindsForce! Extend Stylecolor
+*/
+
+/**===============================
+           重新定义基础
+================================*/
+html { background:#FFFFFF url({IMG_DIR}/../Style/t3/bgimg.jpg) no-repeat 50% 0; }
+a{color: #333333;}
+a:hover {color: #ff6600;}
+
+/**===============================
+           容器
+================================*/
+.breadcrumb {}
+.container_box{padding-top:0px;}
+
+/**===============================
+           重新定义一些颜色
+================================*/
+input[type="button"], input[type="submit"], button, .btn, .pagination a{background-color: #f89406;*background-color: #df8505;}
+input[type="button"]:hover, input[type="submit"]:hover, button:hover, .btn:hover, .pagination a:hover, .pagination .active a {background:#ff7700;}
+input[type="button"]:active, input[type="submit"]:active, button:active, .btn:active {background:#ff7700;}
+input[type="button"][disabled],input[type="submit"][disabled],button[disabled],.btn[disabled],input[type="button"][readonly],input[type="submit"][readonly],button[readonly],.btn[readonly],.pagination .disabled a {background:#FE9500;cursor: not-allowed;opacity: 0.65;}
+
+/**===============================
+           重新定义头部和头部菜单
+================================*/
+.menu-item a:hover,.registerlogin_btn a:hover {color: #ff6600;}
+/* header */
+.header {background:#ff6600;}
+.globa-nav {background: #ff6600;}
+.globa-nav .allMenu a:hover, .globa-nav .allMenu .current {background: #f56403;color: white!important;}
+.globa-nav .sideMenu2{background:#f56403;}
+.globa-nav .sideMenu2 a.menu:hover {color: #f1eeef!important;}
+.header .header_dropdown ul { border:1px solid #ff6600;background: #ff6600;border-top:none;}
+.header .header_dropdown ul li a:hover,.header .header_dropdown ul li.active a { color:#f1eeef!important;}
+/* search */
+.searchheader_box .search {border: solid 2px #ff6600;}
+.searchheader_box .search .submit:hover {background: #ff6600;}
+.searchheader_box .hotkeywords a:hover{color:#ff6600;}
+
+/**===============================
+           重写底部
+================================*/
+.footer{background: #E7E6E5;color:#999;}
+.footer a{color:#999;}
+.footer a:hover{color:#ff6600;}
+
+/**===============================
+           重写通用标签
+================================*/
+a.common_tag{}
+a.common_tag:hover{background:#ff6600;}
+
+/**===============================
+           重写其它
+================================*/
+/* 常用菜单组件 */
+.nav-list a:hover,.nav-list li.active a,.nav_text .active a,.nav_text .active a:hover,.nav_text a:hover,.nav_tab .active a,.nav_pills li a:hover,.nav_pills li.active a,.dropdown ul li a:hover,.dropdown ul li.active a,.nav_tab li a:hover{color: #FE9500;}
+.nav_pills li a:hover .caret,.nav_pills li.active a .caret{border-top-color: #FE9500;}
+
+/* 特殊元素 */
+.Sys-special_color{color:#FE9500;}
+.Sys-special_color a{color:#FE9500;}
+.Sys-special_color_deep{color:#ff6600;}
+.Sys-special_color_deep a{color:#ff6600;}
+
+/**===============================
+           重写系统主题元素CSS
+================================*/
+.WindsforceSystem-link_color,.WindsforceSystem-14{color:#CA4312;}/* 14 */
+.WindsforceSystem-link_color a,.WindsforceSystem-14 a{color:#CA4312;}/* 14 - 2 */
+.WindsforceSystem-interval_line_color-border,.WindsforceSystem-35{}/* 35 */
+.WindsforceSystem-common_background_color,.WindsforceSystem-37{backgound-color:#fcf6e6;}/* 37 */
+.WindsforceSystem-special_bg,.WindsforceSystem-39{background-color:#FE9500;}/* 39 */

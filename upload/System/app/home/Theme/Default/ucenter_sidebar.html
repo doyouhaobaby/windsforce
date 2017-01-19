@@ -1,0 +1,52 @@
+<!--[if IE 6]> 
+<!--{style}-->
+html{overflow:hidden;}
+body{height:100%;overflow:auto;}
+<!--{/style}-->
+<![endif]-->
+
+			<div style="padding: 8px 0;">
+				<div class="userinfo">
+					<div class="userpic">
+						<span id="my-face">
+							<a href='<!--{:Q::U('home://spaceadmin/avatar')}-->' target='_self'>
+								<img src='<!--{:Core_Extend::avatar($GLOBALS['___login___']['user_id'],'small' )}-->' width="48px" height="48px" class="thumbnail">
+							</a>
+						</span>
+					</div>
+					<div class="user_name">
+						<h6><a href="<!--{:Q::U('home://space@?id='.$GLOBALS['___login___']['user_id'])}-->"><!--{$GLOBALS['___login___']['user_name']}--></a>&nbsp;<a href="<!--{:Q::U('home://spaceadmin/index')}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->设置在线状态<!--</lang>-->"><!--{$GLOBALS['___login___']['user_id']|Core_Extend+getUseronlineicon}--></a></h6>
+						<p><!--<lang package='__COMMON_LANG__@Common'>-->积分<!--</lang>-->&nbsp;<a href="<!--{:Q::U('home://spaceadmin/rating')}-->"><!--{$GLOBALS['___login___']['user_id']|Core_Extend+getCountById='usercount_extendcredit1'}--></a></p>
+						<p><!--<lang package='__COMMON_LANG__@Common'>-->金币<!--</lang>-->&nbsp;<a href="<!--{:Q::U('home://spaceadmin/rating')}-->"><!--{$GLOBALS['___login___']['user_id']|Core_Extend+getCountById='usercount_extendcredit2'}--></a></p>
+					</div>
+					<div class="user_follow">
+						<span><a href="<!--{:Q::U('home://friend/index')}-->"><strong><!--{$GLOBALS['___login___']['user_id']|Core_Extend+getCountById='usercount_friends'}--></strong></a><br /><!--<lang package='__COMMON_LANG__@Common'>-->关注<!--</lang>--></span>
+						<span><a href="<!--{:Q::U('home://friend/index?type=fan')}-->"><strong><!--{$GLOBALS['___login___']['user_id']|Core_Extend+getCountById='usercount_fans'}--></strong></a><br /><!--<lang package='__COMMON_LANG__@Common'>-->粉丝<!--</lang>--></span>
+						<!--{if APP_NAME==='home'}-->
+						<span><a href="<!--{:Q::U('home://ucenter/index?type=myself')}-->"><strong id="homefresh_count"><!--{$GLOBALS['___login___']['user_id']|Core_Extend+getCountById='usercount_homfresh'}--></strong></a><br /><!--<lang package='__COMMON_LANG__@Common'>-->新鲜事<!--</lang>--></span>
+						<!--{d*else}-->
+						<span><a href="<!--{:Q::U('home://spaceadmin/index')}-->"><strong><!--{$GLOBALS['___login___']['user_id']|Core_Extend+getCountById='usercount_oltime'}--></strong></a><br /><!--<lang package='__COMMON_LANG__@Common'>-->在线<!--</lang>--></span>
+						<!--{/if}-->
+					</div>
+				</div>
+
+				<ul class="nav nav-list">
+					<li class="nav-header"><!--<lang package='__COMMON_LANG__@Common'>-->我的动态<!--</lang>--></li>
+					<li <!--{if APP_NAME==='home' && ACTION_NAME==='index'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://ucenter/index')}-->"><!--<lang package='__COMMON_LANG__@Common'>-->新鲜事<!--</lang>--></a></li>
+					<li <!--{if in_array(ACTION_NAME,array('tag','tags'))}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://ucenter/tag')}-->"><!--<lang package='__COMMON_LANG__@Common'>-->新鲜事话题<!--</lang>--></a></li>
+					<li <!--{if ACTION_NAME==='feed'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://ucenter/feed')}-->"><!--<lang package='__COMMON_LANG__@Common'>-->用户动态<!--</lang>--></a></li>
+					<!--{~$arrAppucenters=Core_Extend::getAppucenter()}-->
+					<li class="nav-header"><!--<lang package='__COMMON_LANG__@Common'>-->应用个人中心<!--</lang>--></li>
+					<!--<foreach for=arrAppucenters value=arrAppucenter>-->
+					<li <!--{if APP_NAME!=='home' && APP_NAME===$arrAppucenter['app_identifier']}-->class="active"<!--{/if}-->><a href="<!--{:Q::U($arrAppucenter['app_identifier'].'://ucenter/index',array(),($arrAppucenter['app_identifier']=='wap'?true:false))}-->"><!--{$arrAppucenter['app_name']}--></a></a></li>
+					<!--</foreach>-->
+					<li class="nav-header"><!--<lang package='__COMMON_LANG__@Common'>-->我的地盘<!--</lang>--></li>
+					<li><a href="<!--{:Q::U('home://spaceadmin/index')}-->"><!--<lang package='__COMMON_LANG__@Common'>-->修改资料<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('home://attachment/index')}-->"><!--<lang package='__COMMON_LANG__@Common'>-->我的相册<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('home://spaceadmin/tag')}-->"><!--<lang package='__COMMON_LANG__@Common'>-->我的标签<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('home://friend/index')}-->"><!--<lang package='__COMMON_LANG__@Common'>-->我的好友<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('home://public/myrbac')}-->"><!--<lang package='__COMMON_LANG__@Common'>-->我的权限<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('home://homehelp/index')}-->"><!--<lang package='__COMMON_LANG__@Common'>-->帮助<!--</lang>--></a></li>
+				</ul>
+			</div>
+			<div class="clearfix"></div>

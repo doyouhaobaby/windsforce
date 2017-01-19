@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--[if IE 6]>
+<html id="ie6" xmlns="http://www.w3.org/1999/xhtml">
+<![endif]-->
+<!--[if IE 7]>
+<html id="ie7" xmlns="http://www.w3.org/1999/xhtml">
+<![endif]-->
+<!--[if IE 8]>
+<html id="ie8" xmlns="http://www.w3.org/1999/xhtml">
+<![endif]-->
+<!--[if !(IE 6) | !(IE 7) | !(IE 8)  ]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<title><!--{$TheController->_arrSeo['title']}--></title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="keywords" content="<!--{$TheController->_arrSeo['keywords']}-->">
+	<meta name="description" content="<!--{$TheController->_arrSeo['description']}-->">
+	<meta name="renderer" content="webkit">
+	<!--[if lt IE 9]>
+	<script src="<!--{:__PUBLIC__}-->/js/common/html5.js"></script>
+	<![endif]-->
+	<link rel="shortcut icon" href="<!--{:Core_Extend::getFavicon()}-->">
+	<!--{script}-->
+	var __QEEPHP_JS_ENTER__='<!--{:__APP__}-->';
+	<!--{/script}-->
+	<!--{:Core_Extend::loadLang()}-->
+	<script src="<!--{:__PUBLIC__}-->/js/jquery/jquery.js"></script>
+	<script src="<!--{:__PUBLIC__}-->/js/common/Q.js"></script>
+	<script src="<!--{:__PUBLIC__}-->/js/jquery/responsiveslides/responsiveslides.min.js"></script>
+	<link rel="stylesheet" href="<!--{:__PUBLIC__}-->/js/jquery/responsiveslides/style.css">
+	<!--{script}-->
+	Q.Ajax.Q.Image=['<!--{:__PUBLIC__}-->/images/common/ajax/loading.gif','<!--{:__PUBLIC__}-->/images/common/ajax/ok.gif','<!--{:__PUBLIC__}-->/images/common/ajax/update.gif'];
+	var sBgextendRepeat='<!--{$GLOBALS['_option_']['bgextend_repeat']}-->';
+	<!--{:App::U()}-->
+	$(document).ready(function(){
+		$('#runtime_result').html($('#qeephp_run_time').html());
+		$('#qeephp_run_time').html(' ');
+
+		$('.dropdown,.header_dropdown').each(function(){
+			var $dropdown = $(this);
+			var $sub = $dropdown .find('ul');
+			var $title = $dropdown .find('.title');
+			var timer;
+			$dropdown.mouseenter(function(){ 
+				$sub.show();
+				$title.addClass('title-active');
+				clearTimeout(timer);
+			})
+			.mouseleave(function(){
+				timer = setTimeout(function () {
+					$sub.hide();
+					$title.removeClass('title-active');	
+				}, 0);
+			});
+		});
+		
+		$(".need_clicktab li").bind("click", function () {
+			var index = $(this).index();
+			var classs = $(".tab-pane");
+			$(this).parent().children("li").attr("class", "");
+			$(this).attr("class", "active");
+			classs.hide();
+			classs.eq(index).show();
+		});
+
+		$(".need_overtab li").bind("mouseover", function () {
+			var index = $(this).index();
+			var classs = $(".tab-pane");
+			$(this).parent().children("li").attr("class", "");
+			$(this).attr("class", "active");
+			classs.hide();
+			classs.eq(index).show();
+		});
+
+		$(".slider_box").responsiveSlides({
+			auto: true,
+			pager: false,
+			nav: true,
+			speed: 300,
+			namespace: "callbacks",
+			before: function () {
+				$('.events').append("<li>before event fired.</li>");
+			},
+			after: function () {
+				$('.events').append("<li>after event fired.</li>");
+			}
+		});
+
+		<!--<if condition="$GLOBALS['_commonConfig_']['FIREBUGFORIE']">-->
+		var s = document.createElement("script");
+		s.src = 'http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js';
+		s.type="text/javascript";
+		if(document.all){
+			s.onreadystatechange = function(){
+			if(this.readyState == "loaded" || this.readyState == "complete"){
+				alert("loaded success in ie");
+			}
+			}
+		} else{
+			s.onload = function(){
+				alert("load success");
+			}
+		}
+		document.body.appendChild(s); 
+		setTimeout(function(){firebug.init();},1000);
+		<!--</if>-->
+	});
+	<!--{/script}-->
+	<script src="<!--{:__PUBLIC__}-->/js/common/global.js"></script>
+	<script src="<!--{:__PUBLIC__}-->/js/common/common.js"></script>
+	<!--{~$sAppjsPath=APP_PATH.'/Static/Js/'.APP_NAME.'.js'}-->
+	<!--{if is_file($sAppjsPath)}-->
+	<script src="<!--{:__APPPUB__}-->/Js/<!--{:APP_NAME}-->.js"></script>
+	<!--{/if}-->
+	<link rel="stylesheet" href="<!--{:__PUBLIC__}-->/js/artdialog/skins/<!--{$GLOBALS['_option_']['front_dialog_style']}-->.css">
+	<!--{$GLOBALS['_option_']['stat_header_code']}-->
+	<!--[if IE 6]>
+	<script src="<!--{:__PUBLIC__}-->/js/common/DD_belatedPNG.js"></script>
+	<!--{script}-->
+	DD_belatedPNG.fix('.need_pngfix,.need_pngfix:hover,img,background');
+	<!--{/script}-->
+	<![endif]-->
+</head>
+
+<body>
+<link rel="stylesheet" href="<!--{:__PUBLIC__}-->/extension/960gs/960.css">
+<!--{:Core_Extend::loadCss()}-->
+<!--[if IE 6]>
+<link rel="stylesheet" href="<!--{:Core_Extend::path('ie6.css','css')}-->">
+<!--<![endif]-->
+<div id="QAjaxResult" class="none QAjaxResult">&nbsp;</div>

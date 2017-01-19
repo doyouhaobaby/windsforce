@@ -1,0 +1,108 @@
+<!--<include file="public+header" />-->
+
+<!--{:Core_Extend::editorInclude()}-->
+
+<!--{script}-->
+$(function(){
+	editor=loadEditor('test_mail_message');
+});
+
+function mailCheck(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'check...' );
+	$("#submit_button").attr("disabled", false);
+
+	var sTestmailto=$("#test_mail_to").val();
+	if(sTestmailto==''){
+		windsforceAlert('<!--<lang package='Template'>-->接收邮件地址不能为空<!--</lang>-->','',3);
+		$("#submit_button").attr("disabled", false);
+		$("#submit_button").val( '<!--<lang package='Template'>-->开始测试发送邮件<!--</lang>-->' );
+		return false;
+	}
+
+	$('#test_mail_message').val(editor.html());
+
+	Q.AjaxSubmit('mailcheckOption','<!--{:Q::U('mailoption/mail_check')}-->','',function(){
+		$("#submit_button").attr("disabled", false);
+		$("#submit_button").val( '<!--<lang package='Template'>-->开始测试发送邮件<!--</lang>-->' );
+		if(status==1){
+			windsforceAlert('<!--<lang package='Template'>-->邮件测试成功<!--</lang>-->','',1);
+		}
+	});
+};
+
+function resetTestmailsubject(){
+	sHtml=windsforceAjaxhtml(Q.U('mailoption/reset_test?type=subject'));
+	$('#test_mail_subject').val(sHtml);
+};
+
+function resetTestmailmessage(){
+	sHtml=windsforceAjaxhtml(Q.U('mailoption/reset_test?type=message'));
+	replaceEditorContent(editor,sHtml);
+};
+
+checkForm(mailCheck);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->邮件检测<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->邮件检测<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->本程序用于检测邮件发送是否设置正确<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->邮件检测<!--</lang>--></h3>
+				<ul class="tabs">
+					<li><a href="<!--{:Q::U('mailoption/index')}-->"><!--<lang package='Template'>-->基本设置<!--</lang>--></a></li>
+					<li class="active"><a href="<!--{:Q::U('mailoption/check')}-->"><!--<lang package='Template'>-->邮件检测<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="<!--{:Q::U('mailoption/mail_check')}-->" method="post" name="mailcheckOption" id="mailcheckOption" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="test_mail_from"><!--<lang package='Template'>-->邮件发件者邮箱<!--</lang>--></label>
+						<input name="test_mail_from" id="test_mail_from" value="" type="text" class="{email:true}">
+						<div class="description input_tips"><!--<lang package='Template'>-->这里填写邮件发送者的邮箱,如admin@admin.com，不填则为默认邮箱<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="test_mail_to"><!--<lang package='Template'>-->邮件收件者邮箱<!--</lang>--></label>
+						<input name="test_mail_to" id="test_mail_to" value="" type="text" class="{required:true,email:true}">
+						<div class="description input_tips"><!--<lang package='Template'>-->如果要测试包含用户名的邮件地址，格式为“username &lt;user@domain.com&gt;”，多个邮件地址用逗号分隔<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="test_mail_subject"><!--<lang package='Template'>-->测试邮件主题<!--</lang>-->&nbsp;[<a href="javascript:void(0);" onclick="resetTestmailsubject();"><!--<lang package='Template'>-->恢复默认<!--</lang>--></a>]</label>
+						<input name="test_mail_subject" id="test_mail_subject" value="<!--{$arrOptions['mail_testsubject']}-->" type="text">
+						<div class="description"><!--<lang package='Template'>-->这里是系统用于测试邮件的主题信息，你也可以修改然后发送邮件<!--</lang>--><br/>
+						<!--<lang package='Template'>-->系统变量替换: {site_name} 网站标题,{site_description} 网站描述,{site_url} 站点信息,{time} 当前时间,{user_name} 登录用户,{user_nikename} 登录用户昵称,{admin_email} 系统管理员邮箱<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="test_mail_message"><!--<lang package='Template'>-->测试邮件内容<!--</lang>-->&nbsp;[<a href="javascript:void(0);" onclick="resetTestmailmessage();"><!--<lang package='Template'>-->恢复默认<!--</lang>--></a>]</label>
+						<textarea name="test_mail_message" id="test_mail_message" style="width:700px;height:250px;visibility:hidden;"><!--{$arrOptions['mail_testmessage']|nl2br}--></textarea>
+						<div class="description"><!--<lang package='Template'>-->这里是系统用于测试邮件的内容，你可以将邮件模板保存到服务器中以便于下次测试使用<!--</lang>--><br/>
+						<!--<lang package='Template'>-->系统变量替换: {site_name} 网站标题,{site_description} 网站描述,{site_url} 站点信息,{time} 当前时间,{user_name} 登录用户,{user_nikename} 登录用户昵称,{admin_email} 系统管理员邮箱<!--</lang>--></div>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="hidden" name="ajax" value="1" />
+						<input id="submit_button" type="submit" class="alt_btn" name="test_mail_check" value="<!--<lang package='Template'>-->开始测试发送邮件<!--</lang>-->" />
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->" />
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

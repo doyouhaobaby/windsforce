@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<!--[if IE 6]>
+<html id="ie6" xmlns="http://www.w3.org/1999/xhtml">
+<![endif]-->
+<!--[if IE 7]>
+<html id="ie7" xmlns="http://www.w3.org/1999/xhtml">
+<![endif]-->
+<!--[if IE 8]>
+<html id="ie8" xmlns="http://www.w3.org/1999/xhtml">
+<![endif]-->
+<!--[if !(IE 6) | !(IE 7) | !(IE 8)  ]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!--<![endif]-->
+<head>
+<title>$<!--{$GLOBALS['_option_']['windsforce_program_name']}-->&nbsp;<!--<lang package='Template'>-->管理平台<!--</lang>--></title>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<meta name="renderer" content="webkit">
+<!--[if lt IE 9]>
+<link rel="stylesheet" href="<!--{:Q::U('misc/index?type=css&file=ie',array('rand'=>C::randString(4)),true)}-->" type="text/css" media="screen" />
+<script src="<!--{:__PUBLIC__}-->/js/common/html5.js" type="text/javascript"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="<!--{:Q::U('misc/index?type=css&file=style',array('rand'=>C::randString(4)),true)}-->"/>
+<!--{if APP_NAME==='myadmin'}-->
+<link rel="stylesheet" type="text/css" href="<!--{:Q::U('misc/index?type=css&file=myadmin',array('rand'=>C::randString(4)),true)}-->"/>
+<!--{/if}-->
+<!--{style}-->
+overflow-x: hidden;
+<!--{/style}-->
+<!--{script}-->
+var __QEEPHP_JS_ENTER__='<!--{:__APP__}-->';
+<!--{/script}-->
+<script src="<!--{:__PUBLIC__}-->/js/jquery/jquery.js" type="text/javascript"></script>
+<script src="<!--{:__PUBLIC__}-->/js/common/Q.js" type="text/javascript"></script>
+<!--{:Core_Extend::validate()}-->
+<!--{style}-->
+.input_errortips label.error{background-position:0px 5px;}
+<!--{/style}-->
+<link rel="stylesheet" type="text/css" href="<!--{:__PUBLIC__}-->/js/artdialog/skins/<!--{$GLOBALS['_option_']['admin_dialog_style']}-->.css"/>
+<script type="text/javascript" src="<!--{:__PUBLIC__}-->/js/artdialog/jquery.artDialog.min.js"></script>
+<script type="text/javascript" src="<!--{:__PUBLIC__}-->/js/artdialog/artDialog.plugins.min.js"></script>
+<script type="text/javascript" src="<!--{:__PUBLIC__}-->/js/jquery/jquery.equalHeight.js"></script>
+<script type="text/javascript" src="<!--{:__PUBLIC__}-->/js/jquery/tab/jquery.idtabs.min.js"></script>
+<!--{script}-->
+Q.Ajax.Q.Image=['<!--{:__PUBLIC__}-->/images/common/ajax/loading.gif', '<!--{:__PUBLIC__}-->/images/common/ajax/ok.gif','<!--{:__PUBLIC__}-->/images/common/ajax/update.gif' ];
+var URL='<!--{:__URL__}-->';
+<!--{:App::U()}-->
+<!--<if condition="isset($sSortUrl)">-->
+var SORTURL =<!--{$sSortUrl}-->;
+<!--</if>-->
+var sBaseFaqUrl='http://www.114.ms/index.php?app=service&c=faq&a=index&wf_app=<!--{if empty($_GET['controller'])}--><!--{:APP_NAME}--><!--{d*else}--><!--{$arrAppModel['app_identifier']}--><!--{/if}-->&amp;wf_version=<!--{:urlencode(WINDSFORCE_SERVER_VERSION)}-->&amp;wf_release=<!--{:urlencode(WINDSFORCE_SERVER_RELEASE)}-->&amp;wf_bug=<!--{:urlencode(WINDSFORCE_SERVER_BUG)}-->&amp;wf_module=<!--{if empty($_GET['controller'])}--><!--{:MODULE_NAME}--><!--{d*else}--><!--{$_GET['controller']}--><!--{/if}-->&amp;wf_action=<!--{if empty($_GET['controller'])}--><!--{:ACTION_NAME}--><!--{d*else}--><!--{$_GET['action']}--><!--{/if}-->&amp;wf_key=';
+var sBaseFaqTips='<!--<lang package='Template'>-->查看更多提示<!--</lang>-->';
+<!--{tagself}-->
+$(document).ready(
+	function(){
+		$('.column').equalHeight();
+		$(".tablesorter tr:odd").addClass("data_odd");
+		$(".tablesorter tr:even").addClass("data_even");
+		$(".tablesorter tr").hover(function(){
+		$(this).addClass("data_tr")
+	},function(){
+		$(this).removeClass("data_tr")
+	});
+	$(".tablesorter tbody tr")
+		.mouseover(function(){$(this).addClass("row-actions-display")})
+		.mouseout(function(){$(this).removeClass("row-actions-display")});
+	$('.module_content').first().addClass('global_tips');
+	$('fieldset,.windsforce_tabcontent fieldset').first().addClass('fieldset_bordernone');
+	$("fieldset label").each(function(){
+		$(this).append('<a class="faq" title="'+sBaseFaqTips+'" href="'+sBaseFaqUrl+encodeURIComponent($(this).attr('for'))+'" target="_blank">&nbsp;&nbsp;&nbsp;</a>');
+	});
+	$("fieldset")
+		.mouseover(function(){$(this).addClass("hover-fieldset");})
+		.mouseout(function(){$(this).removeClass("hover-fieldset");});
+});
+<!--{/tagself}-->
+var nIsRecycle=<!--{if isset($bIsRecycleList)}-->1<!--{d*else}-->0<!--{/if}-->;
+<!--{/script}-->
+<script src="<!--{:__PUBLIC__}-->/js/common/global.js" type="text/javascript"></script>
+<script src="<!--{:__PUBLIC__}-->/js/admin/common.js" type="text/javascript"></script>
+<!--{if (empty($_GET['controller']) && in_array(ACTION_NAME,array('add','edit'))) || (!empty($_GET['controller']) && in_array($_GET['action'],array('add','edit')))}-->
+<!--{script}-->
+var currentBeforeFun,currentAfterFun;
+var sSubmitFormAdd='<!--<lang package='Template'>-->发布<!--</lang>-->';
+var sSubmitFormUpdate='<!--<lang package='Template'>-->更新<!--</lang>-->';
+<!--{if !empty($_GET['controller'])}-->
+var sSubmitFormId='value';
+var sSubmitFormAddUrl='<!--{:Admin_Extend::insert(array('controller'=>$_GET['controller']))}-->';
+var sSubmitFormUpdateUrl='<!--{:Admin_Extend::update(array('controller'=>$_GET['controller']))}-->';
+var sSubmitFormName='<!--{$_GET['controller']}-->Add';
+var sSubmitFormKey='<!--{$_GET['controller']}-->_id';
+<!--{d*else}-->
+var sSubmitFormId='id';
+var sSubmitFormAddUrl='<!--{:Q::U(MODULE_NAME.'/insert')}-->';
+var sSubmitFormUpdateUrl='<!--{:Q::U(MODULE_NAME.'/update')}-->';
+var sSubmitFormName='<!--{:MODULE_NAME}-->Add';
+var sSubmitFormKey='<!--{:MODULE_NAME}-->_id';
+<!--{/if}-->
+<!--{if ACTION_NAME==='add' || (!empty($_GET['controller']) && $_GET['action']=='add')}-->
+var sSubmitFormButtonName=sSubmitFormAdd;
+var SubmitFormCheckform=addForm;
+<!--{d*else}-->
+var sSubmitFormButtonName=sSubmitFormUpdate;
+var SubmitFormCheckform=updateForm;
+<!--{/if}-->
+$(document).ready(function(){
+	$('#submit_button').val(sSubmitFormButtonName);
+});
+<!--{/script}-->
+<!--{/if}-->
+<link rel="shortcut icon" href="<!--{:At::path('favicon.png')}-->">
+</head>
+
+<body id="main">
+<div id="QAjaxResult" class="none QAjaxResult">&nbsp;</div>
+<!--{script}-->
+function adminctrlmenuAdd(sUrl,sTitle){
+	Q.AjaxSend(Q.U('adminctrlmenu/add_url?url='+encodeURIComponent(sUrl)+'&title='+sTitle),'','',function(data,status){
+		if(status==1){
+			setTimeout(function(){
+				parent.menu.location=Q.U( 'public/fmenu?title='+encodeURIComponent('<!--<lang package='Template'>-->首页<!--</lang>-->')+'&currentid=3&notrefershmain=1' );
+			},1000);
+		}
+	});
+}
+<!--{/script}-->
+
+<!--[if lt IE 8]>
+<h4 class="alert_info">
+	<strong><!--<lang package='Template'>-->本站已停止支持 IE8 以下版本, 请升级你的浏览器!<!--</lang>-->&nbsp;
+		<a href="http://www.getfirefox.com" target="_blank">Firefox</a> &nbsp; 
+		<a href="http://opera.com" target="_blank">Opera</a> &nbsp; 
+		<a href="http://apple.com/safari" target="_blank">Safari</a> &nbsp; 
+		<a href="http://chrome.google.com" target="_blank">Google Chrome</a> &nbsp;
+		<a href="http://windows.microsoft.com/zh-CN/internet-explorer/products/ie/home" target="_blank">IE8+</a>
+	</strong>
+</h4>
+<![endif]-->

@@ -1,0 +1,10 @@
+			<div class="nav_tabcontainer nav_tab">
+				<ul>
+					<li <!--{if $sType=='new'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://pm/index?type=new')}-->"><!--<lang package='Template'>-->未读消息<!--</lang>-->&nbsp;<span id="usernew-pm-num">&nbsp;</span></a></li>
+					<li <!--{if $sType=='user'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://pm/index?type=user')}-->"><!--<lang package='Template'>-->私人消息<!--</lang>--></a></li>
+					<li <!--{if $sType=='my'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://pm/index?type=my')}-->"><!--<lang package='Template'>-->已发消息<!--</lang>--></a></li>
+					<li <!--{if $sType=='systemnew'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://pm/index?type=systemnew')}-->"><!--<lang package='Template'>-->未读公共消息<!--</lang>-->&nbsp;<span id="systemnew-pm-num">&nbsp;</span></a></li>
+					<li <!--{if $sType=='system'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://pm/index?type=system')}-->"><!--<lang package='Template'>-->公共消息<!--</lang>--></a></li>
+					<li <!--{if $sType=='pmnew' && ACTION_NAME==='pmnew'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://pm/pmnew')}-->">+<!--<lang package='Template'>-->发送短消息<!--</lang>--></a></li>
+				</ul>
+			</div>

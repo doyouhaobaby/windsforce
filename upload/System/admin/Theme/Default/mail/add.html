@@ -1,0 +1,101 @@
+<!--<include file="public+header">-->
+
+<!--{:Core_Extend::editorInclude()}-->
+
+<!--{script}-->
+$(function(){
+	editor=loadEditor('mail_message');
+});
+
+currentBeforeFun=function(){
+	$('#mail_message').val(editor.html());
+};
+
+checkForm(SubmitFormCheckform);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<if condition="empty( $nId )" >--><!--<lang package='Template'>-->添加邮件<!--</lang>--><!--<else/>--><!--<lang package='Template'>-->编辑邮件<!--</lang>--><!--</if>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<if condition="empty( $nId )" >--><!--<lang package='Template'>-->添加邮件<!--</lang>--><!--<else/>--><!--<lang package='Template'>-->编辑邮件<!--</lang>-->_<!--{$nId}--><!--</if>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->在这里添加一封邮件，然后返回邮件列表，点击即可发送一封邮件。<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->要发送邮件，请事先配置好系统邮件设置，否则将无法发送。<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<if condition="empty( $nId )" >--><!--<lang package='Template'>-->添加邮件<!--</lang>--><!--<else/>--><!--<lang package='Template'>-->编辑邮件<!--</lang>--><!--</if>--></h3>
+				<ul class="tabs">
+					<li class="active"><a href="<!--{:Q::U('mail/index')}-->"><!--<lang package='Template'>-->邮件列表<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="" method="post" id="mailAdd" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="mail_tomail"><!--<lang package='Template'>-->收件人<!--</lang>--></label>
+						<input type="text" name="mail_tomail" id="mail_tomail" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:mail_tomail}--><!--</if>-->" class="{required:true,email:true}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->邮件接收者地址，邮件地址中如果要包含用户名，格式为username &lt;user@domain.com&gt;<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="mail_subject"><!--<lang package='Template'>-->邮件主题<!--</lang>--></label>
+						<input type="text" name="mail_subject" id="mail_subject" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:mail_subject}--><!--</if>-->"/>
+						<div class="description"><!--<lang package='Template'>-->邮件主题，可以不填，当然最好填上。<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="mail_message"><!--<lang package='Template'>-->邮件内容<!--</lang>--></label>
+						<textarea name="mail_message" id="mail_message" style="width:700px;height:350px;visibility:hidden;"><!--<if condition="isset( $oValue )">--><!--{$oValue:mail_message|htmlspecialchars}--><!--</if>--></textarea>
+						<div class="description"><!--<lang package='Template'>-->邮件内容，邮件内容不能为空。<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="mail_frommail"><!--<lang package='Template'>-->邮件发送者邮箱<!--</lang>--></label>
+						<input type="text" name="mail_frommail" id="mail_frommail" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:mail_frommail}--><!--</if>-->" class="{email:true}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->邮件发送者可以不填，系统将会使用管理员邮件代替。<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="mail_charset"><!--<lang package='Template'>-->邮件编码<!--</lang>--></label>
+						<select name="mail_charset" id="mail_charset">
+							<option value="utf-8" selected>Utf8</option>
+						</select>
+					</fieldset>
+					<fieldset>
+						<label for="mail_level"><!--<lang package='Template'>-->是否紧急<!--</lang>--></label>
+						<p><input id="mail_level" name="mail_level" title="<!--<lang package='Template'>-->是否紧急<!--</lang>-->" value="2" style="margin-top: 1px; vertical-align: middle;" type="checkbox" <!--<if condition="isset( $oValue )&& $oValue:mail_level==2">-->checked<!--</if>-->>
+						</p>
+						<div class="description"><!--<lang package='Template'>-->指定邮件的紧急状态。<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="mail_htmlon"><!--<lang package='Template'>-->是否为纯文本<!--</lang>--></label>
+						<p><input id="mail_htmlon" name="mail_htmlon" title="<!--<lang package='Template'>-->是否为纯文本<!--</lang>-->" value="0" style="margin-top: 1px; vertical-align: middle;" type="checkbox" <!--<if condition="isset( $oValue )&& $oValue:mail_htmlon==0">-->checked<!--</if>-->></p>
+						<div class="description"><!--<lang package='Template'>-->把邮件内容切换成纯文本它将无法插入图片、表情，以及将丢失正文颜色等。<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="mail_status"><!--<lang package='Template'>-->状态<!--</lang>--></label>
+						<select class="field" name="mail_status">
+							<option value="1" <!--<if condition="!isset( $oValue ) || ( isset( $oValue ) && $oValue:mail_status==1)">-->selected<!--</if>-->><!--<lang package='Template'>-->启用<!--</lang>--></option>
+							<option value="0" <!--<if condition="isset( $oValue ) && $oValue:mail_status==0">-->selected<!--</if>--> ><!--<lang package='Template'>-->禁用<!--</lang>--></option>
+							<option value="9" <!--<if condition="isset( $oValue ) && $oValue:mail_status==9">-->selected<!--</if>-->><!--<lang package='Template'>-->回收站<!--</lang>--></option>
+						</select>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="hidden" name="ajax" value="1">
+						<input type="hidden" name="id" id="id" value="<!--<if condition="isset( $nId )">--><!--{$nId}--><!--</if>-->"/>
+						<input type="submit" id="submit_button" value="" class="alt_btn">
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->">
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

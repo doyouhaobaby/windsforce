@@ -1,0 +1,83 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+function update(){
+	$("#submit_button").attr("disabled","disabled");
+	$("#submit_button").val('update...');
+	Q.AjaxSubmit('informationUpd','<!--{:Q::U('public/change_info')}-->','',function(data,status){ 
+		$("#submit_button").attr("disabled",false);
+		$("#submit_button").val("<!--<lang package='Template'>-->更新<!--</lang>-->");
+	});
+}
+
+function usersignPreview(){
+	sHtml=windsforceAjaxhtml(_ROOT_+'/index.php?app=home&c=spaceadmin&a=usersign&content='+$('#user_sign').val());
+	$('#usersign_preview').html(sHtml);
+}
+
+checkForm(update);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->修改资料<!--</lang>--></a><!--{if APP_NAME==='admin'}--> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->修改资料<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a><!--{/if}--></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->修改资料<!--</lang>--></h3>
+				<ul class="tabs">
+					<li><a href="<!--{:Q::U('public/password')}-->"><!--<lang package='Template'>-->修改密码<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('avatar/index')}-->"><!--<lang package='Template'>-->修改头像<!--</lang>--></a></li>
+					<li class="active"><a href="<!--{:Q::U('public/information')}-->"><!--<lang package='Template'>-->修改资料<!--</lang>--></a></li>
+				</ul>
+			</header>
+		
+			<form method="post" id="informationUpd" class="validate">
+				<div class="module_content">
+					<fieldset><label for="user_nikename"><!--<lang package='Template'>-->昵称<!--</lang>--></label>
+						<input type="text" name="user_nikename" id="user_nikename" size="40" value="<!--{$arrUserInfo['user_nikename']}-->" />
+						<div class="description"><!--<lang package='Template'>-->相对于登录名的一种雅称<!--</lang>--></div>
+					</fieldset>
+					<fieldset><label for="user_email">Email</label>
+						<input type="text" name="user_email" id="user_email" size="40" value="<!--{$arrUserInfo['user_email']}-->" class="{required:true,email:true,remote:Q.U('public/check_email'),messages:{remote:'<!--<lang package='Template'>-->Email地址重复<!--</lang>-->'}}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->用户常用的电子邮件地址<!--</lang>--><br/>
+							<!--{if $arrUserInfo['user_isverify']==0}-->
+							<img src="<!--{:__PUBLIC__}-->/images/common/mail_inactive.png" style="position:relative;top:3px;" />&nbsp;<!--<lang package='Template'>-->你尚未通过邮件验证<!--</lang>--></a>&nbsp;<a href="<!--{:Core_Extend::windsforceOuter('app=home&c=spaceadmin&a=verifyemail')}-->" target="_blank"><!--<lang package='Template'>-->我要验证<!--</lang>--></a>
+							<!--{d*else}-->
+							<span style="color:green;font-weight:bold;"><!--<lang package='Template'>-->恭喜你已通过邮件验证<!--</lang>--></span></a>&nbsp;<a href="<!--{:Core_Extend::windsforceOuter('app=home&c=spaceadmin&a=verifyemail')}-->" target="_blank"><!--<lang package='Template'>-->管理验证<!--</lang>--></a>
+							<!--{/if}-->&nbsp;
+							(<!--<lang package='Template'>-->注意修改电子邮件需要重新验证数据<!--</lang>-->)
+						</div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset><label for="user_sign"><!--<lang package='Template'>-->用户签名<!--</lang>--></label>
+						<textarea name="user_sign" id="user_sign" rows="5"><!--{$arrUserInfo['user_sign']}--></textarea>
+						<div class="description">
+							<!--<lang package='Template'>-->用户可以在签名中发布一些自己的信息<!--</lang>-->&nbsp;
+							<a href="javascript:void(0);" onclick="usersignPreview();"><b><!--<lang package='Template'>-->预览签名<!--</lang>--></b></a>&nbsp;<a href="<!--{:Core_Extend::windsforceOuter('app=home&c=misc&a=ubb&type=sign')}-->" target="_blank"><!--<lang package='Template'>-->查看用户签名支持的UBB代码<!--</lang>--></a>
+							<div id="usersign_preview" style="border:2px dashed #CCC;padding:5px;margin-top:10px;">
+								<!--{$arrUserInfo['user_sign']|Core_Extend+usersign}-->
+							</div>
+						</div>
+					</fieldset>
+					<fieldset><label for="seccode"><!--<lang package='Template'>-->验证码<!--</lang>--></label>
+						<input type="text" name="seccode" size="6" id="seccode" class="{required:true,remote:Q.U('public/validate_seccode'),messages:{remote:'<!--<lang package='Template'>-->验证码错误<!--</lang>-->'}} left"/>&nbsp;
+						<span class="validate_seccode"><span class="input_errortips"></span></span>
+						<div class="description clear" style="padding-top:8px;">
+							<span id="seccodeImage"><img style="cursor:pointer" onclick="updateSeccode()" src="<!--{:Q::U('public/seccode')}-->" /></span>
+						</div>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="hidden" name="ajax" value="1">
+						<input type="hidden" name="user_id" value="<!--{$arrUserInfo['user_id']}-->">
+						<input id="submit_button" type="submit" class="alt_btn" value="<!--<lang package='Template'>-->更新<!--</lang>-->" />
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

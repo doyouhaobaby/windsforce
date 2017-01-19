@@ -1,0 +1,58 @@
+<!--<include file="public+header">-->
+
+<!--{script}-->
+currentAfterFun=function(){
+	window.setTimeout(function (){window.location.href='<!--{:Q::U('badword/index')}-->'},1000);
+};
+
+checkForm(addForm);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->添加过滤词语<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->添加过滤词语<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->你可以使用添加单个过滤词语，也可以批量添加过滤词语<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->添加过滤词语<!--</lang>--></h3>
+				<ul class="tabs">
+					<li class="active"><a href="<!--{:Q::U('badword/index')}-->"><!--<lang package='Template'>-->过滤词语列表<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="" method="post" id="badwordAdd" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="badword_find"><!--<lang package='Template'>-->不良词语名字<!--</lang>--></label>
+						<input type="text" name="badword_find" id="badword_find" size="40" value="" class="{required:true,remote:Q.U('badword/check_find'),messages:{remote:'<!--<lang package='Template'>-->不良词语重复<!--</lang>-->'}}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->添加不良词语可以避免被和谐<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="badword_replacement"><!--<lang package='Template'>-->替换词语名字<!--</lang>--></label>
+						<input type="text" name="badword_replacement" id="badword_replacement" size="40" value="" class="{required:true}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->需要将不良词语替换的词语<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="hidden" name="ajax" value="1">
+						<input type="submit" id="submit_button" value="<!--<lang package='Template'>-->发布<!--</lang>-->" class="alt_btn">
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->">
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

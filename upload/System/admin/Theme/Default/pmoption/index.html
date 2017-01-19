@@ -1,0 +1,73 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+function option(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'update...' );
+	$("#submit_button").attr("disabled", false);
+	$('.validate')(0).submit();
+}
+
+checkForm(option);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->短消息设置<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->短消息设置<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->短消息设置<!--</lang>--></h3>
+				<ul class="tabs">
+					<li class="active"><a href="<!--{:Q::U('pmoption/index')}-->"><!--<lang package='Template'>-->基本设置<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('pmoption/sound')}-->"><!--<lang package='Template'>-->短消息声音<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('pm/index')}-->"><!--<lang package='Template'>-->短消息列表<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="<!--{:Q::U('Pmoption/update_option')}-->" method="post" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="pm_status"><!--<lang package='Template'>-->启用短消息中心<!--</lang>--></label>
+						<input type="radio" id="pm_status" name="options[pm_status]" value="1" <!--{if $arrOptions['pm_status']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[pm_status]" value="0" <!--{if $arrOptions['pm_status']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->是否启用短消息中心功能，关闭后短消息功能将不可用<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="pmsend_regdays"><!--<lang package='Template'>-->发短消息最少注册天数<!--</lang>--></label>
+						<input type="text" name="options[pmsend_regdays]" id="pmsend_regdays" size="60" value="<!--{$arrOptions['pmsend_regdays']}-->" class="{required:true,digits:true,min: 0,max:180}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->注册天数少于此设置的，不允许发送短消息，0为不限制，此举为了限制机器人发广告<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="pmlimit_oneday"><!--<lang package='Template'>-->同一用户在 24 小时允许发送短消息的最大数目<!--</lang>--></label>
+						<input type="text" name="options[pmlimit_oneday]" id="pmlimit_oneday" size="60" value="<!--{$arrOptions['pmlimit_oneday']}-->" class="{required:true,digits:true,min: 0,max:100}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->同一用户在 24 小时内可以发送的短消息的极限，建议在 30 - 100 范围内取值，0 为不限制，此举为了限制通过机器批量发广告<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="pmflood_ctrl"><!--<lang package='Template'>-->发短消息灌水预防<!--</lang>--></label>
+						<input type="text" name="options[pmflood_ctrl]" id="pmflood_ctrl" size="60" value="<!--{$arrOptions['pmflood_ctrl']}-->" class="{required:true,digits:true,min: 0}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->两次发短消息间隔小于此时间，单位秒，0 为不限制，此举为了限制通过机器批量发广告<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="pmsend_seccode"><!--<lang package='Template'>-->开启发送短消息验证码<!--</lang>--></label>
+						<input type="radio" id="pmsend_seccode" name="options[pmsend_seccode]" value="1" <!--{if $arrOptions['pmsend_seccode']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[pmsend_seccode]" value="0" <!--{if $arrOptions['pmsend_seccode']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->是否启用短消息是否开启短消息中心发送短消息验证码，可以防止使用机器狂发短消息<!--</lang>--><br/>
+						<!--<lang package='Template'>-->短消息验证码在防灌水管理面板也可以设置，它们是同一设置<!--</lang>-->&nbsp;<a href="<!--{:Q::U('secoption/index')}-->"><!--<lang package='Template'>-->查看<!--</lang>--></a>
+						</div>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input id="submit_button" type="submit" class="alt_btn" value="<!--<lang package='Template'>-->发布<!--</lang>-->" />
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->" />
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

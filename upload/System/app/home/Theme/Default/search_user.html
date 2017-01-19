@@ -1,0 +1,16 @@
+<!--<include file="search+header" />-->
+
+			<form method="get" action="<!--{:Q::U('home://search/user')}-->" class="search-form">
+				<input type="hidden" name="app" value="home" />
+				<input type="hidden" name="c" value="search" />
+				<input type="hidden" name="a" value="user" />
+				
+				<!--<include file="search+menu" />-->
+
+				<input class="width_500 search-input global_searchkey" id="key" name="key" placeholder="<!--<lang package='__COMMON_LANG__@Common'>-->请输入搜索内容<!--</lang>-->" x-webkit-speech />&nbsp;
+				<button class="btn" type="submit"><!--<lang package='__COMMON_LANG__@Common'>-->搜索<!--</lang>--></button>
+			</form>
+		</div>
+	</div>
+
+<!--<include file="search+footer" />-->

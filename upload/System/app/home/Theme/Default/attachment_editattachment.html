@@ -1,0 +1,37 @@
+					<div id="result" class="none"></div>
+					
+					<table class="table" style="width:500px;">
+						<thead>
+							<tr valign="top">
+								<td width="120px"><p><a href="javascript:void(0);" target="_blank"><img class="thumbnail" src="<!--{:Attachment_Extend::getAttachmentPreview($oAttachment)}-->" alt="<!--{$oAttachment['attachment_name']}-->" width="46" height="60"></a>
+									</p>
+								</td>
+								<td><p><strong><!--<lang package='Template'>-->文件名<!--</lang>-->：</strong> <!--{$oAttachment['attachment_name']}--></p>
+									<p><strong><!--<lang package='Template'>-->文件类型<!--</lang>-->：</strong> <!--{$oAttachment['attachment_type']}--></p>
+									<p><strong><!--<lang package='Template'>-->上传日期<!--</lang>-->：</strong> <!--{$oAttachment['create_dateline']|Core_Extend+timeFormat}--></p>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><!--<lang package='Template'>-->标题<!--</lang>--><em class="red">*</em></td>
+								<td><input id="attachment_name" name="attachment_name" value="<!--{$oAttachment['attachment_name']}-->" type="text"></td>
+							</tr>
+							<tr>
+								<td><!--<lang package='Template'>-->附件专辑<!--</lang>--></td>
+								<td>
+									<select name="attachmentcategory_id" id="attachmentcategory_id">
+										<option value="0"><!--<lang package='Template'>-->请选择专辑<!--</lang>--></option>
+										<!--<foreach for=arrAttachmentcategorys value=oAttachmentcategory>-->
+										<option value="<!--{$oAttachmentcategory['attachmentcategory_id']}-->" <!--{if $oAttachment['attachmentcategory_id']==$oAttachmentcategory['attachmentcategory_id']}-->selected<!--{/if}-->><!--{$oAttachmentcategory['attachmentcategory_name']}--></option>
+										<!--</foreach>-->
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td><!--<lang package='Template'>-->文件地址<!--</lang>--></td>
+								<td><input value="<!--{:Attachment_Extend::getAttachmenturl($oAttachment)}-->" type="text" disabled="disabled"></td>
+							</tr>
+						</tbody>
+					</table>
+					<input value="<!--{$oAttachment['attachment_id']}-->" type="hidden" name="attachment_id" id="attachment_id">

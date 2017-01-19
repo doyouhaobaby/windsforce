@@ -1,0 +1,10 @@
+<div id="joineventbox">
+	<form name="joineventform" id="joineventform" method="post" autocomplete="off" action="">
+		<div class="none" id="result"></div>
+		<div class="tips"><!--<lang package='Template'>-->已有<!--</lang>-->&nbsp;<!--{$oEvent['event_joincount']}-->&nbsp;<!--<lang package='Template'>-->人参加<!--</lang>--></div>
+		<p><!--<lang package='Template'>-->联系方式<!--</lang>--></p>
+		<p><input type="text" id="eventuser_contact" name="eventuser_contact" class="input-xlarge"/></p>
+		<input type="hidden" name="ajax" value="1">
+		<input type="hidden" name="event_id" value="<!--{$oEvent['event_id']}-->">
+	</form>
+</div>

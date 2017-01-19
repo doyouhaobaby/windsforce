@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><root>
+<title><![CDATA[WindsForce! Style]]></title>
+<version><![CDATA[2.0]]></version>
+<time><![CDATA[201401007]]></time>
+<url><![CDATA[http://windsforce.114.ms]]></url>
+<copyright><![CDATA[(C)2012-2014 风之力（成都）]]></copyright>
+<data>
+	<theme_id><![CDATA[1]]></theme_id>
+	<name><![CDATA[默认主题]]></name>
+	<theme_name><![CDATA[默认模板套系]]></theme_name>
+	<theme_dirname><![CDATA[default]]></theme_dirname>
+	<status><![CDATA[1]]></status>
+	<style_id><![CDATA[1]]></style_id>
+	<style_extend><![CDATA[t1	t2	t3	t4	t5|t1]]></style_extend>
+	<qeephp_template_base><![CDATA[default]]></qeephp_template_base>
+	<directory><![CDATA[theme/Default]]></directory>
+	<copyright><![CDATA[风之力（成都）]]></copyright>
+	<data>
+		<float_mask_bg_extra><![CDATA[]]></float_mask_bg_extra>
+		<float_mask_bg_img><![CDATA[]]></float_mask_bg_img>
+		<float_mask_bg_color><![CDATA[#FFFFFF]]></float_mask_bg_color>
+		<float_bg_extra><![CDATA[]]></float_bg_extra>
+		<float_bg_img><![CDATA[]]></float_bg_img>
+		<float_bg_color><![CDATA[#FFFFFF]]></float_bg_color>
+		<footer_bg_extra><![CDATA[none repeat scroll]]></footer_bg_extra>
+		<footer_bg_img><![CDATA[]]></footer_bg_img>
+		<footer_bg_color><![CDATA[#5B6566]]></footer_bg_color>
+		<drop_menu_bg_extra><![CDATA[]]></drop_menu_bg_extra>
+		<drop_menu_bg_img><![CDATA[]]></drop_menu_bg_img>
+		<drop_menu_bg_color><![CDATA[#CCCCCC]]></drop_menu_bg_color>
+		<bg_extra><![CDATA[repeat]]></bg_extra>
+		<bg_img><![CDATA[bg.png]]></bg_img>
+		<bg_color><![CDATA[#FFFFFF]]></bg_color>
+		<side_bg_extra><![CDATA[]]></side_bg_extra>
+		<side_bg_img><![CDATA[]]></side_bg_img>
+		<side_bg_color><![CDATA[#FFFFFF]]></side_bg_color>
+		<header_bg_extra><![CDATA[none repeat scroll 0 0]]></header_bg_extra>
+		<header_bg_img><![CDATA[]]></header_bg_img>
+		<header_bg_color><![CDATA[#438079]]></header_bg_color>
+		<menu_bg_extra><![CDATA[]]></menu_bg_extra>
+		<menu_bg_img><![CDATA[]]></menu_bg_img>
+		<menu_bg_color><![CDATA[#F6F7F1]]></menu_bg_color>
+		<noticetext_border_color><![CDATA[]]></noticetext_border_color>
+		<noticetext_color><![CDATA[#FF2B00]]></noticetext_color>
+		<interleave_color><![CDATA[#DEDEDE]]></interleave_color>
+		<special_bg><![CDATA[#95B93D]]></special_bg>
+		<special_border><![CDATA[#DEDEDE]]></special_border>
+		<common_background_color><![CDATA[#f1f1f1]]></common_background_color>
+		<interval_line_color><![CDATA[#E6E7E1]]></interval_line_color>
+		<drop_menu_border><![CDATA[#FFFFFF]]></drop_menu_border>
+		<input_bg><![CDATA[#FFFFFF]]></input_bg>
+		<input_border_dark_color><![CDATA[#c4c4c4]]></input_border_dark_color>
+		<input_border><![CDATA[#ccc]]></input_border>
+		<menu_hover_text_color><![CDATA[#b0d417]]></menu_hover_text_color>
+		<menu_hover_bg_color><![CDATA[#A7BBB6]]></menu_hover_bg_color>
+		<menu_text_color><![CDATA[#d9e7e5]]></menu_text_color>
+		<menu_border_color><![CDATA[#438079]]></menu_border_color>
+		<content_separate_color><![CDATA[]]></content_separate_color>
+		<content_width><![CDATA[90%]]></content_width>
+		<content_big_size><![CDATA[16px]]></content_big_size>
+		<content_fontsize><![CDATA[14px]]></content_fontsize>
+		<wrap_border_color><![CDATA[#FFFFFF]]></wrap_border_color>
+		<wrap_border_width><![CDATA[1px]]></wrap_border_width>
+		<wrap_table_bg><![CDATA[#FFFFFF]]></wrap_table_bg>
+		<wrap_table_width><![CDATA[960px]]></wrap_table_width>
+		<highlightlink_color><![CDATA[#4298BA]]></highlightlink_color>
+		<link_color><![CDATA[#4298BA]]></link_color>
+		<light_textcolor><![CDATA[#999999]]></light_textcolor>
+		<medium_textcolor><![CDATA[#333333]]></medium_textcolor>
+		<normal_color><![CDATA[#333333]]></normal_color>
+		<big_fontsize><![CDATA[20px]]></big_fontsize>
+		<big_font><![CDATA[Verdana,Lucida Grande, Lucida Sans Unicode, Lucida Sans, Helvetica, Arial, sans-serif]]></big_font>
+		<small_fontsize><![CDATA[0.83em]]></small_fontsize>
+		<small_font><![CDATA[Verdana,Lucida Grande, Lucida Sans Unicode, Lucida Sans, Helvetica, Arial, sans-serif]]></small_font>
+		<normal_fontsize><![CDATA[13px]]></normal_fontsize>
+		<normal_font><![CDATA["Helvetica Neue", Helvetica, Arial, sans-serif]]></normal_font>
+		<footer_text_color><![CDATA[#AAAAAA]]></footer_text_color>
+		<header_text_color><![CDATA[#333333]]></header_text_color>
+		<header_border_color><![CDATA[#ebebeb]]></header_border_color>
+		<header_border_width><![CDATA[1px]]></header_border_width>
+		<logo><![CDATA[logo.png]]></logo>
+		<style_img_dir><![CDATA[]]></style_img_dir>
+		<img_dir><![CDATA[]]></img_dir>
+	</data>
+	<version><![CDATA[For WindsForce-2.0]]></version>
+</data>
+</root>

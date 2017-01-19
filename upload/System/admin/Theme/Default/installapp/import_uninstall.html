@@ -1,0 +1,29 @@
+<!--<include file="public+header">-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->卸载应用确认<!--</lang>--></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->直接卸载将有可能清除数据库中记录结果，并且不可恢复<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->强烈建立保留数据库记录或者卸载前备份数据库<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+		
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->卸载应用确认<!--</lang>--></h3></header>
+			<div class="module_content">
+				<p><a href="<!--{:Q::U('installapp/import_uninstall&name='.$sName.'&confirm=1')}-->" class="tags"><!--<lang package='Template'>-->直接卸载<!--</lang>--></a>
+					<a href="<!--{:Q::U('installapp/import_uninstall&name='.$sName.'&confirm=1&sqlprotected=1')}-->" class="tags"><!--<lang package='Template'>-->保留数据库记录<!--</lang>--></a>
+				<p>
+			</div>
+		</article>
+
+<!--<include file="public+footer">-->

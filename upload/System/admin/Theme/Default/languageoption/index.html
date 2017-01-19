@@ -1,0 +1,70 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+function option(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'update...' );
+	$("#submit_button").attr("disabled", false);
+}
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->国际化<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->国际化<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->国际化是为了方便台湾和海外用户能够方便地使用系统<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->国际化设置<!--</lang>--></h3>
+			</header>
+			<form action="<!--{:Q::U('languageoption/update_option')}-->" method="post" onsubmit="return option();">
+				<div class="module_content">
+					<fieldset>
+						<label for="language_switch_on"><!--<lang package='Template'>-->是否开启前台语言包切换<!--</lang>--></label>
+						<input type="radio" id="language_switch_on" name="options[language_switch_on]" value="1" <!--{if $arrOptions['language_switch_on']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[language_switch_on]" value="0" <!--{if $arrOptions['language_switch_on']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->如果选择否的话，那么用户在前台将看不到语言包切换界面以及也无法通过URL来切换语言包<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="admin_language_name"><!--<lang package='Template'>-->后台语言包设置<!--</lang>--></label>
+						<select name="options[admin_language_name]" id="admin_language_name">
+						<!--<foreach for=arrAdminlanguages value=sAdminlanguage>-->
+							<option value="<!--{$sAdminlanguage}-->" <!--{if strtolower($sAdminlanguage)==strtolower($sCurrentAdminlanguage)}-->selected<!--{/if}-->><!--{$sAdminlanguage|strtolower}--></option>
+						<!--</foreach>-->
+						</select>
+						<div class="description">
+							<!--<lang package='Template'>-->后台默认语言包设置，请根据你的需要来设置<!--</lang>--><!--</lang>-->
+						</div>
+					</fieldset>
+					<fieldset>
+						<label for="front_language_name"><!--<lang package='Template'>-->前台语言包设置<!--</lang>--></label>
+						<select name="options[front_language_name]" id="front_language_name">
+						<!--<foreach for=arrFrontlanguages value=sFrontlanguage>-->
+							<option value="<!--{$sFrontlanguage}-->" <!--{if $sFrontlanguage==strtolower($sCurrentFrontlanguage)}-->selected<!--{/if}-->><!--{$sFrontlanguage}--></option>
+						<!--</foreach>-->
+						</select>
+						<div class="description">
+							<!--<lang package='Template'>-->前台默认语言包设置，前台和后台是分开的<!--</lang>--><!--</lang>-->
+						</div>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input id="submit_button" type="submit" class="alt_btn" value="<!--<lang package='Template'>-->发布<!--</lang>-->" />
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->" />
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

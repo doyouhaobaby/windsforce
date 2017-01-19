@@ -1,0 +1,110 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->小组个人中心<!--</lang>--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+		<div class="grid_3">
+			<!--<include file="Core_Extend::template('ucenter_sidebar','home')" />-->
+		</div>
+
+		<div class="grid_9">
+			<!--<include file="ucentergrouptopic+lovemenu" />-->
+
+			<div class="nav_tabcontainer nav_text">
+				<ul>
+					<li <!--{if empty($sType)}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('group://ucenter/index')}-->"><!--<lang package='Template'>-->我关注的<!--</lang>--></a></li>
+					<li <!--{if $sType=='myself'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('group://ucenter/index?type=myself')}-->"><!--<lang package='Template'>-->我自己的<!--</lang>--></a></li>
+					<li <!--{if $sType=='friend'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('group://ucenter/index?type=friend')}-->"><!--<lang package='Template'>-->好友的<!--</lang>--></a></li>
+					<li <!--{if $sType=='all' || isset($_GET['uid'])}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('group://ucenter/index?type=all')}-->"><!--<lang package='Template'>-->正在发生<!--</lang>--></a></li>
+				</ul>
+			</div>
+
+			<div id="topic_list_box" class="topic_list_box">
+				<table width="100%" class="table">
+					<thead>
+						<tr style="border-bottom:1px solid #eeeeee;">
+							<th style="width:45px;"><!--<lang package='Template'>-->发帖人<!--</lang>--></th>
+							<th style="width:450px;"></th>
+							<th class="Sys-special_color" style="text-align:right;font-weight:normal;width:110px;padding-right:20px;">
+								<!--<lang package='Template'>-->浏览<!--</lang>-->
+							</th>
+						</tr>
+					</thead>
+					<tbody id="grouptopiclist_box">
+						<!--{if !empty($arrGrouptopics)}-->
+						<!--<foreach for=arrGrouptopics value=arrGrouptopic>-->
+						<!--{if $arrGrouptopic['grouptopic_comments']>0 && $arrGrouptopic['grouptopic_latestcomment']}-->
+						<!--{~$arrLatestComment=json_decode($arrGrouptopic['grouptopic_latestcomment'],true)}-->
+						<!--{/if}-->
+						<tr>
+							<td class="author">
+								<!--{if $arrGrouptopic['grouptopic_isanonymous']==1}-->
+								<!--<lang package='Template'>-->匿名<!--</lang>-->
+								<!--{d*else}-->
+								<a href="<!--{:Q::U('group://space@?id='.$arrGrouptopic['user_id'])}-->">
+									<img class="thumbnail" src="<!--{:Core_Extend::avatar($arrGrouptopic['user_id'],'small')}-->" width="45px" height="45px" alt="<!--{$arrGrouptopic['grouptopic_username']}-->" />
+								</a>
+								<!--{/if}-->
+							</td>
+							<td class="subject">
+								<div class="title">
+									<!--{:Grouptopic_Extend::grouptopiclistIcon($arrGrouptopic)}-->&nbsp;
+									<!--{if $arrGrouptopic['grouptopiccategory_id']>0}-->
+									<em class="Sys-special_color">[<a href="<!--{:Group_Extend::getGroupurl($arrGrouptopic,'&cid='.$arrGrouptopic['grouptopiccategory_id'])}-->"><!--{$arrGrouptopic['grouptopiccategory_name']}--></a>]</em>
+									<!--{/if}-->
+									<a href="<!--{:Group_Extend::getTopicurl($arrGrouptopic)}-->" style="<!--{$arrGrouptopic['grouptopic_color']|Grouptopic_Extend+grouptopicColor}-->;" title="<!--{$arrGrouptopic['grouptopic_title']}-->"><!--{$arrGrouptopic['grouptopic_title']|C+subString=0,30}--></a>
+									<!--{if isset($arrLatestComment)}-->
+									<!--{if CURRENT_TIMESTAMP-$arrLatestComment['commenttime']<=86400}-->
+									&nbsp;<a href="<!--{:Group_Extend::getTopiccommenturl($arrGrouptopic,$arrLatestComment['commentid'])}-->" title="<!--<lang package='Template'>-->查看新回复<!--</lang>-->">New</a>&nbsp;
+									<!--{/if}-->
+									<!--{/if}-->
+									<!--{:Grouptopic_Extend::grouptopicDigest($arrGrouptopic['grouptopic_addtodigest'],true)}-->
+									<!--{:Grouptopic_Extend::grouptopicRecommend($arrGrouptopic['grouptopic_isrecommend'],true)}-->
+									<!--{:Grouptopic_Extend::grouptopicThumb($arrGrouptopic['grouptopic_thumb'],true)}-->
+									<!--{:Grouptopic_Extend::grouptopicHot($arrGrouptopic['grouptopic_comments'],$arrGrouptopic['grouptopic_views'],true)}-->
+									<!--{:Core_Extend::newData($arrGrouptopic['create_dateline'],true)}-->
+								</div>
+								<div class="info">
+									<a href="<!--{:Group_Extend::getGroupurl($arrGrouptopic)}-->"><!--{$arrGrouptopic['group_nikename']}--></a>
+									<span class="pipe">|</span>
+									<!--{if $arrGrouptopic['grouptopic_isanonymous']==1}-->
+									<!--<lang package='Template'>-->匿名<!--</lang>-->
+									<!--{d*else}--><a href="<!--{:Q::U('group://space@?id='.$arrGrouptopic['user_id'])}-->" class="bind_hover_card" bm_user_id="<!--{$arrGrouptopic['user_id']}-->"><!--{$arrGrouptopic['grouptopic_username']}--></a>
+									<!--{/if}-->&nbsp;
+									<span><!--{$arrGrouptopic['create_dateline']|Core_Extend+timeFormat}--></span>
+									<span class="pipe">|</span>
+									<em class="Sys-special_color" title="<!--<lang package='Template'>-->浏览<!--</lang>-->"><!--{$arrGrouptopic['grouptopic_views']}--></em>
+								</div>
+							</td>
+							<td style="text-align:right;">
+								<a class="num WindsforceSystem-special_bg" href="<!--{:Group_Extend::getTopicurl($arrGrouptopic)}-->#comments"><!--{$arrGrouptopic['grouptopic_comments']}--></a>
+								<!--{if isset($arrLatestComment)}-->
+								<div class="last_reply">
+									<a href="<!--{:Q::U('group://space@?id='.$arrLatestComment['commentuserid'])}-->" class="bind_hover_card Sys-special_color" bm_user_id="<!--{$arrLatestComment['commentuserid']}-->"><!--{$arrLatestComment['commentusername']}--></a>&nbsp;
+									<span><!--{$arrLatestComment['commenttime']|Core_Extend+timeFormat}--></span>
+								</div>
+								<!--{/if}-->
+							</td>
+						</tr>
+						<!--{~unset($arrLatestComment)}-->
+						<!--</foreach>-->
+						<!--{d*else}-->
+						<tr id="grouptopic_no">
+							<td colspan="3"><!--<lang package='Template'>-->暂时没有发现任何帖子<!--</lang>--></td>
+						</tr>
+						<!--{/if}-->
+					</tbody>
+				</table>
+			</div>
+
+			<!--{$sPageNavbar}-->
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

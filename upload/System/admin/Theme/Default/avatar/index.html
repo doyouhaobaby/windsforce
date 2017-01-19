@@ -1,0 +1,76 @@
+<!--<include file="public+header">-->
+
+<!--{script}-->
+function deleteAvatar(){
+	windsforceConfirm('<!--<lang package='Template'>-->你确定要删除当前头像？<!--</lang>-->',function(){
+		window.location.href="<!--{:Q::U('avatar/un')}-->";
+	});
+}
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->头像上传<!--</lang>--></a><!--{if APP_NAME==='admin'}--> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->头像上传<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a><!--{/if}--></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<!--{if !$arrAvatarInfo['exist']}-->
+		<h4 class="alert_info"><!--<lang package='Template'>-->你还没有上传头像，头像为系统默认头像<!--</lang>--></h4>
+		<!--{d*else}-->
+		<h4 class="alert_warning"><!--<lang package='Template'>-->头像不是很满意或者正在做一个更漂亮的头像?<!--</lang>-->&nbsp;<a href="javascript:void(0);" onclick="deleteAvatar();" style="color:red;"><!--<lang package='Template'>-->我要删除当前头像<!--</lang>--></a></h4>
+		<!--{/if}-->
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->本软件内置头像系统，你可以为你上传一张个性图片作为你的名片<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->你的头像被创建后，将会生成4张图片，大头像200*200、中等头像120*120、小头像48*48<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->当前头像<!--</lang>--></h3>
+				<ul class="tabs">
+					<li><a href="<!--{:Q::U('public/password')}-->"><!--<lang package='Template'>-->修改密码<!--</lang>--></a></li>
+					<li class="active"><a href="<!--{:Q::U('avatar/index')}-->"><!--<lang package='Template'>-->修改头像<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('public/information')}-->"><!--<lang package='Template'>-->修改资料<!--</lang>--></a></li>
+				</ul>
+			</header>
+				<div class="module_content">
+						<fieldset>
+							<label><!--<lang package='Template'>-->大头像<!--</lang>--> 200*200</label>
+							<div class="description"><img src="<!--{$arrAvatarInfo['big']}-->"/></div>
+						</fieldset>
+						<fieldset>
+							<label><!--<lang package='Template'>-->中等头像<!--</lang>--> 120*120</label>
+							<div class="description"><img src="<!--{$arrAvatarInfo['middle']}-->"/></div>
+						</fieldset>
+						<fieldset>
+							<label><!--<lang package='Template'>-->小头像<!--</lang>--> 48*48</label>
+							<div class="description"><img src="<!--{$arrAvatarInfo['small']}-->"/></div>
+						</fieldset>
+				</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->上传头像<!--</lang>--></h3></header>
+			<form name="photo" enctype="multipart/form-data" action="<!--{:Q::U('avatar/upload')}-->" method="post" name="uploadAdd" id="uploadAdd">
+				<div class="module_content">
+					<p><!--<lang package='Template'>-->请选择一个新照片进行上传编辑<!--</lang>--></p>
+					<fieldset>
+						<label><!--<lang package='Template'>-->高清原始头像<!--</lang>-->(<!--<lang package='Template'>-->最大上传尺寸<!--</lang>--> <!--{:C::changeFileSize($nUploadSize)}-->)</label>
+						<input type="file" name="image" size="30"/>
+						<div class="description"><!--<lang package='Template'>-->值得注意的是头像文件太大将无法上传成功<!--</lang>--></div>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="submit" name="upload" class="alt_btn" value="<!--<lang package='Template'>-->上传头像<!--</lang>-->">
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

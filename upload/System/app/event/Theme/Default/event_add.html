@@ -1,0 +1,270 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{~$sCalendarLang=Core_Extend::calendar()}-->
+
+<!--{:Core_Extend::editorInclude()}-->
+<!--{:Core_Extend::emotion()}-->
+<!--{:Core_Extend::validate()}-->
+
+<script type="text/javascript" src="<!--{:__PUBLIC__}-->/js/calendar/datepicker/WdatePicker.js"></script>
+
+<!--{script}-->
+$(function(){
+	editor=loadEditorThin('event_content');
+	$(".face-icon").jqfaceedit({txtAreaObj:editor,containerObj:$('#emotion_parentcontainer'),top:25,left:-27});
+});
+
+function addEvent(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( '<!--<lang package='Template'>-->发布<!--</lang>-->...' );
+	$('#event_content').val(editor.html());
+	if(!$("#event_content").val()){
+		windsforceAlert(Q.L('内容不能够为空','Common'),'',3);
+		$("#submit_button").attr("disabled", false);
+		$("#submit_button").val( '<!--<lang package='Template'>-->发布<!--</lang>-->' );
+		return false;
+	}
+	Q.AjaxSubmit('createeventform','<!--{:Q::U('event://event/add_in')}-->','',complete);
+}
+
+function complete(data,status){
+	$("#submit_button").attr("disabled", false);
+	$("#submit_button").val( '<!--<lang package='Template'>-->发布<!--</lang>-->' );
+	if(status==1){
+		setTimeout(function(){window.location.replace(data.url);},1000);
+	}
+}
+
+<!--{if isset($oEvent)}-->
+function updateEvent(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( '<!--<lang package='Template'>-->更新<!--</lang>-->...' );
+	$('#event_content').val(editor.html());
+	if(!$("#event_content").val()){
+		windsforceAlert(Q.L('内容不能够为空','Common'),'',3);
+		$("#submit_button").attr("disabled", false);
+		$("#submit_button").val( '<!--<lang package='Template'>-->更新<!--</lang>-->' );
+		return false;
+	}
+	Q.AjaxSubmit('createeventform','<!--{:Q::U('event://event/update')}-->','',completeUpdate);
+}
+
+function completeUpdate(data,status){
+	$("#submit_button").attr("disabled", false);
+	$("#submit_button").val( '<!--<lang package='Template'>-->更新<!--</lang>-->' );
+	if(status==1){
+		setTimeout(function(){window.location.href='<!--{:Q::U('event://e@?id='.$oEvent['event_id'])}-->';},1000);
+	}
+}
+<!--{/if}-->
+
+function insertEventcover(nAttachmentid){
+	insertAttachmentthumb('event_cover',nAttachmentid);
+}
+
+checkForm(<!--{if isset($oEvent)}-->updateEvent<!--{d*else}-->addEvent<!--{/if}-->,
+	{
+		event_limitcount: {
+			required: true,
+			digits: true
+		}
+	},
+	{
+		event_limitcount: {
+			required: '<!--<lang package='Template'>-->活动人数不能为空<!--</lang>-->',
+			digits: '<!--<lang package='Template'>-->活动人数必须为整数<!--</lang>-->'
+		}
+	}
+);
+<!--{/script}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('event://public/index')}-->" title="<!--<lang package='Template'>-->活动<!--</lang>-->"><!--<lang package='Template'>-->活动<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--{if isset($oEvent)}--><!--<lang package='Template'>-->编辑活动<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->发起活动<!--</lang>--><!--{/if}--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+		<div class="grid_8">
+			<!--{if !isset($oEvent) && $GLOBALS['_cache_']['event_option']['event_audit']==1}-->
+			<div class="tips"><!--<lang package='Template'>-->发起的活动只有通过审核了才能够被浏览<!--</lang>--></div>
+			<!--{/if}-->
+			
+			<form class="form-horizontal validate" method='post' id="createeventform" name="createeventform">
+				<fieldset>
+					<div class="control-group">
+						<label class="control-label" for="event_title"><!--<lang package='Template'>-->活动名称<!--</lang>--><em style="color:red">*</em></label>
+						<div class="controls">
+							<input class="input-xlarge" id="event_title" name="event_title" type="text" value="<!--{if isset($oEvent)}--><!--{$oEvent['event_title']}--><!--{/if}-->" required title="<!--<lang package='Template'>-->活动名称不能为空<!--</lang>-->">
+							<p class="input_errortips"></p>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="event_address"><!--<lang package='Template'>-->活动地点<!--</lang>--><em style="color:red">*</em></label>
+						<div class="controls">
+							<input class="span5" id="event_address" name="event_address" type="text" value="<!--{if isset($oEvent)}--><!--{$oEvent['event_address']}--><!--{/if}-->" required title="<!--<lang package='Template'>-->活动地点不能为空<!--</lang>-->">
+							<p class="input_errortips"></p>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="eventcategory_id"><!--<lang package='Template'>-->活动类型<!--</lang>--><em style="color:red">*</em></label>
+						<div class="controls">
+							<select name="eventcategory_id" id="eventcategory_id" required title="<!--<lang package='Template'>-->活动类型不能为空<!--</lang>-->">
+								<option value="">- <!--<lang package='Template'>-->请选择类型<!--</lang>--> -</option>
+								<!--<foreach for=arrEventcategorys value=arrEventcategory>-->
+								<option value="<!--{$arrEventcategory['eventcategory_id']}-->" <!--{if (isset($oEvent) && $oEvent['eventcategory_id']==$arrEventcategory['eventcategory_id']) || (isset($_GET['cid']) && $_GET['cid']==$arrEventcategory['eventcategory_id'])}-->selected<!--{/if}-->>- <!--{$arrEventcategory['eventcategory_name']}--></option>
+									<!--<foreach for="arrEventcategory['child']" value=arrChildEventcategory>-->
+								<option value="<!--{$arrChildEventcategory['eventcategory_id']}-->" <!--{if (isset($oEvent) && $oEvent['eventcategory_id']==$arrChildEventcategory['eventcategory_id']) || (isset($_GET['cid']) && $_GET['cid']==$arrChildEventcategory['eventcategory_id'])}-->selected<!--{/if}-->>--- <!--{$arrChildEventcategory['eventcategory_name']}--></option>
+									<!--</foreach>-->
+								<!--</foreach>-->
+							</select>
+							<p class="input_errortips"></p>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="event_cost"><!--<lang package='Template'>-->活动经费<!--</lang>--></label>
+						<div class="controls">
+							<input class="input-xlarge" id="event_cost" name="event_cost" type="text" value="<!--{if isset($oEvent)}--><!--{$oEvent['event_cost']}--><!--{/if}-->">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="event_costdescription"><!--<lang package='Template'>-->活动经费说明<!--</lang>--></label>
+						<div class="controls">
+							<input class="input-xlarge" id="event_costdescription" name="event_costdescription" type="text" value="<!--{if isset($oEvent)}--><!--{$oEvent['event_costdescription']}--><!--{/if}-->">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="event_starttime"><!--<lang package='Template'>-->活动时间<!--</lang>--><em style="color:red">*</em></label>
+						<div class="controls">
+							<input class="span2" id="event_starttime" name="event_starttime" type="text" value="<!--{:date('Y-m-d H:i:s',isset($oEvent)?$oEvent['event_starttime']:CURRENT_TIMESTAMP)}-->" onclick="WdatePicker({el:'event_starttime',skin:'ext',lang:'<!--{$sCalendarLang}-->',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'event_endtime\')}'})" style="width:150px;" required title="<!--<lang package='Template'>-->活动开始时间不能为空<!--</lang>-->"> - 
+							<input class="span2" id="event_endtime" name="event_endtime" type="text" value="<!--{:date('Y-m-d H:i:s',isset($oEvent)?$oEvent['event_endtime']:CURRENT_TIMESTAMP+604800)}-->" onclick="WdatePicker({el:'event_endtime',skin:'ext',lang:'<!--{$sCalendarLang}-->',dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'event_starttime\')}'})" style="width:150px;" required title="<!--<lang package='Template'>-->活动结束时间不能为空<!--</lang>-->">
+							<p class="input_errortips"></p>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="event_deadline"><!--<lang package='Template'>-->截止报名时间<!--</lang>--><em style="color:red">*</em></label>
+						<div class="controls">
+							<input class="span2" id="event_deadline" name="event_deadline" type="text" value="<!--{:date('Y-m-d H:i:s',isset($oEvent)?$oEvent['event_deadline']:CURRENT_TIMESTAMP+259200)}-->" onclick="WdatePicker({el:'event_deadline',skin:'ext',lang:'<!--{$sCalendarLang}-->',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'event_endtime\')}'})" style="width:150px;" required title="<!--<lang package='Template'>-->活动截止报名时间不能为空<!--</lang>-->">
+							<p class="input_errortips"></p>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="event_limitcount"><!--<lang package='Template'>-->活动人数<!--</lang>--></label>
+						<div class="controls">
+							<input class="span1" id="event_limitcount" name="event_limitcount" type="text" value="<!--{if isset($oEvent)}--><!--{$oEvent['event_limitcount']}--><!--{d*else}-->0<!--{/if}-->" required>
+							<p class="input_tips"><!--<lang package='Template'>-->活动人数上限，设0表示无限制<!--</lang>--></p>
+							<p class="input_errortips"></p>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="event_content"><!--<lang package='Template'>-->活动介绍<!--</lang>--><em style="color:red">*</em></label>
+						<div class="controls">
+							<div id="event-media-box" class="common-media-box">
+								<a href="javascript:void(0);" class="face-icon icon_add_face" ><!--<lang package='__COMMON_LANG__@Common'>-->表情<!--</lang>--></a> 
+								<a href="javascript:void(0);" onclick="globalAddattachment('insertAttachment_');" class="icon_add_img"><!--<lang package='__COMMON_LANG__@Common'>-->媒体<!--</lang>--></a>
+								<a href="javascript:void(0);" onclick="addVideo('insertVideo_');" class="icon_add_video" ><!--<lang package='__COMMON_LANG__@Common'>-->视频<!--</lang>--></a>
+								<a href="javascript:void(0);" onclick="addMusic('insertMusic_');" class="icon_add_music"><!--<lang package='__COMMON_LANG__@Common'>-->音乐<!--</lang>--></a>
+							</div>
+							<div id="emotion_parentcontainer">
+								<textarea class="input-xlarge" name="event_content" id="event_content" style="width:110%;height:<!--{:Core_Extend::getEditor()}-->px;"><!--{if isset($oEvent)}--><!--{$oEvent['event_content']|htmlspecialchars}--><!--{/if}--></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="event_contact"><!--<lang package='Template'>-->活动联系人<!--</lang>--></label>
+						<div class="controls">
+							<input class="input-xlarge" id="event_contact" name="event_contact" type="text" value="<!--{if isset($oEvent)}--><!--{$oEvent['event_contact']}--><!--{/if}-->">
+							<p class="help-block"><!--<lang package='Template'>-->填写联系人联系方式，如小刘 130xxxxxxxx<!--</lang>--></p>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="event_contactsite"><!--<lang package='Template'>-->活动联系人网站<!--</lang>--></label>
+						<div class="controls">
+							<input class="input-xlarge" id="event_contactsite" name="event_contactsite" type="text" value="<!--{if isset($oEvent)}--><!--{$oEvent['event_contactsite']}--><!--{/if}-->">
+							<p class="help-block"><!--<lang package='Template'>-->如果联系人有网站，可以在这里填写<!--</lang>--></p>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="event_jointcontact"><!--<lang package='Template'>-->活动联合联系人<!--</lang>--></label>
+						<div class="controls">
+							<input class="input-xlarge" id="event_jointcontact" name="event_jointcontact" type="text" value="<!--{if isset($oEvent)}--><!--{$oEvent['event_jointcontact']}--><!--{/if}-->">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="event_jointcontactsite"><!--<lang package='Template'>-->活动联合联系人网站<!--</lang>--></label>
+						<div class="controls">
+							<input class="input-xlarge" id="event_jointcontactsite" name="event_jointcontactsite" type="text" value="<!--{if isset($oEvent)}--><!--{$oEvent['event_jointcontactsite']}--><!--{/if}-->">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="event_isaudit"><!--<lang package='Template'>-->是否审核参加活动用户<!--</lang>--></label>
+						<div class="controls">
+							<select id="event_isaudit" name="event_isaudit">
+								<option value="1" <!--{if isset($oEvent) && $oEvent['event_isaudit']==1}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->是<!--</lang>--></option>
+								<option value="0" <!--{if !isset($oEvent) || $oEvent['event_isaudit']=='0'}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->否<!--</lang>--></option>
+							</select>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="event_cover"><!--<lang package='Template'>-->活动海报<!--</lang>-->&nbsp;<span class="red" style="cursor:pointer;" onclick="$('#event_cover').val('');">x</span></label>
+						<div class="controls">
+							<input type="text" id="event_cover" name="event_cover" value="<!--{if isset($oEvent)}--><!--{$oEvent['event_cover']}--><!--{/if}-->" readonly/>&nbsp;<a href="javascript:void(0);" onclick="globalAddattachment('insertEventcover',1,1);" class="btn"><!--<lang package='__COMMON_LANG__@Common'>-->媒体<!--</lang>--></a>
+							<p class="input_tips"><!--<lang package='Template'>-->从附件管理器中选择<!--</lang>--></p>
+							<p class="input_errortips"></p>
+						</div>
+					</div>
+					<!--{if $nDisplaySeccode==1}-->
+					<div class="control-group">
+						<label class="control-label" for="seccode"><!--<lang package='__COMMON_LANG__@Common'>-->验证码<!--</lang>--></label>
+						<div class="controls">
+							<input name="seccode" id="seccode" type="text" class="input-small {required:true,remote:Q.U('home://public/validate_seccode'),messages:{remote:'<!--<lang package='__COMMON_LANG__@Common'>-->验证码错误<!--</lang>-->'}} left" value="">&nbsp;
+							<span class="validate_seccode"><span class="input_errortips"></span></span>
+							<p class="help-block" style="clear:both;padding-top:10px;"><span id="seccodeImage"><img style="cursor:pointer" onclick="updateSeccode()" src="<!--{:Q::U('home://public/seccode')}-->" /></span></p>
+						</div>
+					</div>
+					<!--{/if}-->
+					<div class="form-actions">
+						<input type="hidden" name="ajax" value="1">
+						<!--{if isset($oEvent)}-->
+						<input type="hidden" name="event_id" value="<!--{$oEvent['event_id']}-->">
+						<!--{/if}-->
+						<input type="submit" id="submit_button" class="btn" value="<!--{if isset($oEvent)}--><!--<lang package='Template'>-->更新<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->发布<!--</lang>--><!--{/if}-->" />
+					</div>
+				<fieldset>
+			</form>
+		</div>
+		<div class="grid_4">
+			<!--{if isset($oEvent)}-->
+			<div class="commonbox">
+				&nbsp;<a class="btn" href="<!--{:Q::U('event://e@?id='.$oEvent['event_id'])}-->" title="<!--<lang package='Template'>-->查看活动<!--</lang>-->"><!--<lang package='Template'>-->查看活动<!--</lang>--></a></p>
+			</div>
+			<!--{/if}-->
+			
+			<div class="commonbox_mini commonbox_mini_gray">
+				<h2 class="title"><!--<lang package='Template'>-->什么是合适的活动？<!--</lang>--></h2>
+				<ul class="eventhelplist_box">
+					<li><!--<lang package='Template'>-->有能最终确定的活动起止日期<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->具备现实中能集体参与的活动地点<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->是多人在现实中能碰面的活动<!--</lang>--></li>
+				</ul>
+			</div>
+			
+			<div class="commonbox_mini commonbox_mini_gray">
+				<h2 class="title"><!--<lang package='Template'>-->如何才能让你的活动更吸引人？<!--</lang>--></h2>
+				<ul class="eventhelplist_box">
+					<li><!--<lang package='Template'>-->标题简单明了<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->活动内容和特点介绍详细<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->活动海报吸引人眼球<!--</lang>--></li>
+				</ul>
+			</div>
+			
+			<div class="commonbox_mini commonbox_mini_gray">
+				<p><b><!--<lang package='Template'>-->更重要的是，邀请好友们都来参与！<!--</lang>--></b></p>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

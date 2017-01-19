@@ -1,0 +1,17 @@
+Crystal Project Icons
+by Everaldo Coelho
+http://everaldo.com
+
+Released under LGPL
+
+----------------------------------
+
+Modified 2011/08/02
+for QeePHP-X Blog
+http://qeephp.114.ms
+
+----------------------------------
+
+Modified 2012/09/20
+for WindsForce
+http://windsforce.net 

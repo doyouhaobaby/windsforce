@@ -1,0 +1,30 @@
+<script type="text/javascript" src="<!--{:__PUBLIC__}-->/js/jquery/slides/slides-1.1.1-min.js"></script>
+<link rel="stylesheet" href="<!--{:__PUBLIC__}-->/js/jquery/slides/style.css">
+
+<!--{script}-->
+$(function(){
+	sHtml=windsforceAjaxhtml(Q.U('home://attachment/get_ajaximg&id=<!--{$arrAttachment['attachment_id']}-->&uid=<!--{$arrAttachment['user_id']}-->'),-1);
+	arrReturn=eval('('+sHtml+')');
+
+	$('.ad-thumb-list').html(arrReturn.content);
+	var nIndex=arrReturn.index;
+	$('#sildes').olvSlides({
+		createNextPrev:true,
+		thumb:true,
+		start:nIndex
+	});
+})
+<!--{/script}-->
+
+	<div id="sildes">
+		<div class="control">
+			<ul class="change">
+			</ul>
+		</div>
+		<div class="thumbWrap">
+			<div class="thumbCont">
+				<ul class="ad-thumb-list">
+				</ul>
+			</div>
+		</div>
+	</div>

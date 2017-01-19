@@ -1,0 +1,82 @@
+<!--<include file="public+header">-->
+
+<script src="<!--{:__PUBLIC__}-->/js/jquery/jcrop/jquery.Jcrop.min.js"></script>
+<script src="<!--{:__PUBLIC__}-->/js/common/jcrop.js"></script>
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->头像裁剪<!--</lang>--></a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->你可以选择裁剪图片，裁剪后的图片将会被压缩为200*200的大头像，保存后将会以大头像创建中等头像120*120和小头像48*48<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->程序最后会将上传的原始图像保存下来为高清头像<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->用鼠标选中你需要裁剪的块，然后点击提交<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->同时，被裁剪的原图也会被上传，系统处理完毕将会为每个用户生产四张头像<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->临时头像<!--</lang>--></h3></header>
+				<form action="<!--{:Q::U('avatar/save_crop')}-->" method="post" onsubmit="return checkCoords();" id="coords" class="coords">
+				<div class="module_content">
+						<fieldset>
+							<label><!--<lang package='Template'>-->临时头像<!--</lang>--></label>
+							<div class="description">
+								<div class="cropbox">
+									<img src="<!--{:__ROOT__}-->/user/avatar/<!--{$arrPhotoInfo['savename']}-->" id="cropbox" />
+								</div>
+							</div>
+						</fieldset>
+						<fieldset>
+							<label><!--<lang package='Template'>-->裁剪预览<!--</lang>--></label>
+							<div class="description">
+								<div class="preview" style="width:100px;height:100px;overflow:hidden;">
+									<img src="<!--{:__ROOT__}-->/user/avatar/<!--{$arrPhotoInfo['savename']}-->" id="preview" alt="Preview" />
+								</div>
+							</div>
+						</fieldset>
+						<fieldset>
+							<label><!--<lang package='Template'>-->头像参数<!--</lang>--></label>
+							<div class="description">
+								<input type="hidden" id="x" name="x" />
+								<input type="hidden" id="y" name="y" />
+								<div class="avatar-select">
+									<table cellspacing="0" border="0">
+										<tr style="text-align:center;">
+											<td>X1</td>
+											<td>Y1</td>
+											<td>X2</td>
+											<td>Y2</td>
+											<td>W</td>
+											<td>H</td>
+										</tr>
+										<tr style="text-align:center;">
+											<td><input type="text" size="4" id="x1" name="x1" style="width:25px;" /></td>
+											<td><input type="text" size="4" id="y1" name="y1" style="width:25px;" /></td>
+											<td><input type="text" size="4" id="x2" name="x2" style="width:25px;" /></td>
+											<td><input type="text" size="4" id="y2" name="y2" style="width:25px;" /></td>
+											<td><input type="text" size="4" id="w" name="w" style="width:25px;" /></td>
+											<td><input type="text" size="4" id="h" name="h" style="width:25px;" /></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="hidden" name="temp_image" value="<!--{$arrPhotoInfo['savename']}-->" />
+						<input type="submit" value="<!--<lang package='Template'>-->裁剪图像<!--</lang>-->" class="alt_btn" />
+					</div>
+				</footer>
+				</form>
+		</article>
+
+<!--<include file="public+footer">-->

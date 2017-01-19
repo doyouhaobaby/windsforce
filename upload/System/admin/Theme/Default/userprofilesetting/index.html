@@ -1,0 +1,134 @@
+<!--<include file="public+header" />-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->用户栏目列表<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->用户栏目列表<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->增加或隐藏用户扩展资料<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->设置结果可以扩充现有的用户资料<!--</lang>--></li>
+				</ul>
+			</div>
+
+			<div class="module_content">
+				<form method='get' action="<!--{:Q::U( 'userprofilesetting/index' )}-->" class="quick_search">
+					<table cellspacing="3" cellpadding="3">
+						<tr>
+							<th><!--<lang package='Template'>-->状态<!--</lang>--></th>
+							<td><select name="userprofilesetting_status">
+									<option value="" <!--{if !isset($nIsStatus)}-->selected<!--{/if}-->><!--<lang package='Template'>-->全部<!--</lang>--></option>
+									<option value="1" <!--{if isset($nIsStatus) && $nIsStatus==1}-->selected<!--{/if}-->><!--<lang package='Template'>-->已审<!--</lang>--></option>
+									<option value="0" <!--{if isset($nIsStatus) && $nIsStatus===0}-->selected<!--{/if}-->><!--<lang package='Template'>-->待审<!--</lang>--></option>
+								</select>
+							</td>
+							<th><!--<lang package='Template'>-->结果排序<!--</lang>--></th>
+							<td>
+								<select name="order_">
+									<option value="" <!--{if !Q+G('order_')}-->selected<!--{/if}-->><!--<lang package='Template'>-->排序字段<!--</lang>--></option>
+									<option value="userprofilesetting_id" <!--{if Q+G('order_')=='userprofilesetting_id'}-->selected<!--{/if}-->><!--<lang package='Template'>-->栏目名称<!--</lang>--></option>
+									<option value="userprofilesetting_sort" <!--{if Q+G('order_')=='userprofilesetting_sort'}-->selected<!--{/if}-->><!--<lang package='Template'>-->序号<!--</lang>--></option>
+									<option value="userprofilesetting_status" <!--{if Q+G('order_')=='userprofilesetting_status'}-->selected<!--{/if}-->><!--<lang package='Template'>-->状态<!--</lang>--></option>
+									<option value="userprofilesetting_title" <!--{if Q+G('order_')=='userprofilesetting_title'}-->selected<!--{/if}-->><!--<lang package='Template'>-->栏目标题<!--</lang>--></option>
+								</select>
+								<select name="sort_">
+									<option value="" <!--{if !Q+G('sort_')}-->selected<!--{/if}-->><!--<lang package='Template'>-->默认排序<!--</lang>--></option>
+									<option value="desc" <!--{if Q+G('sort_')=='desc'}-->selected<!--{/if}-->><!--<lang package='Template'>-->递增<!--</lang>--></option>
+									<option value="asc" <!--{if Q+G('sort_')=='asc'}-->selected<!--{/if}-->><!--<lang package='Template'>-->递减<!--</lang>--></option>
+								</select>
+								<select name="perpage">
+									<option value="" <!--{if !Q+G('perpage')}-->selected<!--{/if}-->><!--<lang package='Template'>-->默认每页数量<!--</lang>--></option>
+									<option value="10" <!--{if Q+G('perpage')==10}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(10)</option>
+									<option value="20" <!--{if Q+G('perpage')==20}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(20)</option>
+									<option value="50" <!--{if Q+G('perpage')==50}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(50)</option>
+									<option value="100" <!--{if Q+G('perpage')==100}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(100)</option>
+									<option value="200" <!--{if Q+G('perpage')==200}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(200)</option>
+									<option value="500" <!--{if Q+G('perpage')==500}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(500)</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th><!--<lang package='Template'>-->栏目标题<!--</lang>--></th>
+							<td><input type="text" name="userprofilesetting_title" title="<!--<lang package='Template'>-->栏目标题<!--</lang>-->" value="<!--{:Q::G('userprofilesetting_title')}-->"/></td>
+							<td colspan="2">
+								<input type="text" name="userprofilesetting_id" title="<!--<lang package='Template'>-->栏目名称<!--</lang>-->" value="<!--{:Q::G('userprofilesetting_id')}-->" class="quicksearch_text">&nbsp;
+								<input type="submit" id="" value="<!--<lang package='Template'>-->查询<!--</lang>-->" onclick="" class="alt_btn">
+							</td>
+						</tr>
+					</table>
+					<input type="hidden" name="c" value="<!--{:MODULE_NAME}-->"/>
+					<input type="hidden" name="a" value="<!--{:ACTION_NAME}-->"/>
+				</form>
+			</div>
+		</article>
+		
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><a href="<!--{:Q::U(MODULE_NAME.'/index')}-->" title="<!--<lang package='Template'>-->用户栏目列表<!--</lang>-->"><!--<lang package='Template'>-->用户栏目列表<!--</lang>--></a></h3>
+				<ul class="tabs">
+					<li><a class="tab_edit" href="javascript:void(0);" onclick="edit()"><!--<lang package='Template'>-->编辑<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<div class="module_content">
+				<table class="tablesorter" cellspacing="0" id="checkList">
+					<thead>
+						<tr>
+							<th width="20px"><input type="checkbox" onclick="checkAll('checkList')"></th> 
+							<th width="180px"><a href="javascript:sortBy('userprofilesetting_id','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('userprofilesetting_id')}-->><!--<lang package='Template'>-->栏目名称<!--</lang>--></a></th> 
+							<th><a href="javascript:sortBy('userprofilesetting_title','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('userprofilesetting_title')}-->><!--<lang package='Template'>-->栏目标题<!--</lang>--></a></th> 
+							<th width="70px"><a href="javascript:sortBy('userprofilesetting_sort','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('userprofilesetting_sort')}-->><!--<lang package='Template'>-->序号<!--</lang>--></a></th>
+							<th width="50px"><a href="javascript:sortBy('userprofilesetting_status','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('userprofilesetting_status')}-->><!--<lang package='Template'>-->状态<!--</lang>--></a></th>
+							<th width="70px"><!--<lang package='Template'>-->操作<!--</lang>--></th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--{if is_array($arrLists)}-->
+						<!--<foreach for=arrLists>-->
+						<tr id="datalist-<!--{$value:userprofilesetting_id}-->">
+							<td><input type="checkbox" name="key" value="<!--{$value:userprofilesetting_id}-->" <!--{if $TheController->is_system_userprofilesetting($value->userprofilesetting_id)}-->disabled="disabled"<!--{/if}-->></td>
+							<td><!--{$value:userprofilesetting_id}--></td>
+							<td><!--{$value:userprofilesetting_title}-->
+								<div class="row-actions">
+									<span class='edit'><a href="javascript:edit('<!--{$value:userprofilesetting_id}-->')"><!--<lang package='Template'>-->编辑<!--</lang>--></a>|</span>
+									<span class='hide'>
+									<!--<if condition="$value:userprofilesetting_status eq 1" >--><a href="javascript:forbid('<!--{$value:userprofilesetting_id}-->')"><!--<lang package='Template'>-->禁用<!--</lang>--></a>
+									<!--<else/>-->
+									<a href="javascript:resume('<!--{$value:userprofilesetting_id}-->')"><!--<lang package='Template'>-->恢复<!--</lang>--></a>
+									<!--</if>--></span>
+								</div>
+							</td>
+							<td><!--{$value:userprofilesetting_sort}--></td>
+							<td><!--{:Admin_Extend::getStatus($value->userprofilesetting_status)}--></td>
+							<td><!--{if $value:userprofilesetting_status==1}-->
+								<a href="javascript:forbid('<!--{$value:userprofilesetting_id}-->')"><input type="image" src="<!--{:At::path('icn_trash.png')}-->" title="<!--<lang package='Template'>-->禁用<!--</lang>-->"></a>
+								<!--{d*else}--><a href="javascript:resume('<!--{$value:userprofilesetting_id}-->')"><input type="image" src="<!--{:At::path('icn_jump_back.png')}-->" title="<!--<lang package='Template'>-->恢复<!--</lang>-->"></a>
+								<!--{/if}-->
+								&nbsp;<a href="javascript:edit('<!--{$value:userprofilesetting_id}-->')"><input type="image" src="<!--{:At::path('icn_edit.png')}-->" title="<!--<lang package='Template'>-->编辑<!--</lang>-->"></a>
+							</td>
+						</tr>
+						<!--</foreach>-->
+						<!--{d*else}-->
+						<tr>
+							<td colspan="6"><!--<lang package='Template'>-->暂时没有发现任何记录<!--</lang>--></td>
+						</tr>
+						<!--{/if}-->
+					</tbody>
+				</table>
+			</div>
+
+			<div class="module_content operate_box">
+				<div class="left">
+					<!--{$sPageNavbar}-->
+				</div>
+				<div class="right operate" style="text-align:right;">
+					<input type="button" name="edit" value="<!--<lang package='Template'>-->编辑<!--</lang>-->" onclick="edit()" class="alt_btn">
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</article>
+
+<!--<include file="public+footer">-->

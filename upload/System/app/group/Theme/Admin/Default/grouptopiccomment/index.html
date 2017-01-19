@@ -1,0 +1,217 @@
+<!--<include file="public+header" />-->
+
+<!--{~$sCalendarLang=Core_Extend::calendar()}-->
+<script type="text/javascript" src="<!--{:__PUBLIC__}-->/js/calendar/datepicker/WdatePicker.js"></script>
+
+<!--{:Core_Extend::emotion()}-->
+
+<!--{script}-->
+$(function(){
+	$('.grouptopiccomment_content').emotionsToHtml();
+});
+<!--{/script}-->
+
+<!--{style}-->
+.grouptopiccomment_content img{max-width:450px;}
+<!--{/style}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->回帖列表<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->回帖列表<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->在这里可以管理系统所有的回帖<!--</lang>--></li>
+				</ul>
+			</div>
+
+			<div class="module_content">
+				<form method='get' action="<!--{:Q::U( 'app/config' )}-->" class="quick_search">
+					<table cellspacing="3" cellpadding="3">
+						<tr>
+							<th><!--<lang package='Template'>-->编号<!--</lang>--></th>
+							<td><input type="text" name="grouptopiccomment_id" title="<!--<lang package='Template'>-->编号<!--</lang>-->" value="<!--{:Q::G('grouptopiccomment_id')}-->" onkeyup="this.value = this.value.replace(/[^-0-9]/g, '');" />
+							</td>
+							<th><!--<lang package='Template'>-->结果排序<!--</lang>--></th>
+							<td>
+								<select name="order_">
+									<option value="" <!--{if !Q+G('order_')}-->selected<!--{/if}-->><!--<lang package='Template'>-->排序字段<!--</lang>--></option>
+									<option value="grouptopiccomment_id" <!--{if Q+G('order_')=='grouptopiccomment_id'}-->selected<!--{/if}-->><!--<lang package='Template'>-->编号<!--</lang>--></option>
+									<option value="grouptopiccomment_status" <!--{if Q+G('order_')=='grouptopiccomment_status'}-->selected<!--{/if}-->><!--<lang package='Template'>-->状态<!--</lang>--></option>
+									<option value="create_dateline" <!--{if Q+G('order_')=='create_dateline'}-->selected<!--{/if}-->><!--<lang package='Template'>-->添加时间<!--</lang>--></option>
+									<option value="user_id" <!--{if Q+G('order_')=='user_id'}-->selected<!--{/if}-->><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->用户<!--</lang>--></option>
+								</select>
+								<select name="sort_">
+									<option value="" <!--{if !Q+G('sort_')}-->selected<!--{/if}-->><!--<lang package='Template'>-->默认排序<!--</lang>--></option>
+									<option value="desc" <!--{if Q+G('sort_')=='desc'}-->selected<!--{/if}-->><!--<lang package='Template'>-->递增<!--</lang>--></option>
+									<option value="asc" <!--{if Q+G('sort_')=='asc'}-->selected<!--{/if}-->><!--<lang package='Template'>-->递减<!--</lang>--></option>
+								</select>
+								<select name="perpage">
+									<option value="" <!--{if !Q+G('perpage')}-->selected<!--{/if}-->><!--<lang package='Template'>-->默认每页数量<!--</lang>--></option>
+									<option value="10" <!--{if Q+G('perpage')==10}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(10)</option>
+									<option value="20" <!--{if Q+G('perpage')==20}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(20)</option>
+									<option value="50" <!--{if Q+G('perpage')==50}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(50)</option>
+									<option value="100" <!--{if Q+G('perpage')==100}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(100)</option>
+									<option value="200" <!--{if Q+G('perpage')==200}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(200)</option>
+									<option value="500" <!--{if Q+G('perpage')==500}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(500)</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->用户<!--</lang>-->(ID)</th>
+							<td>
+								<input type="text" name="user_id" title="<!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->用户<!--</lang>-->" value="<!--{:Q::G('user_id')}-->" onkeyup="this.value = this.value.replace(/[^-0-9]/g, '');" />
+							</td>
+							<th><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->用户<!--</lang>--></th>
+							<td><input type="text" name="grouptopiccomment_name" title="<!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->用户<!--</lang>-->" value="<!--{:Q::G('grouptopiccomment_name')}-->"/>
+							</td>
+						</tr>
+						<tr>
+							<th><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组<!--</lang>-->(ID)</th>
+							<td>
+								<input type="text" name="group_id" title="<!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组<!--</lang>-->" value="<!--{:Q::G('group_id')}-->" onkeyup="this.value = this.value.replace(/[^-0-9]/g, '');" />
+							</td>
+							<th><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组<!--</lang>--></th>
+							<td><input type="text" name="group_nikename" title="<!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组<!--</lang>-->" value="<!--{:Q::G('group_nikename')}-->"/>
+							</td>
+						</tr>
+						<tr>
+							<th><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->帖子标题<!--</lang>--></th>
+							<td>
+								<input type="text" name="grouptopic_title" title="<!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->帖子标题<!--</lang>-->" value="<!--{:Q::G('grouptopic_title')}-->" />
+							</td>
+							<th><!--<lang package='Template'>-->添加时间<!--</lang>--></th>
+							<td>
+								<input type="text" id="start_time" name="start_time" value="<!--{:Q::G('start_time')}-->" onfocus="WdatePicker({el:'start_time',skin:'ext',lang:'<!--{$sCalendarLang}-->',dateFmt:'yyyy-MM-dd'})">
+								&nbsp;~&nbsp;
+								<input type="text" id="end_time" name="end_time" value="<!--{:Q::G('end_time')}-->"  onfocus="WdatePicker({el:'end_time',skin:'ext',lang:'<!--{$sCalendarLang}-->',dateFmt:'yyyy-MM-dd'})">
+							</td>
+						</tr>
+						<tr>
+							<th><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->帖子<!--</lang>-->(ID)</th>
+							<td>
+								<input type="text" name="grouptopic_id" title="<!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->帖子<!--</lang>-->" value="<!--{:Q::G('grouptopic_id')}-->" onkeyup="this.value = this.value.replace(/[^-0-9]/g, '');" />
+							</td>
+							<th><!--<lang package='Template'>-->状态<!--</lang>--></th>
+							<td><select name="grouptopiccomment_status">
+									<option value="" <!--{if !isset($nIsStatus)}-->selected<!--{/if}-->><!--<lang package='Template'>-->全部<!--</lang>--></option>
+									<option value="1" <!--{if isset($nIsStatus) && $nIsStatus==1}-->selected<!--{/if}-->><!--<lang package='Template'>-->已审<!--</lang>--></option>
+									<option value="0" <!--{if isset($nIsStatus) && $nIsStatus===0}-->selected<!--{/if}-->><!--<lang package='Template'>-->待审<!--</lang>--></option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<input type="text" name="grouptopiccomment_content" title="<!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->回帖内容<!--</lang>-->" value="<!--{:Q::G('grouptopiccomment_content')}-->" class="quicksearch_text">
+								&nbsp;<input type="submit" id="" value="<!--<lang package='Template'>-->查询<!--</lang>-->" onclick="" class="alt_btn">
+							</td>
+						</tr>
+					</table>
+					<!--{if isset($bIsRecycleList)}-->
+					<input type="hidden" name="recycle_" value="1"/>
+					<!--{/if}-->
+					<input type="hidden" name="c" value="<!--{:MODULE_NAME}-->"/>
+					<input type="hidden" name="a" value="<!--{:ACTION_NAME}-->"/>
+					<input type="hidden" name="id" value="<!--{$_GET['id']}-->"/>
+					<input type="hidden" name="controller" value="grouptopiccomment"/>
+				</form>
+			</div>
+		</article>
+		
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><a href="<!--{:Admin_Extend::base(array('controller'=>'grouptopiccomment'))}-->"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->回帖列表<!--</lang>--></a>
+					<!--{if isset($bIsRecycleList)}-->&nbsp;<sup><a href="<!--{:Admin_Extend::base(array('controller'=>'grouptopiccomment','recycle_'=>1))}-->" title="<!--<lang package='Template'>-->回收站<!--</lang>-->" style="color:red;">[<!--<lang package='Template'>-->回收站<!--</lang>-->]</a></sup>
+					<!--{/if}-->
+				</h3>
+				<ul class="tabs">
+					<!--{if isset($oGrouptopic)}-->
+					<li><a href="<!--{:Admin_Extend::base(array('controller'=>'grouptopiccomment'))}-->" title="<!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->回帖列表<!--</lang>-->"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->主题<!--</lang>-->&nbsp;-&nbsp;<!--{$oGrouptopic['grouptopic_title']}--></a></li>
+					<!--{/if}-->
+					<!--{if isset($oGroup)}-->
+					<li><a href="<!--{:Admin_Extend::base(array('controller'=>'grouptopiccomment'))}-->" title="<!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->回帖列表<!--</lang>-->"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组<!--</lang>-->&nbsp;-&nbsp;<!--{$oGroup['group_nikename']}--></a></li>
+					<!--{/if}-->
+					<li class="active"><a href="<!--{:Admin_Extend::base()}-->"><!--<lang package='Template'>-->应用入口<!--</lang>--></a></li>
+					<!--{if isset($bIsRecycleList)}-->
+					<li><a class="tab_clearrecycle" href="javascript:void(0);" onclick="clearRecycle('<!--{$_GET['id']}-->','grouptopiccomment')"><!--<lang package='Template'>-->清空回收站<!--</lang>--></a></li>
+					<!--{/if}-->
+					<li><a class="tab_edit" href="javascript:void(0);" onclick="editApp('<!--{$_GET['id']}-->','grouptopiccomment')"><!--<lang package='Template'>-->编辑<!--</lang>--></a></li>
+					<li><a class="tab_delete" href="javascript:void(0);" onclick="foreverdelApp<!--{if isset($bIsRecycleList)}-->Deep<!--{/if}-->('<!--{$_GET['id']}-->','grouptopiccomment')"><!--{if isset($bIsRecycleList)}--><!--<lang package='Template'>-->彻底删除<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->删除<!--</lang>--><!--{/if}--></a></li>
+					<li><!--{if isset($bIsRecycleList)}-->
+						<a class="tab_list" href="<!--{:Admin_Extend::base(array('controller'=>'grouptopiccomment'))}-->" title="<!--<lang package='Template'>-->列表<!--</lang>-->"><img src="<!--{:At::path('icn_list.png')}-->"/></a>
+						<!--{d*else}-->
+						<a class="tab_recycle" href="<!--{:Admin_Extend::base(array('controller'=>'grouptopiccomment','recycle_'=>1))}-->" title="<!--<lang package='Template'>-->回收站<!--</lang>-->"><img src="<!--{:At::path('icn_recycle.png')}-->"/></a>
+						<!--{/if}-->
+					</li>
+				</ul>
+			</header>
+			<div class="module_content">
+				<table class="tablesorter" cellspacing="0" id="checkList">
+					<thead>
+						<tr>
+							<th width="20"><input type="checkbox" class="input-short" onclick="checkAll('checkList')"></th>
+							<th width="85"><a href="<!--{:Admin_Extend::soryBy('grouptopiccomment_id',$sSortByUrl,array('controller'=>'grouptopiccomment'))}-->" <!--{:Admin_Extend::sortField('grouptopiccomment_id')}-->><!--<lang package='Template'>-->编号<!--</lang>--></a></th>
+							<th width="160"><a href="<!--{:Admin_Extend::soryBy('user_id',$sSortByUrl,array('controller'=>'grouptopiccomment'))}-->" <!--{:Admin_Extend::sortField('user_id')}-->><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->用户<!--</lang>--></a></th>
+							<th><a href="<!--{:Admin_Extend::soryBy('grouptopiccomment_content',$sSortByUrl,array('controller'=>'grouptopiccomment'))}-->" <!--{:Admin_Extend::sortField('grouptopiccomment_content')}-->><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->回帖内容<!--</lang>--></a></th>
+							<th width="90"><a href="<!--{:Admin_Extend::soryBy('grouptopiccomment_ip',$sSortByUrl,array('controller'=>'grouptopiccomment'))}-->" <!--{:Admin_Extend::sortField('grouptopiccomment_ip')}-->><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->发布IP<!--</lang>--></a></th>
+							<th width="100"><a href="<!--{:Admin_Extend::soryBy('create_dateline',$sSortByUrl,array('controller'=>'grouptopiccomment'))}-->" <!--{:Admin_Extend::sortField('create_dateline')}-->><!--<lang package='Template'>-->添加时间<!--</lang>--></a></th>
+							<th width="50"><a href="<!--{:Admin_Extend::soryBy('grouptopiccomment_status',$sSortByUrl,array('controller'=>'homehelp'))}-->" <!--{:Admin_Extend::sortField('grouptopiccomment_status')}-->><!--<lang package='Template'>-->状态<!--</lang>--></a></th>
+							<th width="60"><!--<lang package='Template'>-->操作<!--</lang>--></th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--{if !empty($arrLists)}-->
+						<!--<foreach for=arrLists>-->
+						<tr id="datalist-<!--{$value.grouptopiccomment_id}-->">
+							<td><input type="checkbox" class="input-short" name="key" value="<!--{$value.grouptopiccomment_id}-->"></td>
+							<td><!--{$value.grouptopiccomment_id}--></td>
+							<td><!--{$value.grouptopiccomment_name}-->
+								<div class="row-actions">
+									<span class='edit'><a href="javascript:editApp('<!--{$_GET['id']}-->','grouptopiccomment','<!--{$value.grouptopiccomment_id}-->')"><!--<lang package='Template'>-->编辑<!--</lang>--></a>|</span>
+									<span class='delete'><a href="javascript:foreverdelApp<!--{if isset($bIsRecycleList)}-->Deep<!--{/if}-->('<!--{$_GET['id']}-->','grouptopiccomment','<!--{$value.grouptopiccomment_id}-->')"><!--{if isset($bIsRecycleList)}--><!--<lang package='Template'>-->彻底删除<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->删除<!--</lang>--><!--{/if}--></a></span>
+									</span>
+								</div>
+							</td>
+							<td>
+								<a href="<!--{:Admin_Extend::base(array('controller'=>'grouptopiccomment','grouptopic_id'=>$value['grouptopic_id']))}-->">Reply:&nbsp;<!--{$value['grouptopic_title']}--></a>
+								<!--{if $value['group_nikename']}-->&nbsp;<a href="<!--{:Admin_Extend::base(array('controller'=>'grouptopiccomment','group_id'=>$value['group_id']))}-->" style="color:#E0E2E4;">[<!--{$value['group_nikename']}-->]</a><!--{/if}-->
+								<div class="grouptopiccomment_content">
+								<!--{$value['grouptopiccomment_content']|strip_tags|C+subString=0,80|Core_Extend+ubb=false}--></div>
+							</td>
+							<td><!--{$value.grouptopiccomment_ip}--><br/><!--{$value['grouptopiccomment_ip']|Core_Extend+convertIp}--></td>
+							<td><span class="<!--{:Admin_Extend::dateColor($value['create_dateline'])}-->"><!--{$value['create_dateline']|date='Y-m-d',**}--></span><br/>
+								<span class="smallDatecolor"><!--{$value['create_dateline']|date='H:i',**}--></span>
+							</td>
+							<td><!--{:Admin_Extend::getStatus($value['grouptopiccomment_status'])}--></td>
+							<td><!--<if condition="$value['grouptopiccomment_status'] eq 1" >--><a href="javascript:forbidApp('<!--{$_GET['id']}-->','grouptopiccomment','<!--{$value.grouptopiccomment_id}-->');"><input type="image" src="<!--{:At::path('icn_trash.png')}-->" title="<!--<lang package='Template'>-->禁用<!--</lang>-->"></a><!--<else/>-->
+								<a href="javascript:resumeApp('<!--{$_GET['id']}-->','grouptopiccomment','<!--{$value.grouptopiccomment_id}-->');"><input type="image" src="<!--{:At::path('icn_jump_back.png')}-->" title="<!--<lang package='Template'>-->恢复<!--</lang>-->"></a><!--</if>-->
+								<a href="javascript:editApp('<!--{$_GET['id']}-->','grouptopiccomment','<!--{$value.grouptopiccomment_id}-->')"><input type="image" src="<!--{:At::path('icn_edit.png')}-->" title="<!--<lang package='Template'>-->编辑<!--</lang>-->"></a></td>
+						</tr>
+						<!--</foreach>-->
+						<!--{d*else}-->
+						<tr>
+							<td colspan="7"><!--<lang package='Template'>-->暂时没有发现任何记录<!--</lang>--></td>
+						</tr>
+						<!--{/if}-->
+					</tbody>
+				</table>
+			</div>
+
+			<div class="module_content operate_box">
+				<div class="left">
+					<!--{$sPageNavbar}-->
+				</div>
+				<div class="right operate" style="text-align:right;">
+					<!--{if isset($bIsRecycleList)}--><input type="button" name="clear_recycle" value="<!--<lang package='Template'>-->清空回收站<!--</lang>-->" onclick="clearRecycle('<!--{$_GET['id']}-->','grouptopiccomment')">&nbsp;<!--{/if}-->
+					<input type="button" name="edit" value="<!--<lang package='Template'>-->编辑<!--</lang>-->" onclick="editApp('<!--{$_GET['id']}-->','grouptopiccomment')" class="alt_btn">&nbsp;
+					<input type="button" name="delete" value="<!--{if isset($bIsRecycleList)}--><!--<lang package='Template'>-->彻底删除<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->删除<!--</lang>--><!--{/if}-->" onclick="foreverdelApp<!--{if isset($bIsRecycleList)}-->Deep<!--{/if}-->('<!--{$_GET['id']}-->','grouptopiccomment')" class="alt_btn">
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</article>
+
+<!--<include file="public+footer">-->

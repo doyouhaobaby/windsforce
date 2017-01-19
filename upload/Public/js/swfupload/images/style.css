@@ -1,0 +1,12 @@
+@charset "utf-8";
+
+.attachment_flash_top{ width:100%; height:34px;margin-left:-25px;}
+.attachment_flash_top ul{ width:100%;}
+.attachment_flash_top ul li{ width:100px; height:27px; float:left;}
+.attachment_flash_top ul li#add{ background:url(add.png) left top no-repeat;}
+.attachment_flash_top ul li#upload{ background:url(upload.png) left bottom no-repeat; margin-left:10px;}
+.attachment_flash_top ul li#delete{ background:url(delete.png) left bottom no-repeat; margin-left:10px;}
+
+.attachment_flash_mainbox{ overflow:hidden;}
+
+#messageinfo{height:25px; line-height:25px; color:#333; margin:0 auto; text-align:left; display:none;color:#f00;}

@@ -1,0 +1,75 @@
+<!--<include file="public+header">-->
+
+<!--{script}-->
+function add(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'add...' );
+	$WF( 'styleImport').submit();
+}
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->导入<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->导入<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->在这里你可以粘贴主题配置文件的文本<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->你可以直接上传主题配置文件，注意编码必须为utf8<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->导入<!--</lang>--></h3>
+				<ul class="tabs">
+					<li class="active"><a href="<!--{:Q::U('style/index')}-->"><!--<lang package='Template'>-->已安装主题列表<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="<!--{:Q::U('style/import_data')}-->" method="post" enctype="multipart/form-data" name="styleImport" id="styleImport">
+				<div class="module_content">
+					<fieldset>
+						<label for="importtype"><!--<lang package='Template'>-->请选择导入方式<!--</lang>--></label>
+						<input type="radio" name="importtype" id="importtype" value="file" checked onclick="$WF('importfile').style.display = '';$WF('importtxt').style.display = 'none';"><!--<lang package='Template'>-->上传文件<!--</lang>-->
+						<input type="radio" name="importtype" value="txt" onclick="$WF('importfile').style.display = 'none';$WF('importtxt').style.display = '';"><!--<lang package='Template'>-->粘贴文本<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->两种方式均可以实现功能<!--</lang>-->
+						</div>
+					</fieldset>
+					<div id="importfile">
+						<fieldset>
+							<label for="importfile"><!--<lang package='Template'>-->请上传数据文件<!--</lang>-->(<!--<lang package='Template'>-->当前最大上传尺寸<!--</lang>--> <!--{:C::changeFileSize($nUploadSize)}-->)</label>
+							<input name="importfile" id="importfile" value="" type="file" />
+							<div class="description"><!--<lang package='Template'>-->这里将直接上传一个风格主题XML配置文件<!--</lang>--><br/>
+						<!--<lang package='Template'>-->服务器最大上传值<!--</lang>--> <!--{$nUploadMaxFilesize}--> (<!--{$nUploadMaxFilesize*1048576}-->B) <!--<lang package='Template'>-->请注意最好不要超过这个值，否则不会有任何效果<!--</lang>-->
+							</div>
+						</fieldset>
+					</div>
+					<div id="importtxt" style="display: none">
+						<fieldset>
+							<label for="importtxt"><!--<lang package='Template'>-->请将数据内容粘贴如下<!--</lang>--></label>
+							<textarea rows="6" name="importtxt" id="importtxt" cols="50"></textarea>
+							<div class="description"><!--<lang package='Template'>-->这里直接粘贴XML配置文件中的数据<!--</lang>-->
+							</div>
+						</fieldset>
+					</div>
+					<fieldset>
+						<p style="padding:5px;"><input type="checkbox" name="ignoreversion" id="ignoreversion" value="1" style="position:relative;top:2px;" /><!--<lang package='Template'>-->允许导入老版本的界面(易产生错误)<!--</lang>-->
+						</p>
+						</div>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="submit" id="submit_button" onclick="add()" value="<!--<lang package='Template'>-->发布<!--</lang>-->" class="alt_btn">
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->">
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

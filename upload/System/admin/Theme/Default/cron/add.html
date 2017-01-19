@@ -1,0 +1,123 @@
+<!--<include file="public+header">-->
+
+<!--{script}-->
+<!--{if ACTION_NAME==='add'}-->
+currentAfterFun=function(data,status){
+	setTimeout(function(){window.location.href=Q.U('cron/edit?id='+data.cron_id);},1000);
+};
+<!--{/if}-->
+
+checkForm(SubmitFormCheckform);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<if condition="empty( $nId )" >--><!--<lang package='Template'>-->添加计划任务<!--</lang>--><!--<else/>--><!--<lang package='Template'>-->编辑计划任务<!--</lang>--><!--</if>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<if condition="empty( $nId )" >--><!--<lang package='Template'>-->添加计划任务<!--</lang>--><!--<else/>--><!--<lang package='Template'>-->编辑计划任务<!--</lang>-->_<!--{$nId}--><!--</if>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->您正在对系统内置的计划任务进行编辑，除非非常了解本系统结构，否则强烈建议不要修改默认设置。<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->请在修改之前记录原有设置，不当的设置将可能导致站点出现不可预期的错误。<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<if condition="empty( $nId )" >--><!--<lang package='Template'>-->添加计划任务<!--</lang>--><!--<else/>--><!--<lang package='Template'>-->编辑计划任务<!--</lang>--><!--</if>--></h3>
+				<ul class="tabs">
+					<li class="active"><a href="<!--{:Q::U('cron/index')}-->"><!--<lang package='Template'>-->计划任务列表<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="<!--<if condition="empty( $nId )" >--><!--{:Q::U('cron/insert')}--><!--<else/>--><!--{:Q::U('cron/update')}--><!--</if>-->" method="post" id="cronAdd" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="cron_name"><!--<lang package='Template'>-->计划任务名字<!--</lang>--></label>
+						<input type="text" name="cron_name" id="cron_name" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:cron_name}--><!--</if>-->" class="{required:true}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->计划任务的名字，不能为空<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<!--<if condition="!empty( $nId )" >-->
+					<fieldset>
+						<label for="cron_status"><!--<lang package='Template'>-->状态<!--</lang>--></label>
+						<select class="field" name="cron_status">
+							<option value="1" <!--<if condition="isset( $oValue ) && $oValue:cron_status==1">-->selected<!--</if>-->><!--<lang package='Template'>-->启用<!--</lang>--></option>
+							<option value="0" <!--<if condition="!isset( $oValue ) || ( isset( $oValue ) && $oValue:cron_status==0 ) ">-->selected<!--</if>--> ><!--<lang package='Template'>-->禁用<!--</lang>--></option>
+							<option value="9" <!--<if condition="isset( $oValue ) && $oValue:cron_status==9">-->selected<!--</if>-->><!--<lang package='Template'>-->回收站<!--</lang>--></option>
+						</select>
+						<div class="description"><!--<lang package='Template'>-->计划任务状态，决定计划任务是否执行。<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="cron_weekday"><!--<lang package='Template'>-->每周<!--</lang>--></label>
+						<select class="field" name="cron_weekday">
+							<option value="-1" <!--<if condition="isset( $oValue ) && $oValue:cron_weekday==-1">-->selected<!--</if>-->>*</option>
+							<!--<for start='0' end='6' var='myValue'>-->
+							<option value="<!--{$myValue}-->" <!--<if condition="isset( $oValue ) && $oValue:cron_weekday==$myValue">-->selected<!--</if>-->><!--{$TheController:get_week($myValue)}--></option>
+							<!--</for>-->
+						</select>
+						<div class="description"><!--<lang package='Template'>-->设置星期几执行本任务，“*”为不限制，本设置会覆盖下面的“日”设定<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="cron_day"><!--<lang package='Template'>-->每月<!--</lang>--></label>
+						<select class="field" name="cron_day">
+							<option value="-1" <!--<if condition="isset( $oValue ) && $oValue:cron_day==-1">-->selected<!--</if>-->>*</option>
+							<!--<for start='1' end='31' var='myValue'>-->
+							<option value="<!--{$myValue}-->" <!--<if condition="isset( $oValue ) && $oValue:cron_day==$myValue">-->selected<!--</if>-->><!--{$myValue}--><!--<lang package='Template'>-->日<!--</lang>--></option>
+							<!--</for>-->
+						</select>
+						<div class="description"><!--<lang package='Template'>-->设置哪一日执行本任务，“*”为不限制<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="cron_hour"><!--<lang package='Template'>-->小时<!--</lang>--></label>
+						<select class="field" name="cron_hour">
+							<option value="-1" <!--<if condition="isset( $oValue ) && $oValue:cron_hour==-1">-->selected<!--</if>-->>*</option>
+							<!--<for start='0' end='23' var='myValue'>-->
+							<option value="<!--{$myValue}-->" <!--<if condition="isset( $oValue ) && $oValue:cron_hour==$myValue">-->selected<!--</if>-->><!--{$myValue}--><!--<lang package='Template'>-->时<!--</lang>--></option>
+							<!--</for>-->
+						</select>
+						<div class="description"><!--<lang package='Template'>-->设置哪一小时执行本任务，“*”为不限制<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="cron_minute"><!--<lang package='Template'>-->分钟<!--</lang>--></label>
+						<input type="text" name="cron_minute" id="cron_minute" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:cron_minute|str_replace="\t",',',**}--><!--</if>-->" />
+						<div class="description"><!--<lang package='Template'>-->设置哪些分钟执行本任务，至多可以设置 12 个分钟值，多个值之间用半角逗号 "," 隔开，留空为不限制<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="cron_hour"><!--<lang package='Template'>-->类型<!--</lang>--></label>
+						<!--{if $TheController->is_system_cron($oValue['cron_id'])}-->
+						<p><!--{$oValue['cron_type']}--></p>
+						<!--{d*else}-->
+						<select name="cron_type">
+							<option value="user" <!--{if $oValue['cron_type']=='user'}-->selected<!--{/if}-->>user</option>
+							<option value="system" <!--{if $oValue['cron_type']=='system'}-->selected<!--{/if}-->>system</option>
+							<option value="plugin" <!--{if $oValue['cron_type']=='plugin'}-->selected<!--{/if}-->>plugin</option>
+							<option value="app" <!--{if $oValue['cron_type']=='app'}-->selected<!--{/if}-->>app</option>
+						</select>
+						<!--{/if}-->
+					</fieldset>
+					<fieldset>
+						<label for="cron_filename"><!--<lang package='Template'>-->任务脚本<!--</lang>--></label>
+						<input type="text" name="cron_filename" id="cron_filename" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:cron_filename}--><!--</if>-->" class="{required:true}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->设置本任务的执行程序文件名，请勿包含路径，系统计划任务位于 System/cron/ 目录中，插件计划任务位于 user/plugin/插件目录/cron/ 目录中，用户自定义计划任务位于 user/cron/ 目录中，应用计划任务位于 app/应用目录/App/Class/Extension/cron 中。<!--</lang>--><br/>
+						<!--<lang package='Template'>-->注意，插件和应用的计划任务脚本使用 插件目录(应用目录)@任务脚本 的方式保存。<!--</lang>-->
+						</div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<!--</if>-->
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="hidden" name="ajax" value="1">
+						<input type="hidden" name="id" id="id" value="<!--<if condition="isset( $nId )">--><!--{$nId}--><!--</if>-->"/>
+						<input type="submit" id="submit_button" value="<!--<if condition="!empty( $nId )" >--><!--<lang package='Template'>-->更新<!--</lang>--><!--<else/>--><!--<lang package='Template'>-->发布<!--</lang>--><!--</if>-->" class="alt_btn">
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->">
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

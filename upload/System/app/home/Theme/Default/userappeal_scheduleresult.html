@@ -1,0 +1,80 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{script}-->
+var idSetInterval;
+
+function retrieve(id){
+	Q.AjaxSend(Q.U('userappeal/retrieve?id='+id),'ajax=1');
+	$WF("obtain").disabled=true;
+	$WF("second").style.marginRight='3px';
+	$WF("second").innerHTML=60;
+	idSetInterval=setInterval("remaidertime()",1000);
+}
+
+function remaidertime(){
+	var second=--$WF("second").innerHTML;
+	if(second==0){
+		clearInterval(idSetInterval);
+		$WF("second").style.marginRight='0';
+		$WF("second").innerHTML="";
+		var id=$WF("obtain").name;
+		$WF("obtain").disabled=false;
+	}
+}
+<!--{/script}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->申诉结果<!--</lang>--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+		<div class="grid_12">
+			<h3><!--<lang package='Template'>-->你的申诉进度如下<!--</lang>-->:</h3>
+			<table class="table table-bordered">
+				<tbody>
+					<tr>
+						<td width="33%" <!--{if $oAppeal['appeal_progress']==0}-->class="tips"<!--{/if}-->><!--<lang package='Template'>-->申诉录入<!--</lang>--></td>
+						<td width="33%" <!--{if $oAppeal['appeal_progress']==1}-->class="tips"<!--{/if}-->><!--<lang package='Template'>-->系统审核<!--</lang>--></td>
+						<td width="34%" <!--{if in_array($oAppeal['appeal_progress'],array(2,3))}-->class="tips"<!--{/if}-->><!--{if $oAppeal['appeal_progress']==3}--><!--<lang package='Template'>-->申诉驳回<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->申诉通过<!--</lang>--><!--{/if}--></td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="progress progress-striped active">
+				<div class="bar" style="width: <!--{:Home_Extend::scheduleProgress($oAppeal['appeal_progress'])}-->%;"></div>
+			</div>
+			<hr/>
+			<!--{if in_array($oAppeal['appeal_progress'],array(0,1))}-->
+			<h3><!--<lang package='Template'>-->申诉正在被审理<!--</lang>--></h3>
+			<div class="tips">
+				<!--<lang package='Template'>-->请你耐心等待审核结果，我们会在最快的时间内将审核结果发送到你的邮箱.<!--</lang>-->
+			</div>
+			<!--{/if}-->
+			<!--{if $oAppeal['appeal_progress']==2}-->
+			<h3><!--<lang package='Template'>-->恭喜申诉通过<!--</lang>--></h3>
+			<div class="tips">
+			<!--<lang package='Template'>-->申诉重置密码链接已发送至你的邮箱,请注意查收.<!--</lang>--><br />
+			<!--<lang package='Template'>-->若尚未收到邮件,点击这里<!--</lang>-->&nbsp;<button class="btn" onclick="retrieve(<!--{$oAppeal['user_id']}-->);" id="obtain" name="<!--{$oAppeal['user_id']}-->"><span id="second"></span><!--<lang package='Template'>-->重新获取<!--</lang>--></button>
+			</div>
+			<!--{/if}-->
+			<!--{if $oAppeal['appeal_progress']==3}-->
+			<h3><!--<lang package='Template'>-->申诉已被驳回<!--</lang>--></h3>
+			<div class="tips">
+				<!--{if $oAppeal['appeal_reason']}-->
+				<!--{$oAppeal['appeal_reason']|nl2br}-->
+				<!--{d*else}-->
+				<!--<lang package='Template'>-->系统尚未给定驳回理由<!--</lang>-->
+				<!--{/if}-->
+				<div style="margin-top:10px;">
+					<a href="<!--{:Q::U('home://userappeal/index')}-->" class="btn"><!--<lang package='Template'>-->重新申诉<!--</lang>--></a>
+				</div>
+			</div>
+			<!--{/if}-->
+			<p><a href="<!--{:Q::U('home://public/index')}-->" class="btn"><!--<lang package='__COMMON_LANG__@Common'>-->返回首页<!--</lang>--></a></p>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

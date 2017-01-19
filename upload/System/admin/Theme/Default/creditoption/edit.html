@@ -1,0 +1,77 @@
+<!--<include file="public+header">-->
+
+<!--{script}-->
+checkForm(updateForm);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->编辑积分规则<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->编辑积分规则<!--</lang>-->_<!--{$nId}-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->积分对站点有着重大的意义，请根据你的站点性质来合理设置积分大小<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->编辑积分规则<!--</lang>--> - <!--{$oValue['creditrule_name']}--></h3>
+				<ul class="tabs">
+					<li><a href="<!--{:Q::U('creditoption/index')}-->"><!--<lang package='Template'>-->基本设置<!--</lang>--></a></li>
+					<li class="active"><a href="<!--{:Q::U('creditoption/policytable')}-->"><!--<lang package='Template'>-->积分策略<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="" method="post" id="creditoptionAdd" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="creditrule_cycletype"><!--<lang package='Template'>-->周期<!--</lang>--></label>
+						<p><input type="radio" name="creditrule_cycletype" id="creditrule_cycletype" value="0" <!--{if $oValue['creditrule_cycletype']==0}-->checked<!--{/if}--> onclick="$WF('cycletime').style.display = 'none';$WF('rewardnum').style.display = 'none';"><!--<lang package='Template'>-->一次<!--</lang>-->
+							<input type="radio" name="creditrule_cycletype" value="1" <!--{if $oValue['creditrule_cycletype']==1}-->checked<!--{/if}--> onclick="$WF('cycletime').style.display = 'none';$WF('rewardnum').style.display = '';"><!--<lang package='Template'>-->每天<!--</lang>-->
+							<input type="radio" name="creditrule_cycletype" value="2" <!--{if $oValue['creditrule_cycletype']==2}-->checked<!--{/if}--> onclick="$WF('cycletime').style.display = '';$WF('rewardnum').style.display = '';"><!--<lang package='Template'>-->整点<!--</lang>-->
+							<input type="radio" name="creditrule_cycletype" value="3" <!--{if $oValue['creditrule_cycletype']==3}-->checked<!--{/if}--> onclick="$WF('cycletime').style.display = '';$WF('rewardnum').style.display = '';"><!--<lang package='Template'>-->间隔分钟<!--</lang>-->
+							<input type="radio" name="creditrule_cycletype" value="4" <!--{if $oValue['creditrule_cycletype']==4}-->checked<!--{/if}--> onclick="$WF('cycletime').style.display = 'none';$WF('rewardnum').style.display = '';"><!--<lang package='Template'>-->不限<!--</lang>-->
+						</p>
+						<div class="description"><!--<lang package='Template'>-->可以根据不同的动作设置相应的积分策略<!--</lang>--></div>
+					</fieldset>
+					<div id="cycletime" style="display: none">
+						<fieldset>
+							<label for="creditrule_cycletype"><!--<lang package='Template'>-->间隔时间<!--</lang>--></label>
+							<input type="text" name="creditrule_cycletime" id="creditrule_cycletime" size="40" value="<!--{$oValue:creditrule_cycletime}-->" class="{required:true,digits:true,min: 0}"/>
+							<div class="description input_tips"><!--<lang package='Template'>-->当选择“整点”时，该单位为“小时”；选择“间隔分钟”时，该单位为“分钟”<!--</lang>--></div>
+							<p class="input_errortips"></p>
+						</fieldset>
+					</div>
+					<div id="rewardnum" style="display: none">
+						<fieldset>
+							<label for="creditrule_rewardnum"><!--<lang package='Template'>-->间隔次数<!--</lang>--></label>
+							<input type="text" name="creditrule_rewardnum" id="creditrule_rewardnum" size="40" value="<!--{$oValue:creditrule_rewardnum}-->" class="{required:true,digits:true,min: 0}"/>
+							<div class="description input_tips"><!--<lang package='Template'>-->0为不限次数<!--</lang>--></div>
+							<p class="input_errortips"></p>
+						</fieldset>
+					</div>
+					<!--<foreach for=arrAvailableExtendCredits key=nAvailableExtendCredit value=arrAvailableExtendCredit>-->
+					<fieldset>
+						<label for="creditrule_extendcredit<!--{$nAvailableExtendCredit}-->">creditrule_extendcredit<!--{$nAvailableExtendCredit}--> (<!--{$arrAvailableExtendCredit['title']}-->)</label>
+						<input type="text" name="creditrule_extendcredit<!--{$nAvailableExtendCredit}-->" id="creditrule_extendcredit<!--{$nAvailableExtendCredit}-->" size="40" value="<!--{$oValue['creditrule_extendcredit'.$nAvailableExtendCredit]}-->" class="{required:true,ints:true,min: -99,max:99}"/>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<!--</foreach>-->
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="hidden" name="ajax" value="1">
+						<input type="hidden" name="id" id="id" value="<!--{$nId}-->"/>
+						<input type="submit" id="submit_button" value="<!--<lang package='Template'>-->更新<!--</lang>-->" class="alt_btn">
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->">
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

@@ -1,0 +1,69 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+function option(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'update...' );
+	$("#submit_button").attr("disabled", false);
+	$('.validate')(0).submit();
+}
+
+checkForm(option);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->媒体显示<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->媒体显示<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->Ubb设置<!--</lang>--></h3>
+				<ul class="tabs">
+					<li><a href="<!--{:Q::U('uploadoption/index')}-->"><!--<lang package='Template'>-->基本设置<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('uploadoption/avatar')}-->"><!--<lang package='Template'>-->头像设置<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('uploadoption/show')}-->"><!--<lang package='Template'>-->媒体显示<!--</lang>--></a></li>
+					<li class="active"><a href="<!--{:Q::U('uploadoption/ubb')}-->"><!--<lang package='Template'>-->Ubb设置<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('uploadoption/attachment')}-->"><!--<lang package='Template'>-->相册<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="<!--{:Q::U('uploadoption/update_option')}-->" method="post" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="upload_loginuser_view"><!--<lang package='Template'>-->只有会员才能查看附件<!--</lang>--></label>
+						<input type="radio" id="upload_loginuser_view" name="options[upload_loginuser_view]" value="1" <!--{if $arrOptions['upload_loginuser_view']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[upload_loginuser_view]" value="0" <!--{if $arrOptions['upload_loginuser_view']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->设置是否只有会员才能够查看附件，这里为ubb中的权限<!--</lang>-->
+						</div>
+					</fieldset>
+					<fieldset>
+						<label for="ubb_content_autoaddlink"><!--<lang package='Template'>-->内容是否添加链接<!--</lang>--></label>
+						<input type="radio" id="ubb_content_autoaddlink" name="options[ubb_content_autoaddlink]" value="1" <!--{if $arrOptions['ubb_content_autoaddlink']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[ubb_content_autoaddlink]" value="0" <!--{if $arrOptions['ubb_content_autoaddlink']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->内容自动添加链接有助于提高反垃圾外链接的能力<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="ubb_content_shorturl"><!--<lang package='Template'>-->链接URL是否截短<!--</lang>--></label>
+						<input type="radio" id="ubb_content_shorturl" name="options[ubb_content_shorturl]" value="1" <!--{if $arrOptions['ubb_content_shorturl']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[ubb_content_shorturl]" value="0" <!--{if $arrOptions['ubb_content_shorturl']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->将过长的URL进行截取变短，让内容看起来简洁<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="ubb_content_urlmaxlen"><!--<lang package='Template'>-->内容URL最大长度<!--</lang>--></label>
+						<input type="text" name="options[ubb_content_urlmaxlen]" id="ubb_content_urlmaxlen" size="60" value="<!--{$arrOptions['ubb_content_urlmaxlen']}-->" class="{required:true,digits:true,min:0,max:300}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->URL最大的长度，大于这个长度会被截断<!--</lang>-->
+						</div>
+						<p class="input_errortips"></p>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input id="submit_button" type="submit" class="alt_btn" value="<!--<lang package='Template'>-->发布<!--</lang>-->" />
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->" />
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

@@ -1,0 +1,47 @@
+			<div class="grid_12">
+				<div class="groupcontent_commontop" style="margin-top:0px;margin-bottom:15px;">
+					<div style="background:url('<!--{:Group_Extend::getGroupHeaderbg($arrGroup['group_headerbg'])}-->') center no-repeat;background-size:cover;" class="group_commontitle">
+						<dl class="group_info">
+							<dt class="left">
+								<a href="<!--{:Group_Extend::getGroupurl($arrGroup)}-->"><img src="<!--{:Group_Extend::getGroupIcon($arrGroup)}-->" width="48" height="48" alt="<!--{$arrGroup.group_nikename}-->" class="thumbnail"/></a>
+							</dt>
+							<dd style="padding-left:60px;">
+								<p class="name">
+									<a href="<!--{:Group_Extend::getGroupurl($arrGroup)}-->" id="groupName" style="<!--{if $arrGroup['group_color']}-->color:<!--{$arrGroup['group_color']}-->;font-weight:bold;<!--{/if}-->"><!--{$arrGroup['group_nikename']}--></a>
+									<!--{if $arrGroup['group_totaltodaynum']}-->&nbsp;<span class="groupinfo_todaynum" title="<!--<lang package='Template'>-->今日发帖量<!--</lang>-->">(<!--{$arrGroup['group_totaltodaynum']}-->)</span><!--{/if}-->
+									&nbsp;
+									<!--{if !in_array($arrGroup['group_id'],$arrGroupuser)}-->
+									<span id="commongroup_<!--{$arrGroup['group_id']}-->" class="group_joinleave"><a href="javascript:void(0);" style="color:#000;" onclick="joinGroup(<!--{$arrGroup['group_id']}-->,'commongroup_<!--{$arrGroup['group_id']}-->');">+<!--<lang package='Template'>-->加入<!--</lang>--></a></span>
+									<!--{d*else}-->
+									<span id="commongroup_<!--{$arrGroup['group_id']}-->" class="group_joinleave"><a href="javascript:void(0);" style="color:#000;" onclick="leaveGroup(<!--{$arrGroup['group_id']}-->,'commongroup_<!--{$arrGroup['group_id']}-->');"><!--<lang package='Template'>-->退出<!--</lang>--></a></span>
+									<!--{/if}-->
+									<!--{if $arrGroup['group_isrecommend']==1}-->
+									<span>&nbsp;&nbsp;<img title="<!--<lang package='Template'>-->推荐<!--</lang>-->" src="<!--{:Appt::path('group_recommend.gif','group')}-->" /></span>
+									<!--{/if}-->
+								</p>
+								<p><span title="<!--<lang package='Template'>-->主题数<!--</lang>-->"><!--<lang package='Template'>-->主题<!--</lang>-->&nbsp;<!--{$arrGroup['group_topicnum']}--></span>,&nbsp;&nbsp;
+								<span title="<!--<lang package='Template'>-->帖子数<!--</lang>-->"><!--<lang package='Template'>-->帖子<!--</lang>-->&nbsp;<!--{$arrGroup['group_topiccomment']}--></span>,&nbsp;&nbsp;
+								<span title="<!--<lang package='Template'>-->成员数<!--</lang>-->"><!--<lang package='Template'>-->成员<!--</lang>-->&nbsp;<!--{$arrGroup['group_usernum']}--></span></p>
+							</dd>
+						</dl>
+
+						<div class="group_commonmenu">
+							<div class="nav_tab nav-groupmenu">
+								<ul>
+									<li <!--{if ACTION_NAME==='show' && isset($nRecommend) && empty($nRecommend)}-->class="active"<!--{/if}-->><a href="<!--{:Group_Extend::getGroupurl($arrGroup)}-->" class="WindsforceSystem-link_color"><!--<lang package='Template'>-->小组首页<!--</lang>--></a></li>
+									<li <!--{if ACTION_NAME==='show' && isset($nRecommend) && $nRecommend==1}-->class="active"<!--{/if}-->><a href="<!--{:Group_Extend::getGroupurl($arrGroup,'&recommend=1')}-->" class="WindsforceSystem-link_color"><!--<lang package='Template'>-->推荐主题<!--</lang>--></a></li>
+									<li <!--{if ACTION_NAME==='user'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('group://group/user?gid='.($arrGroup['group_name']?$arrGroup['group_name']:$arrGroup['group_id']))}-->" class="WindsforceSystem-link_color"><!--<lang package='Template'>-->成员<!--</lang>-->&nbsp;<b>(<!--{$arrGroup['group_usernum']}-->)</b></a></li>
+									<!--{if Groupadmin_Extend+checkAdminGroupRbac($arrGroup['group_id'])}-->
+									<li <!--{if MODULE_NAME==='groupadmin'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('group://groupadmin/index?gid='.$arrGroup['group_id'])}-->" class="WindsforceSystem-link_color" style="font-weight:bold;"><!--<lang package='Template'>-->小组设置<!--</lang>--></a></li>
+									<!--{/if}-->
+									<!--{if isset($nStyle) && $GLOBALS['_cache_']['group_option']['group_grouptopicstyle_on']==1}-->
+									<li <!--{if $nStyle==1}-->class="active"<!--{/if}-->><a href="javascript:void(0);" onclick="setGrouptopicstyle(1);"><!--<lang package='Template'>-->传统BBS<!--</lang>--></a></li>
+									<li <!--{if $nStyle==2}-->class="active"<!--{/if}-->><a href="javascript:void(0);" onclick="setGrouptopicstyle(2);"><!--<lang package='Template'>-->小组新风格<!--</lang>--></a></li>
+									<!--{/if}-->
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>

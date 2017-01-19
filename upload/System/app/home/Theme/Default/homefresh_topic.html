@@ -1,0 +1,16 @@
+			<div style="width:480px;">
+				<div class="homefresh_topic">
+						<p><input type="button" class="btn" onclick="parent.insertHomefreshtopic('#<!--<lang package='Template'>-->请在这里输入自定义话题<!--</lang>-->#');" value="<!--<lang package='Template'>-->插入话题<!--</lang>-->"/></p>
+						<hr/>
+						<h4><!--<lang package='Template'>-->热门话题<!--</lang>--></h4>
+						<div class="tags_list" node-type="inner" style="padding-top:5px;">
+							<!--{if !empty($arrHothomefreshtags)}-->
+							<!--<foreach for=arrHothomefreshtags>-->
+							<span><a href="javascript:void(0);" class="tagslist_size" onclick="parent.insertHomefreshtopic('#<!--{$value['homefreshtag_name']}-->#');">#<!--{$value['homefreshtag_name']}-->#&nbsp;(<!--{$value['homefreshtag_totalcount']}-->)</a></span>
+							<!--</foreach>-->
+							<!--{d*else}-->
+							<p><!--<lang package='Template'>-->你没有发现任何话题<!--</lang>--></p>
+							<!--{/if}-->
+					</div>
+				</div>
+			</div>

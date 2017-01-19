@@ -1,0 +1,25 @@
+<!--<include file="header">-->
+
+	<div id="content">
+		<!--{if $sReferer && $nRbac==1}-->
+		<div class="light_box">
+			<!--<lang package='Template'>-->你没有权限访问!<!--</lang>-->&nbsp;<a href="<!--{$sReferer}-->"><!--<lang package='Template'>-->重试<!--</lang>--></a>
+		</div>
+		<!--{/if}-->
+
+		<!--{if $sReferer && $nLoginview==1}-->
+		<div class="light_box">
+			<!--<lang package='Template'>-->你需要登陆后才能够访问!<!--</lang>-->&nbsp;<a href="<!--{$sReferer}-->"><!--<lang package='Template'>-->重试<!--</lang>--></a>
+		</div>
+		<!--{/if}-->
+				
+		<form method="post" action="<!--{:Q::U('wap://public/check_login')}-->">
+			<p style="padding-bottom:5px;"><!--<lang package='Template'>-->用户名<!--</lang>--></p>
+			<p style="padding-bottom:5px;"><input type="text" name="user_name" /></p>
+			<p style="padding-bottom:5px;"><!--<lang package='Template'>-->密码<!--</lang>--></p>
+			<p style="padding-bottom:5px;"><input type="password" name="user_password" /></p>
+			<p style="padding-bottom:5px;"><input type="submit" value="<!--<lang package='Template'>-->登录<!--</lang>-->" /></p>
+		</form>
+	</div>
+
+<!--<include file="footer">-->

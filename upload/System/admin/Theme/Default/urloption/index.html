@@ -1,0 +1,61 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+function option(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'update...' );
+	$("#submit_button").attr("disabled", false);
+}
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->URL美化<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->URL美化<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->URL美化为了让网站看起来很干净，同时也提高收录<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->不同的URL模式对应不同的URL用户体验,同时也需要相应的服务器支持<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->URL美化<!--</lang>--></h3>
+			</header>
+			<form action="<!--{:Q::U('urloption/update_option')}-->" method="post" onsubmit="return option();">
+				<div class="module_content">
+					<fieldset>
+						<label for="url_model"><!--<lang package='Template'>-->URL模式设置<!--</lang>--></label>
+						<select	id="url_model" name="options[url_model]" >
+							<option value="1">-&nbsp;<!--<lang package='Template'>-->选择要使用的URL模式<!--</lang>-->&nbsp;-</option>
+							<!--<foreach for=arrUrlModels>-->
+							<option value="<!--{$value['value']}-->" <!--{if $value['value']==$arrOptions['url_model']}-->selected<!--{/if}-->><!--{$value['name']}--></option>
+							<!--</foreach>-->
+						</select>
+						<div class="description"><!--<lang package='Template'>-->URL模式共有4种，不填默认兼容模式，每一种模式都有不同的效果<!--</lang>--><br>
+							<!--<lang package='Template'>-->普通模式(URL_MODEL:0),PATHINFO模式(URL_MODEL:1),REWRITE模式(URL_MODEL:2),兼容模式(URL_MODEL:3)<!--</lang>-->&nbsp;
+							<a href="http://qeephp.114.ms/document/developer-guide/developer-guide-control/url-style.html" target="_blank"><!--<lang package='Template'>-->URL模式详细资料<!--</lang>--></a>
+						</div>
+					</fieldset>
+					<fieldset>
+							<label for="url_domain"><!--<lang package='Template'>-->网址域名前缀<!--</lang>--></label>
+							<input type="text" name="options[url_domain]" id="url_domain" size="60" value="<!--{$arrOptions['url_domain']}-->"/>
+							<div class="description"><!--<lang package='Template'>-->让网址看起来非常漂亮，如http://example.com<!--</lang>--></div>
+						</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input id="submit_button" type="submit" class="alt_btn" value="<!--<lang package='Template'>-->发布<!--</lang>-->" />
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->" />
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

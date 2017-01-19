@@ -1,0 +1,1 @@
+a:3:{s:16:"PublicController";s:37:"Controller/PublicController.class.php";s:16:"UpdateController";s:37:"Controller/UpdateController.class.php";s:14:"Install_Extend";s:34:"Extension/Install_Extend.class.php";}

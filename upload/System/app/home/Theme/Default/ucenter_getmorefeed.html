@@ -1,0 +1,27 @@
+<!--{if !empty($arrFeeddatas)}-->
+<!--<foreach for=arrFeeddatas value=arrFeeddata>-->
+<!--{if !isset($arrFeeddatas[$key-1]) || date('Y-m-d',$arrFeeddata['create_dateline'])!=date('Y-m-d',$arrFeeddatas[$key-1]['create_dateline'])}-->
+<tr>
+	<th colspan="2"><h4><!--{$arrFeeddata['create_dateline']|date='Y-m-d',**}--></h4></th>
+</tr>
+<!--{/if}-->
+<tr>
+	<td width="70px" style="text-align:center;">
+		<!--{if !isset($arrFeeddatas[$key-1]) || $arrFeeddata['user_id']!=$arrFeeddatas[$key-1]['user_id']}-->
+		<a title="<!--{$arrFeeddata['feed_username']}-->" href="<!--{:Q::U('home://space@?id='.$arrFeeddata['user_id'])}-->">
+			<img src="<!--{:Core_Extend::avatar( $arrFeeddata['user_id'],'small' )}-->" width="48px" height="48px" class="thumbnail need_lazyload" title="<!--{$arrFeeddata['feed_username']}-->" alt="<!--{$arrFeeddata['feed_username']}-->" style="margin:auto;"/>
+		</a>
+		<!--{/if}-->
+		<a title="<!--{$arrFeeddata['feed_username']}-->" href="<!--{:Q::U('home://space@?id='.$arrFeeddata['user_id'])}-->"><!--{$arrFeeddata['feed_username']}--></a>
+		<p><!--{:Core_Extend::newData($arrFeeddata['create_dateline'],true)}--></p>
+	</td>
+	<td width="*" >
+		<div class="statfeed-content"><!--{$arrFeeddata['feed_content']|Core_Extend+ubb=false}--></div>
+	</td>
+</tr>
+<!--</foreach>-->
+<!--{d*else}-->
+<tr>
+	<td colspan="2" style="text-align:center;" class="no-feed"><!--<lang package='Template'>-->暂无任何动态<!--</lang>--></td>
+</tr>
+<!--{/if}-->

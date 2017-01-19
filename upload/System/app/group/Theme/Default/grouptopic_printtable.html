@@ -1,0 +1,68 @@
+<html>
+<head>
+	<title><!--{:Core_Extend::title($TheController)}--></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<!--{style}-->
+	body{margin: 10px 80px;}
+	body,table {font-size: fontsize; font-family: font;}
+	h1 { font-size: 24px; margin-bottom: 20px; color: #999; }
+	<!--{/style}-->
+</head>
+
+<body>
+
+<h1><!--{$GLOBALS['_option_']['site_name']}--></h1>
+<b><!--<lang package='Template'>-->标题<!--</lang>-->:</b><!--{$arrGrouptopic['grouptopic_title']}--><b>
+<span><a href="###" onclick="this.style.visibility='hidden';window.print();this.style.visibility='visible'">[<!--<lang package='Template'>-->打印本页<!--</lang>-->]</a></b></span><br />
+
+<hr noshade size="2" width="100%" color="#808080">
+<b><!--<lang package='Template'>-->作者<!--</lang>-->: </b><!--{if $arrGrouptopic['grouptopic_isanonymous']==1}--><!--<lang package='Template'>-->匿名<!--</lang>--><!--{d*else}--><!--{$arrGrouptopic['grouptopic_username']}--><!--{/if}-->&nbsp; &nbsp; 
+<b><!--<lang package='Template'>-->时间<!--</lang>-->: </b><span title="<!--{$arrGrouptopic['create_dateline']|date='Y-m-d H:i',**}-->"><!--{$arrGrouptopic['create_dateline']|Core_Extend+timeFormat}--></span><br />
+<p>
+	<!--{if $arrGrouptopic['grouptopic_isshow']=='0'}-->
+	<div class="locked"><!--<lang package='Template'>-->本帖已经隐藏，仅具有管理权限的人才能够浏览<!--</lang>--></div>
+	<!--{/if}-->
+	
+	<!--{if $arrGrouptopic['grouptopic_onlycommentview']==1}-->
+	<div class="locked"><!--<lang package='Template'>-->本帖需要回复后才能够浏览<!--</lang>--></div>
+	<!--{/if}-->
+	
+	<!--{if ($arrGrouptopic['grouptopic_isshow']=='1' || ($arrGrouptopic['grouptopic_isshow']=='0' && Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic,array('group@grouptopicadmin@hidetopic')) && in_array(Groupadmin_Extend+getGroupUserrole($arrGrouptopic['group_id']),array(1,2,4)))) && ($arrGrouptopic['grouptopic_onlycommentview']=='0' || $bHavecomment===true)}-->
+	<!--{$arrGrouptopic['grouptopic_content']|Core_Extend+ubb=false}-->
+	<!--{/if}-->
+</p><br />
+
+<!--<foreach for=arrComments value=arrComment>-->
+<hr noshade size="2" width="100%" color="#808080">
+<b><!--<lang package='Template'>-->作者<!--</lang>-->: </b><!--{$arrComment['user_name']}-->&nbsp; &nbsp; 
+<b><!--<lang package='Template'>-->时间<!--</lang>-->: </b><span title="<!--{$arrComment['create_dateline']|date='Y-m-d H:i',**}-->"><!--{$arrComment['create_dateline']|Core_Extend+timeFormat}--></span><br />
+<p>
+	<!--{if $arrComment['grouptopiccomment_status']=='0'}-->
+	<div class="locked locked_highlight"><!--<lang package='Template'>-->此回尚未通过审核，仅具有管理权限的人才能够浏览<!--</lang>--></div>
+	<!--{elseif $arrComment['grouptopiccomment_ishide']==1}-->
+	<div class="locked"><!--<lang package='Template'>-->此回帖已被屏蔽，仅具有管理权限的人才能够浏览<!--</lang>--></div>
+	<!--{elseif $arrGrouptopic['grouptopic_hiddenreplies']==1}-->
+	<div class="locked"><!--<lang package='Template'>-->此回帖仅作者可见<!--</lang>--></div>
+	<!--{/if}-->
+	
+	<!--{if $arrComment['grouptopiccomment_ishide']=='0' || ($arrComment['grouptopiccomment_ishide']=='1' && Groupadmin_Extend+checkCommentadminRbac($arrGrouptopic,array('group@grouptopicadmin@hidecomment')))}-->
+	<!--{if $arrGrouptopic['grouptopic_hiddenreplies']=='0' || ($arrGrouptopic['grouptopic_hiddenreplies']==1 && $GLOBALS['___login___']!==false && $GLOBALS['___login___']['user_id']==$arrGrouptopic['user_id'])}-->
+	<!--{$arrComment['grouptopiccomment_content']|Core_Extend+ubb=false}-->
+	<!--{/if}-->
+	<!--{/if}-->
+</p>
+<!--</foreach>-->
+
+<br /><br /><br /><br />
+
+<hr noshade size="2" width="100%" color="bordercolor">
+<table cellspacing="0" cellpadding="0" border="0" width="95%" align="center" style="font-size: smfontsize; font-family: smfont">
+	<tr>
+		<td><!--<lang package='Template'>-->欢迎光临<!--</lang>-->&nbsp;<!--{$GLOBALS['_option_']['site_name']}-->&nbsp;(<!--{:Core_Extend::getSiteurl()}-->)</td>
+		<td align="right">Powered by&nbsp;<strong><a href="<!--{$GLOBALS['_option_']['windsforce_program_url']}-->" title="<!--{$GLOBALS['_option_']['windsforce_program_year']}-->"><!--{$GLOBALS['_option_']['windsforce_program_name']}--></a></strong>
+		<em><!--{$GLOBALS['_option_']['windsforce_program_version']}--></em>.</td>
+	</tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+				<!--<php>-->
+				$arrSearchconfigs=Core_Extend::search();
+				<!--</php>-->
+				
+				<div class="search-menu">
+					<!--<foreach for=arrSearchconfigs value=arrSearchconfig>-->
+					<a href="<!--{:Q::U($arrSearchconfig[0][0].'://'.$arrSearchconfig[0][1].'/'.$arrSearchconfig[0][2].'?key='.urlencode($sKey),array(),true)}-->" <!--{if APP_NAME===$arrSearchconfig[0][0] && MODULE_NAME===$arrSearchconfig[0][1] && (in_array(ACTION_NAME,$arrSearchconfig[2]))}-->class="search-active"<!--{/if}-->><!--{$arrSearchconfig[1]}--></a>&nbsp;&nbsp;
+					<!--</foreach>-->
+				</div>

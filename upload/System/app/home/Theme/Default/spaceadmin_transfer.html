@@ -1,0 +1,87 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{:Core_Extend::validate()}-->
+
+<!--{script}-->
+checkForm();
+<!--{/script}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('home://spaceadmin/index')}-->"><!--<lang package='Template'>-->用户资料<!--</lang>--></a> <span class="divider">/</span></li>
+			<li><!--<lang package='Template'>-->转账<!--</lang>--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+		<!--<include file="spaceadmin+menu" />-->
+
+		<div class="grid_12">
+			<!--<include file="spaceadmin+ratingmenu" />-->
+
+			<p><table class="table table-bordered">
+					<thead>
+						<tr>
+							<th><!--<lang package='Template'>-->积分类型<!--</lang>--></th>
+							<th><!--<lang package='Template'>-->积分数量<!--</lang>--></th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--<foreach for=arrAvailableExtendCredits key=nAvailableExtendCredit value=arrAvailableExtendCredit>-->
+						<tr>
+							<td><!--{$arrAvailableExtendCredit['title']}--></td>
+							<td><span class="badge <!--{if $nAvailableExtendCredit==2}-->badge-success<!--{/if}-->"><!--{$arrUserInfo['usercount_extendcredit'.$nAvailableExtendCredit]}--></span></td>
+						</tr>
+					</tbody>
+					<!--</foreach>-->
+				</table>
+			</p>
+
+			<p><h5><!--<lang package='Template'>-->我要转账<!--</lang>--></h5></p>
+			<form id="transferForm" name="transferForm" method="post" action="<!--{:Q::U('home://spaceadmin/do_transfer')}-->" class="validate">
+				<table class="table" style="width:100%;">
+					<tr>
+						<td><!--<lang package='Template'>-->转账<!--</lang>--></td>
+						<td>
+							<input type="text" name="transfer_amount" id="transfer_amount" size="5" style="width: auto;display:inline;" value="0" required title="<!--<lang package='Template'>-->转账的金钱不能为空<!--</lang>-->"/>&nbsp;&nbsp;&nbsp;
+							<select class="{required:true}" name="credit_type" id="credit_type" >
+							<!--<foreach for=arrAvailableExtendCredits key=nAvailableExtendCredit value=arrAvailableExtendCredit>-->
+							<!--{if $nAvailableExtendCredit>1}-->
+							<option value="<!--{$nAvailableExtendCredit}-->"><!--{$arrAvailableExtendCredit['title']}--></option>
+							<!--{/if}-->
+							<!--</foreach>-->
+							</select>
+							&nbsp;&nbsp;<!--<lang package='Template'>-->给<!--</lang>-->&nbsp;
+							<input type="text" name="to_username" id="to_username" class="span3" size="15" style="width: auto;display:inline;" required title="<!--<lang package='Template'>-->转账的对象不能为空<!--</lang>-->"/>
+							<p class="input_errortips"></p>
+						</td>
+						<td width="300">
+							<!--<lang package='Template'>-->转账后最低余额<!--</lang>-->&nbsp;<!--{$nTransferMincredits}--><br />
+							<!--<lang package='Template'>-->积分交易税<!--</lang>-->&nbsp;<!--{$nCreditstax}-->%
+						</td>
+					</tr>
+					<tr>
+						<td><!--<lang package='Template'>-->登录密码<!--</lang>--><span class="red">*</span></td>
+						<td><input type="password" name="password" id="password" class="span3" value="" required title="<!--<lang package='Template'>-->登录密码不能为空<!--</lang>-->"/>
+							<p class="input_errortips"></p>
+						</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td><!--<lang package='Template'>-->转账留言<!--</lang>--></td>
+						<td><input type="text" name="transfer_message" id="transfer_message" class="span6" size="40" /></td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td colspan="2">
+							<button type="submit" class="btn"><!--<lang package='Template'>-->转账<!--</lang>--></button>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

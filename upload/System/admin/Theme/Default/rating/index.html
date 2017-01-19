@@ -1,0 +1,194 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+function changeRatinggroup(oObj,id){
+	var keyValue;
+	var ratinggroup_id=oObj.value;
+	if(id){
+		keyValue=id;
+	}else{
+		keyValue=getSelectValues();
+	}
+	
+	if(!keyValue){
+		windsforceAlert(Q.L('请选择操作项','Common'),'',3);
+		return false;
+	}
+	
+	window.location.href=Q.U('change_ratinggroup?id='+keyValue+'&ratinggroup_id='+ratinggroup_id);
+}
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->级别列表<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->级别列表<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->级别代表了一个用户在社区中熟悉程度，它代表着用户的荣誉<!--</lang>--></li>
+				</ul>
+			</div>
+			<div class="module_content">
+				<form method='get' action="<!--{:Q::U( 'rating/index' )}-->" class="quick_search">
+					<table cellspacing="3" cellpadding="3">
+						<tr>
+							<th><!--<lang package='Template'>-->等级分组<!--</lang>--></th>
+							<td>
+								<select name="ratinggroup_id" id="ratinggroup_id">
+									<option value="" <!--{if Q+G('ratinggroup_id')===null || Q+G('ratinggroup_id')==''}-->selected<!--{/if}-->><!--<lang package='Template'>-->选择分组<!--</lang>--></option>
+									<!--<volist name="arrRatinggroup" id="value">-->
+									<option value="<!--{$value['ratinggroup_id']}-->" <!--{if isset($_GET['ratinggroup_id']) && $_GET['ratinggroup_id']!='' && $_GET['ratinggroup_id']==$value['ratinggroup_id']}-->selected<!--{/if}-->><!--{$value['ratinggroup_title']}--></option>
+									<!--</volist>-->
+								</select>
+							</td>
+							<th><!--<lang package='Template'>-->结果排序<!--</lang>--></th>
+							<td>
+								<select name="order_">
+									<option value="" <!--{if !Q+G('order_')}-->selected<!--{/if}-->><!--<lang package='Template'>-->排序字段<!--</lang>--></option>
+									<option value="rating_id" <!--{if Q+G('order_')=='rating_id'}-->selected<!--{/if}-->><!--<lang package='Template'>-->编号<!--</lang>--></option>
+									<option value="create_dateline" <!--{if Q+G('order_')=='create_dateline'}-->selected<!--{/if}-->><!--<lang package='Template'>-->添加时间<!--</lang>--></option>
+									<option value="rating_name" <!--{if Q+G('order_')=='rating_name'}-->selected<!--{/if}-->><!--<lang package='Template'>-->等级名<!--</lang>--></option>
+									<option value="rating_nikename" <!--{if Q+G('order_')=='rating_nikename'}-->selected<!--{/if}-->><!--<lang package='Template'>-->等级昵称<!--</lang>--></option>
+								</select>
+								<select name="sort_">
+									<option value="" <!--{if !Q+G('sort_')}-->selected<!--{/if}-->><!--<lang package='Template'>-->默认排序<!--</lang>--></option>
+									<option value="desc" <!--{if Q+G('sort_')=='desc'}-->selected<!--{/if}-->><!--<lang package='Template'>-->递增<!--</lang>--></option>
+									<option value="asc" <!--{if Q+G('sort_')=='asc'}-->selected<!--{/if}-->><!--<lang package='Template'>-->递减<!--</lang>--></option>
+								</select>
+								<select name="perpage">
+									<option value="" <!--{if !Q+G('perpage')}-->selected<!--{/if}-->><!--<lang package='Template'>-->默认每页数量<!--</lang>--></option>
+									<option value="10" <!--{if Q+G('perpage')==10}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(10)</option>
+									<option value="20" <!--{if Q+G('perpage')==20}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(20)</option>
+									<option value="50" <!--{if Q+G('perpage')==50}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(50)</option>
+									<option value="100" <!--{if Q+G('perpage')==100}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(100)</option>
+									<option value="200" <!--{if Q+G('perpage')==200}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(200)</option>
+									<option value="500" <!--{if Q+G('perpage')==500}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(500)</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th><!--<lang package='Template'>-->编号<!--</lang>--></th>
+							<td><input type="text" name="rating_id" title="<!--<lang package='Template'>-->编号<!--</lang>-->" value="<!--{:Q::G('rating_id')}-->" onkeyup="this.value = this.value.replace(/[^-0-9]/g, '');" />
+							</td>
+							<td colspan="2">
+								<input type="text" name="rating_name" title="<!--<lang package='Template'>-->级别名<!--</lang>-->" value="<!--{:Q::G('rating_name')}-->" class="quicksearch_text">
+								&nbsp;<input type="submit" id="" value="<!--<lang package='Template'>-->查询<!--</lang>-->" onclick="" class="alt_btn">
+							</td>
+						</tr>
+					</table>
+					<input type="hidden" name="c" value="<!--{:MODULE_NAME}-->"/>
+					<input type="hidden" name="a" value="<!--{:ACTION_NAME}-->"/>
+				</form>
+			</div>
+			<form action="<!--{:Q::U('rating/update_option')}-->" method="post" id="ratingOption">
+				<div class="module_content">
+					<fieldset>
+						<label for="rating_icontype"><!--<lang package='Template'>-->等级图标样式<!--</lang>--></label>
+						<select name="options[rating_icontype]" id="rating_icontype">
+							<!--<foreach for=arrRatingtype value=sRatingtype>-->
+							<option value="<!--{$sRatingtype}-->" <!--{if $sRatingtype==$arrOptions['rating_icontype']}-->selected<!--{/if}-->><!--{$sRatingtype}--></option>
+							<!--</foreach>-->
+						</select>
+						<div class="description"><!--<lang package='Template'>-->系统目前支持的图标样式，如果要添加新的样式，请将设计好的图标放置在Public/images/rating中即可<!--</lang>--></div>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="submit" id="submit_button"  value="<!--<lang package='Template'>-->发布<!--</lang>-->" class="alt_btn">
+					</div>
+				</footer>
+			</form>
+		</article>
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->级别列表<!--</lang>--></h3>
+				<ul class="tabs">	
+					<!--<volist name="arrRatinggroup" id="value">-->
+					<li class="<!--{if isset($_GET['ratinggroup_id']) && ($_GET['ratinggroup_id']===$value['ratinggroup_id'] || (!$_GET['ratinggroup_id']) && !$value['ratinggroup_id'])}-->active<!--{/if}-->"><a href="<!--{:Q::U('rating/index?ratinggroup_id='.$value['ratinggroup_id'].'&sort_=asc' )}-->"><!--{$value['ratinggroup_title']}--></a></li>
+					<!--</volist>-->
+					<li class="<!--{if !isset($_GET['ratinggroup_id'])}-->active<!--{/if}-->"><a href="<!--{:Q::U('rating/index?sort_=asc' )}-->"><!--<lang package='Template'>-->所有<!--</lang>--></a></li>
+					<!--{ifQ+C('APP_DEVELOP')}-->
+					<li><a class="tab_add" href="javascript:void(0);" onclick="add()"><!--<lang package='Template'>-->新增<!--</lang>--></a></li>
+					<li><a class="tab_edit" href="javascript:void(0);" onclick="edit()"><!--<lang package='Template'>-->编辑<!--</lang>--></a></li>
+					<li><a class="tab_delete" href="javascript:void(0);" onclick="foreverdel()"><!--<lang package='Template'>-->删除<!--</lang>--></a></li>
+					<!--{/if}-->
+				</ul>
+			</header>
+			
+			<div class="module_content">
+				<table class="tablesorter" cellspacing="0" id="checkList">
+					<thead>
+						<tr>
+							<th width="20px"><input type="checkbox" onclick="checkAll('checkList')"></th> 
+							<th width="85px"><a href="javascript:sortBy('rating_id','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('rating_id')}-->><!--<lang package='Template'>-->编号<!--</lang>--></a></th> 
+							<th width="160px"><a href="javascript:sortBy('rating_name','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('rating_name')}-->><!--<lang package='Template'>-->等级名<!--</lang>--></a></th>
+							<th width="180px"><a href="javascript:sortBy('rating_icon','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('rating_icon')}-->><!--<lang package='Template'>-->等级图标<!--</lang>--></a></th>
+							<th width="160px"><a href="javascript:sortBy('rating_nikename','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('rating_nikename')}-->><!--<lang package='Template'>-->等级昵称<!--</lang>--></a></th>
+							<th><a href="javascript:sortBy('ratinggroup_id','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('ratinggroup_id')}-->><!--<lang package='Template'>-->等级分组<!--</lang>--></a></th>
+							<th width="100px"><a href="javascript:sortBy('ratinggroup_id','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('ratinggroup_id')}-->><!--<lang package='Template'>-->开始积分<!--</lang>--></a></th>
+							<th width="100px"><a href="javascript:sortBy('ratinggroup_id','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('ratinggroup_id')}-->><!--<lang package='Template'>-->结束积分<!--</lang>--></a></th>
+							<!--{ifQ+C('APP_DEVELOP')}-->
+							<th width="50px"><!--<lang package='Template'>-->操作<!--</lang>--></th>
+							<!--{/if}-->
+						</tr>
+					</thead>
+					<tbody>
+						<!--{if !empty($arrLists)}-->
+						<!--<foreach for=arrLists>-->
+						<tr id="datalist-<!--{$value.rating_id}-->">
+							<td><input type="checkbox" name="key" value="<!--{$value.rating_id}-->" <!--{if $TheController->is_system_rating($value['rating_id'])}-->disabled="disabled"<!--{/if}-->></td>
+							<td><!--{$value.rating_id}--></td>
+							<td><a href="javascript:edit('<!--{$value.rating_id}-->')"><!--{$value.rating_name}--></a>
+								<!--{ifQ+C('APP_DEVELOP')}-->
+								<div class="row-actions">
+									<span class='edit'><a href="javascript:edit('<!--{$value.rating_id}-->')"><!--<lang package='Template'>-->编辑<!--</lang>--></a>|</span>
+									<span class='delete'><a href="javascript:foreverdel('<!--{$value.rating_id}-->');"><!--<lang package='Template'>-->删除<!--</lang>--></a></span>
+								</div>
+								<!--{/if}-->
+							</td>
+							<td><img src="<!--{:__PUBLIC__}-->/images/rating/<!--{$GLOBALS['_option_']['rating_icontype']}-->/<!--{$value.rating_icon}-->"/></td>
+							<td><!--{if $value['rating_nikename']}--><!--{$value.rating_nikename}--><!--{d*else}--><!--<lang package='Template'>-->未设定<!--</lang>--><!--{/if}--></td>
+							<td><!--<if condition="!empty($value['ratinggroup_name'])">--><a href="<!--{:Q::U('rating/index?ratinggroup_id='.$value['ratinggroup_id'].'&sort_=asc')}-->"><!--{$value['ratinggroup_title']}-->-<!--{$value['ratinggroup_name']}--></a><!--<else/>--><!--<lang package='Template'>-->未分组<!--</lang>--><!--</if>--></td>
+							<td class="pointer" title="<!--<lang package='Template'>-->点击修改数据<!--</lang>-->" id="rating_creditstart_<!--{$value.rating_id}-->" onClick="clickToInput('rating_creditstart','<!--{$value.rating_id}-->')"><!--{$value.rating_creditstart}--></td>
+							<td class="pointer" title="<!--<lang package='Template'>-->点击修改数据<!--</lang>-->" id="rating_creditend_<!--{$value.rating_id}-->" onClick="clickToInput('rating_creditend','<!--{$value.rating_id}-->')"><!--{$value.rating_creditend}--></td>
+							<!--{ifQ+C('APP_DEVELOP')}-->
+							<td><a href="javascript:edit('<!--{$value.rating_id}-->')"><input type="image" src="<!--{:At::path('icn_edit.png')}-->" title="<!--<lang package='Template'>-->编辑<!--</lang>-->"></a></td>
+							<!--{/if}-->
+						</tr>
+						<!--</foreach>-->
+						<!--{d*else}-->
+						<tr>
+							<td colspan="<!--{ifQ+C('APP_DEVELOP')}-->9<!--{d*else}-->8<!--{/if}-->"><!--<lang package='Template'>-->暂时没有发现任何记录<!--</lang>--></td>
+						</tr>
+						<!--{/if}-->
+					</tbody>
+				</table>
+			</div>
+
+			<div class="module_content operate_box">
+				<div class="left">
+					<!--{$sPageNavbar}-->
+				</div>
+				<!--{ifQ+C('APP_DEVELOP')}-->
+				<div class="right operate" style="text-align:right;width:450px;">
+					<input type="button" name="add" value="<!--<lang package='Template'>-->新增<!--</lang>-->" onclick="add()" class="alt_btn">&nbsp;
+					<input type="button" name="edit" value="<!--<lang package='Template'>-->编辑<!--</lang>-->" onclick="edit()" class="alt_btn">&nbsp;
+					<input type="button" name="delete" value="<!--<lang package='Template'>-->删除<!--</lang>-->" onclick="foreverdel()" class="alt_btn">&nbsp;
+					<select name="ratinggroup" id="ratinggroup" onChange="changeRatinggroup(this);">
+						<option value="0">-<!--<lang package='Template'>-->移动级别分组<!--</lang>-->-</option>
+						<!--<volist name="arrRatinggroup" id="value">-->
+						<option value="<!--{$value['ratinggroup_id']}-->" <!--{if isset($_GET['ratinggroup_id']) && ($_GET['ratinggroup_id']===$value['ratinggroup_id'] || (!$_GET['ratinggroup_id']) && !$value['ratinggroup_id'])}-->selected<!--{/if}-->><!--{$value['ratinggroup_title']}--></option>
+						<!--</volist>-->
+					</select>
+				</div>
+				<!--{/if}-->
+				<div class="clearfix"></div>
+			</div>
+		</article>
+
+<!--<include file="public+footer">-->

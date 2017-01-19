@@ -1,0 +1,185 @@
+<!--<include file="public+header" />-->
+
+<script type="text/javascript" src="<!--{:__PUBLIC__}-->/js/bigcolorpicker/js/jquery.bigcolorpicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="<!--{:__PUBLIC__}-->/js/bigcolorpicker/css/jquery.bigcolorpicker.css"/>
+
+<!--{script}-->
+function option(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'update...' );
+	$("#submit_button").attr("disabled", false);
+	$('.validate')(0).submit();
+}
+
+$(function(){
+	$("img[f='color-img']").bigColorpicker(function(el,color){
+		var id=$(el).attr("data-target");
+		$("#"+id).val(color);
+		$("#"+id).css({"color":color});
+	});
+});
+
+checkForm(option);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->上传设置<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->上传设置<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->上传设置<!--</lang>--></h3>
+				<ul class="tabs">
+					<li class="active"><a href="<!--{:Q::U('uploadoption/index')}-->"><!--<lang package='Template'>-->基本设置<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('uploadoption/avatar')}-->"><!--<lang package='Template'>-->头像设置<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('uploadoption/show')}-->"><!--<lang package='Template'>-->媒体显示<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('uploadoption/ubb')}-->"><!--<lang package='Template'>-->Ubb设置<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('uploadoption/attachment')}-->"><!--<lang package='Template'>-->相册<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="<!--{:Q::U('uploadoption/update_option')}-->" method="post" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="disallowed_register"><!--<lang package='Template'>-->附件存放方式<!--</lang>--></label>
+						<select name="options[upload_store_type]">
+						<option value="" <!--<if condition="$arrOptions['upload_store_type']==''">-->selected='selected'<!--</if>-->><!--<lang package='Template'>-->同一文件夹<!--</lang>--></option>
+						<option value="month" <!--<if condition="$arrOptions['upload_store_type']=='month'">-->selected='selected'<!--</if>-->><!--<lang package='Template'>-->按月归档<!--</lang>--></option>
+						<option value="day" <!--<if condition="$arrOptions['upload_store_type']=='day'">-->selected='selected'<!--</if>-->><!--<lang package='Template'>-->按天归档<!--</lang>--></option>
+						</select>
+						<div class="description"><!--<lang package='Template'>-->可以根据站点的繁忙程度进行设置<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="uploadfile_maxsize"><!--<lang package='Template'>-->附件最大上传限制(B)<!--</lang>-->&nbsp;(<!--<lang package='Template'>-->当前最大上传尺寸<!--</lang>--> <!--{:C::changeFileSize($nUploadSize)}-->)</label>
+						<input type="text" name="options[uploadfile_maxsize]" id="uploadfile_maxsize" size="60" value="<!--{$arrOptions['uploadfile_maxsize']}-->" class="{required:true,ints:true,min: -1}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->系统最大附件上传大小，单位为B，-1表示不限制<!--</lang>--> <br/>
+						<!--<lang package='Template'>-->服务器最大上传值<!--</lang>--> <!--{$nUploadMaxFilesize}--> (<!--{$nUploadMaxFilesize*1048576}-->B) <!--<lang package='Template'>-->请注意最好不要超过这个值，否则不会有任何效果<!--</lang>-->
+						</div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="upload_file_mode"><!--<lang package='Template'>-->附件上传方式<!--</lang>--></label>
+						<input type="radio" id="upload_file_mode" name="options[upload_file_mode]" value="0" <!--{if $arrOptions['upload_file_mode']==0}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->Flash 批量上传<!--</lang>-->
+						<input type="radio" id="" name="options[upload_file_mode]" value="1" <!--{if $arrOptions['upload_file_mode']==1}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->传统表单<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->两种上传方式，一种是Flash批量上传，一种是传统上传方式<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="upload_allowed_type"><!--<lang package='Template'>-->全站附件允许上传格式<!--</lang>--></label>
+						<input type="text" name="options[upload_allowed_type]" id="upload_allowed_type" size="60" value="<!--{$arrOptions['upload_allowed_type']}-->"/>
+						<div class="description"><!--<lang package='Template'>-->全站允许的附件格式，用|分割，例如jpg|jpeg|gif|mp3<!--</lang>-->
+						</div>
+					</fieldset>
+					<fieldset>
+						<label for="upload_input_num"><!--<lang package='Template'>-->传统表单上传方式INPUT数量<!--</lang>--></label>
+						<input type="text" name="options[upload_input_num]" id="upload_input_num" size="60" value="<!--{$arrOptions['upload_input_num']}-->" class="{required:true,digits:true,min: 10,max:100}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->传统表单上传方式的文件表单域数量<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="upload_isauto"><!--<lang package='Template'>-->附件是否自动上传<!--</lang>--></label>
+						<input type="radio" id="upload_isauto" name="options[upload_isauto]" value="1" <!--{if $arrOptions['upload_isauto']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[upload_isauto]" value="0" <!--{if $arrOptions['upload_isauto']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->开启了附件功能自动上传，FLASH上传的时候选中后直接上传<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="upload_flash_limit"><!--<lang package='Template'>-->FLASH每次上传数量<!--</lang>--></label>
+						<input type="text" name="options[upload_flash_limit]" id="upload_flash_limit" size="60" value="<!--{$arrOptions['upload_flash_limit']}-->" class="{required:true,digits:true,min: 10,max:300}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->FLASH上传每次最大上传输量<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="upload_create_thumb"><!--<lang package='Template'>-->附件是否开启缩略图<!--</lang>--></label>
+						<input type="radio" id="upload_create_thumb" name="options[upload_create_thumb]" value="1" <!--{if $arrOptions['upload_create_thumb']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[upload_create_thumb]" value="0" <!--{if $arrOptions['upload_create_thumb']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->生成缩略图可以减少图片加载速度，当然也占用了服务器空间<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="upload_thumb_size"><!--<lang package='Template'>-->附件缩略图大小<!--</lang>--></label>
+						<input type="text" name="options[upload_thumb_size]" id="upload_thumb_size" size="60" value="<!--{$arrOptions['upload_thumb_size']}-->"/>
+						<div class="description"><!--<lang package='Template'>-->系统缩略图大小，用|分割，例如500|500<!--</lang>-->
+						</div>
+					</fieldset>
+					<fieldset>
+						<label for="upload_is_watermark"><!--<lang package='Template'>-->附件是否开启水印<!--</lang>--></label>
+						<input type="radio" id="upload_is_watermark" name="options[upload_is_watermark]" value="1" <!--{if $arrOptions['upload_is_watermark']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[upload_is_watermark]" value="0" <!--{if $arrOptions['upload_is_watermark']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->水印虽然能够保护版权，但同时将会损害图片品质，建议关闭水印<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="upload_images_watertype"><!--<lang package='Template'>-->附件水印格式<!--</lang>--></label>
+						<input type="radio" id="upload_images_watertype" name="options[upload_images_watertype]" value="img" <!--{if $arrOptions['upload_images_watertype']=='img'}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->图片<!--</lang>-->
+						<input type="radio" id="" name="options[upload_images_watertype]" value="text" <!--{if $arrOptions['upload_images_watertype']=='text'}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->文字<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->一种图片水印，一种文字水印<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="upload_imageswater_position"><!--<lang package='Template'>-->附件水印位置<!--</lang>--></label>
+						<select name="options[upload_imageswater_position]">
+							<option value="0" <!--{if $arrOptions['upload_imageswater_position']==0}-->selected='selected'<!--{/if}-->><!--<lang package='Template'>-->随机添加<!--</lang>--></option>
+							<option value="1" <!--{if $arrOptions['upload_imageswater_position']==1}-->selected='selected'<!--{/if}-->><!--<lang package='Template'>-->顶端居左<!--</lang>--></option>
+							<option value="2" <!--{if $arrOptions['upload_imageswater_position']==2}-->selected='selected'<!--{/if}-->><!--<lang package='Template'>-->顶端居中<!--</lang>--></option>
+							<option value="3" <!--{if $arrOptions['upload_imageswater_position']==3}-->selected='selected'<!--{/if}-->><!--<lang package='Template'>-->顶端居右<!--</lang>--></option>
+							<option value="4" <!--{if $arrOptions['upload_imageswater_position']==4}-->selected='selected'<!--{/if}-->><!--<lang package='Template'>-->中部居左<!--</lang>--></option>
+							<option value="5" <!--{if $arrOptions['upload_imageswater_position']==5}-->selected='selected'<!--{/if}-->><!--<lang package='Template'>-->中部居中<!--</lang>--></option>
+							<option value="6" <!--{if $arrOptions['upload_imageswater_position']==6}-->selected='selected'<!--{/if}-->><!--<lang package='Template'>-->中部居右<!--</lang>--></option>
+							<option value="7" <!--{if $arrOptions['upload_imageswater_position']==7}-->selected='selected'<!--{/if}-->><!--<lang package='Template'>-->底端居左<!--</lang>--></option>
+							<option value="8" <!--{if $arrOptions['upload_imageswater_position']==8}-->selected='selected'<!--{/if}-->><!--<lang package='Template'>-->底端居中<!--</lang>--></option>
+							<option value="9" <!--{if $arrOptions['upload_imageswater_position']==9}-->selected='selected'<!--{/if}-->><!--<lang package='Template'>-->底端居右<!--</lang>--></option>
+						</select>
+						<div class="description"><!--<lang package='Template'>-->根据你的喜好设置水印的位置，建议右下角<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="upload_imageswater_offset"><!--<lang package='Template'>-->水印位置偏移量<!--</lang>--></label>
+						<input type="text" name="options[upload_imageswater_offset]" id="upload_imageswater_offset" size="60" value="<!--{$arrOptions['upload_imageswater_offset']}-->" class="{required:true,digits:true,min: 0}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->能够更加精确地控制水印图片的位置<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="upload_watermark_imgurl"><!--<lang package='Template'>-->水印图片路径<!--</lang>--></label>
+						<input type="text" name="options[upload_watermark_imgurl]" id="upload_watermark_imgurl" size="60" value="<!--{$arrOptions['upload_watermark_imgurl']}-->"/>
+						<div class="description"><!--<lang package='Template'>-->请填写一个水印图片的绝对路径<!--</lang>-->
+						</div>
+					</fieldset>
+					<fieldset>
+						<label for="upload_imageswater_text"><!--<lang package='Template'>-->水印文字内容<!--</lang>--></label>
+						<input type="text" name="options[upload_imageswater_text]" id="upload_imageswater_text" size="60" value="<!--{$arrOptions['upload_imageswater_text']}-->"/>
+						<div class="description"><!--<lang package='Template'>-->文字水印的内容<!--</lang>-->
+						</div>
+					</fieldset>
+					<fieldset>
+						<label for="upload_imageswater_textcolor"><!--<lang package='Template'>-->水印文字颜色<!--</lang>--></label>
+						<p><input class="left" type="text" name="options[upload_imageswater_textcolor]" id="upload_imageswater_textcolor" size="60" value="<!--{$arrOptions['upload_imageswater_textcolor']}-->" style="color:<!--{$arrOptions['upload_imageswater_textcolor']}-->"/>
+							<img src='<!--{:__PUBLIC__}-->/images/common/ico_color.gif' align='absmiddle' border='0' f="color-img" data-target="upload_imageswater_textcolor"/>
+						</p>
+						<div class="description"><!--<lang package='Template'>-->文字水印的文字颜色<!--</lang>-->
+						</div>
+					</fieldset>
+					<fieldset>
+						<label for="upload_imageswater_textfontsize"><!--<lang package='Template'>-->水印文字大小<!--</lang>--></label>
+						<input type="text" name="options[upload_imageswater_textfontsize]" id="upload_imageswater_textfontsize" size="60" value="<!--{$arrOptions['upload_imageswater_textfontsize']}-->" class="{required:true,digits:true,min: 5,max:100}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->文字水印的文字大小<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="upload_imageswater_textfontpath"><!--<lang package='Template'>-->水印文字字体路径<!--</lang>--></label>
+						<input type="text" name="options[upload_imageswater_textfontpath]" id="upload_imageswater_textfontpath" size="60" value="<!--{$arrOptions['upload_imageswater_textfontpath']}-->"/>
+						<div class="description"><!--<lang package='Template'>-->不填则默认为Window 字体目录，填写framework-font将会加载框架内部字体<!--</lang>-->
+						</div>
+					</fieldset>
+					<fieldset>
+						<label for="upload_imageswater_textfonttype"><!--<lang package='Template'>-->水印文字字体<!--</lang>--></label>
+						<input type="text" name="options[upload_imageswater_textfonttype]" id="upload_imageswater_textfonttype" size="60" value="<!--{$arrOptions['upload_imageswater_textfonttype']}-->"/>
+						<div class="description"><!--<lang package='Template'>-->不填则默认为FetteSteinschrift.ttf<!--</lang>-->
+						</div>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input id="submit_button" type="submit" class="alt_btn" value="<!--<lang package='Template'>-->发布<!--</lang>-->" />
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->" />
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

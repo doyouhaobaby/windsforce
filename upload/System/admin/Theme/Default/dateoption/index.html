@@ -1,0 +1,59 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+function option(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'update...' );
+	$("#submit_button").attr("disabled", false);
+	$('.validate')(0).submit();
+}
+
+checkForm(option);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->时间设置<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->时间设置<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->时间设置<!--</lang>--></h3>
+			</header>
+			<form action="<!--{:Q::U('dateoption/update_option')}-->" method="post" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="time_format"><!--<lang package='Template'>-->默认日期格式<!--</lang>--></label>
+						<input type="text" name="options[time_format]" id="uploadfile_maxsize" size="60" value="<!--{$arrOptions['time_format']}-->" required/>
+						<div class="description input_tips"><!--<lang package='Template'>-->这里为PHP的格式化时间，如Y-m-d H:i:s<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="date_convert"><!--<lang package='Template'>-->人性化时间格式<!--</lang>--></label>
+						<input type="radio" id="date_convert" name="options[date_convert]" value="1" <!--{if $arrOptions['date_convert']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[date_convert]" value="0" <!--{if $arrOptions['date_convert']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->选择“是”，站点中的时间将显示以“n分钟前”、“n小时前”等形式显示<!--</lang>-->
+						</div>
+					</fieldset>
+					<fieldset>
+						<label for="timeoffset"><!--<lang package='Template'>-->时区<!--</lang>--></label>
+						<select name="options[timeoffset]">
+						<!--<foreach for=arrTimezones value=sTimezones>-->
+						<option value="<!--{$sTimezones}-->" <!--<if condition="$sTimezones==$arrOptions['timeoffset']">-->selected="selected"<!--</if>-->><!--{$sTimezones}--></option>
+						<!--</foreach>-->
+						</select>
+						<div class="description"><!--<lang package='Template'>-->系统默认时区设置，时区影响数据发布的日期<!--</lang>--><br/>
+						<!--<lang package='Template'>-->时区修改后，系统会自动更新应用的配置，以完成系统时区变更<!--</lang>--></div>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input id="submit_button" type="submit" class="alt_btn" value="<!--<lang package='Template'>-->发布<!--</lang>-->" />
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->" />
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

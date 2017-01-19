@@ -1,0 +1,59 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('home://spaceadmin/index')}-->"><!--<lang package='Template'>-->用户资料<!--</lang>--></a> <span class="divider">/</span></li>
+			<li><!--<lang package='Template'>-->系统积分记录<!--</lang>--></li>
+		</ul>
+	</div>
+		
+	<div class="container_12 container_box">
+		<!--<include file="spaceadmin+menu" />-->
+		
+		<div class="grid_12">
+			<!--<include file="spaceadmin+ratingmenu" />-->
+				
+			<div class="nav_tabcontainer nav_pills">
+				<ul>
+					<li><a href="<!--{:Q::U('home://spaceadmin/creditlog')}-->"><!--<lang package='Template'>-->积分收益<!--</lang>--></a></li>
+					<li class="active"><a href="<!--{:Q::U('home://spaceadmin/creditrulelog')}-->"><!--<lang package='Template'>-->系统奖励<!--</lang>--></a></li>
+				</ul>
+			</div>
+
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th><!--<lang package='Template'>-->动作名称<!--</lang>--></th>
+						<th><!--<lang package='Template'>-->总次数<!--</lang>--></th>
+						<th><!--<lang package='Template'>-->周期次数<!--</lang>--></th>
+						<!--<foreach for=arrAvailableExtendCredits value=arrAvailableExtendCredit>-->
+						<th><!--{$arrAvailableExtendCredit['title']}--></th>
+						<!--</foreach>-->
+						<th><!--<lang package='Template'>-->最后奖励时间<!--</lang>--></th>
+					</tr>
+				</thead>
+				<tbody>
+					<!--{if !empty($arrCreditrulelogs)}-->
+					<!--<foreach for=arrCreditrulelogs value=arrCreditrulelog>-->
+					<tr>
+						<td><!--{$arrCreditrulelog['creditrule_name']}--></td>
+						<td><!--{$arrCreditrulelog['creditrulelog_total']}--></td>
+						<td><!--{$arrCreditrulelog['creditrulelog_cyclenum']}--></td>
+						<!--<foreach for=arrAvailableExtendCredits key=nAvailableExtendCredit>-->
+						<td><!--{$arrCreditrulelog['creditrulelog_extendcredit'.$nAvailableExtendCredit]}--></td>
+						<!--</foreach>-->
+						<td><!--{$arrCreditrulelog['update_dateline']|Core_Extend+timeFormat}--></td>
+					</tr>
+					<!--</foreach>-->
+					<!--{d*else}-->
+					<tr>
+						<td colspan="7"><!--<lang package='Template'>-->暂时没有发现任何系统奖励<!--</lang>--></td>
+					</tr>
+					<!--{/if}-->
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

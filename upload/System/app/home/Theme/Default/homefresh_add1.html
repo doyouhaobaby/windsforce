@@ -1,0 +1,132 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{:Core_Extend::editorInclude()}-->
+<!--{:Core_Extend::emotion()}-->
+<!--{:Core_Extend::validate()}-->
+
+<!--{script}-->
+$(function(){
+	editor=loadEditorThin('homefresh_message');
+	$(".homefresh-face-icon").jqfaceedit({txtAreaObj:editor,containerObj:$('#emotion_parentcontainer'),top:25,left:-27});
+});
+
+function addHomefresh(){
+	$('#homefresh_message').val(editor.html());
+	if($('#homefresh_message').val()==''){
+		windsforceAlert('<!--<lang package='Template'>-->新鲜事内容不能为空<!--</lang>-->','',3);
+		return false;
+	}
+	
+	$("#submit_button").attr("disabled","disabled");
+	$("#submit_button").val('<!--{if isset($arrHomefresh)}--><!--<lang package='__COMMON_LANG__@Common'>-->更新<!--</lang>--><!--{d*else}--><!--<lang package='__COMMON_LANG__@Common'>-->发布<!--</lang>--><!--{/if}-->...');
+	Q.AjaxSubmit('homefreshAdd','<!--{:Q::U('home://ucenter/'.(isset($arrHomefresh)?'update_homefresh':'add_homefresh'))}-->','',function(data,status){ 
+		$("#submit_button").attr("disabled",false);
+		$("#submit_button").val("<!--{if isset($arrHomefresh)}--><!--<lang package='__COMMON_LANG__@Common'>-->更新<!--</lang>--><!--{d*else}--><!--<lang package='__COMMON_LANG__@Common'>-->发布<!--</lang>--><!--{/if}-->");
+		if(status==1){
+			setTimeout(function(){window.location.replace(data.url);},1000);
+		}
+	});
+}
+
+function showHomefreshtitle(){
+	$('#homefresh-title-box').toggle('fast');
+}
+
+var oEditNewhomefreshtopic='';
+function addHomefreshtopic(){
+	oEditNewhomefreshtopic=windsforceAjax(Q.U('home://ucenter/homefreshtopic'),'<!--<lang package='Template'>-->插入话题<!--</lang>-->','','','',500,100,'',0,1);
+}
+
+function insertHomefreshtopic(sContent){
+	addEditorContent(editor,sContent);
+	oEditNewhomefreshtopic.close();
+}
+
+function insertHomefreshthumb(nAttachmentid){
+	insertAttachmentthumb('homefresh_thumb',nAttachmentid);
+}
+
+checkForm(addHomefresh);
+<!--{/script}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('home://ucenter/index')}-->"><!--<lang package='Template'>-->个人中心<!--</lang>--></a> <span class="divider">/</span></li>
+			<li><!--{if isset($arrHomefresh)}--><!--<lang package='Template'>-->编辑新鲜事<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->分享文字<!--</lang>--><!--{/if}--></li>
+		</ul>
+	</div>
+	
+	<div class="container_12 container_box">
+		<div class="grid_12">
+			<h2 style="font-size:30px;"><!--<lang package='Template'>-->分享文字<!--</lang>--></h2>
+			<div class="homefresh-box" style="margin-top:5px;">
+				<form method="post" id="homefreshAdd" name="homefreshAdd" class="validate">
+					<fieldset>
+						<div class="control-group">
+							<div class="controls">
+								<input type="text" name="homefresh_title" id="homefresh_title" value="<!--{if isset($arrHomefresh)}--><!--{$arrHomefresh['homefresh_title']}--><!--{/if}-->" style="width:546px;" class="{required:true}">
+								<p class="input_errortips"></p>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="pm_message"><!--<lang package='Template'>-->新鲜事内容<!--</lang>--><em class="red">*</em></label>
+							<div class="controls">
+								<div id="homefresh-media-box" class="common-media-box">
+									<a href="javascript:void(0);" class="homefresh-face-icon icon_add_face" ><!--<lang package='__COMMON_LANG__@Common'>-->表情<!--</lang>--></a> 
+									<a href="javascript:void(0);" onclick="addHomefreshtopic();" class="icon_add_topic"><!--<lang package='Template'>-->话题<!--</lang>--></a> 
+									<a href="javascript:void(0);" onclick="globalAddattachment('insertAttachment_');" class="icon_add_img"><!--<lang package='__COMMON_LANG__@Common'>-->媒体<!--</lang>--></a>
+									<a href="javascript:void(0);" onclick="addVideo('insertVideo_');" class="icon_add_video" ><!--<lang package='__COMMON_LANG__@Common'>-->视频<!--</lang>--></a>
+									<a href="javascript:void(0);" onclick="addMusic('insertMusic_');" class="icon_add_music"><!--<lang package='__COMMON_LANG__@Common'>-->音乐<!--</lang>--></a>
+								</div>
+								<div id="emotion_parentcontainer">
+									<textarea class="input-xlarge" name="homefresh_message" id="homefresh_message" rows="5" style="height:<!--{:Core_Extend::getEditor()}-->px;width:90%;"><!--{if isset($arrHomefresh)}--><!--{$arrHomefresh['homefresh_message']|htmlspecialchars}--><!--{/if}--></textarea>
+								</div>
+							</div>
+						</div>
+						<div class="control-group">
+							<table cellspacing="0" cellpadding="0">
+								<tr>
+									<td style="min-width:150px"><!--<lang package='Template'>-->文章分类<!--</lang>--></td>
+									<td><!--<lang package='Template'>-->缩略图<!--</lang>-->&nbsp;<span class="red" style="cursor:pointer;" onclick="$('#homefresh_thumb').val('');">x</span></td>
+								</tr>
+								<tr>
+									<td>
+										<select name="homefreshcategory_id" id="homefreshcategory_id" style="margin-top:10px;">
+											<option value="0">- <!--<lang package='Template'>-->选择分类<!--</lang>--> -</option>
+											<!--<foreach for=arrCategorys value=arrCategory>-->
+											<option value="<!--{$arrCategory['homefreshcategory_id']}-->" <!--{if isset($arrHomefresh) && $arrHomefresh['homefreshcategory_id']==$arrCategory['homefreshcategory_id']}-->selected<!--{/if}-->><!--{$arrCategory['homefreshcategory_name']}--></option>
+											<!--</foreach>-->
+										</select>
+									</td>
+									<td><input type="text" class="left" id="homefresh_thumb" name="homefresh_thumb" value="<!--{if isset($arrHomefresh)}--><!--{$arrHomefresh['homefresh_thumb']}--><!--{/if}-->" readonly/>&nbsp;<a href="javascript:void(0);" onclick="globalAddattachment('insertHomefreshthumb',1,1);" class="btn"><!--<lang package='__COMMON_LANG__@Common'>-->媒体<!--</lang>--></a>
+								</tr>
+							</table>
+						</div>
+						<!--{if $nDisplaySeccode==1}-->
+						<div class="control-group">
+							<label class="control-label" for="seccode"><!--<lang package='__COMMON_LANG__@Common'>-->验证码<!--</lang>--><em class="red">*</em></label>
+							<div class="controls">
+								<input name="seccode" id="seccode" type="text" class="input-small {required:true,remote:Q.U('home://public/validate_seccode'),messages:{remote:'<!--<lang package='__COMMON_LANG__@Common'>-->验证码错误<!--</lang>-->'}} left" value="">&nbsp;
+								<span class="validate_seccode"><span class="input_errortips"></span></span>
+								<p class="help-block" style="clear:both;padding-top:10px;"><span id="seccodeImage"><img style="cursor:pointer" onclick="updateSeccode()" src="<!--{:Q::U('home://public/seccode')}-->" /></span></p>
+							</div>
+						</div>
+						<!--{/if}-->
+						<div class="form-actions">
+							<input type="hidden" name="ajax" value="1">
+							<!--{if isset($arrHomefresh)}-->
+							<input type="hidden" name="homefresh_id" id="homefresh_id" value="<!--{$arrHomefresh['homefresh_id']}-->">
+							<!--{d*else}-->
+							<input type="hidden" name="homefresh_type" value="<!--{$nType}-->">
+							<!--{/if}-->
+							<input type="submit" class="btn" id="submit_button" value="<!--{if isset($arrHomefresh)}--><!--<lang package='__COMMON_LANG__@Common'>-->更新<!--</lang>--><!--{d*else}--><!--<lang package='__COMMON_LANG__@Common'>-->发布<!--</lang>--><!--{/if}-->">
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

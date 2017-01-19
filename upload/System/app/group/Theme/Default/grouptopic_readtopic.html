@@ -1,0 +1,22 @@
+<!--<include file="Core_Extend::template('cheader')" />-->
+
+<!--{style}-->
+html,body{background:none;}
+<!--{/style}-->
+
+	<h1><!--{$arrGrouptopic.grouptopic_title}--></h1>
+	<p>
+		<!--{if $arrGrouptopic['grouptopic_isshow']=='0'}-->
+		<div class="locked"><!--<lang package='Template'>-->本帖已经隐藏，仅具有管理权限的人才能够浏览<!--</lang>--></div>
+		<!--{/if}-->
+		
+		<!--{if $arrGrouptopic['grouptopic_onlycommentview']==1}-->
+		<div class="locked"><!--<lang package='Template'>-->本帖需要回复后才能够浏览<!--</lang>--></div>
+		<!--{/if}-->
+		
+		<!--{if ($arrGrouptopic['grouptopic_isshow']=='1' || ($arrGrouptopic['grouptopic_isshow']=='0' && Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic,array('group@grouptopicadmin@hidetopic')) && in_array(Groupadmin_Extend+getGroupUserrole($arrGrouptopic['group_id']),array(1,2,4)))) && ($arrGrouptopic['grouptopic_onlycommentview']=='0' || $bHavecomment===true)}-->
+		<!--{$arrGrouptopic['grouptopic_content']|Core_Extend+ubb=false}-->
+		<!--{/if}-->
+	</p>
+
+<!--<include file="Core_Extend::template('cfooter')" />-->

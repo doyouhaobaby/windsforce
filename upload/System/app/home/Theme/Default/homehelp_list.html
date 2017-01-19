@@ -1,0 +1,47 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='__COMMON_LANG__@Common'>-->帮助信息<!--</lang>--></li>
+		</ul>
+	</div>
+		
+	<div class="container_12 container_box">
+		<div class="grid_2">
+			<ul class="nav-list">
+				<li class="nav-header"><!--<lang package='__COMMON_LANG__@Common'>-->帮助信息<!--</lang>--></li>
+				<li <!--{if !$nCid}-->class="active"<!--{/if}-->><a href="<!--{:Q::U(Q::C('DEFAULT_APP').'://homehelp/index')}-->"><!--<lang package='__COMMON_LANG__@Common'>-->所有帮助<!--</lang>--></a></li>
+				<!--<foreach for=arrHomehelpcategorys value=oHomehelpcategory>-->
+				<li <!--{if $nCid==$oHomehelpcategory['homehelpcategory_id']}-->class="active"<!--{/if}-->><a href="<!--{:Q::U(Q::C('DEFAULT_APP').'://homehelp/index?cid='.$oHomehelpcategory['homehelpcategory_id'])}-->"><!--{$oHomehelpcategory['homehelpcategory_name']}--></a>
+				</li>
+				<!--</foreach>-->
+			</ul>
+		</div>
+
+		<div class="grid_10">
+			<!--{if !empty($arrHomehelps)}-->
+			<table class="table">
+				<thead>
+					<tr>
+						<th><!--<lang package='__COMMON_LANG__@Common'>-->帮助标题<!--</lang>--></th>
+						<th width="120px"><!--<lang package='__COMMON_LANG__@Common'>-->添加时间<!--</lang>--></th>
+					</tr>
+				</thead>
+				<tbody>
+					<!--<foreach for=arrHomehelps value=oHomehelp>-->
+					<tr>
+						<td>【<!--{if $oHomehelp['homehelpcategory_id']}--><a href="<!--{:Q::U(Q::C('DEFAULT_APP').'://homehelp/index?cid='.$oHomehelp['homehelpcategory_id'])}-->"><!--{$oHomehelp['homehelpcategory_name']}--></a><!--{d*else}--><!--<lang package='__COMMON_LANG__@Common'>-->未分类<!--</lang>--><!--{/if}-->】<a href="<!--{:Q::U(Q::C('DEFAULT_APP').'://help@?id='.$oHomehelp['homehelp_id'])}-->"><!--{$oHomehelp['homehelp_title']}--></a></td>
+						<td><!--{$oHomehelp['create_dateline']|Core_Extend+timeFormat}--></td>
+					</tr>
+					<!--</foreach>-->
+				</tbody>
+			</table>
+			<!--{/if}-->
+			
+			<!--{$sPageNavbar}-->
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

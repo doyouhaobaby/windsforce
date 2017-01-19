@@ -1,0 +1,61 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('home://spaceadmin/index')}-->"><!--<lang package='Template'>-->用户资料<!--</lang>--></a> <span class="divider">/</span></li>
+			<li><!--<lang package='Template'>-->积分记录<!--</lang>--></li>
+		</ul>
+	</div>
+		
+	<div class="container_12 container_box">
+		<!--<include file="spaceadmin+menu" />-->
+		
+		<div class="grid_12">
+			<!--<include file="spaceadmin+ratingmenu" />-->
+				
+			<div class="nav_tabcontainer nav_pills">
+				<ul>
+					<li class="active"><a href="<!--{:Q::U('home://spaceadmin/creditlog')}-->"><!--<lang package='Template'>-->积分收益<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('home://spaceadmin/creditrulelog')}-->"><!--<lang package='Template'>-->系统奖励<!--</lang>--></a></li>
+				</ul>
+			</div>
+
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th><!--<lang package='Template'>-->操作<!--</lang>--></th>
+						<th><!--<lang package='Template'>-->积分变更<!--</lang>--></th>
+						<th><!--<lang package='Template'>-->详情<!--</lang>--></th>
+						<th><!--<lang package='Template'>-->变更时间<!--</lang>--></th>
+					</tr>
+				</thead>
+				<tbody>
+					<!--{if is_array($arrCreditlogs)}-->
+					<!--<foreach for=arrCreditlogs value=arrCreditlog>-->
+					<tr>
+						<td><!--{$arrCreditlog['creditoperation_title']}--></td>
+						<td><!--<foreach for=arrAvailableExtendCredits key=nAvailableExtendCredit value=arrAvailableExtendCredit>-->
+							<!--{~$nCreditlogextcredits='creditlog_extcredits'.$nAvailableExtendCredit}-->
+							<!--{if $arrCreditlog[$nCreditlogextcredits]}-->
+							<!--{$arrAvailableExtendCredit['title']}-->&nbsp;<!--{if $arrCreditlog[$nCreditlogextcredits]>0}-->+<!--{/if}--><!--{$arrCreditlog['creditlog_extcredits'.$nAvailableExtendCredit]}-->&nbsp;&nbsp;
+							<!--{/if}-->
+							<!--</foreach>-->
+						</td>
+						<td><!--<lang package='Template'>-->与<!--</lang>-->&nbsp;<a href="<!--{:Q::U('home://space@?id='.$arrCreditlog['creditlog_relatedid'])}-->" target="_blank"><!--{$arrCreditlog['user_name']}--></a>&nbsp;<!--<lang package='Template'>-->进行<!--</lang>--><!--{$arrCreditlog['creditoperation_title']}--></td>
+						<td><!--{$arrCreditlog['create_dateline']|Core_Extend+timeFormat}--></td>
+					</tr>
+					<!--</foreach>-->
+					<!--{d*else}-->
+					<tr>
+						<td colspan="4"><!--<lang package='Template'>-->暂时没有发现任何积分记录<!--</lang>--></td>
+					</tr>
+					<!--{/if}-->
+				</tbody>
+			</table>
+
+			<!--{$sPageNavbar}-->
+		</div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

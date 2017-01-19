@@ -1,0 +1,11 @@
+	<!--<include file="grouptopicadmin+header" />-->
+
+<!--{~$sCalendarLang=Core_Extend::calendar()}-->
+
+		<p>
+			<input type="radio" class="input-short" name="up" value="1" checked><!--<lang package='Template'>-->提升主题<!--</lang>-->
+			<input type="text" name="time" id="time" value="<!--{:date('Y-m-d H:i:s',CURRENT_TIMESTAMP)}-->" onclick="WdatePicker({el:'time',skin:'ext',lang:'<!--{$sCalendarLang}-->',dateFmt:'yyyy-MM-dd HH:mm:ss'})" style="width:120px;"/>
+			<input type="radio" class="input-short" name="up" value="0" style="margin-top:10px;" <!--{if isset($nStatus) && $nStatus==0}-->checked<!--{/if}-->><!--<lang package='Template'>-->下沉主题<!--</lang>-->
+		</p>
+
+	<!--<include file="grouptopicadmin+footer" />-->

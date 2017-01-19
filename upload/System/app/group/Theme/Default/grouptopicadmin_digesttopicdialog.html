@@ -1,0 +1,12 @@
+	<!--<include file="grouptopicadmin+header" />-->
+		
+		<p>
+			<select name="status">
+				<option value="0"><!--<lang package='Template'>-->取消精华<!--</lang>--></option>
+				<!--<for start='1' end='4' var='nMyvalue'>-->
+				<option value="<!--{$nMyvalue}-->" <!--{if isset($nStatus) && $nStatus==$nMyvalue}-->selected<!--{/if}-->><!--<lang package='Template'>-->精华<!--</lang>-->&nbsp;<!--{$nMyvalue}--></option>
+				<!--</for>-->
+			</select>
+		</p>
+
+	<!--<include file="grouptopicadmin+footer" />-->

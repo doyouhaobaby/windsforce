@@ -1,0 +1,88 @@
+<script type="text/javascript" src="<!--{:__PUBLIC__}-->/js/artdialog/jquery.artDialog.min.js"></script>
+<script type="text/javascript" src="<!--{:__PUBLIC__}-->/js/artdialog/artDialog.plugins.min.js"></script>
+<script src="<!--{:__PUBLIC__}-->/js/common/top.js"></script>
+
+<!--{if $GLOBALS['___login___']!==false}-->
+<script src="<!--{:__PUBLIC__}-->/js/pm/pm.js" type="text/javascript"></script>
+<!--{~$sSoundOuturl=$GLOBALS['_option_']['pm_sound_out_url']?
+$GLOBALS['_option_']['pm_sound_out_url']:
+__PUBLIC__."/images/common/sound/pm_".$GLOBALS['_option_']['pm_sound_type'].".mp3"}-->
+<!--{script}-->
+getNewpms(<!--{$GLOBALS['___login___']['user_id']}-->);
+var pm_sound_on=<!--{$GLOBALS['_option_']['pm_sound_on']}-->;
+var sound_outurl='<!--{$sSoundOuturl}-->';
+getNewnotices(<!--{$GLOBALS['___login___']['user_id']}-->);
+<!--{/script}-->
+<!--{/if}-->
+
+<link rel="stylesheet" type="text/css" href="<!--{:__PUBLIC__}-->/js/jquery/hovercard/css/main.css"/>
+<script src="<!--{:__PUBLIC__}-->/js/jquery/hovercard/js/hoverCard.js"></script>
+<!--{script}-->
+$(document).ready(function(){
+	$(".bind_hover_card").hoverCard({
+		url:Q.U('home://misc/avatar'),
+		borederRadius:true,
+		errorText:"get avatar error"
+	});
+});
+<!--{/script}-->
+<script type="text/javascript" src="<!--{:__PUBLIC__}-->/js/editor/kindeditor/plugins/code/sh/sh.js"></script>
+<link rel="stylesheet" href="<!--{:__PUBLIC__}-->/js/editor/kindeditor/plugins/code/sh/styles/shCore.css">
+<link rel="stylesheet" href="<!--{:__PUBLIC__}-->/js/editor/kindeditor/plugins/code/sh/styles/shThemeDefault.css">
+<!--{if $GLOBALS['_option_']['js_lazyload_on']==1}-->
+<script src="<!--{:__PUBLIC__}-->/js/jquery/lazyload/jquery.lazyload.pack.js?v=1.5.0"></script>
+<!--{script}-->
+$(document).ready(function(){
+	$(".ubbmediabox_content img,.need_lazyload").lazyload({
+		placeholder: "<!--{:__PUBLIC__}-->/images/common/ajax/loading.gif",
+		effect: "fadeIn"
+	});
+});
+<!--{/script}-->
+<!--{/if}-->
+<!--{if $GLOBALS['_option_']['js_slimbox_on']==1}-->
+<link href="<!--{:__PUBLIC__}-->/js/highslide/highslide.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<!--{:__PUBLIC__}-->/js/highslide/highslide-with-gallery.min.js"></script>
+<!--{script}-->
+hs.graphicsDir="<!--{:__PUBLIC__}-->/js/highslide/graphics/"; 
+hs.showCredits = false; 
+hs.align = 'center';
+hs.transitions = ['expand', 'crossfade'];
+hs.outlineType = 'glossy-dark';
+hs.wrapperClassName = 'dark';
+hs.fadeInOut = true;
+hs.dimmingOpacity = 0.75;
+if(hs.addSlideshow) hs.addSlideshow({
+	interval: 5000,
+	repeat: false,
+	useControls: true,
+	fixedControls: 'fit',
+	overlayOptions: {
+		opacity: .6,
+		position: 'bottom center',
+		hideOnMouseOut: true
+	}
+});
+
+jQuery(function($){$("a[href$=jpg],a[href$=gif],a[href$=png],a[href$=jpeg],a[href$=bmp]").addClass("highslide").each(function(){this.onclick=function(){return hs.expand(this)}});})
+<!--{/script}-->
+<!--{/if}-->
+
+<link href="<!--{:__PUBLIC__}-->/js/jquery/qtip2/css/jquery.qtip.min.css" rel="stylesheet" />
+<script src="<!--{:__PUBLIC__}-->/js/jquery/qtip2/js/jquery.qtip.min.js"></script>
+<!--{script}-->
+$(function(){
+	$(".ubb_media_box img[tips],.ubb_media_box a[tips],.userrating_tips[tips],.need_tips[tips]").qtip({
+		content: {
+			attr: 'tips'
+		},
+		show: {event: 'mouseenter', solo: true },
+		position: {my: 'bottom left',at: 'top left'},
+		style: {classes: 'ui-tooltip-rlight ui-tooltip-shadow'},
+		hide: {event: 'mouseleave',delay: 1000}
+	});
+});
+<!--{/script}-->
+
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<script src="<!--{:__PUBLIC__}-->/js/jquery/jquery.myPagination.js"></script>
+<script src="<!--{:__PUBLIC__}-->/js/common/template.js"></script>
+<script src="<!--{:__APPPUB__}-->/Js/homefresh.js"></script>
+
+<!--{:Core_Extend::editorInclude()}-->
+<!--{:Core_Extend::emotion()}-->
+<!--{:Core_Extend::validate()}-->
+
+<!--{script}-->
+$(function(){
+	editor=loadEditorThin('homefresh_message');
+	$(".homefresh-face-icon").jqfaceedit({txtAreaObj:editor,containerObj:$('#emotion_parentcontainer'),top:25,left:-27});
+
+	var lastkey,_timer,_focus,msl_timer,cpage,pcount,skey,newsearch;
+	var msk=$("#music_search_key");
+	var msl=$("#music_search_list");
+	var mslu=$("#music_search_list ul");
+	var ms=$("#musicSearch");
+	var mlp=$("#music_list_pager");
+	var psize=8;
+
+	ms.hover(function(){
+		!msl_timer||clearTimeout(msl_timer);
+	},function(){
+		msl_timer=setTimeout(function(){
+			msl.hide();
+		},500);
+	});
+
+	msk.keyup(function(e){
+		skey=$(this).val();
+		if(e.keyCode=="27"||$(this).val()==''){
+			msl.hide();
+			clearTimeout(_timer);
+			return false;
+		};
+		
+		!_timer||clearTimeout(_timer);
+		
+		_timer=setTimeout(function(){
+			if(skey==lastkey){
+				if(!msl.is(":visible")){
+					msl.show()
+				}
+				return false;
+			};
+			if(skey==''){
+				newsearch=false;
+				return false;
+			};
+			newsearch=true;
+			lastkey=skey;
+			cpage=1;
+			search_music();
+		},500)
+	}).keydown(function(e){
+		skey=$(this).val();
+		if(skey==''&&skey==lastkey||e.keyCode=="13"){
+			cpage=1;
+			newsearch=true;
+			search_music();
+		}else{
+			newsearch=false;
+		}
+	}).live("click focus",function(){
+		if(!msl.is(":visible") && msk.val()!=''){
+			msl.show();
+		}
+	});
+	
+	function search_music(){
+		if(!cpage)cpage=1;
+		key = encodeURIComponent(skey);
+		var api = 'http://songs.sinaapp.com/search/key/'+ key +'/page/'+cpage;
+		$('#loadProcess').show();
+		$.ajax({
+			url:api,
+			dataType:"jsonp",
+			jsonp:"callback",
+			cache:false,
+			success:function(data){
+				if(newsearch){
+					pcount=parseInt(data["total"]);
+					show_pager();
+				}
+				console.log(data);
+				mslu.html(template("tmpl_music_lists",data));
+				msl.show();
+				$('#loadProcess').hide();
+				$(".music_list_li").each(function(){
+					$(this).click(function(){
+						temp=$(this).attr("data").split("|");
+						sid=temp[0];
+						aid=temp[1];
+						swfhtml = 'http://www.xiami.com/widget/0_' + temp[5] + '/singlePlayer.swf';
+						urlhtml = 'http://www.xiami.com/song/'+temp[5];
+						data = {type:"xiamisearch",title:temp[6],author:temp[4],artist:temp[2],id:swfhtml,url:urlhtml,img:temp[1]};
+						setHTML(data);
+						$('#homefresh_title').val(temp[6]+'-'+temp[4]);
+						msl.hide();
+					})
+				})
+			}
+		});
+	}
+
+	function show_pager(){
+		if(pcount< 1){
+			return false;
+		}
+		mlp.myPagination({
+			currPage:cpage,
+			pageCount:pcount,
+			pageSize:psize,
+			cssStyle: 'flickr',
+			info:{
+				msg_on:false,
+				pages:false,
+				first_on:false,
+				last_on:false
+			},
+			fun:function(currp){
+				cpage=currp;
+				search_music();
+			}
+		});
+	}
+});
+
+function addHomefresh(){
+	$('#homefresh_message').val(editor.html());
+	if($('#homefresh_message').val()==''){
+		windsforceAlert('<!--<lang package='Template'>-->新鲜事内容不能为空<!--</lang>-->','',3);
+		return false;
+	}
+
+	var umus = '';
+	$('#musicList .list').each(function(){umus+= $(this).attr('data')+'[WF]';});
+	if(umus==''){
+		windsforceAlert('<!--<lang package='Template'>-->发布列表为空<!--</lang>-->','',3);
+		return false; 
+	}
+	$('#urlmusic').val(umus);
+	
+	$("#submit_button").attr("disabled","disabled");
+	$("#submit_button").val('<!--<lang package='__COMMON_LANG__@Common'>-->发布<!--</lang>-->...');
+	Q.AjaxSubmit('homefreshAdd','<!--{:Q::U('home://ucenter/add_homefresh')}-->','',function(data,status){ 
+		$("#submit_button").attr("disabled",false);
+		$("#submit_button").val("<!--<lang package='__COMMON_LANG__@Common'>-->发布<!--</lang>-->");
+		if(status==1){
+			setTimeout(function(){window.location.replace(data.url);},1000);
+		}
+	});
+}
+
+function showHomefreshtitle(){
+	$('#homefresh-title-box').toggle('fast');
+}
+
+var oEditNewhomefreshtopic='';
+function addHomefreshtopic(){
+	oEditNewhomefreshtopic=windsforceAjax(Q.U('home://ucenter/homefreshtopic'),'<!--<lang package='Template'>-->插入话题<!--</lang>-->','','','',500,100,'',0,1);
+}
+
+function insertHomefreshtopic(sContent){
+	addEditorContent(editor,sContent);
+	oEditNewhomefreshtopic.close();
+}
+
+function musicMouse(thisa){
+	if($(thisa).val() == 'http://'){
+		$(thisa).val('');
+	}
+}
+
+function musicMosout(thisa,t){
+	if($(thisa).val() == '' && t=='u'){
+		$(thisa).val('http://');
+	}
+}
+
+function saveMusicList(){
+	var url = $('#musicurl').val();
+	if(url == 'http://'){ 
+		windsforceAlert('<!--<lang package='Template'>-->请填写一个引用地址<!--</lang>-->','',3);
+		return false;
+	}
+	
+	$('#musicFrom').disable();
+	$('#urlParseLoading').val('<!--<lang package='Template'>-->正在解析<!--</lang>-->...');
+
+	$.post(Q.U('home://ucenter/homefresh_parse?type=music'),{'url':url},function(result){
+		$('#musicFrom').enable();
+		$('#urlParseLoading').val('<!--<lang package='Template'>-->添加地址<!--</lang>-->');
+		
+		var data = eval("(" + result + ")");
+		if(data.error != undefined){ 
+			windsforceAlert(data.error,'',3);
+			return false;
+		}
+
+		data.url = url;
+		temp=data.title.split("-");
+		if(temp[0] != undefined){
+			data.title = temp[0];
+		}
+
+		if(temp[1] != undefined){
+			if(!data.author){
+				data.author = temp[1];
+			}
+		}else{
+			if(!data.author){
+				data.author='<!--<lang package='Template'>-->歌手<!--</lang>-->';
+			}
+		}
+
+		setHTML(data);
+		$('#homefresh_title').val(data.title);
+		$('#musicurl').val('http://');
+	})
+}
+
+function setHTML(r){
+	console.log(r);
+	if(!r.artist){
+		r.artist='<!--<lang package='Template'>-->艺术家<!--</lang>-->';
+	}
+	if(r.id == undefined){
+		r.id = r.pid; /*兼容*/
+	}
+	html = '<div class="list" data="'+r.type+'|'+r.img+'|'+r.id+'|'+r.title+'|'+r.url+'|'+r.artist+'|'+r.author+'">'+
+			'<li><img src="'+r.img+'" /></li>';
+	if(r.type =='xiamisearch'){
+		html += '<embed src="'+r.id+'" type="application/x-shockwave-flash" width="257" height="33" wmode="transparent"></embed>';	
+	}else{
+		html +=	'<li><input type="text" class="m_title" name="title_list[]" value="'+r.title+'"><br>'+
+			'<input type="text" class="m_author" name="author_list[]" value="'+r.author+'"><br>'+
+			'<input type="text" class="m_artist" name="artist_list[]" value="'+r.artist+'" /></li>';
+	}
+	html += '<div class="delete"><a href="javascript:void(0)" onclick="musicDItem(this)">x</a></div>'+
+			'<div class="clearfix"></div></div>';
+	$('#musicList').append(html);
+}
+
+function musicDItem(that){
+	$(that).parent().parent().remove();
+}
+
+function insertHomefreshthumb(nAttachmentid){
+	insertAttachmentthumb('homefresh_thumb',nAttachmentid);
+}
+
+checkForm(addHomefresh);
+<!--{/script}-->
+
+<script type="text/html" id="tmpl_music_lists">
+{each results as d i}
+<li class="music_list_li" data="{d.album_id}|{d.album_logo}|{decodeURI(d.album_name)}|{d.artist_id}|{decodeURI(d.artist_name)}|{d.song_id}|{decodeURI(d.song_name)}">
+	<span class="music_music_song">{decodeURI(d.song_name)}</span>
+	<span>-</span>
+	<span class="music_artist_name">{decodeURI(d.artist_name)}</span>
+	</li>
+{/each}
+</script>
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('home://ucenter/index')}-->"><!--<lang package='Template'>-->个人中心<!--</lang>--></a> <span class="divider">/</span></li>
+			<li><!--<lang package='Template'>-->分享音乐<!--</lang>--></li>
+		</ul>
+	</div>
+	
+	<div class="container_12 container_box">
+		<div class="grid_12">
+			<h2 style="font-size:30px;"><!--<lang package='Template'>-->分享音乐<!--</lang>--></h2>
+			<div class="homefresh-box" style="margin-top:5px;">
+				<form method="post" id="homefreshAdd" name="homefreshAdd" class="validate">
+					<div style="margin:15px 0;">
+						<div class="nav_tabcontainer nav_tab">
+							<ul class="need_clicktab">
+								<li class="active"><a href="javascript:void(0);"><!--<lang package='Template'>-->搜索音乐<!--</lang>--></a></li>
+								<li><a href="javascript:void(0);"><!--<lang package='Template'>-->引用地址<!--</lang>--></a></li>
+							</ul>
+						</div>
+						<div class="clearfix"></div>
+
+						<div id="needTabContent" class="tab-content">
+							<div class="tab-pane fade in active" id="searchmusic">
+								<div style="display:none" id="loadProcess"><img src="<!--{:__PUBLIC__}-->/images/common/ajax/loading.gif"/>&nbsp;<!--<lang package='Template'>-->正在搜索音乐<!--</lang>--></div>
+								<input name="music_search_key" id="music_search_key" autocomplete="off" class="musicurl" type="text" style="width:546px;">
+								<div style="display: none;" id="music_search_list">
+									<ul class="music_list">
+									</ul>
+									<div id="music_list_pager"></div>
+								</div>
+								<div class="clearfix"></div>
+								<div class="notice" style="margin-top:10px;">
+									<!--<lang package='Template'>-->输入歌曲名、专辑或演唱者<!--</lang>-->&nbsp;(<!--<lang package='Template'>-->搜索数据来自于<!--</lang>-->&nbsp;<a href="http://www.xiami.com" target="_blank"><!--<lang package='Template'>-->虾米音乐<!--</lang>--></a>)
+								</div>
+							</div>
+							<div class="tab-pane fade" id="musicaddress" style="display:none">
+								<input id="musicurl" value="http://" onfocus="musicMouse(this)" onblur="musicMosout(this,'u')" type="text" class="musicurl" style="display:inline;">&nbsp;
+								<input id="urlParseLoading" value="<!--<lang package='Template'>-->添加地址<!--</lang>-->" onclick="saveMusicList($('#musicurl').val())" class="mu_btn" type="button">
+								<div class="notice">
+									<!--<lang package='Template'>-->请输入音乐网站的播放页面地址,注意不是FLASH地址<!--</lang>-->&nbsp;(<!--<lang package='Template'>-->目前支持网站<!--</lang>-->&nbsp;<a href="http://www.yinyuetai.com" target="_blank"><!--<lang package='Template'>-->音悦台<!--</lang>--></a>)
+								</div>
+							</div>
+						</div>
+
+						<div id="musicList"></div>
+					</div>
+
+					<fieldset>
+						<div class="control-group">
+							<div class="controls">
+								<input type="text" name="homefresh_title" id="homefresh_title" value="" style="width:546px;" class="{required:true}">
+								<p class="input_errortips"></p>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="pm_message"><!--<lang package='Template'>-->新鲜事内容<!--</lang>--><em class="red">*</em></label>
+							<div class="controls">
+								<div id="homefresh-media-box" class="common-media-box">
+									<a href="javascript:void(0);" class="homefresh-face-icon icon_add_face" ><!--<lang package='__COMMON_LANG__@Common'>-->表情<!--</lang>--></a> 
+									<a href="javascript:void(0);" onclick="addHomefreshtopic();" class="icon_add_topic"><!--<lang package='Template'>-->话题<!--</lang>--></a> 
+									<a href="javascript:void(0);" onclick="globalAddattachment('insertAttachment_');" class="icon_add_img"><!--<lang package='__COMMON_LANG__@Common'>-->媒体<!--</lang>--></a>
+									<a href="javascript:void(0);" onclick="addVideo('insertVideo_');" class="icon_add_video" ><!--<lang package='__COMMON_LANG__@Common'>-->视频<!--</lang>--></a>
+									<a href="javascript:void(0);" onclick="addMusic('insertMusic_');" class="icon_add_music"><!--<lang package='__COMMON_LANG__@Common'>-->音乐<!--</lang>--></a>
+								</div>
+								<div id="emotion_parentcontainer">
+									<textarea class="input-xlarge" name="homefresh_message" id="homefresh_message" rows="5" style="height:<!--{:Core_Extend::getEditor()}-->px;width:90%;"></textarea>
+								</div>
+							</div>
+						</div>
+						<div class="control-group">
+							<table cellspacing="0" cellpadding="0">
+								<tr>
+									<td style="min-width:150px"><!--<lang package='Template'>-->文章分类<!--</lang>--></td>
+									<td><!--<lang package='Template'>-->缩略图<!--</lang>-->&nbsp;<span class="red" style="cursor:pointer;" onclick="$('#homefresh_thumb').val('');">x</span></td>
+								</tr>
+								<tr>
+									<td>
+										<select name="homefreshcategory_id" id="homefreshcategory_id" style="margin-top:10px;">
+											<option value="0">- <!--<lang package='Template'>-->选择分类<!--</lang>--> -</option>
+											<!--<foreach for=arrCategorys value=arrCategory>-->
+											<option value="<!--{$arrCategory['homefreshcategory_id']}-->"><!--{$arrCategory['homefreshcategory_name']}--></option>
+											<!--</foreach>-->
+										</select>
+									</td>
+									<td><input type="text" class="left" id="homefresh_thumb" name="homefresh_thumb" value="" readonly/>&nbsp;<a href="javascript:void(0);" onclick="globalAddattachment('insertHomefreshthumb',1,1);" class="btn"><!--<lang package='__COMMON_LANG__@Common'>-->媒体<!--</lang>--></a>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!--{if $nDisplaySeccode==1}-->
+						<div class="control-group">
+							<label class="control-label" for="seccode"><!--<lang package='__COMMON_LANG__@Common'>-->验证码<!--</lang>--><em class="red">*</em></label>
+							<div class="controls">
+								<input name="seccode" id="seccode" type="text" class="input-small {required:true,remote:Q.U('home://public/validate_seccode'),messages:{remote:'<!--<lang package='__COMMON_LANG__@Common'>-->验证码错误<!--</lang>-->'}} left" value="">&nbsp;
+								<span class="validate_seccode"><span class="input_errortips"></span></span>
+								<p class="help-block" style="clear:both;padding-top:10px;"><span id="seccodeImage"><img style="cursor:pointer" onclick="updateSeccode()" src="<!--{:Q::U('home://public/seccode')}-->" /></span></p>
+							</div>
+						</div>
+						<!--{/if}-->
+						<div class="form-actions">
+							<input type="hidden" name="ajax" value="1">
+							<input type="hidden" id="urlmusic" name="urlmusic" value="" />
+							<input type="hidden" name="homefresh_type" value="<!--{$nType}-->">
+							<input type="submit" class="btn" id="submit_button" value="<!--<lang package='__COMMON_LANG__@Common'>-->发布<!--</lang>-->">
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

@@ -1,0 +1,307 @@
+<!--<include file="grouptopic+viewheader" />-->
+
+<!--{script}-->
+$(function(){
+	$('.grouptopiccomment-content').emotionsToHtml();
+});
+<!--{/script}-->
+
+			<div class="grid_12">
+				<div class="floor floor_headerpost">
+					<table width="100%" class="floor_table" style="margin:12px 0px 5px 0px;">
+						<tr>
+							<td width="200px">
+								<div><a rel="nofollow" href="<!--{:Q::U('group://grouptopic/add?gid='.$arrGrouptopic['group_id'].($arrGrouptopic['grouptopiccategory_id']>0?'&cid='.$arrGrouptopic['grouptopiccategory_id']:''))}-->" class="btn"><!--<lang package='Template'>-->发帖<!--</lang>--></a>&nbsp;
+									<a rel="nofollow" href="<!--{:Q::U('group://grouptopic/reply?id='.$arrGrouptopic['grouptopic_id'])}-->" class="btn"><!--<lang package='Template'>-->回复<!--</lang>--></a>
+								</div>
+							</td>
+							<td style="text-align:right;float:right;line-height:20px;"><!--{$sPageNavbar}--></td>
+						</tr>
+					</table>
+				</div>
+				
+				<div id="grouptopicview_tip" class="grouptopicview_tip"></div>
+				
+				<div id="grouptopicview_list" class="grouptopicview_list">
+					<div id="grouptopicnew_show" class="grouptopicsnew">
+						<!--{if $nPage<2}-->
+						<div class="grouptopic">
+							<div class="infos">
+								<div class="right avatar_large">
+									<!--{if $arrGrouptopic['grouptopic_isanonymous']==1}-->
+									<!--{if Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic,array('group@grouptopicadmin@hidetopic'))}-->
+									<a href="<!--{:Q::U('group://space@?id='.$arrGrouptopic['user_id'])}-->"><!--<lang package='Template'>-->匿名<!--</lang>--></a><!--{d*else}--><!--<lang package='Template'>-->匿名<!--</lang>--><!--{/if}-->
+									<!--{d*else}-->
+									<a href="<!--{:Q::U('group://space@?id='.$arrGrouptopic['user_id'])}-->"><img alt="2" class="uface need_lazyload" src="<!--{:Core_Extend::avatar($arrGrouptopic['user_id'],'small')}-->" style="width:48px;height:48px;" style="padding:20px;" title="<!--{$arrGrouptopic['user_name']}--><!--{if $arrGrouptopic['user_nikename']}--> - <!--{$arrGrouptopic['user_nikename']}--><!--{/if}-->" /></a>
+									<!--{/if}-->
+								</div>
+								<h1 class="grouptopic-title">
+									<!--{if $arrGrouptopic['grouptopiccategory_id']>0}-->
+									<span class="floor_category Sys-special_color"><a href="<!--{:Group_Extend::getGroupurl($arrGroup,'&cid='.$arrGrouptopic['grouptopiccategory_id'])}-->" class="grouptopiccategory">[<!--{$arrGrouptopic['grouptopiccategory_name']}-->]</a>&nbsp;
+									</span>
+									<!--{/if}-->
+									<span title="<!--{$arrGrouptopic['grouptopic_title']}-->" class="grouptopic-titletext"><!--{$arrGrouptopic['grouptopic_title']|C+subString=0,40}--></span>&nbsp;
+									<!--{:Grouptopic_Extend::grouptopicClose($arrGrouptopic['grouptopic_isclose'],true)}-->
+									<span class="floor_copy" style="color:gray;font-size:13px;font-weight:normal;" title="<!--<lang package='Template'>-->复制此楼地址<!--</lang>-->" onclick="copy('<!--{$arrGrouptopic['grouptopic_title']}--> '+'\n'+'<!--{:Core_Extend::windsforceOuter('app=group&c=grouptopic&a=view&id='.$arrGrouptopic['grouptopic_id'])}-->','<!--<lang package='Template'>-->楼层复制成功<!--</lang>-->');">[<!--<lang package='Template'>-->复制链接<!--</lang>-->]</span>
+								</h1>
+								<div class="info">
+									<span>
+									<!--{if $arrGrouptopic['grouptopic_isanonymous']==1}-->
+									<!--{:Core_Extend::getUsericon(0)}-->&nbsp;<!--<lang package='Template'>-->匿名<!--</lang>-->
+									<!--{d*else}-->
+									<a href="<!--{:Q::U('group://space@?id='.$arrGrouptopic['user_id'])}-->"  class="bind_hover_card" bm_user_id="<!--{$arrGrouptopic['user_id']}-->"><!--{$arrGrouptopic['user_name']}--></a><!--{$arrGrouptopic|Core_Extend+getUseronlineicon}-->
+									<!--{/if}-->
+									&nbsp;<!--<lang package='Template'>-->发布于<!--</lang>-->&nbsp;<!--{$arrGrouptopic['create_dateline']|Core_Extend+timeFormat}--></span>
+									<span class="pipe">|</span>
+									<!--{$arrGrouptopic['grouptopic_views']}-->&nbsp;<!--<lang package='Template'>-->次阅读<!--</lang>-->
+									<span class="pipe">|</span>
+									<!--<lang package='Template'>-->回复<!--</lang>-->&nbsp;<em><!--{$arrGrouptopic['grouptopic_comments']}--></em>&nbsp;
+									<!--{:Grouptopic_Extend::grouptopicClose($arrGrouptopic['grouptopic_isclose'],true)}-->
+									<!--{:Grouptopic_Extend::grouptopicStick($arrGrouptopic['grouptopic_sticktopic'],true)}-->
+									<!--{:Grouptopic_Extend::grouptopicDigest($arrGrouptopic['grouptopic_addtodigest'],true)}-->
+									<!--{:Grouptopic_Extend::grouptopicRecommend($arrGrouptopic['grouptopic_isrecommend'],true)}-->
+									<!--{:Grouptopic_Extend::grouptopicHighlight($arrGrouptopic['grouptopic_color'],true)}-->
+									<!--{:Grouptopic_Extend::grouptopicThumb($arrGrouptopic['grouptopic_thumb'],true)}-->
+									<!--{:Grouptopic_Extend::grouptopicHot($arrGrouptopic['grouptopic_comments'],$arrGrouptopic['grouptopic_views'],true)}-->
+									<!--{:Core_Extend::newData($arrGrouptopic['create_dateline'],true)}-->
+								</div>
+							</div>
+
+							<div class="grouptopic-content">
+								<div class="grouptopiccontent_box">
+									<!--{if $arrGrouptopic['grouptopic_isshow']=='0'}-->
+									<div class="locked"><!--<lang package='Template'>-->本帖已经隐藏，仅具有管理权限的人才能够浏览<!--</lang>--></div>
+									<!--{/if}-->
+									
+									<!--{if $arrGrouptopic['grouptopic_onlycommentview']==1}-->
+									<div class="locked"><!--<lang package='Template'>-->本帖需要回复后才能够浏览<!--</lang>--></div>
+									<!--{/if}-->
+									
+									<!--{if ($arrGrouptopic['grouptopic_isshow']=='1' || ($arrGrouptopic['grouptopic_isshow']=='0' && Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic,array('group@grouptopicadmin@hidetopic')) && in_array(Groupadmin_Extend+getGroupUserrole($arrGrouptopic['group_id']),array(1,2,4)))) && ($arrGrouptopic['grouptopic_onlycommentview']=='0' || $bHavecomment===true)}-->
+									<!--{$arrGrouptopic['grouptopic_content']|Core_Extend+ubb=false}-->
+									<!--{/if}-->
+								</div>
+
+								<!--{if !empty($arrGrouptopictags)}-->
+								<div class="grouptopictag">
+									<!--<foreach for=arrGrouptopictags value=arrGrouptopictag>-->
+									<a title="<!--{$arrGrouptopictag['grouptopictag_name']}-->" href="<!--{:Q::U('group://tag/show?tag='.urlencode($arrGrouptopictag['grouptopictag_name']),array(),true)}-->" target="_blank" class="common_tag"><!--{$arrGrouptopictag['grouptopictag_name']}--></a><!--{if count($arrGrouptopictags)-1!=$key}-->,&nbsp;<!--{/if}-->
+									<!--</foreach>-->
+								</div>
+								<!--{/if}-->
+							</div>
+
+							<div class="love_tools clearfix">
+								<a href="javascript:void(0);" onclick="topicLove('<!--{$arrGrouptopic['grouptopic_id']}-->');" class="btn"><!--<lang package='Template'>-->喜欢<!--</lang>-->&nbsp;<!--{$arrGrouptopic['grouptopic_loves']}--></a>
+							</div>
+
+							<!--{if $GLOBALS['___login___']!==false && $arrGrouptopic['grouptopic_iscomment']==1 && $arrGrouptopic['grouptopic_isclose']=='0'}-->
+							<div class="floor_quickreply">
+								<textarea class="grouptopiccomment_quickmessage" name="grouptopiccomment_content" id="grouptopiccomment_quickmessage" placeholder="<!--<lang package='Template'>-->我也说两句<!--</lang>-->" rows="2" cols="10"></textarea>
+
+								<!--{if $nDisplaySeccode==1}-->
+								<div  id="seccode_box" class="none">
+									<p style="margin:10px 0px 5px 0;">
+										<label for="user_name"><!--<lang package='__COMMON_LANG__@Common'>-->验证码<!--</lang>--><span class="pipe">|</span><a href="javascript:void(0);" onclick="seccodeon(1);"><!--<lang package='__COMMON_LANG__@Common'>-->关闭<!--</lang>--></a></label>
+									</p>
+									<input name="grouptopiccomment_seccode" id="grouptopiccomment_seccode" type="text" class="input-small left" value="" onblur="checkSeccode(this.value,'grouptopiccomment_seccode');" style="width:60px;">&nbsp;
+									<span class="validate_seccode" id="grouptopiccomment_seccode"><span class="input_errortips"><label class=""></label></span></span>
+									<p class="help-block" style="clear:both;padding-top:10px;">
+										<span id="seccodeImage"><img style="cursor:pointer" onclick="updateSeccode()" src="<!--{:Q::U('home://public/seccode')}-->" /></span>
+									</p>
+								</div>
+								<!--{/if}-->
+								
+								<input type="hidden" name="grouptopiccomment_name" id="grouptopiccomment_name" value="<!--{$GLOBALS['___login___']['user_name']}-->" class="grouptopiccomment_name">
+								
+								<div class="grouptopiccomment_reply none" id="grouptopiccomment_reply">
+									<input type="button" onclick="addGrouptopiccommentquick();" class="btn grouptopiccomment_btn" id="grouptopiccommentquick_button" value="<!--<lang package='Template'>-->回复<!--</lang>-->" style="padding:2px 5px;" />
+									<a href="javascript:void(0);" onclick="closeQuickreplay();"><!--<lang package='Template'>-->关闭<!--</lang>--></a>
+									<!--{if $nDisplaySeccode==1}-->
+									<span class="pipe">|</span>
+									<a href="javascript:void(0);" onclick="seccodeon();"><!--<lang package='__COMMON_LANG__@Common'>-->验证码<!--</lang>--></a>
+									<!--{/if}-->
+									<span class="pipe">|</span>
+									<a href="<!--{:Q::U('group://grouptopic/reply?id='.$arrGrouptopic['grouptopic_id'])}-->" ><!--<lang package='Template'>-->进入高级模式<!--</lang>-->&gt;&gt;</a>
+								</div>
+							</div>
+							<!--{/if}-->
+
+							<div class="tips" style="margin:10px 0;">
+								<div class="right">
+									<!--{if $arrGrouptopic['grouptopic_comments'] && $arrGrouptopic['grouptopic_latestcomment']}-->
+									<!--{~$arrLatestComment=json_decode($arrGrouptopic['grouptopic_latestcomment'],true)}-->
+									<!--<lang package='Template'>-->最后由<!--</lang>-->&nbsp;<a href="<!--{:Q::U('group://space@?id='.$arrLatestComment['commentuserid'])}-->" class="bind_hover_card" bm_user_id="<!--{$arrLatestComment['commentuserid']}-->" ><!--{$arrLatestComment['commentusername']}--></a>&nbsp;<!--<lang package='Template'>-->于<!--</lang>-->&nbsp;<!--{$arrLatestComment['commenttime']|Core_Extend+timeFormat}-->&nbsp;<!--<lang package='Template'>-->回复<!--</lang>-->
+									<!--{d*else}-->
+									<span><!--<lang package='Template'>-->暂无回复<!--</lang>--></span>
+									<!--{/if}-->
+								</div>
+								<div>
+									<a href="<!--{:Q::U('group://grouptopic/printtable?id='.$arrGrouptopic['grouptopic_id'])}-->" title="<!--<lang package='Template'>-->打印<!--</lang>-->" target="_blank"><img src="<!--{:Appt::path('print.png')}-->" alt="<!--<lang package='Template'>-->打印<!--</lang>-->" class="vertical_middle" /></a>&nbsp;
+									<a href="<!--{:Q::U('group://grouptopic/prev?id='.$arrGrouptopic['grouptopic_id'])}-->" title="<!--<lang package='Template'>-->上一主题<!--</lang>-->"><img src="<!--{:Appt::path('topic_prev.png')}-->" alt="<!--<lang package='Template'>-->上一主题<!--</lang>-->" class="vertical_middle" /></a>&nbsp;
+									<a href="<!--{:Q::U('group://grouptopic/next?id='.$arrGrouptopic['grouptopic_id'])}-->" title="<!--<lang package='Template'>-->下一主题<!--</lang>-->"><img src="<!--{:Appt::path('topic_next.png')}-->" alt="<!--<lang package='Template'>-->下一主题<!--</lang>-->" class="vertical_middle" /></a>
+									<span class="pipe">|</span>
+									<a href="javascript:void(0);" onclick="readTopic('<!--{$arrGrouptopic['grouptopic_id']}-->');"><!--<lang package='Template'>-->阅读模式<!--</lang>--></a>
+								</div>
+							</div>
+
+							<!--{if $arrGrouptopic['user_sign']}-->
+							<div class="space"></div>
+							<div class="common_usersign" style="margin-top:20px;">
+								<!--{$arrGrouptopic['user_sign']|Core_Extend+usersign}-->
+							</div>
+							<!--{/if}-->
+
+							<div class="extend_tool" style="margin-top:10px;">
+								<div class="topic_share right">
+									<!--{:Core_Extend::share()}-->
+								</div>
+								<em>
+									<a class="fastre" href="javascript:void(0);" onclick="grouptopicComment('<!--{$arrGrouptopic['grouptopic_id']}-->');"><!--<lang package='Template'>-->回复<!--</lang>--></a>
+									<!--{if Groupadmin_Extend+checkTopicedit($arrGrouptopic)}-->
+									<a class="editp" href="<!--{:Q::U('group://grouptopic/edit?tid='.$arrGrouptopic['grouptopic_id'])}-->"><!--<lang package='Template'>-->编辑<!--</lang>--></a>
+									<!--{/if}-->
+								</em>
+							</div>
+							<span class="clear">&nbsp;</span>
+						</div>
+						<!--{d*else}-->
+						<div class="grouptopic">
+							<div class="infos" style="border-bottom:none;">
+								<div class="right avatar_large">
+									<!--{if $arrGrouptopic['grouptopic_isanonymous']==1}-->
+									<!--{if Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic,array('group@grouptopicadmin@hidetopic'))}-->
+									<a href="<!--{:Q::U('group://space@?id='.$arrGrouptopic['user_id'])}-->"><!--<lang package='Template'>-->匿名<!--</lang>--></a><!--{d*else}--><!--<lang package='Template'>-->匿名<!--</lang>--><!--{/if}-->
+									<!--{d*else}-->
+									<a href="<!--{:Q::U('group://space@?id='.$arrGrouptopic['user_id'])}-->"><img alt="2" class="uface need_lazyload" src="<!--{:Core_Extend::avatar($arrGrouptopic['user_id'],'small')}-->" style="width:48px;height:48px;" style="padding:20px;" title="<!--{$arrGrouptopic['user_name']}--><!--{if $arrGrouptopic['user_nikename']}--> - <!--{$arrGrouptopic['user_nikename']}--><!--{/if}-->" /></a>
+									<!--{/if}-->
+								</div>
+								<h1 class="grouptopic-title">
+									<!--{if $arrGrouptopic['grouptopiccategory_id']>0}-->
+									<span class="floor_category"><a href="<!--{:Group_Extend::getGroupurl($arrGroup,'&cid='.$arrGrouptopic['grouptopiccategory_id'])}-->" class="grouptopiccategory">[<!--{$arrGrouptopic['grouptopiccategory_name']}-->]</a>&nbsp;
+									</span>
+									<!--{/if}-->
+									<span title="<!--{$arrGrouptopic['grouptopic_title']}-->" class="grouptopic-titletext"><!--{$arrGrouptopic['grouptopic_title']|C+subString=0,40}--></span>&nbsp;
+									<!--{:Grouptopic_Extend::grouptopicClose($arrGrouptopic['grouptopic_isclose'],true)}-->
+									<span class="floor_copy" style="color:gray;font-size:13px;font-weight:normal;" title="<!--<lang package='Template'>-->复制此楼地址<!--</lang>-->" onclick="copy('<!--{$arrGrouptopic['grouptopic_title']}--> '+'\n'+'<!--{:Core_Extend::windsforceOuter('app=group&c=grouptopic&a=view&id='.$arrGrouptopic['grouptopic_id'])}-->','<!--<lang package='Template'>-->楼层复制成功<!--</lang>-->');">[<!--<lang package='Template'>-->复制链接<!--</lang>-->]</span>
+								</h1>
+								<div class="info">
+									<span>
+									<!--{if $arrGrouptopic['grouptopic_isanonymous']==1}-->
+									<!--{:Core_Extend::getUsericon(0)}-->&nbsp;<!--<lang package='Template'>-->匿名<!--</lang>-->
+									<!--{d*else}-->
+									<a href="<!--{:Q::U('group://space@?id='.$arrGrouptopic['user_id'])}-->"  class="bind_hover_card" bm_user_id="<!--{$arrGrouptopic['user_id']}-->"><!--{$arrGrouptopic['user_name']}--></a><!--{$arrGrouptopic|Core_Extend+getUseronlineicon}-->
+									<!--{/if}-->
+									&nbsp;<!--<lang package='Template'>-->发布于<!--</lang>-->&nbsp;<!--{$arrGrouptopic['create_dateline']|Core_Extend+timeFormat}--></span>
+									<span class="pipe">|</span>
+									<!--{$arrGrouptopic['grouptopic_views']}-->&nbsp;<!--<lang package='Template'>-->次阅读<!--</lang>-->
+									<span class="pipe">|</span>
+									<!--<lang package='Template'>-->回复<!--</lang>-->&nbsp;<em><!--{$arrGrouptopic['grouptopic_comments']}--></em>&nbsp;
+									<!--{:Grouptopic_Extend::grouptopicClose($arrGrouptopic['grouptopic_isclose'],true)}-->
+									<!--{:Grouptopic_Extend::grouptopicStick($arrGrouptopic['grouptopic_sticktopic'],true)}-->
+									<!--{:Grouptopic_Extend::grouptopicDigest($arrGrouptopic['grouptopic_addtodigest'],true)}-->
+									<!--{:Grouptopic_Extend::grouptopicRecommend($arrGrouptopic['grouptopic_isrecommend'],true)}-->
+									<!--{:Grouptopic_Extend::grouptopicHighlight($arrGrouptopic['grouptopic_color'],true)}-->
+									<!--{:Grouptopic_Extend::grouptopicThumb($arrGrouptopic['grouptopic_thumb'],true)}-->
+									<!--{:Grouptopic_Extend::grouptopicHot($arrGrouptopic['grouptopic_comments'],$arrGrouptopic['grouptopic_views'],true)}-->
+									<!--{:Core_Extend::newData($arrGrouptopic['create_dateline'],true)}-->
+								</div>
+							</div>
+						</div>
+						<!--{/if}-->
+
+						<div id="grouptopiccomments" class="">
+							<div class="total"><!--<lang package='Template'>-->共收到<!--</lang>-->&nbsp;<b><!--{$arrGrouptopic['grouptopic_comments']}--></b>&nbsp;<!--<lang package='Template'>-->条回复<!--</lang>--></div>
+							<div class="grouptopiccomment_items">
+								<!--{if !empty($arrComments)}-->
+								<!--<foreach for=arrComments value=arrComment>-->
+								<a name="grouptopiccomment-<!--{$arrComment['grouptopiccomment_id']}-->"></a>
+								<div class="grouptopiccommentnew_reply" id="grouptopiccommentreply-<!--{$arrComment['grouptopiccomment_id']}-->">
+									<div class="left face">
+										<a href="<!--{:Q::U('group://space@?id='.$arrComment['user_id'])}-->"><img alt="21" class="uface need_lazyload" src="<!--{:Core_Extend::avatar($arrComment['user_id'],'middle')}-->" style="width:48px;height:48px;" /></a>
+									</div>
+									<div class="infos">
+										<div class="info">
+											<span class="name"><a href="<!--{:Q::U('group://space@?id='.$arrComment['user_id'])}-->" class="bind_hover_card" bm_user_id="<!--{$arrComment['user_id']}-->"><!--{$arrComment['user_name']}--></a><!--<lang package='Template'>-->回复于<!--</lang>-->&nbsp;<!--{$arrComment['create_dateline']|Core_Extend+timeFormat}--></span>
+										</div>
+										
+										<!--{if $arrComment['grouptopiccomment_title']}-->
+										<div class="grouptopiccomment_title">
+											<h1><!--{$arrComment['grouptopiccomment_title']}--></h1>
+										</div>
+										<!--{/if}-->
+										
+										<div class="grouptopiccomment-content">
+											<!--{if $arrComment['grouptopiccomment_status']=='0'}-->
+											<div class="locked locked_highlight"><!--<lang package='Template'>-->此回尚未通过审核，仅具有管理权限的人才能够浏览<!--</lang>--></div>
+											<!--{elseif $arrComment['grouptopiccomment_ishide']==1}-->
+											<div class="locked"><!--<lang package='Template'>-->此回帖已被屏蔽，仅具有管理权限的人才能够浏览<!--</lang>--></div>
+											<!--{elseif $arrGrouptopic['grouptopic_hiddenreplies']==1}-->
+											<div class="locked"><!--<lang package='Template'>-->此回帖仅作者可见<!--</lang>--></div>
+											<!--{/if}-->
+											
+											<!--{if $arrComment['grouptopiccomment_ishide']=='0' || ($arrComment['grouptopiccomment_ishide']=='1' && Groupadmin_Extend+checkCommentadminRbac($arrGrouptopic,array('group@grouptopicadmin@hidecomment')))}-->
+											<!--{if $arrGrouptopic['grouptopic_hiddenreplies']=='0' || ($arrGrouptopic['grouptopic_hiddenreplies']==1 && $GLOBALS['___login___']!==false && $GLOBALS['___login___']['user_id']==$arrGrouptopic['user_id'])}-->
+											<!--{if $arrComment['grouptopiccomment_parentid'] && !empty($arrComment['parent_grouptopiccomment_id'])}-->
+											<div class="grouptopiccomment_parent tips">
+												<div class="">
+													<h2 class="title">
+														<!--<lang package='Template'>-->你参与了<!--</lang>-->&nbsp;<a class="bind_hover_card" href="<!--{:Q::U('group://space@?id='.$arrComment['parent_user_id'])}-->" bm_user_id="<!--{$arrComment['parent_user_id']}-->"><img alt="<!--{$arrComment['parent_grouptopiccomment_name']}-->" src="<!--{:Core_Extend::avatar($arrComment['parent_user_id'],'small')}-->" width="32px" height="32px" class="need_lazyload" ></a>
+														&nbsp;<!--<lang package='Template'>-->他的回帖<!--</lang>-->&nbsp;<a href="<!--{:Q::U('group://space@?id='.$arrComment['parent_user_id'])}-->" class="bind_hover_card" bm_user_id="<!--{$arrComment['parent_user_id']}-->"><!--{$arrComment['parent_grouptopiccomment_name']}--></a>&nbsp;<i><a href="<!--{:Q::U('group://topic@?id='.$arrComment['parent_grouptopic_id'].'&isolation_commentid='.$arrComment['parent_grouptopiccomment_id'])}-->" title="<!--<lang package='Template'>-->查看该回帖<!--</lang>-->" class="Sys-special_color">@<!--<lang package='Template'>-->查看<!--</lang>--></i></a>
+													</h2>
+													<div class="grouptopiccomment_parentcontent">
+														<p><!--{$arrComment['parent_grouptopiccomment_content']|strip_tags|C+subString=0,100|Core_Extend+ubb=false}--></p>
+													</div>
+												</div>
+											</div>
+											<!--{/if}-->
+
+											<!--{$arrComment['grouptopiccomment_content']|Core_Extend+ubb=false}-->
+											<!--{/if}-->
+											<!--{/if}-->
+										</div>
+
+										<span class="extend_tool" >
+											<em class="left">
+												<a class="fastre" href="javascript:void(0);" onclick="grouptopicComment('<!--{$arrGrouptopic['grouptopic_id']}-->','<!--{$arrComment['grouptopiccomment_id']}-->');"><!--<lang package='Template'>-->回复<!--</lang>--></a>
+												<!--{if Groupadmin_Extend+checkCommentRbac($arrGrouptopic,$arrComment)}-->
+												<a class="editp" href="javascript:void(0);" onclick="grouptopiceditComment('<!--{$arrComment['grouptopiccomment_id']}-->');"><!--<lang package='Template'>-->编辑<!--</lang>--></a>
+												<!--{/if}-->
+											</em>
+											<p class="right">
+												<span class="floor_copy" title="<!--<lang package='Template'>-->复制此楼地址<!--</lang>-->" onclick="copy('<!--<lang package='Template'>-->楼层<!--</lang>--> '+'\n'+'<!--{:Core_Extend::windsforceOuter('app=group&c=grouptopic&a=view&id='.$arrGrouptopic['grouptopic_id'].'&isolation_commentid='.$arrComment['grouptopiccomment_id'])}-->','<!--<lang package='Template'>-->楼层复制成功<!--</lang>-->');"><!--{if $arrComment['grouptopiccomment_stickreply']==1}--><img src="<!--{:Appt::path('settop.png')}-->" />&nbsp;<!--{/if}--><!--{$TheController->get_commentfloor($i,$GLOBALS['_cache_']['group_option']['grouptopic_listcommentnum'])}--><!--<lang package='Template'>-->楼<!--</lang>-->&nbsp;<sup>#</sup></span>
+												<!--{if Groupadmin_Extend+checkCommentadminRbac($arrGrouptopic)}-->
+												<span class="pipe">|</span>
+												<label for="manage<!--{$arrComment['grouptopiccomment_id']}-->" class="checkbox" style="width:50px;color:#CACBCA;">
+													<input type="checkbox" class="input-short" autocomplete="off" value="<!--{$arrComment['grouptopiccomment_id']}-->" onclick="dataidChecked(this);modClick(this,<!--{$arrComment['grouptopiccomment_id']}-->)" style="position:relative;top:2px;">&nbsp;<!--<lang package='Template'>-->管理<!--</lang>-->
+												</label>
+												<!--{/if}-->
+											</p>
+										</span>
+									</div>
+								</div>
+								<!--</foreach>-->
+								<!--{d*else}-->
+								<p><!--<lang package='Template'>-->暂时没有任何人回应，赶快来抢沙发吧。<!--</lang>--></p>
+								<!--{/if}-->
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="floor floor_footerpost">
+					<table width="100%" class="floor_footerposttable" style="margin-bottom:-10px;margin-top: -10px;">
+						<tr>
+							<td width="200px">
+								<div>
+									<a rel="nofollow" href="<!--{:Q::U('group://grouptopic/add?gid='.$arrGrouptopic['group_id'].($arrGrouptopic['grouptopiccategory_id']>0?'&cid='.$arrGrouptopic['grouptopiccategory_id']:''))}-->" class="btn" ><!--<lang package='Template'>-->发帖<!--</lang>--></a>&nbsp;
+									<a rel="nofollow" href="<!--{:Q::U('group://grouptopic/reply?id='.$arrGrouptopic['grouptopic_id'])}-->" class="btn"><!--<lang package='Template'>-->回复<!--</lang>--></a>
+								</div>
+							</td>
+							<td style="text-align:right;float:right;padding-bottom:15px;"><!--{$sPageNavbar}--></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+<!--<include file="grouptopic+viewfooter" />-->

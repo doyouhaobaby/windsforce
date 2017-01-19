@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<title><![CDATA[WindsForce App]]></title>
+	<version><![CDATA[2.0]]></version>
+	<time><![CDATA[2014-10-07]]></time>
+	<copyright><![CDATA[WindsForce Team]]></copyright>
+	<data>
+		<identifier><![CDATA[home]]></identifier>
+		<name><![CDATA[个人空间]]></name>
+		<version><![CDATA[2.0]]></version>
+		<description><![CDATA[个人空间应用]]></description>
+		<url><![CDATA[http://qeephp.114.ms]]></url>
+		<email><![CDATA[admin@qeephp.114.ms]]></email>
+		<author><![CDATA[WindsForce Team]]></author>
+		<authorurl><![CDATA[http://qeephp.114.ms]]></authorurl>
+		<isadmin><![CDATA[1]]></isadmin>
+		<isinstall><![CDATA[1]]></isinstall>
+		<isuninstall><![CDATA[1]]></isuninstall>
+		<issystem><![CDATA[1]]></issystem>
+		<isappnav><![CDATA[1]]></isappnav>
+	</data>
+</root>

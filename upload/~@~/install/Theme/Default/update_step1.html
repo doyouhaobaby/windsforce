@@ -1,0 +1,30 @@
+<include file="common+header">
+
+	<ul class="breadcrumb">
+		<li><a href="{:__APP__}" title="<lang package='Template/Default/Common'>主页</lang>"><lang package='Template/Default/Common'>主页</lang></a>&nbsp;<span class="divider">/</span></li>
+		<li><lang package='Template/Default/Update'>升级确认页</lang></li>
+	</ul>
+
+	<include file="update+process">
+
+	<div class="row">
+		<div class="span12">
+			<h2><lang package='Template/Default/Update'>你认真阅读下面的提示</lang></h2>
+			<p><span style="color:#f00;"><lang package='Template/Default/Update'>本程序仅适用于当前版本升级到下一个新版本</lang></span></p>
+			<div class="alert"><span style="color:#f00;font-weight:700;"><lang package='Template/Default/Update'>再次提醒，升级前必须备份数据！</lang></span></div>
+			<p><lang package='Template/Default/Update'>升级过程完全不用人工干预,请耐心等待升级，整个过程将会很快。</lang></p>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="span12">
+			<div class="well">
+				<p><input type="button" class="btn" value="<lang package='Template/Default/Common'>后退</lang>" onclick="window.location.href='{:Q::U( 'public/select' )}';" />
+					<span class="pipe">|</span>
+					<input type="button" class="btn btn-success" value="<lang package='Template/Default/Common'>检查环境</lang>" onclick="window.location.href='{:Q::U( 'update/step2' )}'" />
+				</p>
+			</div>
+		</div>
+	</div>
+
+<include file="common+footer">

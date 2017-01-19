@@ -1,0 +1,326 @@
+<!--<include file="public+header">-->
+
+<link rel="stylesheet" type="text/css" href="<!--{:Q::U('misc/index?type=css&file=controlpanel',array('rand'=>C::randString(4)),true)}-->"/>
+
+<!--<if condition="$GLOBALS['_option_']['programeupdate_on'] eq 1">-->
+<!--{script}-->
+function closeUpdateinfo(){
+	Q.AjaxSend(Q.U('public/close_updateinfo'),'ajax=1','',function(data,status){
+		if(status==1){
+			setTimeout(function(){
+				parent.menu.location=Q.U( 'public/fmenu?title='+encodeURIComponent('<!--<lang package='Template'>-->首页<!--</lang>-->')+'&notrefershmain=1' );
+				window.location.replace(_SELF_);
+			},1000);
+		}
+	});
+}
+<!--{/script}-->
+<!--</if>-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->系统信息<!--</lang>--></a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<!--<if condition="$GLOBALS['_option_']['programeupdate_on'] eq 1">-->
+		<div id="news_box" style="display:none;">
+			<h4 class="alert_warning"><!--<lang package='Template'>-->有新版本发布<!--</lang>--></h4>
+			<article class="module width_full">
+				<header><h3><legend id="news_title"><!--<lang package='Template'>-->读取中<!--</lang>-->...</legend></h3></header>
+				<div class="module_content">
+					<p><div id="news_content" class="alertmsg"><!--<lang package='Template'>-->读取中<!--</lang>-->...</div></p>
+					<p><!--<lang package='Template'>-->如果不想看到升级信息，请点击这里<!--</lang>-->&nbsp;<a href="javascript:void(0);" onclick="closeUpdateinfo();"><!--<lang package='Template'>-->关闭升级提醒<!--</lang>--></a></p>
+				</div>
+			</article>
+		</div>
+		<!--<else/>-->
+		<div id="news_box" style="display:none;">
+			<div id="news_title" style="display:none;"></div>
+			<div id="news_content" style="display:none;"></div>
+		</div>
+		<!--</if>-->
+
+		<h4 class="alert_info" id="welcome_info"><!--{$sTipsTxt}--></h4>
+		
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->控制面板<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul class="controlpanel-buttons-set" style="margin-left:-40px;">
+					<li><a class="controlpanel-button" href="<!--{:Q::U('languageoption/index')}-->" onclick="parent.header.location=Q.U( 'public/fheader?currentid=1' );parent.menu.location=Q.U( 'public/fmenu?tag=2&title='+encodeURIComponent('<!--<lang package='Template'>-->设置<!--</lang>-->')+'&notrefershmain=1&currentid=9' );"><span> 
+						<img src="<!--{:At::path('controlpanel/l18n_48.png')}-->" alt="icon" border="0"/><br />
+						<!--<lang package='Template'>-->国际化<!--</lang>--></span></a>
+					</li>
+					<li><a class="controlpanel-button" href="<!--{:Q::U('style/index')}-->" href="<!--{:Q::U('languageoption/index')}-->" onclick="parent.header.location=Q.U( 'public/fheader?currentid=2' );parent.menu.location=Q.U( 'public/fmenu?tag=5&title='+encodeURIComponent('<!--<lang package='Template'>-->界面<!--</lang>-->')+'&notrefershmain=1&currentid=2' );"><span> 
+						<img src="<!--{:At::path('controlpanel/theme_48.png')}-->" alt="icon" border="0"/><br />
+						<!--<lang package='Template'>-->主题<!--</lang>--></span></a>
+					</li>
+					<li><a class="controlpanel-button" href="<!--{:Q::U('app/index')}-->" onclick="parent.header.location=Q.U( 'public/fheader?currentid=4' );parent.menu.location=Q.U( 'public/fmenu?tag=4&title='+encodeURIComponent('<!--<lang package='Template'>-->应用<!--</lang>-->')+'&notrefershmain=1&currentid=0' );"><span> 
+						<img src="<!--{:At::path('controlpanel/app_48.png')}-->" alt="icon" border="0"/><br />
+						<!--<lang package='Template'>-->应用APP<!--</lang>--></span></a>
+					</li>
+					<li><a class="controlpanel-button" href="<!--{:Q::U('option/index')}-->" onclick="parent.header.location=Q.U( 'public/fheader?currentid=1' );parent.menu.location=Q.U( 'public/fmenu?tag=2&title='+encodeURIComponent('<!--<lang package='Template'>-->设置<!--</lang>-->')+'&notrefershmain=1&currentid=0' );"><span> 
+						<img src="<!--{:At::path('controlpanel/option_48.png')}-->" alt="icon" border="0"/><br />
+						<!--<lang package='Template'>-->设置<!--</lang>--></span></a>
+					</li>
+					<li><a class="controlpanel-button" href="<!--{:Q::U('role/index')}-->" onclick="parent.header.location=Q.U( 'public/fheader?currentid=5' );parent.menu.location=Q.U( 'public/fmenu?tag=1&title='+encodeURIComponent('<!--<lang package='Template'>-->权限<!--</lang>-->')+'&notrefershmain=1&currentid=2' );"><span> 
+						<img src="<!--{:At::path('controlpanel/rbac_48.png')}-->" alt="icon" border="0"/><br />
+						<!--<lang package='Template'>-->权限<!--</lang>--></span></a>
+					</li>
+				</ul>
+				<div class="clear"></div>
+				<ul class="controlpanel-buttons-set" style="margin-left:-40px;">
+					<li><a class="controlpanel-button" href="<!--{:Q::U('user/index')}-->" onclick="parent.header.location=Q.U( 'public/fheader?currentid=5' );parent.menu.location=Q.U( 'public/fmenu?tag=1&title='+encodeURIComponent('<!--<lang package='Template'>-->权限<!--</lang>-->')+'&notrefershmain=1&currentid=6' );"><span> 
+						<img src="<!--{:At::path('controlpanel/user_48.png')}-->" alt="icon" border="0"/><br />
+						<!--<lang package='Template'>-->用户<!--</lang>--></span></a>
+					</li>
+					<li><a class="controlpanel-button" href="<!--{:Q::U('loginlog/index')}-->" onclick="parent.header.location=Q.U( 'public/fheader?currentid=8' );parent.menu.location=Q.U( 'public/fmenu?tag=3&title='+encodeURIComponent('<!--<lang package='Template'>-->站长<!--</lang>-->')+'&notrefershmain=1&currentid=1' );"><span> 
+						<img src="<!--{:At::path('controlpanel/safe_48.png')}-->" alt="icon" border="0"/><br />
+						<!--<lang package='Template'>-->安全<!--</lang>--></span></a>
+					</li>
+					<li><a class="controlpanel-button" href="<!--{:Q::U('appconfigtool/index')}-->" onclick="parent.header.location=Q.U( 'public/fheader?currentid=7' );parent.menu.location=Q.U( 'public/fmenu?tag=8&title='+encodeURIComponent('<!--<lang package='Template'>-->工具<!--</lang>-->')+'&notrefershmain=1&currentid=0' );"><span> 
+						<img src="<!--{:At::path('controlpanel/tool_48.png')}-->" alt="icon" border="0"/><br />
+						<!--<lang package='Template'>-->工具<!--</lang>--></span></a>
+					</li>
+					<li><a class="controlpanel-button" href="<!--{:Q::U('pm/index')}-->" onclick="parent.header.location=Q.U( 'public/fheader?currentid=6' );parent.menu.location=Q.U( 'public/fmenu?tag=6&title='+encodeURIComponent('<!--<lang package='Template'>-->运营<!--</lang>-->')+'&notrefershmain=1&currentid=1' );"><span> 
+						<img src="<!--{:At::path('controlpanel/operators_48.png')}-->" alt="icon" border="0"/><br />
+						<!--<lang package='Template'>-->运营<!--</lang>--></span></a>
+					</li>
+					<li><a class="controlpanel-button" href="<!--{:Q::U('public/profile')}-->" onclick="parent.menu.location=Q.U( 'public/fmenu?title='+encodeURIComponent('<!--<lang package='Template'>-->首页<!--</lang>-->')+'&notrefershmain=1&currentid=2' );"><span> 
+						<img src="<!--{:At::path('controlpanel/profile_48.png')}-->" alt="icon" border="0"/><br />
+						<!--<lang package='Template'>-->个人中心<!--</lang>--></span></a>
+					</li>
+				</ul>
+				<div class="clear"></div>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->待做数据统计<!--</lang>--></h3></header>
+			<div class="module_content">
+				<p><!--<lang package='Template'>-->这里为当前急需要做的事情<!--</lang>--></p>
+				<table class="tablesorter" cellspacing="0">
+					<thead>
+						<tr>
+							<th width="180"><!--<lang package='Template'>-->系统名字<!--</lang>--></th> 
+							<th><!--<lang package='Template'>-->当前值<!--</lang>--></th> 
+						</tr>
+					</thead>
+					<tbody>
+						<!--<foreach for=arrTodos value=arrTodo>-->
+						<tr>
+							<td><!--{$arrTodo[1]}--></td> 
+							<td><!--{if $arrTodo[0]>0}--><span style="color:red;"><a href="<!--{$arrTodo[2]}-->" target="_blank"><!--{$arrTodo[0]}--></a></span><!--{d*else}--><!--{$arrTodo[0]}--><!--{/if}--></td> 
+						</tr>
+						<!--</foreach>-->
+					</tbody>
+				</table>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->后台在线管理员<!--</lang>-->&nbsp;<span style="font-weight:normal;color:#47D765;">[<!--<lang package='Template'>-->这里为已经登录系统的管理员，并不一定是来过后台的<!--</lang>-->]</span></h3></header>
+			<div class="module_content">
+				<p><!--<lang package='Template'>-->这里你可以看到后台当前在线的管理员<!--</lang>--></p>
+				<table class="tablesorter" cellspacing="0">
+					<thead>
+						<tr>
+							<th width="180"><!--<lang package='Template'>-->后台在线用户<!--</lang>--></th>
+							<th><!--<lang package='Template'>-->IP地址<!--</lang>--></th>
+							<th width="230"><!--<lang package='Template'>-->最后活动时间<!--</lang>-->&nbsp;(<!--<lang package='Template'>-->最后一次登录时间<!--</lang>-->)</th>
+						</tr>
+					</thead>
+					<tbody>
+					<!--{if is_array($arrUsers)}-->
+					<!--<foreach for=arrUsers value=oUser>-->
+					<tr>
+						<td><a href="<!--{:Core_Extend::windsforceOuter('app=home&c=space&a=index&id='.$oUser['user_id'])}-->" target="_blank"><!--{$oUser['user_name']}--></a></td>
+						<td><!--{$oUser['user_lastloginip']}--><br/><!--{$oUser['user_lastloginip']|Core_Extend+convertIp}--></td>
+						<td><!--{$oUser['user_lastlogintime']|date='Y-m-d H:i:s',**}--></td>
+					</tr>
+					<!--</foreach>-->
+					<!--{d*else}-->
+					<tr>
+						<td colspan="3"><!--<lang package='Template'>-->暂时没有发现任何记录<!--</lang>--></td>
+					</tr>
+					<!--{/if}-->
+					</tbody>
+				</table>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3><!--{$GLOBALS['_option_']['windsforce_program_name']}--> <!--<lang package='Template'>-->目录权限<!--</lang>--></h3></header>
+			<div class="module_content">
+				<p><!--{$GLOBALS['_option_']['windsforce_program_name']}--> <!--<lang package='Template'>-->站点运行必须设置的相关目录权限，请确保设置正确<!--</lang>--></p>
+				<table class="tablesorter" cellspacing="0">
+					<thead>
+						<tr>
+							<th width="180"><!--<lang package='Template'>-->目录或者文件<!--</lang>--></th>
+							<th><!--<lang package='Template'>-->读取权限<!--</lang>--></th>
+							<th width="70"><!--<lang package='Template'>-->写入权限<!--</lang>--></th>
+						</tr>
+					</thead>
+					<tbody>
+					<!--<foreach for=arrTestDirs value=sTestDir>-->
+					<tr>
+						<td><!--{$sTestDir}--></td>
+						<!--<php>-->
+						$sFullPath=WINDSFORCE_PATH.'/'.str_replace('/*','',$sTestDir);
+						$sRsta=(is_readable($sFullPath)?'<font color=#47D765>[√]'.Q::L('读','Template').'</font>':'<font color=red>[×]'.Q::L('读','Template' ).'</font>');
+						$sWsta=((is_file($sFullPath)?is_writeable($sFullPath):Admin_Extend::testWrite($sFullPath))?'<font color=#47D765>[√]'.Q::L('写','Template').'</font>':'<font color=red>[×]'.Q::L('写','Template').'</font>');
+						<!--</php>-->
+						<td><!--{$sRsta}--></td>
+						<td><!--{$sWsta}--></td>
+					</tr>
+					<!--</foreach>-->
+					</tbody>
+				</table>
+			</div>
+		</article>
+		
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->系统服务器消息<!--</lang>--></h3></header>
+			<div class="module_content">
+				<p><!--<lang package='Template'>-->在反映您遇到的问题时可能需要提供服务器的一些信息，服务器信息对系统而言非常重要，请勿随便提供给他人。<!--</lang>--></p>
+				<table class="tablesorter" cellspacing="0">
+					<thead>
+						<tr>
+							<th width="180"><!--<lang package='Template'>-->系统名字<!--</lang>--></th> 
+							<th><!--<lang package='Template'>-->当前值<!--</lang>--></th> 
+						</tr>
+					</thead>
+					<tbody>
+						<!--<foreach for=arrInfo>-->
+						<tr>
+							<td><!--{$key}--></td> 
+							<td><!--{$value}--></td> 
+						</tr>
+						<!--</foreach>-->
+					</tbody>
+				</table>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3><!--{$GLOBALS['_option_']['windsforce_program_name']}--> <!--<lang package='Template'>-->统计信息<!--</lang>--></h3></header>
+			<div class="module_content">
+				<p><!--{$GLOBALS['_option_']['windsforce_program_name']}--> <!--<lang package='Template'>-->运行相关信息，便于对整个站点的数据做到心中有数。<!--</lang>--></p>
+				<table class="tablesorter" cellspacing="0">
+					<thead>
+						<tr>
+							<th width="180"><!--<lang package='Template'>-->系统名字<!--</lang>--></th>
+							<th><!--<lang package='Template'>-->当前值<!--</lang>--></th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--<foreach for=arrStaticInfo >-->
+						<tr>
+							<td><!--{if isset( $value[2] )}--><a href="<!--{$value[2]}-->" target="_blank"><!--{$value[0]}--></a><!--{d*else}--><!--{$value[0]}--><!--{/if}--></td>
+							<td><!--{if isset( $value[2] )}--><a href="<!--{$value[2]}-->" target="_blank"><!--{$value[1]}--></a><!--{d*else}--><!--{$value[1]}--><!--{/if}--></td>
+						</tr>
+						<!--</foreach>-->
+					</tbody>
+				</table>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->程序版本信息<!--</lang>--></h3></header>
+			<div class="module_content">
+				<p><!--<lang package='Template'>-->记录当前使用的软件版本，这个方便大家查看你的程序是否为最新版本，以及本软件开发相关贡献者荣誉榜。<!--</lang>--></p>
+				<table class="tablesorter" cellspacing="0">
+					<thead>
+						<tr>
+							<th width="180"><!--<lang package='Template'>-->版本名字<!--</lang>--></th> 
+							<th><!--<lang package='Template'>-->当前值<!--</lang>--></th> 
+						</tr>
+					</thead>
+					<tbody>
+						<!--<foreach for=arrVersionInfo >-->
+						<tr>
+							<td><!--{$key}--></td>
+							<td><!--{$value}--></td>
+						</tr>
+						<!--</foreach>-->
+					</tbody>
+				</table>
+
+				<table class="tablesorter" cellspacing="0">
+					<thead>
+						<tr>
+							<th width="180"><!--<lang package='Template'>-->负责项目板块<!--</lang>--></th> 
+							<th><!--{$GLOBALS['_option_']['windsforce_program_name']}--> <!--<lang package='Template'>-->开发精英团队<!--</lang>--></th> 
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><!--<lang package='Template'>-->版权所有<!--</lang>--></td>
+							<td><a href="<!--{$GLOBALS['_option_']['windsforce_program_url']}-->" target="_blank"><!--{$GLOBALS['_option_']['windsforce_program_name']}--></a></td>
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->创始人<!--</lang>--></td>
+							<td><a href="http://www.114.ms/app/home/space/3.html" target="_blank">刘祥敏</a>(小牛哥QEEPHP)</td>
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->开发与支持团队<!--</lang>--></td>
+							<td><a href="http://www.114.ms/app/home/space/2.html" target="_blank">韦永明</a>、<a href="http://www.114.ms/app/home/space/3.html" target="_blank">刘祥敏</a></td>
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->界面与用户体验团队<!--</lang>--></td>
+							<td><a href="http://www.114.ms/app/home/space/3.html" target="_blank">刘祥敏</a></td>
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->产品运维团队<!--</lang>--></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->应用APP贡献者<!--</lang>--></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->插件贡献者<!--</lang>--></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->主题贡献者<!--</lang>--></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->感谢贡献者<!--</lang>--></td>
+							<td></td>
+						</tr>
+					</tbody> 
+				</table>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->程序版权信息<!--</lang>--></h3></header>
+			<div class="module_content">
+				<p><!--<lang package='Template'>-->在使用本软件前，请仔细阅读版权许可协议。<!--</lang>--></p>
+				<table class="tablesorter" cellspacing="0">
+					<thead>
+						<tr>
+							<th colspan="2"><!--<lang package='Template'>-->版权信息<!--</lang>--></th> 
+						</tr>
+					</thead>
+					<tbody>
+						<tr style="background:none;" >
+							<td colspan=2><div style="height: 100px; width: 100%; overflow:auto;"><!--{$sCopyTxt}--></div></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</article>
+
+		<script type="text/javascript" src="<!--{$sUpdateUrl}-->"></script>
+
+		<!--<if condition="$GLOBALS['_option_']['programeupdate_on'] eq 0">-->
+		<!--{script}-->
+		$WF("welcome_info").style.display="block";
+		<!--{/script}-->
+		<!--</if>-->
+
+<!--<include file="public+footer">-->

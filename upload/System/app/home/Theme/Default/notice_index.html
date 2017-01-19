@@ -1,0 +1,72 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->提醒<!--</lang>--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+		<!--<include file="pmnotice+menu" />-->
+		
+		<div class="grid_10">
+			<!--<include file="notice+menu" />-->
+			
+			<form method="post" name="noticeform" id="noticeform" action="" class="form-inline">
+				<div id="checkList">
+					<!--{if $arrNoticedatas}-->
+					<table class="table">
+						<colgroup>
+							<col width="70px"></col>
+							<col></col>
+						</colgroup>
+						<tbody>
+							<!--<foreach for=arrNoticedatas value=arrNoticedata>-->
+							<!--{if !isset($arrNoticedatas[$key-1]) || date('Y-m-d',$arrNoticedata['create_dateline'])!=date('Y-m-d',$arrNoticedatas[$key-1]['create_dateline'])}-->
+							<tr>
+								<th colspan="2"><h4><!--{$arrNoticedata['create_dateline']|date='Y-m-d',**}--></h4></th>
+							</tr>
+							<!--{/if}-->
+							<tr>
+								<td width="70px" style="text-align:center;">
+									<!--{if $arrNoticedata['notice_type']=='system'}-->
+									<img src="<!--{:__PUBLIC__}-->/images/common/systempm.png" width="48px" height="48px" class="thumbnail" title="<!--<lang package='Template'>-->系统提醒<!--</lang>-->" alt="<!--<lang package='Template'>-->系统提醒<!--</lang>-->" style="margin:auto;"/>
+									<!--{d*else}-->
+									<!--{if !isset($arrNoticedatas[$key-1]) || $arrNoticedata['user_id']!=$arrNoticedatas[$key-1]['user_id']}-->
+									<a title="<!--{$arrNoticedata['notice_username']}-->" href="<!--{:Q::U('home://space@?id='.$arrNoticedata['user_id'])}-->">
+									<img src="<!--{:Core_Extend::avatar( $arrNoticedata['user_id'],'small' )}-->" width="48px" height="48px" class="thumbnail need_lazyload" title="<!--{$arrNoticedata['notice_username']}-->" alt="<!--{$arrNoticedata['notice_username']}-->" style="margin:auto;"/>
+									</a>
+									<!--{/if}-->
+									<!--{/if}-->
+								</td>
+								<td width="*" class="notice-content">
+									<!--{if $arrNoticedata['notice_type']=='system'}-->
+									<!--{$arrNoticedata['notice_content']|Core_Extend+replaceSiteVar|nl2br|Core_Extend+ubb=false}-->
+									<!--{d*else}-->
+									<!--{if $arrNoticedata['notice_type']=='athomefresh'}-->
+									<!--{$arrNoticedata['notice_content']|Core_Extend+ubb}-->
+									<!--{d*else}-->
+									<!--{$arrNoticedata['notice_content']|Core_Extend+ubb=false}-->
+									<!--{/if}-->
+									<!--{/if}-->
+									<!--{if $arrNoticedata['notice_fromnum']>1}-->
+									<div class="notice-note"><!--<lang package='Template'>-->还有<!--</lang>-->&nbsp;<!--{$arrNoticedata['notice_fromnum']-1}-->&nbsp;<!--<lang package='Template'>-->个相同通知被忽略<!--</lang>--></div>
+									<!--{/if}-->
+								</td>
+							</tr>
+							<!--</foreach>-->
+						</tbody>
+					</table>
+					<!--{d*else}-->
+					<p><!--<lang package='Template'>-->暂无任何提醒<!--</lang>--><!--{if $sType=='new'}-->&nbsp;<a href="<!--{:Q::U('home://notice/index?type=isread')}-->"><!--<lang package='Template'>-->点此查看已读提醒<!--</lang>--></a><!--{/if}--></p>
+					<!--{/if}-->
+
+					<!--{$sPageNavbar}-->
+				</div>
+			</form>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

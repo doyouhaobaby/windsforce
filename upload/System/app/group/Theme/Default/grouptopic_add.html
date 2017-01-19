@@ -1,0 +1,251 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{:Core_Extend::editorInclude()}-->
+<!--{:Core_Extend::emotion()}-->
+<!--{:Core_Extend::validate()}-->
+
+<!--{script}-->
+$(function(){
+	editor=loadEditor('grouptopic_content');
+	$(".face-icon").jqfaceedit({txtAreaObj:editor,containerObj:$('#emotion_parentcontainer'),top:25,left:-27});
+});
+
+
+<!--{if isset($arrGrouptopic)}-->
+function grouptopicSubmit(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( '<!--<lang package='Template'>-->编辑帖子<!--</lang>-->...' );
+	$("#grouptopic_content").val(editor.html());
+	if(!$("#grouptopic_content").val()){
+		windsforceAlert(Q.L('内容不能够为空','Common'),'',3);
+		$("#submit_button").attr("disabled", false);
+		$("#submit_button").val( '<!--<lang package='Template'>-->编辑帖子<!--</lang>-->' );
+		return false;
+	}
+	Q.AjaxSubmit('grouptopic_form','<!--{:Q::U('group://grouptopic/submit_edit')}-->','',function(data,status){
+		$("#submit_button").attr("disabled", false);
+		$("#submit_button").val( '<!--<lang package='Template'>-->编辑帖子<!--</lang>-->' );
+		if(status==1){
+			setTimeout(function(){window.location.href=data.url;},1000);
+		}
+	});
+}
+<!--{d*else}-->
+function grouptopicSubmit(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( '<!--<lang package='Template'>-->发布帖子<!--</lang>-->...' );
+	$("#grouptopic_content").val(editor.html());
+	if(!$("#grouptopic_content").val()){
+		windsforceAlert(Q.L('内容不能够为空','Common'),'',3);
+		$("#submit_button").attr("disabled", false);
+		$("#submit_button").val( '<!--<lang package='Template'>-->发布帖子<!--</lang>-->' );
+		return false;
+	}
+	Q.AjaxSubmit('grouptopic_form','<!--{:Q::U('group://grouptopic/add_topic')}-->','',function(data,status){
+		$("#submit_button").attr("disabled", false);
+		$("#submit_button").val( '<!--<lang package='Template'>-->发布帖子<!--</lang>-->' );
+		if(status==1){
+			setTimeout(function(){window.location.href=data.url;},1000);
+		}
+	});
+}
+<!--{/if}-->
+
+function insertGrouptopicthumb(nAttachmentid){
+	insertAttachmentthumb('grouptopic_thumb',nAttachmentid);
+}
+
+function reloadCategory(){
+	var nGid=$('#group_id').val();
+	var sUrl="<!--{:Q::U('group://group/getcategory')}-->";
+	$.post(sUrl,{gid:nGid},function(data,textStatus){
+		$("#grouptopiccategory_id").html(data);
+	});
+}
+
+function grouptopicBack(){
+	window.location.href="<!--{if isset($arrGrouptopic)}--><!--{:Q::U('group://topic@?id='.$arrGrouptopic['grouptopic_id'])}--><!--{elseif empty($nGroupid)}--><!--{:Q::U('group://public/index')}--><!--{d*else}--><!--{:Q::U('group://gid@?id='.$nGroupid)}--><!--{/if}-->";
+}
+
+checkForm(grouptopicSubmit);
+<!--{/script}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('group://public/index')}-->" title="<!--<lang package='Template'>-->小组<!--</lang>-->"><!--<lang package='Template'>-->小组<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--{if isset($arrGrouptopic)}--><!--<lang package='Template'>-->编辑帖子<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->发布帖子<!--</lang>--><!--{/if}--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+		<!--{if isset($arrGroup)}-->
+		<!--<include file="group+header" />-->
+		<!--{/if}-->
+			
+		<div class="grid_12">
+			<div class="nav_tabcontainer nav_tab">
+				<ul>
+					<li class="active"><a href="javascript:void(0);"><!--{if isset($arrGrouptopic)}--><!--<lang package='Template'>-->编辑帖子<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->发布帖子<!--</lang>--><!--{/if}--></a></li>
+					<!--{if isset($arrGrouptopic)}-->
+					<li>
+						<a href="<!--{:Q::U('group://topic@?id='.$arrGrouptopic['grouptopic_id'])}-->"><!--<lang package='Template'>-->返回帖子<!--</lang>--></a>
+					</li>
+					<!--{/if}-->
+					<li>
+						<!--{if empty($nGroupid) && !isset($arrGrouptopic)}-->
+						<a href="<!--{:Q::U('group://public/index')}-->"><!--<lang package='Template'>-->返回首页<!--</lang>--></a>
+						<!--{d*else}-->
+						<a href="<!--{:Q::U('group://gid@?id='.$nGroupid)}-->"><!--<lang package='Template'>-->返回小组<!--</lang>--></a>
+						<!--{/if}-->
+					</li>
+				</ul>
+			</div>
+			<div class="clearfix"></div>
+
+			<form method='post' name="grouptopic_form" id="grouptopic_form" class="validate">
+				<div class="grid_10 alpha">
+					<div>
+						<input type="text" name="grouptopic_title" id="grouptopic_title" placeholder="<!--<lang package='Template'>-->请输入标题<!--</lang>-->" value="<!--{if isset($arrGrouptopic)}--><!--{$arrGrouptopic.grouptopic_title}--><!--{/if}-->" style="width:60%;margin-top:7px;margin-bottom:15px;" required title="<!--<lang package='Template'>-->帖子标题不能为空<!--</lang>-->">
+						<p class="input_tips none"><!--<lang package='Template'>-->帖子标题不能为空<!--</lang>--></p>
+						<p class="input_errortips"></p>
+					</div>
+					<div id="grouptopicadd-media-box" class="common-media-box">
+						<a href="javascript:void(0);" class="face-icon icon_add_face" ><!--<lang package='__COMMON_LANG__@Common'>-->表情<!--</lang>--></a>
+						<a href="javascript:void(0);" onclick="globalAddattachment('insertAttachment_');" class="icon_add_img"><!--<lang package='__COMMON_LANG__@Common'>-->媒体<!--</lang>--></a>
+						<a href="javascript:void(0);" onclick="addVideo('insertVideo_');" class="icon_add_video" ><!--<lang package='__COMMON_LANG__@Common'>-->视频<!--</lang>--></a>
+						<a href="javascript:void(0);" onclick="addMusic('insertMusic_');" class="icon_add_music"><!--<lang package='__COMMON_LANG__@Common'>-->音乐<!--</lang>--></a>
+					</div>
+					<div id="emotion_parentcontainer">
+						<textarea name="grouptopic_content" id="grouptopic_content" style="height:<!--{:Core_Extend::getEditor()}-->px;width:100%;padding:0;margin:0;"><!--{if isset($arrGrouptopic)}--><!--{$arrGrouptopic['grouptopic_content']|htmlspecialchars}--><!--{/if}--></textarea>
+					</div>
+
+					<div class="grouptopic_tabs">
+						<div class="nav_tabcontainer nav_tab">
+							<ul class="need_clicktab">
+								<li class="active"><a href="#grouptopiccategory" data-toggle="tab"><!--<lang package='Template'>-->帖子分类<!--</lang>--></a></li>
+								<li><a href="#thumb" data-toggle="tab"><!--<lang package='Template'>-->缩略图<!--</lang>--></a></li>
+								<li><a href="#tags" data-toggle="tab"><!--<lang package='Template'>-->帖子标签<!--</lang>--></a></li></li>
+							</ul>
+						</div>
+						<div id="grouptopic_tabcontent" class="tab-content">
+							<div class="tab-pane fade in active tips" id="grouptopiccategory">
+								<table cellspacing="0" cellpadding="0">
+									<tr>
+										<td class="grouptopictabs_title"><!--<lang package='Template'>-->帖子分类<!--</lang>-->&nbsp;</td>
+										<td>
+											<!--{if empty($nGroupid)}-->
+											<select name="group_id" id="group_id" onchange="reloadCategory();" title="<!--<lang package='Template'>-->我的小组<!--</lang>-->">
+												<!--<foreach for=arrGroups value=arrGroupTemp>-->
+												<option value="<!--{$arrGroupTemp['group_id']}-->"><!--{$arrGroupTemp['group_nikename']}--></option>
+												<!--</foreach>-->
+											</select>&nbsp;
+											<!--{/if}-->
+
+											<select name="grouptopiccategory_id" id="grouptopiccategory_id" title="<!--<lang package='Template'>-->帖子分类<!--</lang>-->">
+												<option value="0" <!--{if !isset($arrGrouptopic) || $arrGrouptopic['grouptopiccategory_id']==0}-->selected<!--{/if}-->><!--<lang package='Template'>-->默认未分类<!--</lang>--></option>
+												<!--<foreach for=arrGrouptopiccategorys value=arrGrouptopiccategory>-->
+												<option value="<!--{$arrGrouptopiccategory['grouptopiccategory_id']}-->" <!--{if (isset($arrGrouptopic) && $arrGrouptopic['grouptopiccategory_id']==$arrGrouptopiccategory['grouptopiccategory_id']) || (isset($_GET['cid']) && $_GET['cid']==$arrGrouptopiccategory['grouptopiccategory_id'])}-->selected<!--{/if}-->><!--{$arrGrouptopiccategory['grouptopiccategory_name']}--></option>
+												<!--</foreach>-->
+											</select>
+										</td>
+									</tr>
+								</table>
+							</div>
+							
+							<div class="tab-pane fade tips none" id="thumb">
+								<table cellspacing="0" cellpadding="0">
+									<tr>
+										<td class="grouptopictabs_title"><!--<lang package='Template'>-->缩略图<!--</lang>-->&nbsp;<span class="red" style="cursor:pointer;" onclick="$('#grouptopic_thumb').val('');">x</span>&nbsp;</td>
+										<td><input type="text" class="left" id="grouptopic_thumb" name="grouptopic_thumb" value="<!--{if isset($arrGrouptopic)}--><!--{$arrGrouptopic.grouptopic_thumb}--><!--{/if}-->" readonly/>&nbsp;<a href="javascript:void(0);" onclick="globalAddattachment('insertGrouptopicthumb',1,1);" class="btn"><!--<lang package='__COMMON_LANG__@Common'>-->媒体<!--</lang>--></a>
+										</td>
+									</tr>
+								</table>
+							</div>
+							
+							<div class="tab-pane fade tips none" id="tags">
+								<table cellspacing="0" cellpadding="0">
+									<tr>
+										<td class="grouptopictabs_title"><!--<lang package='Template'>-->标签<!--</lang>-->&nbsp;</td>
+										<td><input type="text" size="60" id="tags" name="tags" value="<!--{if isset($arrGrouptopic)}--><!--{$sTag}--><!--{/if}-->"/>
+										<!--{if isset($arrGrouptopic)}-->
+										<input type="hidden" id="old_tags" name="old_tags" value="<!--{$sTag}-->"/>
+										<!--{/if}-->
+										</td>
+									</tr>
+									<tr>
+										<td></td>
+										<td>
+											<div class="grouptopictabs_description"><!--<lang package='Template'>-->用逗号或空格隔开多个标签，最多可填写 5 个<!--</lang>--></div>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+
+					<!--{if $nDisplaySeccode==1}-->
+					<div>
+						<input name="seccode" id="seccode" type="text" class="input-small {required:true,remote:Q.U('home://public/validate_seccode'),messages:{remote:'<!--<lang package='__COMMON_LANG__@Common'>-->验证码错误<!--</lang>-->'}} left" value="">&nbsp;
+						<span class="validate_seccode"><span class="input_errortips"></span></span>
+						<p class="help-block" style="clear:both;padding-top:10px;"><span id="seccodeImage"><img style="cursor:pointer" onclick="updateSeccode()" src="<!--{:Q::U('home://public/seccode')}-->" /></span></p>
+					</div>
+					<!--{/if}-->
+
+				</div>
+
+				<div class="grid_2 omega">
+					<div id="grouptopic_more" class="grouptopic_more">
+						<h3 class="grouptopicmore_title"><!--<lang package='Template'>-->附加选项<!--</lang>--></h3>
+						<label class="checkbox">
+							<input type="checkbox" class="input-short" name="grouptopic_usesign" id="grouptopic_usesign" value="1" <!--{if !isset($arrGrouptopic) || $arrGrouptopic['grouptopic_usesign']==1}-->checked="checked"<!--{/if}-->><!--<lang package='Template'>-->使用个人签名<!--</lang>-->
+						</label>
+						<label class="checkbox">
+							<input type="checkbox" class="input-short" name="grouptopic_isanonymous" id="grouptopic_isanonymous" value="1" <!--{if isset($arrGrouptopic) && $arrGrouptopic['grouptopic_isanonymous']==1}-->checked="checked"<!--{/if}-->><!--<lang package='Template'>-->使用匿名发帖<!--</lang>-->
+						</label>
+						<label class="checkbox">
+							<input type="checkbox" class="input-short" name="grouptopic_hiddenreplies" id="grouptopic_hiddenreplies" value="1" <!--{if isset($arrGrouptopic) && $arrGrouptopic['grouptopic_hiddenreplies']==1}-->checked="checked"<!--{/if}-->><!--<lang package='Template'>-->回帖仅作者可见<!--</lang>-->
+						</label>
+						<label class="checkbox">
+							<input type="checkbox" class="input-short" name="grouptopic_ordertype" id="grouptopic_ordertype" value="1" <!--{if isset($arrGrouptopic) && $arrGrouptopic['grouptopic_ordertype']==1}-->checked="checked"<!--{/if}-->><!--<lang package='Template'>-->回帖倒序排列<!--</lang>-->
+						</label>
+						<label class="checkbox">
+							<input type="checkbox" class="input-short" name="grouptopic_allownoticeauthor" id="grouptopic_allownoticeauthor" value="1" <!--{if !isset($arrGrouptopic) || $arrGrouptopic['grouptopic_allownoticeauthor']==1}-->checked="checked"<!--{/if}-->><!--<lang package='Template'>-->接收回复通知<!--</lang>-->
+						</label>
+						<label class="checkbox">
+							<input type="checkbox" class="input-short" name="grouptopic_iscomment" id="grouptopic_iscomment" value="1" <!--{if !isset($arrGrouptopic) || $arrGrouptopic['grouptopic_iscomment']==1}-->checked="checked"<!--{/if}-->><!--<lang package='Template'>-->允许回复<!--</lang>-->
+						</label>
+						<label class="checkbox">
+							<input type="checkbox" class="input-short" name="grouptopic_onlycommentview" id="grouptopic_onlycommentview" value="1" <!--{if isset($arrGrouptopic) && $arrGrouptopic['grouptopic_onlycommentview']>0}-->checked="checked"<!--{/if}-->><!--<lang package='Template'>-->回复后才能够浏览<!--</lang>-->
+						</label>
+						<hr/>
+						<label class="checkbox">
+							<input type="checkbox" class="input-short" name="grouptopic_sticktopic" id="grouptopic_sticktopic" value="<!--{if isset($arrGrouptopic) && $arrGrouptopic['grouptopic_sticktopic']>0}--><!--{$arrGrouptopic['grouptopic_sticktopic']}--><!--{d*else}-->1<!--{/if}-->" <!--{if isset($arrGrouptopic) && $arrGrouptopic['grouptopic_sticktopic']>0}-->checked="checked"<!--{/if}--> <!--{if (!isset($arrGroup) && !Core_Extend+isAdmin()) || (isset($arrGroup) && !Groupadmin_Extend+checkTopicadminRbac($arrGroup,array('group@grouptopicadmin@sticktopic')))}-->disabled="disabled"<!--{/if}-->><!--<lang package='Template'>-->主题置顶<!--</lang>-->
+						</label>
+						<label class="checkbox">
+							<input type="checkbox" class="input-short" name="grouptopic_addtodigest" id="grouptopic_addtodigest" value="<!--{if isset($arrGrouptopic) && $arrGrouptopic['grouptopic_addtodigest']>0}--><!--{$arrGrouptopic['grouptopic_addtodigest']}--><!--{d*else}-->1<!--{/if}-->" <!--{if isset($arrGrouptopic) && $arrGrouptopic['grouptopic_addtodigest']>0}-->checked="checked"<!--{/if}--> <!--{if (!isset($arrGroup) && !Core_Extend+isAdmin()) || (isset($arrGroup) && !Groupadmin_Extend+checkTopicadminRbac($arrGroup,array('group@grouptopicadmin@digesttopic')))}-->disabled="disabled"<!--{/if}-->><!--<lang package='Template'>-->精华帖子<!--</lang>-->
+						</label>
+						<label class="checkbox">
+							<input type="checkbox" class="input-short" name="grouptopic_isrecommend" id="grouptopic_isrecommend" value="1" <!--{if isset($arrGrouptopic) && $arrGrouptopic['grouptopic_isrecommend']==1}-->checked="checked"<!--{/if}--> <!--{if (!isset($arrGroup) && !Core_Extend+isAdmin()) || (isset($arrGroup) && !Groupadmin_Extend+checkTopicadminRbac($arrGroup,array('group@grouptopicadmin@recommendtopic')))}-->disabled="disabled"<!--{/if}-->><!--<lang package='Template'>-->推荐帖子<!--</lang>-->
+						</label>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="clearfix"></div>
+
+				<div class="form-actions" style="margin-top:-10px;">
+					<!--{if !empty($nGroupid)}-->
+					<input type="hidden" name="group_id" id="group_id" value="<!--{$nGroupid}-->">
+					<!--{/if}-->
+					<!--{if isset($arrGrouptopic)}-->
+					<input type="hidden" name="grouptopic_id" value="<!--{$arrGrouptopic.grouptopic_id}-->">
+					<!--{/if}-->
+					<input type="hidden" name="ajax" value="1">
+					<input type="submit" name="submit_button" id="submit_button" class="btn" value="<!--{if isset($arrGrouptopic)}--><!--<lang package='Template'>-->更新帖子<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->发表帖子<!--</lang>--><!--{/if}-->" />&nbsp;
+					<input type="button" name="back_button" id="back_button" class="btn" onClick="grouptopicBack();" value="<!--<lang package='__COMMON_LANG__@Common'>-->取消<!--</lang>-->" />
+				</div>
+			</form>
+		</div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

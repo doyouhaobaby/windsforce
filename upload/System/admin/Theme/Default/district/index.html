@@ -1,0 +1,104 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+function add(){
+	window.location.href='<!--{:Q::U('district/add?pid='.$arrValues[0].'&cid='.$arrValues[1].'&did='.$arrValues[2])}-->';
+}
+
+function refreshDistrict(province,city,district){
+	window.location.href=Q.U('district/index'+
+		'?province='+province+'&city='+city+'&district='+district+
+		'&pid='+$('#province').val()+'&cid='+$('#city').val()+"&did="+$('#district').val());
+}
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->地区列表<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->地区列表<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->您可以自己编辑地区数据<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->如果没有必要请不要删除地理数据<!--</lang>--></li>
+				</ul>
+			</div>
+
+			<div class="module_content">
+				<form name="districtForm" method="post" autocomplete="off" id="districtForm" class="quick_search">
+					<table cellspacing="3" cellpadding="3">
+						<tr>
+							<td colspan="4">
+								<!--{$sHtml}-->
+							</td>
+						</tr>
+					</table>
+					<input type="hidden" name="c" value="<!--{:MODULE_NAME}-->"/>
+					<input type="hidden" name="a" value="<!--{:ACTION_NAME}-->"/>
+				</form>
+			</div>
+		</article>
+		
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><a href="<!--{:Q::U('district/index')}-->"><!--<lang package='Template'>-->地区列表<!--</lang>--></a></h3>
+				<ul class="tabs">
+					<li class="active"><a href="javascript:void(0);" onclick="add()"><!--<lang package='Template'>-->添加地区<!--</lang>--></a></li>
+					<li><a class="tab_edit" href="javascript:void(0);" onclick="edit()"><!--<lang package='Template'>-->编辑<!--</lang>--></a></li>
+					<li><a class="tab_delete" href="javascript:void(0);" onclick="foreverdelDeep()"><!--<lang package='Template'>-->彻底删除<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<div class="module_content">
+				<table class="tablesorter" cellspacing="0" id="checkList">
+					<thead>
+						<tr>
+							<th width="20"><input type="checkbox" onclick="checkAll('checkList')"></th>
+							<th width="85"><!--<lang package='Template'>-->编号<!--</lang>--></th>
+							<th><!--<lang package='Template'>-->地区名称<!--</lang>--></th>
+							<th width="100"><!--<lang package='Template'>-->序号<!--</lang>--></th>
+							<th width="40"><!--<lang package='Template'>-->操作<!--</lang>--></th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--{if !empty($arrThevalues)}-->
+						<!--<foreach for=arrThevalues>-->
+						<tr id="datalist-<!--{$value[0]}-->">
+							<td><input type="checkbox" name="key" value="<!--{$value[0]}-->" <!--{if $TheController->is_system_district($value[0])}-->disabled="disabled"<!--{/if}-->></td>
+							<td><!--{$value[0]}--></td>
+							<td><!--{$value[1]}-->
+								<!--{if !$TheController->is_system_district($value[0])}-->
+								<div class="row-actions">
+									<span class='edit'><a href="javascript:edit('<!--{$value[0]}-->')"><!--<lang package='Template'>-->编辑<!--</lang>--></a>|</span>
+									<span class='delete'><a href="javascript:foreverdelDeep('<!--{$value[0]}-->');"><!--<lang package='Template'>-->彻底删除<!--</lang>--></a></span>
+								</div>
+								<!--{/if}-->
+							</td>
+							<td class="pointer" title="<!--<lang package='Template'>-->点击修改数据<!--</lang>-->" id="district_sort_<!--{$value[0]}-->" onClick="clickToInput('district_sort','<!--{$value[0]}-->')"><!--{$value[2]}--></td>
+							<td><a href="javascript:edit('<!--{$value[0]}-->')"><input type="image" src="<!--{:At::path('icn_edit.png')}-->" title="<!--<lang package='Template'>-->编辑<!--</lang>-->"></a>
+							</td>
+						</tr>
+						<!--</foreach>-->
+						<!--{d*else}-->
+						<tr>
+							<td colspan="5"><!--<lang package='Template'>-->暂时没有发现任何记录<!--</lang>--></td>
+						</tr>
+						<!--{/if}-->
+					</tbody>
+				</table>
+			</div>
+
+			<div class="module_content operate_box">
+				<div class="left"></div>
+				<div class="right operate" style="text-align:right;">
+					<input type="button" name="add" value="<!--<lang package='Template'>-->新增<!--</lang>-->" onclick="add()" class="alt_btn">&nbsp;
+					<input type="button" name="edit" value="<!--<lang package='Template'>-->编辑<!--</lang>-->" onclick="edit()" class="alt_btn">&nbsp;
+					<input type="button" name="delete" value="<!--<lang package='Template'>-->彻底删除<!--</lang>-->" onclick="foreverdelDeep()" class="alt_btn">
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</article>
+
+<!--<include file="public+footer">-->

@@ -1,0 +1,32 @@
+</div>
+
+<div class="footer">
+	<div class="container_12">
+		<div class="grid_4">
+			<p>Copyright &copy; <!--{$GLOBALS['_option_']['site_year']}--> &nbsp;<!--{$GLOBALS['_option_']['site_name']}-->.</p>
+			<p>Powered by <strong><a href="<!--{$GLOBALS['_option_']['windsforce_program_url']}-->" title="<!--{$GLOBALS['_option_']['windsforce_program_year']}-->"><!--{$GLOBALS['_option_']['windsforce_program_name']}--></a></strong>
+			<em><!--{$GLOBALS['_option_']['windsforce_program_version']}--></em>.</p>
+		</div>
+		<div class="grid_8" style="text-align:right;">
+			<p><!--{~$arrFooterNavs=$GLOBALS['_cache_']['nav']['footer']}-->
+				<!--<foreach for=arrFooterNavs value=arrFooterNav>-->
+				<a <!--{$arrFooterNav['style']}--> title="<!--{$arrFooterNav['description']}-->" href="<!--{$arrFooterNav['link']}-->" <!--{$arrFooterNav['target']}--> <!--{if $arrFooterNav['app']===APP_NAME}-->class="active"<!--{/if}-->>
+					<!--{$arrFooterNav['title']}-->
+				</a>
+				<span class="pipe">|</span>
+				<!--</foreach>-->
+				<a href="<!--{$GLOBALS['_option_']['windsforce_company_url']}-->" title="<!--{$GLOBALS['_option_']['windsforce_company_year']}-->"><!--{$GLOBALS['_option_']['windsforce_company_name']}--></a>&nbsp;
+				<!--{$GLOBALS['_option_']['stat_code']}-->
+				<!--{if !empty($GLOBALS['_option_']['icp'])}-->
+					<span class="pipe">|</span>
+					<a href="http://www.miitbeian.gov.cn/"><!--{$GLOBALS['_option_']['icp']}--></a>
+					<!--{/if}-->
+				</p>
+				<p class="footer_debug">GMT <!--{$GLOBALS['_commonConfig_']['TIME_ZONE']}-->, <!--{:date('Y-m-d H:i')}-->. <span class="runtime_result" id="runtime_result"><!--<lang package='__COMMON_LANG__@Common'>-->数据加载中<!--</lang>--></span>
+			</p>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+
+<!--<include file="Core_Extend::template('cfooter')" />-->

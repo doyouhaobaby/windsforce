@@ -1,0 +1,73 @@
+<!--<include file="Core_Extend::template('cheader')" />-->
+
+<!--{style}-->
+html,body{background:none;width:700px;}
+<!--{/style}-->
+
+<!--{script}-->
+function deleteAttachment(id){
+	windsforceConfirm('<!--<lang package='Template'>-->你确定要删除附件吗?<!--</lang>-->',function(){
+		Q.AjaxSend(Q.U('home://attachment/delete_attachment?id='+id),
+			'ajax=1','',
+			function(data,status){
+				if(status==1){
+					$('#attachment_item_'+id).remove();
+					return true;
+				}
+			}
+		);
+
+		return true;
+	});
+
+	return false;
+}
+
+function insertYes(id){
+	$('#insertattachement-'+id).html('<font style="color:green;">√</font>&nbsp;<font style="color:#999;"><!--<lang package='Template'>-->插入<!--</lang>--></font>');
+	setTimeout(function(){$('#attachment_item_'+id).remove();},500);
+}
+
+function getCheckboxValue(){
+	var arrValue=[];
+	$('input[name="selectId"]:checked').each(function(){
+		arrValue.push($(this).val());
+	});
+	return arrValue.length==0?false:arrValue;
+} 
+<!--{/script}-->
+
+	<div style="width:500px;">
+		<!--<include file="attachment+dialogmenu" />-->
+
+		<div style="width:500px;">
+			<div style="width:500px;">
+				<!--{if !empty($arrAttachments)}-->
+				<ul class="thumbnails">
+					<!--<foreach for=arrAttachments value=oAttachment>-->
+					<li style="width:110px;" id="attachment_item_<!--{$oAttachment['attachment_id']}-->">
+						<div class="thumbnail">
+							<div class="img dialogattachment_thumb">
+								<a target="_blank" href="<!--{:Q::U('home://file@?id='.$oAttachment['attachment_id'])}-->">
+									<img src="<!--{:Attachment_Extend::getAttachmentPreview($oAttachment)}-->" alt="<!--{$oAttachment['attachment_name']}-->" height="90px" width="85" title="Name:<!--{$oAttachment['attachment_name']}-->&nbsp;|&nbsp;Size:<!--{$oAttachment['attachment_size']|C+changeFileSize}-->">
+								</a>
+							</div>
+							<div class="caption" style="text-align:center;margin:auto;">
+								<p><!--{if $nMulti==1 && ACTION_NAME==='lists'}-->
+									<input type="checkbox" name="selectId" value="<!--{if $GLOBALS['_option_']['attachment_dialog_full']==1 || $nFull==1}--><!--{:Attachment_Extend::getAttachmenturl_($oAttachment)}--><!--{d*else}--><!--{$oAttachment['attachment_id']}--><!--{/if}-->"/>&nbsp;
+									<!--{/if}-->
+									<span id="insertattachement-<!--{$oAttachment['attachment_id']}-->">
+										<a class="btn btn-mini" href="javascript:void(0);" onclick="javascript:parent.<!--{$sFunction}-->('<!--{if $GLOBALS['_option_']['attachment_dialog_full']==1 || $nFull==1}--><!--{:Attachment_Extend::getAttachmenturl_($oAttachment)}--><!--{d*else}--><!--{$oAttachment['attachment_id']}--><!--{/if}-->');insertYes('<!--{$oAttachment['attachment_id']}-->');<!--{if $nFull==1}-->parent.closeAddattachment();<!--{/if}-->"><!--<lang package='Template'>-->插入<!--</lang>--></a>
+									</span>
+								</p>
+							</div>
+						</div>
+					</li>
+					<!--</foreach>-->
+				</ul>
+				<!--{/if}-->
+				<div style="margin:auto;text-align:center;"><!--{$sPageNavbar}--></div>
+			</div>
+		</div>
+
+<!--<include file="Core_Extend::template('cfooter')" />-->

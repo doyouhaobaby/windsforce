@@ -1,0 +1,51 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+function option(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'update...' );
+	$("#submit_button").attr("disabled", false);
+	$('.validate')(0).submit();
+}
+
+checkForm(option);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->头像设置<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->头像设置<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->头像设置<!--</lang>--></h3>
+				<ul class="tabs">
+					<li><a href="<!--{:Q::U('uploadoption/index')}-->"><!--<lang package='Template'>-->基本设置<!--</lang>--></a></li>
+					<li class="active"><a href="<!--{:Q::U('uploadoption/avatar')}-->"><!--<lang package='Template'>-->头像设置<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('uploadoption/show')}-->"><!--<lang package='Template'>-->媒体显示<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('uploadoption/ubb')}-->"><!--<lang package='Template'>-->Ubb设置<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('uploadoption/attachment')}-->"><!--<lang package='Template'>-->相册<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="<!--{:Q::U('uploadoption/update_option')}-->" method="post" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="avatar_uploadfile_maxsize"><!--<lang package='Template'>-->头像最大上传限制(B)<!--</lang>--> (<!--<lang package='Template'>-->当前最大上传尺寸<!--</lang>--> <!--{:C::changeFileSize($nUploadSize)}-->)</label>
+						<input type="text" name="options[avatar_uploadfile_maxsize]" id="avatar_uploadfile_maxsize" size="60" value="<!--{$arrOptions['avatar_uploadfile_maxsize']}-->" class="{required:true,ints:true,min: -1}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->系统最大附件上传大小，单位为B，-1表示不限制<!--</lang>--> <br/>
+						<!--<lang package='Template'>-->服务器最大上传值<!--</lang>--> <!--{$nUploadMaxFilesize}--> (<!--{$nUploadMaxFilesize*1048576}-->B) <!--<lang package='Template'>-->请注意最好不要超过这个值，否则不会有任何效果<!--</lang>-->
+						</div>
+						<p class="input_errortips"></p>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input id="submit_button" type="submit" class="alt_btn" value="<!--<lang package='Template'>-->发布<!--</lang>-->" />
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->" />
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

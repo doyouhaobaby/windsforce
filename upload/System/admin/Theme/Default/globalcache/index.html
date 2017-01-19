@@ -1,0 +1,61 @@
+<!--<include file="public+header" />-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->更新缓存<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->更新缓存<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->当站点进行了数据恢复、升级或者工作出现异常的时候，您可以使用本功能重新生成缓存。更新缓存的时候，可能让服务器负载升高，请尽量避开会员访问的高峰时间<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->数据缓存：更新站点的全部数据缓存<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->模板缓存：更新网站模板、风格等缓存文件，当您修改了模板或者风格，但是没有立即生效的时候使用<!--</lang>--></li>
+					<li class="message-display common-message-display" style="list-style:none;"><a href="javascript:void(0);" onclick="messageDisplay();"><!--<lang package='Template'>-->展开更多<!--</lang>-->&gt;&gt;</a></li>
+					<div class="message_display none">
+						<li><!--<lang package='Template'>-->字段缓存：当你修改了数据库结构后，可以更新然后可以使用新的结构<!--</lang>--></li>
+						<li style="list-style:none;" class="common_message_display"><a href="javascript:void(0);" onclick="messageDisplay();"><!--<lang package='Template'>-->收起<!--</lang>-->&lt;&lt;&lt;&lt;</a></li>
+					</div>
+				</ul>
+			</div>
+			<form action="<!--{:Q::U('globalcache/cache')}-->" method="post" id="globalCache">
+				<div class="module_content">
+					<fieldset>
+						<label for="slide_duration"><!--<lang package='Template'>-->缓存类型<!--</lang>--></label>
+						<input type="checkbox" name="type[]" value="data" checked />
+						<!--<lang package='Template'>-->数据缓存<!--</lang>-->&nbsp;&nbsp;
+						<input type="checkbox" name="type[]" value="template" checked />
+						<!--<lang package='Template'>-->模板缓存<!--</lang>-->&nbsp;&nbsp;
+						<input type="checkbox" name="type[]" value="field"/>
+						<!--<lang package='Template'>-->字段缓存<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->请选择需要更新缓存的类型<!--</lang>--></div>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="submit" id="submit_button"  value="<!--<lang package='Template'>-->发布<!--</lang>-->" class="alt_btn">
+					</div>
+				</footer>
+			</form>
+		</article>
+
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->应用缓存<!--</lang>--></h3></header>
+			<div class="module_content">
+				<fieldset>
+					<label for="slide_duration"><!--<lang package='Template'>-->应用缓存列表<!--</lang>--></label>
+					<p>
+						<!--<foreach for=arrAppinfos value=arrAppinfo>-->
+						<a href="<!--{:Q::U('app/config?id='.$arrAppinfo['app_id'].'&controller=appcache')}-->" class="content-tab"><!--{$arrAppinfo['app_name']}-->&nbsp;(<!--{$arrAppinfo['app_identifier']}-->)</a>
+						<!--</foreach>-->
+					</p>
+					<div class="description"><!--<lang package='Template'>-->直接点击链接更新相应的应用缓存<!--</lang>--></div>
+				</fieldset>
+			</div>
+		</article>
+
+<!--<include file="public+footer">-->

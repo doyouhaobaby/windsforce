@@ -1,0 +1,49 @@
+<div class="genderbg_<!--{$arrUserInfo['userprofile_gender']}-->">
+	<div class="bm_hover_card_content udline">
+		<div class="bm_hover_card_avator">
+			<a href="<!--{:Q::U('home://space@?id='.$arrUserInfo['user_id'])}-->" target="_blank">
+				<img src="<!--{:Core_Extend::avatar( $arrUserInfo['user_id'],'small' )}-->" height="50" width="50" />
+			</a>
+		</div>
+		<div class="bm_hover_card_name">
+			<img src="<!--{$sUsergender}-->" style="position:relative;top:-2px;" />&nbsp;
+			<a href="<!--{:Q::U('home://space@?id='.$arrUserInfo['user_id'])}-->" target="_blank"><!--{$arrUserInfo['user_name']}--></a>
+			<!--{$arrUserInfo['user_id']|Core_Extend+getUseronlineicon}-->
+		</div>
+		<!--{if $arrUserInfo['userprofile_resideprovince']}-->
+		<div class="bm_hover_card_from">
+			<span><!--{$arrUserInfo['userprofile_resideprovince']}--></span>
+			<span><!--{$arrUserInfo['userprofile_residecity']}--></span>
+		</div>
+		<!--{/if}-->
+		<!--{if $arrUserInfo['user_sign']}-->
+		<div class="bm_hover_card_signaure"><!--{$arrUserInfo['user_sign']|C+subString=0,16}--></div>
+		<!--{/if}-->
+		<div class="clearfix"></div>
+		<div class="bm_hover_card_info">
+			<table cellpadding="4" cellspacing="1" width="100%" border="0">
+				<tr>
+					<td><a href="<!--{:Q::U('home://space@?id='.$arrUserInfo['user_id'].'&type=friend')}-->" target="_blank"><!--<lang package='Template'>-->关注<!--</lang>--></a></td>
+					<td><a href="<!--{:Q::U('home://space@?id='.$arrUserInfo['user_id'].'&type=friend&fan=1')}-->" target="_blank"><!--<lang package='Template'>-->粉丝<!--</lang>--></a></td>
+					<td><a href="<!--{:Q::U('home://space@?id='.$arrUserInfo['user_id'].'&type=rating')}-->" target="_blank"><!--<lang package='Template'>-->积分<!--</lang>--></a></td>
+					<td><a href="<!--{:Q::U('home://space@?id='.$arrUserInfo['user_id'].'&type=rating')}-->" target="_blank"><!--<lang package='Template'>-->金币<!--</lang>--></a></td>
+				</tr>
+				<tr>
+					<td><b><!--{$arrUserInfo['usercount_friends']}--></b></td>
+					<td><b><!--{$arrUserInfo['usercount_fans']}--></b></td>
+					<td><b><!--{$arrUserInfo['usercount_extendcredit1']}--></b></td>
+					<td><b><!--{$arrUserInfo['usercount_extendcredit2']}--></b></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="bm_hover_card_bar">
+		<!--{~$nAlreadyFriendId=Core_Extend::isAlreadyFriend($arrUserInfo['user_id'])}-->
+		<!--{if $nAlreadyFriendId==1 || $nAlreadyFriendId==4}-->
+		<a rel="nofollow" class="btn btn-mini" href="javascript:void(0);" onclick="deleteFriend(<!--{$arrUserInfo['user_id']}-->);"><!--<lang package='Template'>-->取消关注<!--</lang>--></a>
+		<!--{d*else}-->
+		<a rel="nofollow" class="btn btn-mini" href="javascript:void(0);" onclick="addFriend(<!--{$arrUserInfo['user_id']}-->);"><!--<lang package='Template'>-->加关注<!--</lang>--></a>
+		<!--{/if}-->&nbsp;
+		<a rel="nofollow" class="btn btn-mini" href="javascript:void(0);" onclick="addMessage('<!--{$arrUserInfo['user_id']}-->');"><!--<lang package='Template'>-->写私信<!--</lang>--></a>
+	</div>
+</div>

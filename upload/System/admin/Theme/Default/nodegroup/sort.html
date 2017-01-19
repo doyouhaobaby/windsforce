@@ -1,0 +1,82 @@
+<!--<include file="public+header">-->
+
+<!--{script}-->
+function saveSort(){
+	move.ok();
+	Q.AjaxSubmit('form1','<!--{:Q::U('nodegroup/save_sort')}-->');
+}
+<!--{/script}-->
+
+<script src="<!--{:__PUBLIC__}-->/js/admin/SortSelect.js" type="text/javascript"></script>
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->分组排序<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->分组排序<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->排序提供了多个按钮供你操作，选择完毕后，请不要忘记保存一下<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->分组排序<!--</lang>--></h3>
+				<ul class="tabs">
+					<li class="active"><a href="<!--{:Q::U('node/index')}-->"><!--<lang package='Template'>-->分组列表<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form method="post" id="form1" name="form1">
+				<div class="module_content">
+					<fieldset>
+						<label for="search"><!--<lang package='Template'>-->搜索<!--</lang>--></label>
+						<p><input name="search" type="text" class="left">
+						<input type="button" value="<!--<lang package='Template'>-->查询<!--</lang>-->" onclick="move.search()" class="alt_btn" /></p>
+						<div class="description"><!--<lang package='Template'>-->请输入要排序的序号数字<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label><!--<lang package='Template'>-->排序<!--</lang>--></label>
+						<table>
+							<tr>
+								<td><p><input type="button" value="<!--<lang package='Template'>-->第一<!--</lang>-->" onclick="move.moveFirst()" class="alt_btn" /></p>
+									<p><input type="button" value="<!--<lang package='Template'>-->上移<!--</lang>-->" onclick="move.moveUp()" class="alt_btn" /></p>
+									<p><input type="button" value="<!--<lang package='Template'>-->下移<!--</lang>-->" onclick="move.moveDown()" class="alt_btn" /></p>
+									<p><input type="button" value="<!--<lang package='Template'>-->最后<!--</lang>-->" onclick="move.moveEnd()" class="alt_btn" /></p>
+								</td>
+								<td><select name="sort" size="15" style="width: 300px; height: 200px">
+										<!--<foreach for=arrSortList>-->
+										<option value="<!--{$value:nodegroup_id}-->"><!--{$key+1}-->.<!--{$value:nodegroup_title}--></option>
+										<!--</foreach>-->
+									</select>
+									<div class="description"><!--<lang package='Template'>-->排序主操作窗口<!--</lang>--></div>
+								</td>
+							</tr>
+						</table>
+					</fieldset>
+					<fieldset>
+						<label><!--<lang package='Template'>-->跳转<!--</lang>--></label>
+						<p><input type="text" name="jumpNum" size="4" class="left">
+							<input type="button" value="<!--<lang package='Template'>-->跳转<!--</lang>-->" onclick="move.jump()" class="alt_btn" />
+						</p>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="hidden" name="moveResult" />
+						<input type="hidden" name="ajax" VALUE="1" />
+						<input type="button" value="<!--<lang package='Template'>-->确定<!--</lang>-->" onclick="saveSort()" class="alt_btn"/>
+						<input type="reset" value="<!--<lang package='Template'>-->取消<!--</lang>-->" onclick="history.back()" />
+					</div>
+				</footer>
+			</form>
+		</article>
+		<!--{script}-->
+		var move= new sortSelect('form1','sort','search','jumpNum');
+		<!--{/script}-->
+	
+<!--<include file="public+footer">-->

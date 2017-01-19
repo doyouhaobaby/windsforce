@@ -1,0 +1,9 @@
+			<div class="nav_tabcontainer nav_text">
+				<ul>
+					<li <!--{if ACTION_NAME==='rating'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://spaceadmin/rating')}-->"><!--<lang package='Template'>-->我的积分<!--</lang>--></a></li>
+					<li <!--{if ACTION_NAME==='transfer'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://spaceadmin/transfer')}-->"><!--<lang package='Template'>-->转账<!--</lang>--></a></li>
+					<li <!--{if ACTION_NAME==='exchange'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://spaceadmin/exchange')}-->"><!--<lang package='Template'>-->积分兑换<!--</lang>--></a></li>
+					<li <!--{if in_array(ACTION_NAME,array('creditlog','creditrulelog'))}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://spaceadmin/creditlog')}-->"><!--<lang package='Template'>-->积分记录<!--</lang>--></a></li>
+					<li <!--{if ACTION_NAME==='creditrule'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://spaceadmin/creditrule')}-->"><!--<lang package='Template'>-->积分规则<!--</lang>--></a></li>
+				</ul>
+			</div>

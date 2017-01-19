@@ -1,0 +1,105 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{if Groupadmin_Extend+checkAdminGroupRbac($arrGroup['group_id'])}-->
+<!--{:Core_Extend::validate()}-->
+
+<!--{script}-->
+function deleteGroupuser(nGroupid,nUserid){
+	windsforceConfirm(Q.L('确实要永久删除选择项吗？','Common'),function(){
+		Q.AjaxSend(Q.U('group://groupadmin/user_delete'),'gid='+nGroupid+'&uid='+nUserid+'&ajax=1','',completeDelete);
+	});
+}
+
+function completeDelete(data,status){
+	if(status==1){
+		setTimeout("window.location.replace(_SELF_);",1000);
+	}
+}
+
+checkForm();
+<!--{/script}-->
+<!--{/if}-->
+
+		<div class="container_12">
+			<ul class="breadcrumb">
+				<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+				<li><a href="<!--{:Q::U('group://public/index')}-->" title="<!--<lang package='Template'>-->小组<!--</lang>-->"><!--<lang package='Template'>-->小组<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+				<li><a href="<!--{:Group_Extend::getGroupurl($arrGroup)}-->"><!--{$arrGroup.group_nikename}--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+				<li><!--<lang package='Template'>-->小组成员<!--</lang>--></li>
+			</ul>
+		</div>
+
+		<div class="container_12 container_box">
+			<!--<include file="group+header" />-->
+			
+			<div class="grid_12">
+				<div id="groupuser_leaders" class="commonbox userlist clearfix" style="margin-top:10px;">
+					<div class="commonboxtitle"><!--<lang package='Template'>-->小组<!--</lang>--><!--{$arrGroup['group_roleleader']}--></div>
+
+					<!--{if !empty($arrGroupleaders)}-->
+					<!--<foreach for=arrGroupleaders value=arrGroupleader>-->
+					<div class="smalluser left">
+						<a href="<!--{:Q::U('group://space@?id='.$arrGroupleader['user_id'])}-->"><img src="<!--{:Core_Extend::avatar( $arrGroupleader['user_id'],'small' )}-->" width="100%" title="<!--<lang package='Template'>-->组长<!--</lang>-->&nbsp;<!--{$arrGroupleader['user_name']}--> | <!--<lang package='Template'>-->创建时间<!--</lang>-->&nbsp;<!--{$arrGroupleader['create_dateline']|Core_Extend+timeFormat}-->" alt="<!--<lang package='Template'>-->组长<!--</lang>-->&nbsp;<!--{$arrGroupleader['user_name']}-->" class="need_lazyload" ></a>
+						<a class="need_tips" tips="<!--<lang package='Template'>-->组长<!--</lang>-->&nbsp;<!--{$arrGroupleader['user_name']}-->&nbsp;,&nbsp;<!--<lang package='Template'>-->创建时间<!--</lang>-->&nbsp;<!--{$arrGroupleader['create_dateline']|Core_Extend+timeFormat}-->" href="<!--{:Q::U('group://space@?id='.$arrGroupleader['user_id'])}-->"><!--{$arrGroupleader['user_name']|C+subString=0,3}--></a>
+					</div>
+					<!--</foreach>-->
+					<div class="clearfix"></div>
+					<!--{d*else}-->
+					<p><!--<lang package='Template'>-->暂时没有发现任何小组长<!--</lang>--></p>
+					<!--{/if}-->
+				</div>
+
+				<div id="groupuser_admins" class="commonbox userlist clearfix" style="margin-top:10px;">
+					<div class="commonboxtitle"><!--<lang package='Template'>-->小组<!--</lang>--><!--{$arrGroup['group_roleadmin']}--></div>
+
+					<!--{if !empty($arrGroupadmins)}-->
+					<!--<foreach for=arrGroupadmins value=arrGroupadmin>-->
+					<div class="smalluser left" style="text-align:center;">
+						<a href="<!--{:Q::U('group://space@?id='.$arrGroupadmin['user_id'])}-->"><img src="<!--{:Core_Extend::avatar( $arrGroupadmin['user_id'],'small' )}-->" width="100%" title="<!--<lang package='Template'>-->管理员<!--</lang>-->&nbsp;<!--{$arrGroupadmin['user_name']}--> | <!--<lang package='Template'>-->创建时间<!--</lang>-->&nbsp;<!--{$arrGroupadmin['create_dateline']|Core_Extend+timeFormat}-->" alt="<!--<lang package='Template'>-->管理员<!--</lang>-->&nbsp;<!--{$arrGroupadmin['user_name']}-->" class="need_lazyload" ></a>
+						<a class="need_tips" tips="<!--<lang package='Template'>-->管理员<!--</lang>-->&nbsp;<!--{$arrGroupadmin['user_name']}-->&nbsp;,&nbsp;<!--<lang package='Template'>-->创建时间<!--</lang>-->&nbsp;<!--{$arrGroupadmin['create_dateline']|Core_Extend+timeFormat}-->" href="<!--{:Q::U('group://space@?id='.$arrGroupadmin['user_id'])}-->"><!--{$arrGroupadmin['user_name']|C+subString=0,3}--></a>
+						<!--{if Groupadmin_Extend+checkAdminGroupRbac($arrGroup['group_id'])}-->&nbsp;
+						<a href="javascript:void(0);" onclick="deleteGroupuser('<!--{$arrGroupadmin['group_id']}-->','<!--{$arrGroupadmin['user_id']}-->');" style="color:red;">x</a>
+						<!--{/if}-->
+					</div>
+					<!--</foreach>-->
+					<div class="clearfix"></div>
+					<!--{d*else}-->
+					<p><!--<lang package='Template'>-->暂时没有发现任何管理员<!--</lang>--></p>
+					<!--{/if}-->
+
+					<form action="<!--{:Q::U('group://groupadmin/admins_update')}-->" method="post" id="groupAdd" style="margin-top:10px;" class="validate">
+						<fieldset>
+							<input type="text" class="left" name="admin_userid" id="admin_userid" size="40" value="" required title="<!--<lang package='Template'>-->小组管理员不能为空<!--</lang>-->" />&nbsp;
+							<button type="submit" class="btn"><!--<lang package='Template'>-->更新<!--</lang>--></button>
+							<p class="input_errortips"></p>
+							<p class="help-block"><!--<lang package='Template'>-->这里为小组的管理员，例如1,2,3表示用户ID为1,2,3三个用户为本小组的管理员<!--</lang>--></p>
+							<input type="hidden" name="gid" value="<!--{$arrGroup.group_id}-->">
+						</fieldset>
+					</form>
+				</div>
+				
+				<div id="groupuser_users" class="commonbox userlist" style="margin-top:10px;">
+					<div class="commonboxtitle"><!--<lang package='Template'>-->小组<!--</lang>--><!--{$arrGroup['group_roleuser']}--></div>
+
+					<!--{if !empty($arrGroupusers)}-->
+					<!--<foreach for=arrGroupusers value=arrGroupuser>-->
+					<div class="smalluser left" style="text-align:center;">
+						<a href="<!--{:Q::U('group://space@?id='.$arrGroupuser['user_id'])}-->"><img src="<!--{:Core_Extend::avatar( $arrGroupuser['user_id'],'small' )}-->" width="100%" title="<!--<lang package='Template'>-->成员<!--</lang>-->&nbsp;<!--{$arrGroupuser['user_name']}--> | <!--<lang package='Template'>-->创建时间<!--</lang>-->&nbsp;<!--{$arrGroupuser['create_dateline']|Core_Extend+timeFormat}-->" alt="<!--<lang package='Template'>-->成员<!--</lang>-->&nbsp;<!--{$arrGroupuser['user_name']}-->" class="need_lazyload" ></a>
+						<a class="need_tips" tips="<!--<lang package='Template'>-->成员<!--</lang>-->&nbsp;<!--{$arrGroupuser['user_name']}-->&nbsp;,&nbsp;<!--<lang package='Template'>-->创建时间<!--</lang>-->&nbsp;<!--{$arrGroupuser['create_dateline']|Core_Extend+timeFormat}-->" href="<!--{:Q::U('group://space@?id='.$arrGroupuser['user_id'])}-->"><!--{$arrGroupuser['user_name']|C+subString=0,3}--></a>
+						<!--{if Groupadmin_Extend+checkAdminGroupRbac($arrGroup['group_id'])}-->&nbsp;
+						<a href="javascript:void(0);" onclick="deleteGroupuser('<!--{$arrGroupuser['group_id']}-->','<!--{$arrGroupuser['user_id']}-->');" style="color:red;">x</a>
+						<!--{/if}-->
+					</div>
+					<!--</foreach>-->
+					<div class="clearfix"></div>
+					<!--{d*else}-->
+					<p><!--<lang package='Template'>-->暂时没有发现任何成员<!--</lang>--></p>
+					<!--{/if}-->
+
+					<!--{$sPageNavbar}-->
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

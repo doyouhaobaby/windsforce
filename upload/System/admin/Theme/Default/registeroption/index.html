@@ -1,0 +1,79 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+function option(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'update...' );
+	$("#submit_button").attr("disabled", false);
+}
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->注册设置<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->注册设置<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->注册设置<!--</lang>--></h3>
+				<ul class="tabs">
+					<li class="active"><a href="<!--{:Q::U('registeroption/index')}-->"><!--<lang package='Template'>-->注册设置<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('registeroption/login')}-->"><!--<lang package='Template'>-->登陆安全设置<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="<!--{:Q::U('registeroption/update_option')}-->" method="post" onsubmit="return option();">
+				<div class="module_content">
+					<fieldset>
+						<label for="disallowed_register"><!--<lang package='Template'>-->关闭注册功能<!--</lang>--></label>
+						<input type="radio" id="disallowed_register" name="options[disallowed_register]" value="1" <!--{if $arrOptions['disallowed_register']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[disallowed_register]" value="0" <!--{if $arrOptions['disallowed_register']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->关闭注册功能后，新用户不能够注册<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="audit_register"><!--<lang package='Template'>-->审核新用户注册<!--</lang>--></label>
+						<input type="radio" id="audit_register" name="options[audit_register]" value="1" <!--{if $arrOptions['audit_register']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[audit_register]" value="0" <!--{if $arrOptions['audit_register']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->开启本功能后，新用户只有审核后才能够使用账户<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="disallowed_register_user"><!--<lang package='Template'>-->用户信息保留关键字<!--</lang>--></label>
+						<textarea name="options[disallowed_register_user]" rows="5"><!--{$arrOptions['disallowed_register_user']}--></textarea>
+						<div class="description"><!--<lang package='Template'>-->用户在其用户信息中无法使用这些关键字。每个关键字一行，可使用通配符 "*" 如 "*组长*"<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="only_login_viewsite"><!--<lang package='Template'>-->只有登陆后才能够访问网站<!--</lang>--></label>
+						<input type="radio" id="only_login_viewsite" name="options[only_login_viewsite]" value="1" <!--{if $arrOptions['only_login_viewsite']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[only_login_viewsite]" value="0" <!--{if $arrOptions['only_login_viewsite']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->开启本功能后，如果用户没有登录，那么他将无法访问网站的任何地方，对于建立内部系统而言，非常实用<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="allowed_register_email"><!--<lang package='Template'>-->允许的 EMAIL 地址<!--</lang>--></label>
+						<textarea name="options[allowed_register_email]" rows="5"><!--{$arrOptions['allowed_register_email']}--></textarea>
+						<div class="description"><!--<lang package='Template'>-->只允许使用这些域名结尾的 Email 地址注册<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="disallowed_register_email"><!--<lang package='Template'>-->禁止的 EMAIL 地址<!--</lang>--></label>
+						<textarea name="options[disallowed_register_email]" rows="5"><!--{$arrOptions['disallowed_register_email']}--></textarea>
+						<div class="description"><!--<lang package='Template'>-->禁止使用这些域名结尾的 Email 地址注册<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="register_welcome"><!--<lang package='Template'>-->网站主页介绍<!--</lang>--></label>
+						<textarea name="options[register_welcome]" rows="5"><!--{$arrOptions['register_welcome']}--></textarea>
+						<div class="description">
+							<!--<lang package='Template'>-->会员注册时候的欢迎提醒模板<!--</lang>--><br/>
+							<!--<lang package='Template'>-->系统变量替换: {site_name} 网站标题,{site_description} 网站描述,{site_url} 站点信息,{time} 当前时间,{user_name} 登录用户,{user_nikename} 登录用户昵称,{admin_email} 系统管理员邮箱<!--</lang>--><br/>
+							<!--<lang package='Template'>-->静态变量替换: {static_time} 为用户创建的当前时间,{static_user_name} 为用户创建的用户名<!--</lang>-->
+						</div>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input id="submit_button" type="submit" class="alt_btn" value="<!--<lang package='Template'>-->发布<!--</lang>-->" />
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->" />
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

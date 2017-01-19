@@ -1,0 +1,349 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{:Core_Extend::validate()}-->
+
+<!--{script}-->
+function update(){
+	$("#submit_button").attr("disabled","disabled");
+	$("#submit_button").text('<!--<lang package='__COMMON_LANG__@Common'>-->更新<!--</lang>-->...');
+	Q.AjaxSubmit('informationUpd','<!--{:Q::U('home://spaceadmin/change_info')}-->','',function(data,status){ 
+		$("#submit_button").attr("disabled",false);
+		$("#submit_button").text("<!--<lang package='__COMMON_LANG__@Common'>-->更新<!--</lang>-->");
+	});
+}
+
+function usersignPreview(){
+	sHtml=windsforceAjaxhtml(_ROOT_+'/index.php?app=home&c=spaceadmin&a=usersign&content='+$('#user_sign').val());
+	$('#usersign_preview').html(sHtml);
+}
+
+function stealthOnline(nUserid){
+	Q.AjaxSend(Q.U('home://misc/stealth_online?uid='+nUserid),'ajax=1','',function(data,status){
+		if(status==1){
+			setTimeout("window.location.replace(_SELF_);",1000);
+		}
+	});
+}
+
+function unstealthOnline(nUserid){
+	Q.AjaxSend(Q.U('home://misc/stealth_online?un=1&uid='+nUserid),'ajax=1','',function(data,status){
+		if(status==1){
+			setTimeout("window.location.replace(_SELF_);",1000);
+		}
+	});
+}
+
+checkForm(update,
+	{
+		user_email: {
+			required: true,
+			email: true
+		}
+	},{
+		user_email: "<!--<lang package='Template'>-->请输入合法的Email<!--</lang>-->"
+	}
+);
+<!--{/script}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('home://spaceadmin/index')}-->"><!--<lang package='Template'>-->用户资料<!--</lang>--></a> <span class="divider">/</span></li>
+			<li><!--<lang package='Template'>-->基本信息<!--</lang>--></li>
+		</ul>
+	</div>
+	
+	<div class="container_12 container_box">
+		<!--<include file="spaceadmin+menu" />-->
+		
+		<div class="container_12">
+			<div class="grid_12">
+				<div class="nav_tabcontainer nav_text">
+					<ul>
+						<!--<foreach for=arrInfoMenus key=sInfoMenuKey value=sInfoMenu>-->
+						<li <!--{if (!$sDo && !$sInfoMenuKey) || $sDo==$sInfoMenuKey}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://spaceadmin/index'.(!empty($sInfoMenuKey)?'?do='.$sInfoMenuKey:''))}-->"><!--{$sInfoMenu}--></a></li>
+						<!--</foreach>-->
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="container_12">
+			<div class="grid_12">
+				<form method="post" id="informationUpd" name="informationUpd" class="validate">
+					<fieldset>
+						<div class="control-group">
+							<label class="control-label">
+								<!--<lang package='Template'>-->用户名<!--</lang>-->&nbsp;&nbsp;<a href="<!--{:Q::U('home://space@?id='.$arrUserInfo['user_id'])}-->"><!--{$arrUserInfo['user_name']}--></a>&nbsp;
+								<!--{if $GLOBALS['_option_']['online_on']==1}-->
+								<span id="set_online">
+									<!--{$arrUserInfo['user_id']|Core_Extend+getUseronlineicon}-->&nbsp;
+									<!--{if $bOnline==false}-->
+									<a href="javascript:void(0);" onclick="unstealthOnline('<!--{$arrUserInfo['user_id']}-->');" ><!--<lang package='Template'>-->取消隐身<!--</lang>--></a>
+									<!--{d*else}-->
+									<a href="javascript:void(0);" onclick="stealthOnline('<!--{$arrUserInfo['user_id']}-->');"><!--<lang package='Template'>-->隐身<!--</lang>--></a>
+									<!--{/if}-->
+								</span>
+								<!--{/if}-->
+								<span class="pipe">|</span>
+								<span><!--<lang package='Template'>-->你的累计在线时间<!--</lang>-->&nbsp;<b><!--{$arrUserInfo['usercount_oltime']}-->&nbsp;(h)</b></span>
+							</label>
+							<p class="tips" style="margin:15px 0;"><!--<lang package='Template'>-->在这里你可以修改在线状态，点击图标修改在线状态<!--</lang>-->&nbsp;&nbsp;
+							<!--{if $GLOBALS['_option_']['online_stealtholtime']==1}--><b>
+							<!--<lang package='Template'>-->注意，隐身状态系统还是可以记录你的在线时间<!--</lang>--></b>
+							<!--{d*else}-->
+							<span style="color:red;font-weight:bold;"><!--<lang package='Template'>-->注意，隐身状态系统不会记录你的在线时间<!--</lang>--></span><!--{/if}--></p>
+						</div>
+						<!--{if !$sDo}-->
+						<!--<foreach for=arrBases value=sBase>-->
+						<!--{if array_key_exists($sBase,$arrUserprofilesettingDatas)}-->
+						<!--{if $sBase=='userprofile_gender'}-->
+						<div class="control-group">
+							<label class="control-label" for="userprofile_gender"><!--{$arrUserprofilesettingDatas['userprofile_gender']['userprofilesetting_title']}--></label>
+							<div class="controls">
+								<select id="userprofile_gender" name="userprofile_gender">
+									<option value="0" <!--{if !$arrUserInfo['userprofile_gender']}-->selected="selected"<!--{/if}-->><!--{:Profile_Extend::getGender(0)}--></option>
+									<option value="1" <!--{if $arrUserInfo['userprofile_gender']==1}-->selected="selected"<!--{/if}-->><!--{:Profile_Extend::getGender(1)}--></option>
+									<option value="2" <!--{if $arrUserInfo['userprofile_gender']==2}-->selected="selected"<!--{/if}-->><!--{:Profile_Extend::getGender(2)}--></option>
+								</select>
+							</div>
+						</div>
+						<!--{elseif $sBase=='userprofile_birthday'}-->
+						<div class="control-group">
+							<label class="control-label" for="userprofile_birthday"><!--{$arrUserprofilesettingDatas['userprofile_birthday']['userprofilesetting_title']}--></label>
+							<div class="controls">
+								<select name="userprofile_birthyear" id="userprofile_birthyear" style="width:80px;" onchange="showYearmonthday('userprofile_birthday','userprofile_birthmonth','userprofile_birthyear');">
+									<option value="" <!--{if !$arrUserInfo['userprofile_birthyear']}-->selected="selected"<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->年<!--</lang>--></option>
+									<!--<for start='0' end='100' var='nBirthyear'>-->
+									<!--{~$nTheNowYear=$nNowYear-$nBirthyear}-->
+									<option value="<!--{$nTheNowYear}-->" <!--{if $arrUserInfo['userprofile_birthyear']==$nTheNowYear}-->selected="selected"<!--{/if}-->><!--{$nTheNowYear}--></option>
+									<!--</for>-->
+								</select>&nbsp;&nbsp;
+								<select name="userprofile_birthmonth" id="userprofile_birthmonth" style="width:60px;" onchange="showYearmonthday('userprofile_birthday','userprofile_birthmonth','userprofile_birthyear');">
+									<option value="" <!--{if !$arrUserInfo['userprofile_birthmonth']}-->selected="selected"<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->月<!--</lang>--></option>
+									<!--<for start='1' end='12' var='nBirthmonth'>-->
+									<option value="<!--{$nBirthmonth}-->" <!--{if $arrUserInfo['userprofile_birthmonth']==$nBirthmonth}-->selected="selected"<!--{/if}-->><!--{$nBirthmonth}--></option>
+									<!--</for>-->
+								</select>&nbsp;&nbsp;
+								<select name="userprofile_birthday" id="userprofile_birthday" style="width:60px;">
+									<option value="" <!--{if !$arrUserInfo['userprofile_birthday']}-->selected="selected"<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->日<!--</lang>--></option>
+									<!--<for start='1' end='$nNowDays' var='nBirthday'>-->
+									<option value="<!--{$nBirthday}-->" <!--{if $arrUserInfo['userprofile_birthday']==$nBirthday}-->selected="selected"<!--{/if}-->><!--{$nBirthday}--></option>
+									<!--</for>-->
+								</select>
+							</div>
+						</div>
+						<!--{elseif $sBase=='userprofile_birthcity'}-->
+						<div class="control-group">
+							<label class="control-label" for="userprofile_birthcity"><!--{$arrUserprofilesettingDatas['userprofile_birthcity']['userprofilesetting_title']}--></label>
+							<div class="controls">
+								<!--{$sDirthDistrict}-->
+							</div>
+						</div>
+						<!--{elseif $sBase=='userprofile_residecity'}-->
+						<div class="control-group">
+							<label class="control-label" for="userprofile_residecity"><!--{$arrUserprofilesettingDatas['userprofile_residecity']['userprofilesetting_title']}--></label>
+							<div class="controls">
+								<!--{$sResideDistrict}-->
+							</div>
+						</div>
+						<!--{elseif $sBase=='userprofile_bloodtype'}-->
+						<div class="control-group">
+							<label class="control-label" for="userprofile_bloodtype"><!--{$arrUserprofilesettingDatas['userprofile_bloodtype']['userprofilesetting_title']}--></label>
+							<div class="controls">
+								<select name="userprofile_bloodtype">
+									<option value="A" <!--{if $arrUserInfo['userprofile_bloodtype']=='A'}-->selected="selected"<!--{/if}-->>A</option>
+									<option value="B" <!--{if $arrUserInfo['userprofile_bloodtype']=='B'}-->selected="selected"<!--{/if}-->>B</option>
+									<option value="AB" <!--{if $arrUserInfo['userprofile_bloodtype']=='AB'}-->selected="selected"<!--{/if}-->>AB</option>
+									<option value="O" <!--{if $arrUserInfo['userprofile_bloodtype']=='O'}-->selected="selected"<!--{/if}-->>O</option><option value="<!--<lang package='Template'>-->其它<!--</lang>-->"><!--<lang package='Template'>-->其它<!--</lang>--></option>
+								</select>
+							</div>
+						</div>
+						<!--{d*else}-->
+						<div class="control-group">
+							<label class="control-label" for="<!--{$sBase}-->"><!--{$arrUserprofilesettingDatas[$sBase]['userprofilesetting_title']}--></label>
+							<div class="controls">
+								<input class="input-xlarge" type="text" name="<!--{$sBase}-->" id="<!--{$sBase}-->" size="40" value="<!--{$arrUserInfo[$sBase]}-->" <!--{if $sBase=='userprofile_realname'}-->required title="<!--<lang package='Template'>-->真实姓名不能为空<!--</lang>-->"<!--{/if}-->/>
+								<p class="input_tips none"><!--<lang package='Template'>-->真实姓名不能为空<!--</lang>--></p>
+								<p class="input_errortips"></p>
+							</div>
+						</div>
+						<!--{/if}-->
+						<!--{/if}-->
+						<!--</foreach>-->
+
+						<!--<for start='1' end='8' var='nCustomFieldId'>-->
+						<!--{~$sCustomField='userprofile_field'.$nCustomFieldId}-->
+						<!--{if array_key_exists($sCustomField,$arrUserprofilesettingDatas)}-->
+						<div class="control-group">
+							<label class="control-label" for="<!--{$sCustomField}-->"><!--{$arrUserprofilesettingDatas[$sCustomField]['userprofilesetting_title']}--></label>
+							<div class="controls">
+								<input class="input-xlarge" type="text" name="<!--{$sCustomField}-->" id="<!--{$sCustomField}-->" size="40" value="<!--{$arrUserInfo[$sCustomField]}-->" />
+							</div>
+						</div>
+						<!--{/if}-->
+						<!--</for>-->
+						<!--{elseif $sDo=='contact'}-->
+						<!--<foreach for=arrContacts value=sContact>-->
+						<!--{if array_key_exists($sContact,$arrUserprofilesettingDatas)}-->
+						<div class="control-group">
+							<label class="control-label" for="<!--{$sContact}-->"><!--{$arrUserprofilesettingDatas[$sContact]['userprofilesetting_title']}--></label>
+							<div class="controls">
+								<input class="input-xlarge" type="text" name="<!--{$sContact}-->" id="<!--{$sContact}-->" size="40" value="<!--{$arrUserInfo[$sContact]}-->" />
+							</div>
+						</div>
+						<!--{/if}-->
+						<!--</foreach>-->
+						<div class="control-group">
+							<label class="control-label" for="user_email">Email</label>
+							<div class="controls">
+								<!--{$arrUserInfo['user_email']}-->&nbsp;(<a href="<!--{:Q::U('home://spaceadmin/index?do=info')}-->"><!--<lang package='Template'>-->修改<!--</lang>--></a>)
+							</div>
+						</div>
+						<!--{elseif $sDo=='edu'}-->
+						<!--<foreach for=arrEdus value=sEdu>-->
+						<!--{if array_key_exists($sEdu,$arrUserprofilesettingDatas)}-->
+						<!--{if $sEdu=='userprofile_nowschool'}-->
+						<div class="control-group">
+							<label class="control-label" for="userprofile_nowschool"><!--{$arrUserprofilesettingDatas['userprofile_nowschool']['userprofilesetting_title']}--></label>
+							<div class="controls">
+								<select name="userprofile_nowschool">
+									<option value="<!--<lang package='Template'>-->博士<!--</lang>-->" <!--{if $arrUserInfo['userprofile_nowschool']==Q+L("博士",'Template')}-->selected="selected"<!--{/if}-->><!--<lang package='Template'>-->博士<!--</lang>--></option>
+									<option value="<!--<lang package='Template'>-->硕士<!--</lang>-->" <!--{if $arrUserInfo['userprofile_nowschool']==Q+L("硕士",'Template')}-->selected="selected"<!--{/if}-->><!--<lang package='Template'>-->硕士<!--</lang>--></option>
+									<option value="<!--<lang package='Template'>-->本科<!--</lang>-->" <!--{if $arrUserInfo['userprofile_nowschool']==Q+L("本科",'Template')}-->selected="selected"<!--{/if}-->><!--<lang package='Template'>-->本科<!--</lang>--></option>
+									<option value="<!--<lang package='Template'>-->专科<!--</lang>-->" <!--{if $arrUserInfo['userprofile_nowschool']==Q+L("专科",'Template')}-->selected="selected"<!--{/if}-->><!--<lang package='Template'>-->专科<!--</lang>--></option>
+									<option value="<!--<lang package='Template'>-->高中<!--</lang>-->" <!--{if $arrUserInfo['userprofile_nowschool']==Q+L("高中",'Template')}-->selected="selected"<!--{/if}-->><!--<lang package='Template'>-->高中<!--</lang>--></option>
+									<option value="<!--<lang package='Template'>-->初中<!--</lang>-->" <!--{if $arrUserInfo['userprofile_nowschool']==Q+L("初中",'Template')}-->selected="selected"<!--{/if}-->><!--<lang package='Template'>-->初中<!--</lang>--></option>
+									<option value="<!--<lang package='Template'>-->小学<!--</lang>-->" <!--{if $arrUserInfo['userprofile_nowschool']==Q+L("小学",'Template')}-->selected="selected"<!--{/if}-->><!--<lang package='Template'>-->小学<!--</lang>--></option>
+									<option value="<!--<lang package='Template'>-->幼儿班<!--</lang>-->" <!--{if $arrUserInfo['userprofile_nowschool']==Q+L("幼儿班",'Template')}-->selected="selected"<!--{/if}-->><!--<lang package='Template'>-->幼儿班<!--</lang>--></option>
+									<option value="<!--<lang package='Template'>-->其它<!--</lang>-->" <!--{if $arrUserInfo['userprofile_nowschool']==Q+L("其它",'Template')}-->selected="selected"<!--{/if}-->><!--<lang package='Template'>-->其它<!--</lang>--></option>
+									<option value="<!--<lang package='Template'>-->工作<!--</lang>-->" <!--{if $arrUserInfo['userprofile_nowschool']==Q+L("工作",'Template')}-->selected="selected"<!--{/if}-->><!--<lang package='Template'>-->工作<!--</lang>--></option>
+								</select>
+							</div>
+						</div>
+						<!--{elseif $sEdu=='userprofile_education'}-->
+						<div class="control-group">
+							<label class="control-label" for="userprofile_education"><!--{$arrUserprofilesettingDatas['userprofile_education']['userprofilesetting_title']}--></label>
+							<div class="controls">
+								<select name="userprofile_education">
+									<option value="<!--<lang package='Template'>-->博士<!--</lang>-->" <!--{if $arrUserInfo['userprofile_education']==Q+L("博士",'Template')}-->selected="selected"<!--{/if}-->><!--<lang package='Template'>-->博士<!--</lang>--></option>
+									<option value="<!--<lang package='Template'>-->硕士<!--</lang>-->" <!--{if $arrUserInfo['userprofile_education']==Q+L("硕士",'Template')}-->selected="selected"<!--{/if}-->><!--<lang package='Template'>-->硕士<!--</lang>--></option>
+									<option value="<!--<lang package='Template'>-->本科<!--</lang>-->" <!--{if $arrUserInfo['userprofile_education']==Q+L("本科",'Template')}-->selected="selected"<!--{/if}-->><!--<lang package='Template'>-->本科<!--</lang>--></option>
+									<option value="<!--<lang package='Template'>-->专科<!--</lang>-->" <!--{if $arrUserInfo['userprofile_education']==Q+L("专科",'Template')}-->selected="selected"<!--{/if}-->><!--<lang package='Template'>-->专科<!--</lang>--></option>
+									<option value="<!--<lang package='Template'>-->中学<!--</lang>-->" <!--{if $arrUserInfo['userprofile_education']==Q+L("中学",'Template')}-->selected="selected"<!--{/if}-->><!--<lang package='Template'>-->中学<!--</lang>--></option>
+									<option value="<!--<lang package='Template'>-->小学<!--</lang>-->" <!--{if $arrUserInfo['userprofile_education']==Q+L("小学",'Template')}-->selected="selected"<!--{/if}-->><!--<lang package='Template'>-->小学<!--</lang>--></option>
+									<option value="<!--<lang package='Template'>-->其它<!--</lang>-->" <!--{if $arrUserInfo['userprofile_education']==Q+L("其它",'Template')}-->selected="selected"<!--{/if}-->><!--<lang package='Template'>-->其它<!--</lang>--></option>
+								</select>
+							</div>
+						</div>
+						<!--{d*else}-->
+						<div class="control-group">
+							<label class="control-label" for="<!--{$sEdu}-->"><!--{$arrUserprofilesettingDatas[$sEdu]['userprofilesetting_title']}--></label>
+							<div class="controls">
+								<input class="input-xlarge" type="text" name="<!--{$sEdu}-->" id="<!--{$sEdu}-->" size="40" value="<!--{$arrUserInfo[$sEdu]}-->" />
+							</div>
+						</div>
+						<!--{/if}-->
+						<!--{/if}-->
+						<!--</foreach>-->
+						<!--{elseif $sDo=='work'}-->
+						<!--<foreach for=arrWorks value=sWork>-->
+						<!--{if array_key_exists($sWork,$arrUserprofilesettingDatas)}-->
+						<div class="control-group">
+							<label class="control-label" for="<!--{$sWork}-->"><!--{$arrUserprofilesettingDatas[$sWork]['userprofilesetting_title']}--></label>
+							<div class="controls">
+								<input class="input-xlarge" type="text" name="<!--{$sWork}-->" id="<!--{$sWork}-->" size="40" value="<!--{$arrUserInfo[$sWork]}-->" />
+							</div>
+						</div>
+						<!--{/if}-->
+						<!--</foreach>-->
+						<!--{elseif $sDo=='info'}-->
+						<!--<foreach for=arrInfos value=sInfo>-->
+						<!--{if array_key_exists($sInfo,$arrUserprofilesettingDatas)}-->
+						<!--{if $sInfo=='userprofile_idcardtype'}-->
+						<div class="control-group">
+							<label class="control-label" for="userprofile_idcardtype"><!--{$arrUserprofilesettingDatas['userprofile_idcardtype']['userprofilesetting_title']}--></label>
+							<div class="controls">
+								<select name="userprofile_idcardtype">
+									<option value="<!--<lang package='Template'>-->身份证<!--</lang>-->" <!--{if $arrUserInfo['userprofile_idcardtype']==Q+L("身份证",'Template')}-->selected="selected"<!--{/if}-->><!--<lang package='Template'>-->身份证<!--</lang>--></option>
+									<option value="<!--<lang package='Template'>-->护照<!--</lang>-->" <!--{if $arrUserInfo['userprofile_idcardtype']==Q+L("护照",'Template')}-->selected="selected"<!--{/if}-->><!--<lang package='Template'>-->护照<!--</lang>--></option>
+									<option value="<!--<lang package='Template'>-->驾驶证<!--</lang>-->" <!--{if $arrUserInfo['userprofile_idcardtype']==Q+L("驾驶证",'Template')}-->selected="selected"<!--{/if}-->><!--<lang package='Template'>-->驾驶证<!--</lang>--></option>
+								</select>
+							</div>
+						</div>
+						<!--{elseif in_array($sInfo,array('userprofile_bio','userprofile_interest'))}-->
+						<div class="control-group">
+							<label class="control-label" for="<!--{$sInfo}-->"><!--{$arrUserprofilesettingDatas[$sInfo]['userprofilesetting_title']}--></label>
+							<div class="controls">
+								<textarea class="input-xlarge" name="<!--{$sInfo}-->" id="<!--{$sInfo}-->" rows="5" style="width:400px;"><!--{$arrUserInfo[$sInfo]}--></textarea>
+							</div>
+						</div>
+						<!--{d*else}-->
+						<div class="control-group">
+							<label class="control-label" for="<!--{$sInfo}-->"><!--{$arrUserprofilesettingDatas[$sInfo]['userprofilesetting_title']}--></label>
+							<div class="controls">
+								<input class="input-xlarge" type="text" name="<!--{$sInfo}-->" id="<!--{$sInfo}-->" size="40" value="<!--{$arrUserInfo[$sInfo]}-->" />
+							</div>
+						</div>
+						<!--{/if}-->
+						<!--{/if}-->
+						<!--</foreach>-->
+						<div class="control-group">
+							<label class="control-label" for="user_nikename"><!--<lang package='Template'>-->昵称<!--</lang>--></label>
+							<div class="controls">
+								<input class="input-xlarge" type="text" name="user_nikename" id="user_nikename" size="40" value="<!--{$arrUserInfo['user_nikename']}-->" required title="<!--<lang package='Template'>-->昵称不能为空<!--</lang>-->"/>
+								<p class="input_tips none"><!--<lang package='Template'>-->昵称不能为空<!--</lang>--></p>
+								<p class="input_errortips"></p>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="user_email">Email</label>
+							<div class="controls">
+								<input class="input-xlarge" type="text" name="user_email" id="user_email" size="40" value="<!--{$arrUserInfo['user_email']}-->" />
+								<p class="input_tips none"><!--<lang package='Template'>-->请输入合法的Email<!--</lang>--></p>
+								<p class="input_errortips"></p>
+								<p class="help-block">
+									<!--{if $arrUserInfo['user_isverify']==0}-->
+									<img src="<!--{:__PUBLIC__}-->/images/common/mail_inactive.png" style="position:relative;top:-3px;" />&nbsp;<!--<lang package='Template'>-->你尚未通过邮件验证<!--</lang>--></a>&nbsp;<a href="<!--{:Q::U('home://spaceadmin/verifyemail')}-->"><!--<lang package='Template'>-->我要验证<!--</lang>--></a>
+									<!--{d*else}-->
+									<span style="color:green;font-weight:bold;"><!--<lang package='Template'>-->恭喜你已通过邮件验证<!--</lang>--></span></a>&nbsp;<a href="<!--{:Q::U('home://spaceadmin/verifyemail')}-->"><!--<lang package='Template'>-->管理验证<!--</lang>--></a>
+									<!--{/if}-->&nbsp;
+									(<!--<lang package='Template'>-->注意修改电子邮件需要重新验证数据<!--</lang>-->)
+								</p>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="user_sign"><!--<lang package='Template'>-->用户签名<!--</lang>--></label>
+							<div class="controls">
+								<textarea class="input-xlarge" name="user_sign" id="user_sign" rows="5" style="width:400px;"><!--{$arrUserInfo['user_sign']}--></textarea>
+								<p class="help-block">
+									<a href="javascript:void(0);" onclick="usersignPreview();"><b><!--<lang package='Template'>-->预览签名<!--</lang>--></b></a><span class="pipe">|</span><a href="<!--{:Q::U('home://misc/ubb?type=sign')}-->" target="_blank"><!--<lang package='Template'>-->查看用户签名支持的UBB代码<!--</lang>--></a>
+									<div id="usersign_preview" style="border:2px dashed #CCC;padding:5px;">
+										<!--{$arrUserInfo['user_sign']|Core_Extend+usersign}-->
+									</div>
+								</p>
+							</div>
+						</div>
+						<!--{/if}-->
+						<!--{if $nDisplaySeccode==1}-->
+						<div class="control-group">
+							<label class="control-label" for="seccode"><!--<lang package='__COMMON_LANG__@Common'>-->验证码<!--</lang>--></label>
+							<div class="controls">
+								<input name="seccode" id="seccode" type="text" class="input-small {required:true,remote:Q.U('home://public/validate_seccode'),messages:{remote:'<!--<lang package='__COMMON_LANG__@Common'>-->验证码错误<!--</lang>-->'}} left" value="">&nbsp;
+								<span class="validate_seccode"><span class="input_errortips"></span></span>
+								<p class="help-block" style="clear:both;padding-top:10px;"><span id="seccodeImage"><img style="cursor:pointer" onclick="updateSeccode()" src="<!--{:Q::U('home://public/seccode')}-->" required/></span></p>
+							</div>
+						</div>
+						<!--{/if}-->
+						<div class="form-actions">
+							<input type="hidden" name="ajax" value="1">
+							<input type="hidden" name="user_id" value="<!--{$arrUserInfo['user_id']}-->">
+							<button id="submit_button" type="submit" class="btn"><!--<lang package='__COMMON_LANG__@Common'>-->更新<!--</lang>--></button>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

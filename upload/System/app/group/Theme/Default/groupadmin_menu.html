@@ -1,0 +1,13 @@
+		<div class="grid_12">
+			<div class="nav_tabcontainer nav_pills">
+				<ul>
+					<li <!--{if ACTION_NAME==='index'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('group://groupadmin/index?gid='.$arrGroup['group_id'])}-->"><!--<lang package='Template'>-->基本信息<!--</lang>--></a></li>
+					<li <!--{if ACTION_NAME==='headerbg'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('group://groupadmin/headerbg?gid='.$arrGroup['group_id'])}-->"><!--<lang package='Template'>-->群组头部背景<!--</lang>--></a></li>
+					<li <!--{if ACTION_NAME==='icon'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('group://groupadmin/icon?gid='.$arrGroup['group_id'])}-->"><!--<lang package='Template'>-->群组图标<!--</lang>--></a></li>
+					<li <!--{if ACTION_NAME==='category'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('group://groupadmin/category?gid='.$arrGroup['group_id'])}-->"><!--<lang package='Template'>-->群组分类<!--</lang>--></a></li>
+					<li <!--{if in_array(ACTION_NAME,array('topiccategory','updatetopiccategory'))}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('group://groupadmin/topiccategory?gid='.$arrGroup['group_id'])}-->"><!--<lang package='Template'>-->帖子分类<!--</lang>--></a></li>
+					<li <!--{if ACTION_NAME==='admins'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('group://group/user?gid='.$arrGroup['group_id'])}-->"><!--<lang package='Template'>-->成员管理<!--</lang>--></a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="clearfix"></div>

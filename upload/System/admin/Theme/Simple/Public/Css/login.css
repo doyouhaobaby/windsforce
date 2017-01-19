@@ -1,0 +1,18 @@
+/*
+File Name: login.css
+File Type: 必须
+Description: 登录样式
+*/
+
+/** 导入样式进行重写 */
+{admin/Theme/Default/Public/Css/login.css}
+
+/**===============================
+           重写基本样式
+================================*/
+html,body{background: #30a4b1;}
+
+/**===============================
+           重写登录框
+================================*/
+#login-form .module_content{padding-left:25px;}

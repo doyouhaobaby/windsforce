@@ -1,0 +1,134 @@
+<include file="common+header">
+
+	<ul class="breadcrumb">
+		<li><a href="{:__APP__}" title="<lang package='Template/Default/Common'>主页</lang>"><lang package='Template/Default/Common'>主页</lang></a>&nbsp;<span class="divider">/</span></li>
+		<li><lang package='Template/Default/Common'>环境检测</lang></li>
+	</ul>
+
+	{if MODULE_NAME==='index'}
+	<include file="install+process">
+	{d*else}
+	<include file="update+process">
+	{/if}
+
+	<div class="row">
+		<div class="span12">
+			<h2><lang package='Template/Default/Common'>服务器信息</lang></h2>
+			<p><table border="0" align="center" cellpadding="0" cellspacing="0" class="table table-striped table-bordered">
+				<thead>
+					<tr>
+						<th width="300px" align="center"><strong><lang package='Template/Default/Common'>参数</lang></strong></th>
+						<th><strong><lang package='Template/Default/Common'>值</lang></strong></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><lang package='Template/Default/Common'>服务器域名</lang></td>
+						<td>{$arrInfo['sp_name']}</td>
+					</tr>
+					<tr>
+						<td><lang package='Template/Default/Common'>服务器操作系统</lang></td>
+						<td>{$arrInfo['sp_os']}</td>
+					</tr>
+					<tr>
+						<td><lang package='Template/Default/Common'>服务器解译引擎</lang></td>
+						<td>{$arrInfo['sp_server']}</td>
+					</tr>
+					<tr>
+						<td><lang package='Template/Default/Common'>PHP版本</lang></td>
+						<td>{$arrInfo['phpv']}</td>
+					</tr>
+					<tr>
+						<td><lang package='Template/Default/Common'>系统安装目录</lang></td>
+						<td>{:WINDSFORCE_PATH}</td>
+					</tr>
+				</tbody>
+			</table></p>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="span12">
+			<h2><lang package='Template/Default/Common'>系统环境检测</lang></h2>
+			<div style="padding:2px 8px 0px; line-height:33px; height:23px; overflow:hidden; color:#666;">
+				<lang package='Template/Default/Common'>系统环境要求必须满足下列所有条件，否则系统或系统部份功能将无法使用。</lang>
+			</div>
+			<p><table border="0" align="center" cellpadding="0" cellspacing="0" class="table table-striped table-bordered">
+				<thead>
+					<tr>
+						<th width="200px" align="center"><strong><lang package='Template/Default/Common'>需开启的变量或函数</lang></strong></th>
+						<th width="80px"><strong><lang package='Template/Default/Common'>要求</lang></strong></th>
+						<th><strong><lang package='Template/Default/Common'>实际状态及建议</lang></strong></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>allow_url_fopen</td>
+						<td align="center">On </td>
+						<td>{$arrInfo['sp_allow_url_fopen']} <small>(<lang package='Template/Default/Common'>不符合要求将导致采集、远程资料本地化等功能无法应用</lang>)</small></td>
+					</tr>
+					<tr>
+						<td>safe_mode</td>
+						<td align="center">Off</td>
+						<td>{$arrInfo['sp_safe_mode']} <small>(<lang package='Template/Default/Common'>本系统不支持在</lang><span class="STYLE2"><lang package='Template/Default/Common'>非win主机的安全模式</lang></span><lang package='Template/Default/Common'>下运行</lang>)</small></td>
+					</tr>
+					
+					<tr>
+						<td><lang package='Template/Default/Common'>GD 支持</lang></td>
+						<td align="center">On</td>
+						<td>{$arrInfo['sp_gd']} <small>(<lang package='Template/Default/Common'>不支持将导致与图片相关的大多数功能无法使用或引发警告</lang>)</small></td>
+					</tr>
+					<tr>
+						<td><lang package='Template/Default/Common'>MySQL 支持</lang></td>
+						<td align="center">On</td>
+						<td>{$arrInfo['sp_mysql']} <small>(<lang package='Template/Default/Common'>不支持无法使用本系统</lang>)</small></td>
+					</tr>
+				</tbody>
+			</table></p>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="span12">
+			<h2><lang package='Template/Default/Common'>目录权限检测</lang></h2>
+			<div style="padding:2px 8px 0px; line-height:33px; height:23px; overflow:hidden; color:#666;">
+				<lang package='Template/Default/Common'>系统要求必须满足下列所有的目录权限全部可读写的需求才能使用，其它应用目录可安装后在管理后台检测。</lang>
+			</div>
+			<p><table border="0" align="center" cellpadding="0" cellspacing="0" class="table table-striped table-bordered">
+				<thead>
+					<tr>
+						<th width="300px" align="center"><strong><lang package='Template/Default/Common'>目录名</lang> + <lang package='Template/Default/Common'>文件名</lang></strong></th>
+						<th><strong><lang package='Template/Default/Common'>读取权限</lang></strong></th>
+						<th><strong><lang package='Template/Default/Common'>写入权限</lang></strong></th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach for=arrSpTestDirs value=sSpTestDir>
+					<tr>
+						<td>{$sSpTestDir}</td>
+						<php>
+							$sFullPath=WINDSFORCE_PATH.'/'.str_replace('/*','',$sSpTestDir);
+							$sRsta=(is_readable($sFullPath)?'<font color=green>[√]'.Q::L('读','Template/Default/Common').'</font>':'<font color=red>[×]'.Q::L('读','Template/Default/Common').'</font>');
+							$sWsta=((is_file($sFullPath)?is_writeable($sFullPath):Install_Extend::testWrite($sFullPath))?'<font color=green>[√]'.Q::L('写','Template/Default/Common').'</font>':'<font color=red>[×]'.Q::L('写','Template/Default/Common').'</font>');
+						</php>
+						<td>{$sRsta}</td>
+						<td>{$sWsta}</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table></p>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="span12">
+			<div class="well">
+				<p><input type="button" class="btn" value="<lang package='Template/Default/Common'>后退</lang>" onclick="window.location.href='{if MODULE_NAME==='index'}{:Q::U( 'public/step1' )}{d*else}{:Q::U( 'update/index' )}{/if}';" />
+					<span class="pipe">|</span>
+					<input type="button" class="btn btn-success" value="<lang package='Template/Default/Common'>下一步</lang>" onclick="window.location.href='{if MODULE_NAME==='public'}{:Q::U( 'public/step3' )}{d*else}{:Q::U( 'update/step3' )}{/if}';" />
+				</p>
+			</div>
+		</div>
+	</div>
+
+<include file="common+footer">

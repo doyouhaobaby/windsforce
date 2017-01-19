@@ -1,0 +1,50 @@
+<!--<include file="public+header" />-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->文件权限检查结果<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->文件权限检查结果<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->如果某个文件或目录被检查到“无法写入”(以红色列出)，请即刻通过 FTP 或其他工具修改其属性(例如设置为 777)，以确保站点功能的正常使用。<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+		
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->文件权限检查结果<!--</lang>--></h3>
+			</header>
+			<div class="module_content">
+				<table class="tablesorter" cellspacing="0">
+					<thead>
+						<tr>
+							<th width="180"><!--<lang package='Template'>-->目录或者文件<!--</lang>--></th>
+							<th><!--<lang package='Template'>-->读取权限<!--</lang>--></th>
+							<th width="70"><!--<lang package='Template'>-->写入权限<!--</lang>--></th>
+						</tr>
+					</thead>
+					<tbody>
+					<!--<foreach for=arrTestDirs value=sTestDir>-->
+					<tr>
+						<td><!--{$sTestDir}--></td>
+						<!--<php>-->
+						$sFullPath=WINDSFORCE_PATH.'/'.str_replace('/*','',$sTestDir);
+						$sRsta=(is_readable($sFullPath)?'<font color=#47D765>[√]'.Q::L('读','Template').'</font>':'<font color=red>[×]'.Q::L('读','Template' ).'</font>');
+						$sWsta=((is_file($sFullPath)?is_writeable($sFullPath):Admin_Extend::testWrite($sFullPath))?'<font color=#47D765>[√]'.Q::L('写','Template').'</font>':'<font color=red>[×]'.Q::L('写','Template').'</font>');
+						<!--</php>-->
+						<td><!--{$sRsta}--></td>
+						<td><!--{$sWsta}--></td>
+					</tr>
+					<!--</foreach>-->
+					</tbody>
+				</table>
+			</div>
+		</article>
+
+<!--<include file="public+footer">-->

@@ -1,0 +1,96 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+function option(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'update...' );
+	$("#submit_button").attr("disabled",false);
+	$('.validate')(0).submit();
+}
+
+checkForm(option);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->管理相关<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->管理相关<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->为了让系统管理员邮箱能够接收邮件，请确保一下邮件发送设置正确<!--</lang>-->&nbsp;<a href="<!--{:Q::U('mailoption/index')}-->"><!--<lang package='Template'>-->邮件设置<!--</lang>--></a></li>
+				</ul>
+			</div>
+		</article>
+		
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->管理相关<!--</lang>--></h3>
+				<ul class="tabs">
+					<li><a href="<!--{:Q::U('option/index')}-->"><!--<lang package='Template'>-->基本设置<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('option/show')}-->"><!--<lang package='Template'>-->首页显示<!--</lang>--></a></li>
+					<li class="active"><a href="<!--{:Q::U('option/admin')}-->"><!--<lang package='Template'>-->管理相关<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="<!--{:Q::U('option/update_option')}-->" method="post" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="admin_email"><!--<lang package='Template'>-->系统管理员邮箱<!--</lang>--></label>
+						<input type="text" name="options[admin_email]" id="admin_email" size="40" value="<!--{$arrOptions['admin_email']}-->" class="{required:true,email:true}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->这个非常重要，请注意填写正确<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="admin_list_num"><!--<lang package='Template'>-->后台分页数据数量<!--</lang>--></label>
+						<input type="text" name="options[admin_list_num]" id="admin_list_num" size="40" value="<!--{$arrOptions['admin_list_num']}-->" class="{required:true,digits:true,min: 15,max:300}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->后台系统通用分页数量，方便控制数据量<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="admin_userid"><!--<lang package='Template'>-->系统后台管理员设置<!--</lang>--></label>
+						<input type="text" name="admin_userid" id="admin_userid" size="40" value="<!--{$sUid}-->"/>
+						<div class="description"><!--<lang package='Template'>-->能够进入后台的管理员设置，例如1,2,3表示用户ID为1,2,3三个用户为管理员<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<div style="padding:10px 0px;">
+							<!--<foreach for=arrUsers value=oUser>-->
+							<div class="left user_box"><img src="<!--{:Core_Extend::avatar( $oUser->user_id,'small' )}-->" width="48px" height="48px" />
+								<br/>
+								<a href="<!--{:Core_Extend::windsforceOuter('app=home&c=space&a=index&id='.$oUser->user_id)}-->" target="_blank"><!--{$oUser->user_name}--></a>&nbsp;(<!--{$oUser->user_id}-->)
+							</div>
+							<!--</foreach>-->
+						</div>
+					</fieldset>
+					<fieldset>
+						<label for="adminlog_record"><!--<lang package='Template'>-->是否记录后台管理数据<!--</lang>--></label>
+						<input type="radio" id="adminlog_record" name="options[adminlog_record]" value="1" <!--{if $arrOptions['adminlog_record']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[adminlog_record]" value="0" <!--{if $arrOptions['adminlog_record']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->为了系统安全，请尽量开启本功能，可以记录后台管理数据<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="adminlog_record_time"><!--<lang package='Template'>-->后台管理数据防重复记录时间<!--</lang>--></label>
+						<input type="text" name="options[adminlog_record_time]" id="adminlog_record_time" size="40" value="<!--{$arrOptions['adminlog_record_time']}-->" class="{required:true,digits:true,min: 60}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->重复记录时间会自动屏蔽一段时间内的重复记录，时间为秒，0表示不防止重复记录<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="loginlog_record"><!--<lang package='Template'>-->是否记录登录数据<!--</lang>--></label>
+						<input type="radio" id="loginlog_record" name="options[loginlog_record]" value="1" <!--{if $arrOptions['loginlog_record']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[close_site]" value="0" <!--{if $arrOptions['loginlog_record']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->本功能可以记录登录数据，但会加大服务器开销<!--</lang>--></div>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input id="submit_button" type="submit" class="alt_btn" value="<!--<lang package='Template'>-->发布<!--</lang>-->" />
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->" />
+					</div>
+				</footer>
+			</form>
+			</div>
+		</article>
+
+<!--<include file="public+footer">-->

@@ -1,0 +1,159 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+$(document).ready(function() {
+	$("#option_tab ul").idTabs();
+});
+
+function option(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'update...' );
+	$("#submit_button").attr("disabled", false);
+	$('.validate')(0).submit();
+}
+
+checkForm(option);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->基本设置<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->基本设置<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->基本设置<!--</lang>--></h3>
+				<ul class="tabs">
+					<li class="active"><a href="<!--{:Q::U('option/index')}-->"><!--<lang package='Template'>-->基本设置<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('option/show')}-->"><!--<lang package='Template'>-->首页显示<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('option/admin')}-->"><!--<lang package='Template'>-->管理相关<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="<!--{:Q::U('option/update_option')}-->" method="post" class="validate">
+				<div class="module_content"></div>
+				<div class="module_content">
+					<div id="option_tab" class="windsforce_tab">
+						<div class="windsforce_tabtitlebox">
+							<ul class="windsforce_tabtitle">
+								<li><a href="#tab1"><!--<lang package='Template'>-->基本<!--</lang>--></a></li>
+								<li><a href="#tab2"><!--<lang package='Template'>-->显示<!--</lang>--></a></li>
+							</ul>
+						</div>
+						<div id="tab1" class="windsforce_tabcontent">
+							<fieldset class="fieldset_bordernone">
+								<label for="site_name"><!--<lang package='Template'>-->网站名称<!--</lang>--></label>
+								<input type="text" name="options[site_name]" id="site_name" size="40" value="<!--{$arrOptions['site_name']}-->" required title="<!--<lang package='Template'>-->网站名称<!--</lang>--><!--<lang package='Template'>-->不能为空<!--</lang>-->"/>
+								<div class="description input_tips"><!--<lang package='Template'>-->网站名称，将显示在前台顶部欢迎信息等位置<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="site_description"><!--<lang package='Template'>-->网站描述<!--</lang>--></label>
+								<input type="text" name="options[site_description]" id="site_description" size="40" value="<!--{$arrOptions['site_description']}-->" required title="<!--<lang package='Template'>-->网站描述<!--</lang>--><!--<lang package='Template'>-->不能为空<!--</lang>-->"/>
+								<div class="description input_tips"><!--<lang package='Template'>-->网站描述，将显示在浏览器窗口标题等位置<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="site_year"><!--<lang package='Template'>-->网站创办时间<!--</lang>--></label>
+								<input type="text" name="options[site_year]" id="site_year" size="40" value="<!--{$arrOptions['site_year']}-->" required title="<!--<lang package='Template'>-->网站创办时间<!--</lang>--><!--<lang package='Template'>-->不能为空<!--</lang>-->"/>
+								<div class="description input_tips"><!--<lang package='Template'>-->网站创办时间，将显示在前台底部的版权中的时间<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="home_title"><!--<lang package='Template'>-->网站主页标题<!--</lang>--></label>
+								<input type="text" name="options[home_title]" id="home_title" size="40" value="<!--{$arrOptions['home_title']}-->" required title="<!--<lang package='Template'>-->网站主页标题<!--</lang>--><!--<lang package='Template'>-->不能为空<!--</lang>-->"/>
+								<div class="description input_tips"><!--<lang package='Template'>-->出现在首页的网站介绍中<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="home_description"><!--<lang package='Template'>-->网站主页介绍<!--</lang>--></label>
+								<textarea name="options[home_description]" rows="5" required title="<!--<lang package='Template'>-->网站主页介绍<!--</lang>--><!--<lang package='Template'>-->不能为空<!--</lang>-->"><!--{$arrOptions['home_description']}--></textarea>
+								<div class="description input_tips"><!--<lang package='Template'>-->网站主页介绍，将显示在未登录的首页的介绍部分<!--</lang>--><br/>
+								<!--<lang package='Template'>-->系统变量替换: {site_name} 网站标题,{site_description} 网站描述,{site_url} 站点信息,{time} 当前时间,{user_name} 登录用户,{user_nikename} 登录用户昵称,{admin_email} 系统管理员邮箱<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="windsforce_company_name"><!--<lang package='Template'>-->网站底部公司名字<!--</lang>--></label>
+								<input type="text" name="options[windsforce_company_name]" id="windsforce_company_name" size="60" value="<!--{$arrOptions['windsforce_company_name']}-->"/>
+								<div class="description"><!--<lang package='Template'>-->网站底部公司名字，将显示在页面底部的联系方式处<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="windsforce_company_url"><!--<lang package='Template'>-->网站底部公司主页<!--</lang>--></label>
+								<input type="text" name="options[windsforce_company_url]" id="windsforce_company_url" size="60" value="<!--{$arrOptions['windsforce_company_url']}-->"/>
+								<div class="description"><!--<lang package='Template'>-->网站底部公司 URL，将作为链接显示在页面底部<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="windsforce_company_year"><!--<lang package='Template'>-->公司创办时间<!--</lang>--></label>
+								<input type="text" name="options[windsforce_company_year]" id="windsforce_company_year" size="40" value="<!--{$arrOptions['windsforce_company_year']}-->"/>
+								<div class="description"><!--<lang package='Template'>-->公司创办时间，将显示在前台底部的公司信息中<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="icp"><!--<lang package='Template'>-->网站备案信息代码<!--</lang>--></label>
+								<input type="text" name="options[icp]" id="icp" size="60" value="<!--{$arrOptions['icp']}-->"/>
+								<div class="description"><!--<lang package='Template'>-->页面底部可以显示 ICP 备案信息，如果网站已备案，在此输入您的授权码，它将显示在页面底部，如果没有请留空<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="site_url"><!--<lang package='Template'>-->网站地址<!--</lang>--></label>
+								<input type="text" name="options[site_url]" id="site_url" size="60" value="<!--{$arrOptions['site_url']}-->" required title="<!--<lang package='Template'>-->网站地址<!--</lang>--><!--<lang package='Template'>-->不能为空<!--</lang>-->"/>
+								<div class="description input_tips"><!--<lang package='Template'>-->网站的地址，后面不能带“/”<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="stat_header_code"><!--<lang package='Template'>-->网站头部自定义代码<!--</lang>--></label>
+								<textarea name="options[stat_header_code]" rows="5"><!--{$arrOptions['stat_header_code']}--></textarea>
+								<div class="description"><!--<lang package='Template'>-->头部header标签中自定义代码<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="stat_code"><!--<lang package='Template'>-->网站第三方统计<!--</lang>--></label>
+								<textarea name="options[stat_code]" rows="5"><!--{$arrOptions['stat_code']}--></textarea>
+								<div class="description"><!--<lang package='Template'>-->页面底部可以显示第三方统计<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="close_site"><!--<lang package='Template'>-->是否关闭网站<!--</lang>--></label>
+								<input type="radio" id="close_site" name="options[close_site]" value="1" <!--{if $arrOptions['close_site']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+								<input type="radio" id="" name="options[close_site]" value="0" <!--{if $arrOptions['close_site']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+								<div class="description"><!--<lang package='Template'>-->可暂时将站点关闭，其他人无法访问，但不影响管理员访问后台<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="close_site_reason"><!--<lang package='Template'>-->关闭原因<!--</lang>--></label>
+								<textarea name="options[close_site_reason]" rows="5"><!--{$arrOptions['close_site_reason']}--></textarea>
+								<div class="description"><!--<lang package='Template'>-->可暂时将站点关闭，这里为站点关闭原因<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="start_gzip"><!--<lang package='Template'>-->是否启用GZIP<!--</lang>--></label>
+								<input type="radio" id="start_gzip" name="options[start_gzip]" value="1" <!--{if $arrOptions['start_gzip']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+								<input type="radio" id="" name="options[start_gzip]" value="0" <!--{if $arrOptions['start_gzip']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+								<div class="description"><!--<lang package='Template'>-->启用Gzip能够压缩页面数据，提高系统访问速度<!--</lang>--></div>
+							</fieldset>
+						</div>
+						<div id="tab2" class="windsforce_tabcontent">
+							<fieldset class="fieldset_bordernone">
+								<label for="baselistnum"><!--<lang package='Template'>-->全局基本每页显示数量<!--</lang>--></label>
+								<input type="text" name="options[baselistnum]" id="baselistnum" size="60" value="<!--{$arrOptions['baselistnum']}-->" class="{required:true,digits:true,min: 2,max:50,messages:{required:'<!--<lang package='Template'>-->全局基本每页显示数量<!--</lang>--><!--<lang package='Template'>-->不能为空<!--</lang>-->',digits:'<!--<lang package='Template'>-->全局基本每页显示数量<!--</lang>--><!--<lang package='Template'>-->只能是数字<!--</lang>-->',min:'<!--<lang package='Template'>-->全局基本每页显示数量<!--</lang>--><!--<lang package='Template'>-->最小值为<!--</lang>-->2'}}"/>
+								<div class="description input_tips"><!--<lang package='Template'>-->整个系统基本的分页显示数量<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="share_on"><!--<lang package='Template'>-->是否启用全局分享功能<!--</lang>--></label>
+								<input type="radio" id="share_on" name="options[share_on]" value="1" <!--{if $arrOptions['share_on']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+								<input type="radio" id="" name="options[share_on]" value="0" <!--{if $arrOptions['share_on']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+								<div class="description"><!--<lang package='Template'>-->启用后，你将会在内容页看到分享的按钮，以便于将内容分享到第三方社交网站<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="share_code"><!--<lang package='Template'>-->分享功能代码<!--</lang>--></label>
+								<textarea name="options[share_code]" rows="5"><!--{$arrOptions['share_code']}--></textarea>
+								<div class="description"><!--<lang package='Template'>-->这里可以到网上搜索一些分享代码，我们这里找了一个。<!--</lang>--></div>
+							</fieldset>
+						</div>
+					</div>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input id="submit_button" type="submit" class="alt_btn" value="<!--<lang package='Template'>-->发布<!--</lang>-->" />
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->" />
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

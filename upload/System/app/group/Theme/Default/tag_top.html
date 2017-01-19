@@ -1,0 +1,96 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('group://public/index')}-->" title="<!--<lang package='Template'>-->小组<!--</lang>-->"><!--<lang package='Template'>-->小组<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->标签排行榜<!--</lang>--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+
+		<!--<include file="tag+menu" />-->
+
+		<div class="grid_12">
+			<div class="commonbox">
+				<div class="commonboxtitle"><!--<lang package='Template'>-->一小时排行<!--</lang>--></div>
+				<div id="tag_list_box_hour" class="tag_list_box">
+					<!--{if !empty($arrHourHotgrouptopictags)}-->
+					<!--<foreach for=arrHourHotgrouptopictags value=arrGrouptopictag>-->
+					<a href="<!--{:Q::U('group://tag/show?tag='.urlencode($arrGrouptopictag['grouptopictag_name']),array(),true)}-->" class="common_tag" title="<!--<lang package='Template'>-->帖子数量<!--</lang>--> <!--{$arrGrouptopictag['grouptopictag_count']}-->"><!--{$arrGrouptopictag['grouptopictag_name']}--></a>&nbsp;&nbsp;
+					<!--</foreach>-->
+					<!--{d*else}-->
+					<p><!--<lang package='Template'>-->暂时没有发现任何标签<!--</lang>--></p>
+					<!--{/if}-->
+				</div>
+			</div>
+
+			<div class="commonbox">
+				<div class="commonboxtitle"><!--<lang package='Template'>-->今日排行<!--</lang>--></div>
+				<div id="tag_list_box_today" class="tag_list_box">
+					<!--{if !empty($arrTodayHotgrouptopictags)}-->
+					<!--<foreach for=arrTodayHotgrouptopictags value=arrGrouptopictag>-->
+					<a href="<!--{:Q::U('group://tag/show?tag='.urlencode($arrGrouptopictag['grouptopictag_name']),array(),true)}-->" class="common_tag" title="<!--<lang package='Template'>-->帖子数量<!--</lang>--> <!--{$arrGrouptopictag['grouptopictag_count']}-->"><!--{$arrGrouptopictag['grouptopictag_name']}--></a>&nbsp;&nbsp;
+					<!--</foreach>-->
+					<!--{d*else}-->
+					<p><!--<lang package='Template'>-->暂时没有发现任何标签<!--</lang>--></p>
+					<!--{/if}-->
+				</div>
+			</div>
+
+			<div class="commonbox">
+				<div class="commonboxtitle"><!--<lang package='Template'>-->本周排行<!--</lang>--></div>
+				<div id="tag_list_box_week" class="tag_list_box">
+					<!--{if !empty($arrWeekHotgrouptopictags)}-->
+					<!--<foreach for=arrWeekHotgrouptopictags value=arrGrouptopictag>-->
+					<a href="<!--{:Q::U('group://tag/show?tag='.urlencode($arrGrouptopictag['grouptopictag_name']),array(),true)}-->" class="common_tag" title="<!--<lang package='Template'>-->帖子数量<!--</lang>--> <!--{$arrGrouptopictag['grouptopictag_count']}-->"><!--{$arrGrouptopictag['grouptopictag_name']}--></a>&nbsp;&nbsp;
+					<!--</foreach>-->
+					<!--{d*else}-->
+					<p><!--<lang package='Template'>-->暂时没有发现任何标签<!--</lang>--></p>
+					<!--{/if}-->
+				</div>
+			</div>
+
+			<div class="commonbox">
+				<div class="commonboxtitle"><!--<lang package='Template'>-->当月排行<!--</lang>--></div>
+				<div id="tag_list_box_month" class="tag_list_box">
+					<!--{if !empty($arrMonthHotgrouptopictags)}-->
+					<!--<foreach for=arrMonthHotgrouptopictags value=arrGrouptopictag>-->
+					<a href="<!--{:Q::U('group://tag/show?tag='.urlencode($arrGrouptopictag['grouptopictag_name']),array(),true)}-->" class="common_tag" title="<!--<lang package='Template'>-->帖子数量<!--</lang>--> <!--{$arrGrouptopictag['grouptopictag_count']}-->"><!--{$arrGrouptopictag['grouptopictag_name']}--></a>&nbsp;&nbsp;
+					<!--</foreach>-->
+					<!--{d*else}-->
+					<p><!--<lang package='Template'>-->暂时没有发现任何标签<!--</lang>--></p>
+					<!--{/if}-->
+				</div>
+			</div>
+
+			<div class="commonbox">
+				<div class="commonboxtitle"><!--<lang package='Template'>-->年度排行<!--</lang>--></div>
+				<div id="tag_list_box_year" class="tag_list_box">
+					<!--{if !empty($arrYearHotgrouptopictags)}-->
+					<!--<foreach for=arrYearHotgrouptopictags value=arrGrouptopictag>-->
+					<a href="<!--{:Q::U('group://tag/show?tag='.urlencode($arrGrouptopictag['grouptopictag_name']),array(),true)}-->" class="common_tag" title="<!--<lang package='Template'>-->帖子数量<!--</lang>--> <!--{$arrGrouptopictag['grouptopictag_count']}-->"><!--{$arrGrouptopictag['grouptopictag_name']}--></a>&nbsp;&nbsp;
+					<!--</foreach>-->
+					<!--{d*else}-->
+					<p><!--<lang package='Template'>-->暂时没有发现任何标签<!--</lang>--></p>
+					<!--{/if}-->
+				</div>
+			</div>
+
+			<div class="commonbox">
+				<div class="commonboxtitle"><!--<lang package='Template'>-->总排行<!--</lang>--></div>
+				<div id="tag_list_box_total" class="tag_list_box">
+					<!--{if !empty($arrTotalHotgrouptopictags)}-->
+					<!--<foreach for=arrTotalHotgrouptopictags value=arrGrouptopictag>-->
+					<a href="<!--{:Q::U('group://tag/show?tag='.urlencode($arrGrouptopictag['grouptopictag_name']),array(),true)}-->" class="common_tag" title="<!--<lang package='Template'>-->帖子数量<!--</lang>--> <!--{$arrGrouptopictag['grouptopictag_count']}-->"><!--{$arrGrouptopictag['grouptopictag_name']}--></a>&nbsp;&nbsp;
+					<!--</foreach>-->
+					<!--{d*else}-->
+					<p><!--<lang package='Template'>-->暂时没有发现任何标签<!--</lang>--></p>
+					<!--{/if}-->
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

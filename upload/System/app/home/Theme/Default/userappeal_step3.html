@@ -1,0 +1,60 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{:Core_Extend::validate()}-->
+
+<!--{script}-->
+checkForm();
+<!--{/script}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->填写申诉资料<!--</lang>--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+		<!--<include file="userappeal+menu" />-->
+		
+		<div class="grid_12">
+			<form class="form-horizontal validate" method='post' name="userappeal3_form" id="userappeal3_form" action="<!--{:Q::U('home://userappeal/step4')}-->">
+				<fieldset>
+					<div class="tips"><h3><!--<lang package='Template'>-->申诉验证码<!--</lang>--></h3></div>
+					<div class="control-group">
+						<label class="control-label" for="open_email">&nbsp;</label>
+						<div class="controls">
+							<p><!--<lang package='Template'>-->申诉验证码已发送到你的邮箱<!--</lang>-->&nbsp;<em class="red"><!--{$sAppealemail}--></em></p>
+							<input class="btn" id="open_email" name="open_email" type="button" value="<!--<lang package='Template'>-->打开网站<!--</lang>-->&nbsp;<!--{$sAppealemailsite}-->"  onclick="window.open('<!--{$sAppealemailsite}-->');">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="hashcode"><!--<lang package='Template'>-->申诉验证码<!--</lang>--><em class="red">*</em></label>
+						<div class="controls">
+							<input class="input-xlarge" id="hashcode" name="hashcode" type="text" value="" required>
+							<p class="input_errortips"></p>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="seccode"><!--<lang package='__COMMON_LANG__@Common'>-->验证码<!--</lang>--></label>
+						<div class="controls">
+							<input name="seccode" id="seccode" type="text" class="input-small {required:true,remote:Q.U('home://public/validate_seccode'),messages:{remote:'<!--<lang package='__COMMON_LANG__@Common'>-->验证码错误<!--</lang>-->'}} left" value="">&nbsp;
+							<span class="validate_seccode"><span class="input_errortips"></span></span>
+							<p class="help-block" style="clear:both;padding-top:10px;"><span id="seccodeImage"><img style="cursor:pointer" onclick="updateSeccode()" src="<!--{:Q::U('home://public/seccode')}-->" /></span></p>
+						</div>
+					</div>
+					<div class="form-actions">
+						<input type="hidden" value="<!--{$sUserid}-->" name="user_id"/>
+						<input type="hidden" value="<!--{$sHashcode}-->" name="old_hashcode"/>
+						<input type="hidden" value="<!--{$sRealname}-->" name="real_name"/>
+						<input type="hidden" value="<!--{$sAddress}-->" name="address"/>
+						<input type="hidden" value="<!--{$sIdnumber}-->" name="id_number"/>
+						<input type="hidden" value="<!--{$sAppealemail}-->" name="appeal_email"/>
+						<button type="submit" class="btn"><!--<lang package='__COMMON_LANG__@Common'>-->提交<!--</lang>--></button>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

@@ -1,0 +1,59 @@
+			<div class="grid_4">
+				<div class="commonbox">
+					<div class="backgroup_box">
+						<p>
+							<!--{if $arrEvent['eventcategory_id']}-->
+							<a class="btn" href="<!--{:Q::U('event://category@?cid='.$arrEvent['eventcategory_id'])}-->"><!--{$arrEvent['eventcategory_name']}--></a>
+							<!--{d*else}-->
+							<a class="btn" href="<!--{:Q::U('event://public/index')}-->"><!--<lang package='Template'>-->返回活动主页<!--</lang>--></a>
+							<!--{/if}-->
+						</p>
+					</div>
+				</div>
+
+				<div class="commonbox">
+					<div class="commonboxtitle"><!--<lang package='Template'>-->活动组织者<!--</lang>--></div>
+					<div class="userlist">
+						<div class="user smalluser">
+							<a href="<!--{:Q::U('home://space@?id='.$arrEvent['user_id'])}-->"><img src="<!--{:Core_Extend::avatar( $arrEvent['user_id'],'small' )}-->" width="100%" title="<!--<lang package='Template'>-->发起者<!--</lang>-->&nbsp;<!--{$arrEvent['event_username']}--> - <!--<lang package='Template'>-->创建时间<!--</lang>-->&nbsp;<!--{$arrEvent['create_dateline']|Core_Extend+timeFormat}-->" alt="<!--<lang package='Template'>-->活动成员<!--</lang>--> <!--{:Core_Extend::getUsernameById($arrEvent['user_id'])}-->" class="need_lazyload"></a>
+							<a class="need_tips" tips="<!--<lang package='Template'>-->发起者<!--</lang>-->&nbsp;<!--{$arrEvent['event_username']}-->&nbsp;,&nbsp;<!--<lang package='Template'>-->创建时间<!--</lang>-->&nbsp;<!--{$arrEvent['create_dateline']|Core_Extend+timeFormat}-->" href="<!--{:Q::U('home://space@?id='.$arrEvent['user_id'])}-->"><!--{:C::subString($arrEvent['event_username'],0,3)}--></a>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				
+				<div class="commonbox">
+					<div class="commonboxtitle"><!--<lang package='Template'>-->活动成员<!--</lang>--></div>
+					<div class="userlist">
+						<!--{if !empty($arrNeweventusers)}-->
+						<!--<foreach for=arrNeweventusers value=arrNeweventuser>-->
+						<div class="user smalluser">
+							<a href="<!--{:Q::U('home://space@?id='.$arrNeweventuser['user_id'])}-->"><img src="<!--{:Core_Extend::avatar( $arrNeweventuser['user_id'],'small' )}-->" width="100%" title="<!--<lang package='Template'>-->活动成员<!--</lang>-->&nbsp;<!--{$arrNeweventuser['user_name']}--> - <!--<lang package='Template'>-->创建时间<!--</lang>-->&nbsp;<!--{$arrNeweventuser['create_dateline']|Core_Extend+timeFormat}-->" alt="<!--<lang package='Template'>-->活动成员<!--</lang>--> <!--{$arrNeweventuser['user_name']}-->"></a>
+							<a class="need_tips" tips="<!--<lang package='Template'>-->活动成员<!--</lang>-->&nbsp;<!--{$arrNeweventuser['user_name']}-->&nbsp;,&nbsp;<!--<lang package='Template'>-->创建时间<!--</lang>-->&nbsp;<!--{$arrNeweventuser['create_dateline']|Core_Extend+timeFormat}-->" href="<!--{:Q::U('home://space@?id='.$arrNeweventuser['user_id'])}-->"><!--{:C::subString($arrNeweventuser['user_name'],0,3)}--></a>
+						</div>
+						<!--</foreach>-->
+						<!--{d*else}-->
+						<p><!--<lang package='Template'>-->暂时没有发现任何活动成员<!--</lang>--></p>
+						<!--{/if}-->
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				
+				<div class="commonbox">
+					<div class="commonboxtitle"><!--<lang package='Template'>-->感兴趣成员<!--</lang>--></div>
+					<div class="userlist">
+						<!--{if !empty($arrNeweventattentionusers)}-->
+						<!--<foreach for=arrNeweventattentionusers value=arrNeweventattentionuser>-->
+						<div class="user smalluser">
+							<a href="<!--{:Q::U('home://space@?id='.$arrNeweventattentionuser['user_id'])}-->"><img src="<!--{:Core_Extend::avatar( $arrNeweventattentionuser['user_id'],'small' )}-->" width="100%" title="<!--<lang package='Template'>-->活动成员<!--</lang>-->&nbsp;<!--{$arrNeweventattentionuser['user_name']}--> - <!--<lang package='Template'>-->创建时间<!--</lang>-->&nbsp;<!--{$arrNeweventattentionuser['create_dateline']|Core_Extend+timeFormat}-->" alt="<!--<lang package='Template'>-->活动成员<!--</lang>-->&nbsp;<!--{$arrNeweventattentionuser['user_name']}-->"></a>
+							<a class="need_tips" tips="<!--<lang package='Template'>-->活动成员<!--</lang>-->&nbsp;<!--{$arrNeweventattentionuser['user_name']}-->&nbsp;,&nbsp;<!--<lang package='Template'>-->创建时间<!--</lang>-->&nbsp;<!--{$arrNeweventattentionuser['create_dateline']|Core_Extend+timeFormat}-->" href="<!--{:Q::U('home://space@?id='.$arrNeweventattentionuser['user_id'])}-->"><!--{:C::subString($arrNeweventattentionuser['user_name'],0,3)}--></a>
+						</div>
+						<!--</foreach>-->
+						<!--{d*else}-->
+						<p><!--<lang package='Template'>-->暂时没有发现任何感兴趣成员<!--</lang>--></p>
+						<!--{/if}-->
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			<div class="clearfix"></div>

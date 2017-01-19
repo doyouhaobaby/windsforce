@@ -1,0 +1,38 @@
+				<ul class="global_tips">
+					<li><!--<lang package='Template'>-->这里是全局惯性配置数据，你可以与全局配置数据进行对比，可以用来恢复一下设置<!--</lang>-->&nbsp;<a href="javascript:void(0);" onclick="closeGlobaldefaultconfig();"><!--<lang package='Template'>-->关闭<!--</lang>--></a></li>
+				</ul>
+				<table class="tablesorter" cellspacing="0">
+					<thead>
+						<tr>
+							<th width="50%"><!--<lang package='Template'>-->配置文件信息<!--</lang>--></th>
+							<th width="50%"><!--<lang package='Template'>-->配置文件数据值<!--</lang>--></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr style="background:none;" >
+							<td>
+								<div style="height: 200px; width: 100%; overflow:auto;"><!--{$sAppGlobaldefaultconfig}--></div>
+							</td>
+							<td>
+								<div style="height: 200px; width: 100%; overflow:auto;">
+									<table class="tablesorter" cellspacing="0">
+										<thead>
+											<tr style="background:none;">
+												<th><!--<lang package='Template'>-->配置项<!--</lang>--></th>
+												<th><!--<lang package='Template'>-->配置值<!--</lang>--></th>
+											</tr>
+										</thead>
+										<tbody>
+											<!--<foreach for=arrAppGlobaldefaultconfigs >-->
+											<tr style="background:none;" >
+												<td><!--{$key}--></td>
+												<td><!--{$TheController->filter_value($value)}--></td>
+											</tr>
+											<!--</foreach>-->
+										</tbody>
+									</table>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>

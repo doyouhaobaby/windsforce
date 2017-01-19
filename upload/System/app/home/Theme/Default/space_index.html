@@ -1,0 +1,248 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{:Core_Extend::emotion()}-->
+<!--{:Core_Extend::validate()}-->
+
+<script src="<!--{:__PUBLIC__}-->/js/jquery/jquery.insertcontent.js"></script>
+<script src="<!--{:__PUBLIC__}-->/js/jquery/autoresize/jquery.autoresize.js"></script>
+
+<!--{script}-->
+$(function(){
+	$('.userguestbook-content').emotionsToHtml();
+	
+	$('#userguestbook_content').autoResize({
+		onResize:function(){
+			$(this).css({opacity:0.8});
+		},
+		animateCallback:function(){
+			$(this).css({opacity:1});
+		},
+		animateDuration:300,
+		extraSpace:0,
+		min:'100px'
+	});
+
+	$(".face-icon").jqfaceedit({txtAreaObj:$("#userguestbook_content"),textareaid:'userguestbook_content',containerObj:$('#emotion_parentcontainer'),top:25,left:-27});
+});
+
+function commentSubmit(){
+	var comment_name=$.trim($('#userguestbook_name').val());
+	var comment_content=$.trim($("#userguestbook_content").val());
+	var bResult=commentCheckForm_(comment_name,comment_content);
+	if(bResult===false){
+		return false;
+	}
+
+	$("#comment-submit").val(Q.L('正在提交评论','Common'));
+	$("#comment-submit").attr("disabled", "disabled");
+	Q.AjaxSubmit('userguestbook-commentform',Q.U('home://space/add_userguestbook'),'',function(data,status){
+		$("#comment-submit").attr("disabled", false);
+		$("#comment-submit").val(Q.L('提交评论','Common'));
+		if(status==1){
+			setTimeout("window.location.replace(_SELF_);",1000);
+		}
+	});
+}
+
+sCurrentTextareaContent='userguestbook_content';
+
+checkForm(commentSubmit);
+<!--{/script}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('home://space@?id='.$nId)}-->"><!--{$arrUserInfo['user_name']}--></a> <span class="divider">/</span></li>
+			<li><!--<lang package='Template'>-->个人空间<!--</lang>--></li>
+		</ul>
+	</div>
+		
+	<div class="container_12 container_box">
+		<div class="grid_8">
+			<!--<include file="space+menu" />-->
+			
+			<div class="nav_tabcontainer nav_text">
+				<ul>
+					<!--<foreach for=arrInfoMenus key=sInfoMenuKey value=sInfoMenu>-->
+					<li <!--{if (!$sDo && !$sInfoMenuKey) || $sDo==$sInfoMenuKey}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://space@?id='.$nId.(!empty($sInfoMenuKey)?'&do='.$sInfoMenuKey:''))}-->"><!--{$sInfoMenu}--></a></li>
+					<!--</foreach>-->
+				</ul>
+			</div>
+
+			<table class="table">
+				<thead>
+					<tr>
+						<th><!--<lang package='Template'>-->用户名<!--</lang>--></th>
+						<th><!--{$arrUserInfo['user_name']}--></th>
+					</tr>
+				</thead>
+				<tbody>
+					<!--{if !$sDo}-->
+					<!--<foreach for=arrBases value=sBase>-->
+					<!--{if array_key_exists($sBase,$arrUserprofilesettingDatas) && 
+							$arrUserprofilesettingDatas[$sBase]['userprofilesetting_showinfo']==1 && 
+							Profile_Extend+checkPrivacy($nId,$arrUserprofilesettingDatas[$sBase]['userprofilesetting_privacy'])}-->
+					<tr>
+						<td><!--{$arrUserprofilesettingDatas[$sBase]['userprofilesetting_title']}--></td>
+						<td>
+						<!--{if $sBase=='userprofile_gender'}-->
+						<!--{:Profile_Extend::getGender($arrUserInfo['userprofile_gender'])}-->
+						<!--{elseif $sBase=='userprofile_birthday'}-->
+						<!--{$arrUserInfo['userprofile_birthyear']}--><!--<lang package='__COMMON_LANG__@Common'>-->年<!--</lang>--><!--{$arrUserInfo['userprofile_birthmonth']}--><!--<lang package='__COMMON_LANG__@Common'>-->月<!--</lang>--><!--{$arrUserInfo['userprofile_birthday']}--><!--<lang package='__COMMON_LANG__@Common'>-->日<!--</lang>-->
+						<!--{elseif $sBase=='userprofile_birthcity'}-->
+						<!--{$sDirthDistrict}-->
+						<!--{elseif $sBase=='userprofile_residecity'}-->
+						<!--{$sResideDistrict}-->
+						<!--{d*else}-->
+						<!--{$arrUserInfo[$sBase]}-->
+						<!--{/if}-->
+						</td>
+					</tr>
+					<!--{/if}-->
+					<!--</foreach>-->
+					
+					<!--<for start='1' end='8' var='nCustomFieldId'>-->
+					<!--{~$sCustomField='userprofile_field'.$nCustomFieldId}-->
+					<!--{if array_key_exists($sCustomField,$arrUserprofilesettingDatas) && 
+							$arrUserprofilesettingDatas[$sCustomField]['userprofilesetting_showinfo']==1 && 
+							Profile_Extend+checkPrivacy($nId,$arrUserprofilesettingDatas[$sCustomField]['userprofilesetting_privacy'])}-->
+					<tr>
+						<td><!--{$arrUserprofilesettingDatas[$sCustomField]['userprofilesetting_title']}--></td>
+						<td><!--{$arrUserInfo:userprofile:$sCustomField}--></td>
+					<tr/>
+					<!--{/if}-->
+					<!--</for>-->
+					<!--{elseif $sDo=='contact'}-->
+					<!--<foreach for=arrContacts value=sContact>-->
+					<!--{if array_key_exists($sContact,$arrUserprofilesettingDatas) && 
+							$arrUserprofilesettingDatas[$sContact]['userprofilesetting_showinfo']==1 && 
+							Profile_Extend+checkPrivacy($nId,$arrUserprofilesettingDatas[$sContact]['userprofilesetting_privacy'])}-->
+					<tr>
+						<td><!--{$arrUserprofilesettingDatas[$sContact]['userprofilesetting_title']}--></td>
+						<td><!--{$arrUserInfo[$sContact]}--></td>
+					<tr/>
+					<!--{/if}-->
+					<!--</foreach>-->
+					<!--{elseif $sDo=='edu'}-->
+					<!--<foreach for=arrEdus value=sEdu>-->
+					<!--{if array_key_exists($sEdu,$arrUserprofilesettingDatas) && 
+							$arrUserprofilesettingDatas[$sEdu]['userprofilesetting_showinfo']==1 && 
+							Profile_Extend+checkPrivacy($nId,$arrUserprofilesettingDatas[$sEdu]['userprofilesetting_privacy'])}-->
+					<tr>
+						<td><!--{$arrUserprofilesettingDatas[$sEdu]['userprofilesetting_title']}--></td>
+						<td><!--{$arrUserInfo[$sEdu]}--></td>
+					<tr/>
+					<!--{/if}-->
+					<!--</foreach>-->
+					<!--{elseif $sDo=='work'}-->
+					<!--<foreach for=arrWorks value=sWork>-->
+					<!--{if array_key_exists($sWork,$arrUserprofilesettingDatas) &&  
+							$arrUserprofilesettingDatas[$sWork]['userprofilesetting_showinfo']==1 && 
+							Profile_Extend+checkPrivacy($nId,$arrUserprofilesettingDatas[$sWork]['userprofilesetting_privacy'])}-->
+					<tr>
+						<td><!--{$arrUserprofilesettingDatas[$sWork]['userprofilesetting_title']}--></td>
+						<td><!--{$arrUserInfo[$sWork]}--></td>
+					<tr/>
+					<!--{/if}-->
+					<!--</foreach>-->
+					<!--{elseif $sDo=='info'}-->
+					<!--<foreach for=arrInfos value=sInfo>-->
+					<!--{if array_key_exists($sInfo,$arrUserprofilesettingDatas) && 
+							$arrUserprofilesettingDatas[$sInfo]['userprofilesetting_showinfo']==1 && 
+							Profile_Extend+checkPrivacy($nId,$arrUserprofilesettingDatas[$sInfo]['userprofilesetting_privacy'])}-->
+					<tr>
+						<td><!--{$arrUserprofilesettingDatas[$sInfo]['userprofilesetting_title']}--></td>
+						<td><!--{if in_array($sInfo,array('userprofile_bio','userprofile_interest'))}--><!--{$arrUserInfo[$sInfo]|Profile_Extend+formatUserinfo}--><!--{d*else}--><!--{$arrUserInfo[$sInfo]}--><!--{/if}--></td>
+					<tr/>
+					<!--{/if}-->
+					<!--</foreach>-->
+					<tr>
+						<td><!--<lang package='Template'>-->昵称<!--</lang>--></td>
+						<td><!--{$arrUserInfo['user_nikename']}--></td>
+					<tr/>
+					<!--{/if}-->
+				</tbody>
+			</table>
+
+			<!--{# 留言列表}-->
+			<!--<include file="space+guestbookcommentlist" />-->
+			
+			<!--{# 留言表单}-->
+			<!--<include file="space+guestbookcommentform" />-->
+		</div>
+
+		<div class="grid_4">
+			<table class="table">
+				<tbody>
+					<tr>
+						<td style="text-align:center;">
+							<a href="<!--{:Q::U('home://space@?id='.$nId.'&type=avatar')}-->"><img src="<!--{:Core_Extend::avatar( $nId,'middle' )}-->" /></a>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2"><!--{$nId|Core_Extend+getUsericon}-->&nbsp;<a href="<!--{:Q::U('home://space@?id='.$arrUserInfo['user_id'])}-->"><!--{$arrUserInfo['user_name']}-->@<!--{$arrUserInfo['user_id']}--></a><!--{$arrUserInfo|Core_Extend+getUseronlineicon}--></td>
+					</tr>
+					<tr>
+						<td colspan="2"><img src="<!--{:Profile_Extend::getUserprofilegender($arrUserInfo['userprofile_gender'])}-->" border="0" align="absmiddle" />&nbsp;<!--<lang package='Template'>-->性别<!--</lang>--> <!--{:Profile_Extend::getGender($arrUserInfo['userprofile_gender'])}--></td>
+					</tr>
+					<tr>
+						<td colspan="2"><!--{$arrUserInfo['create_dateline']|Core_Extend+timeFormat}-->&nbsp;<!--<lang package='Template'>-->注册<!--</lang>--></td>
+					</tr>
+					<tr>
+						<td colspan="2"><!--<lang package='Template'>-->最后登陆<!--</lang>-->&nbsp;<!--{$arrUserInfo['user_lastlogintime']|Core_Extend+timeFormat}--></td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<!--<lang package='Template'>-->等级<!--</lang>-->&nbsp;<a href="<!--{:Q::U('home://space@?id='.$arrUserInfo['user_id'].'&type=rating')}-->" ><!--{$arrRatinginfo['rating_name']}--></a>
+							<span class="userrating_tips" tips="<!--<lang package='__COMMON_LANG__@Common'>-->当前积分<!--</lang>-->&nbsp;<!--{$nUserscore}-->,<!--<lang package='__COMMON_LANG__@Common'>-->等级名字<!--</lang>-->&nbsp;<!--{$arrRatinginfo['rating_name']}-->,<!--<lang package='__COMMON_LANG__@Common'>-->距离下一个等级<!--</lang>-->&nbsp;<!--{$arrRatinginfo['next_rating']['rating_name']}-->&nbsp;<!--<lang package='__COMMON_LANG__@Common'>-->还差<!--</lang>-->&nbsp;<!--{$arrRatinginfo['next_needscore']}-->&nbsp;<!--<lang package='__COMMON_LANG__@Common'>-->积分<!--</lang>-->"><img src="<!--{$arrRatinginfo['rating_icon']}-->" style="position:relative;top:-2px;" />
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2"><!--<lang package='Template'>-->积分<!--</lang>-->&nbsp;<span class="badge badge-success"><a href="<!--{:Q::U('home://space@?id='.$arrUserInfo['user_id'].'&type=rating')}-->"><!--{$arrUserInfo['usercount_extendcredit1']}--></a></span>&nbsp;
+						<!--<lang package='Template'>-->金币<!--</lang>-->&nbsp;<span class="badge badge-success"><a href="<!--{:Q::U('home://space@?id='.$arrUserInfo['user_id'].'&type=rating')}-->"><!--{$arrUserInfo['usercount_extendcredit2']}--></a></span></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div style="padding:5px;">
+				<!--{if $GLOBALS['___login___']===false}-->
+				<a class="btn btn-small" href="javascript:void(0);" onclick="addFriend(<!--{$arrUserInfo['user_id']}-->);"><!--<lang package='Template'>-->关注<!--</lang>-->+1</a>
+				<!--{d*else}-->
+				<!--{~$nAlreadyFriendId=Core_Extend::isAlreadyFriend($GLOBALS['___login___']['user_id']);}-->
+				<!--{if $nAlreadyFriendId==1 || $nAlreadyFriendId==4}-->
+				<a class="btn btn-small" rel="nofollow" href="javascript:void(0);" onclick="deleteFriend(<!--{$arrUserInfo['user_id']}-->);"><!--<lang package='Template'>-->取消关注<!--</lang>--></a>
+				<!--{d*else}-->
+				<a rel="nofollow" class="btn btn-small" href="javascript:void(0);" onclick="addFriend(<!--{$arrUserInfo['user_id']}-->);"><!--<lang package='Template'>-->关注<!--</lang>-->+1</a>
+				<!--{/if}-->
+				<!--{/if}-->&nbsp;
+				<a href="<!--{:Q::U('home://pm/pmnew?uid='.$arrUserInfo['user_id'])}-->" rel="nofollow" class="btn btn-small"><!--<lang package='Template'>-->发消息<!--</lang>--></a>
+			</div>
+
+			<!--{if $arrUserInfo['user_sign']}-->
+			<div style="padding:10px 5px;">
+				<h4><!--<lang package='Template'>-->签名<!--</lang>--></h4>
+				<p style="margin-top:10px;"><!--{$arrUserInfo['user_sign']|Core_Extend+usersign}--></p>
+			</div>
+			<!--{/if}-->
+
+			<div style="padding:10px 5px;" class="userlist">
+				<h4><!--<lang package='Template'>-->他关注的用户<!--</lang>--></h4>
+				<p style="margin-top:10px;">
+					<!--{if !empty($arrFriends)}-->
+					<!--<foreach for=arrFriends value=oFriend>-->
+					<div class="user smalluser">
+						<a href="<!--{:Q::U('home://space@?id='.$oFriend['friend_friendid'])}-->"><img src="<!--{:Core_Extend::avatar( $oFriend['friend_friendid'],'small' )}-->" width="100%" title="<!--<lang package='Template'>-->好友<!--</lang>--> <!--{$oFriend['friend_friendusername']}-->" alt="<!--<lang package='Template'>-->好友<!--</lang>--> <!--{$oFriend['friend_friendusername']}-->"></a>
+						<a title="<!--<lang package='Template'>-->好友<!--</lang>--> <!--{$oFriend['friend_friendusername']}-->" href="<!--{:Q::U('home://space@?id='.$oFriend['friend_friendid'])}-->"><!--{:C::subString(Core_Extend::getUsernameById($oFriend['friend_friendid']),0,3)}--></a>
+					</div>
+					<!--</foreach>-->
+					<!--{d*else}-->
+					<!--<lang package='Template'>-->他尚未关注任何人<!--</lang>-->
+					<!--{/if}-->
+				</p>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

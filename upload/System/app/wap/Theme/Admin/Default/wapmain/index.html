@@ -1,0 +1,75 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+function option(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'update...' );
+	$("#submit_button").attr("disabled", false);
+	$('.validate')(0).submit();
+}
+
+checkForm(option);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='__APPWAP_COMMON_LANG__@Template'>-->Wap入口<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='__APPWAP_COMMON_LANG__@Template'>-->Wap入口<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='__APPWAP_COMMON_LANG__@Template'>-->Wap入口<!--</lang>--></h3>
+				<ul class="tabs">
+					<li class="active"><a href="<!--{:Admin_Extend::base()}-->"><!--<lang package='Template'>-->应用入口<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('app/index')}-->"><!--<lang package='Template'>-->应用列表<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="<!--{:Q::U('app/config?id='.$nId.'&action=update_option')}-->" method="post" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="wap_on"><!--<lang package='Template'>-->WAP服务是否开启<!--</lang>--></label>
+						<input type="radio" class="input-short" id="wap_on" name="options[wap_on]" value="1" <!--{if $arrOptions['wap_on']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" class="input-short" id="" name="options[wap_on]" value="0" <!--{if $arrOptions['wap_on']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->可暂时关闭WAP服务，不影响用户访问WEB网站<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="wap_close_reason"><!--<lang package='Template'>-->关闭原因<!--</lang>--></label>
+						<textarea name="options[wap_close_reason]" rows="5"><!--{$arrOptions['wap_close_reason']}--></textarea>
+						<div class="description"><!--<lang package='Template'>-->可暂时将站点关闭，这里为WAP站点关闭原因<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="wap_mobile_only"><!--<lang package='Template'>-->WAP服务是否只能使用手机访问<!--</lang>--></label>
+						<input type="radio" class="input-short" id="wap_mobile_only" name="options[wap_mobile_only]" value="1" <!--{if $arrOptions['wap_mobile_only']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" class="input-short" id="" name="options[wap_mobile_only]" value="0" <!--{if $arrOptions['wap_mobile_only']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->如果选择了只能通过手机访问，那么通过计算机无法直接访问，注意这会造成IE6-IE8用户无法使用网站服务<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="wap_computer_on"><!--<lang package='Template'>-->计算机直接访问是否跳转到WEB页面<!--</lang>--></label>
+						<input type="radio" class="input-short" id="wap_computer_on" name="options[wap_computer_on]" value="1" <!--{if $arrOptions['wap_computer_on']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" class="input-short" id="" name="options[wap_computer_on]" value="0" <!--{if $arrOptions['wap_computer_on']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->如果选择了是，那么计算机直接访问WAP页面将自动跳转到WEB页面，注意这会造成IE6-IE8的用户页面不断重定向<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="wap_baselist_num"><!--<lang package='Template'>-->WAP网页每页基本分页数量<!--</lang>--></label>
+						<input type="text" name="options[wap_baselist_num]" id="wap_baselist_num" size="40" value="<!--{$arrOptions['wap_baselist_num']}-->" class="{required:true,digits:true,min: 2,max:50}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->WAP网站每页基本列表数量<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="wap_img_size"><!--<lang package='Template'>-->WAP网页照片显示尺寸<!--</lang>--></label>
+						<input type="text" name="options[wap_img_size]" id="wap_img_size" size="40" value="<!--{$arrOptions['wap_img_size']}-->" class="{required:true}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->为了减少WAP网页图片传说量，这里可以控制WAP网页图片的尺寸<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input id="submit_button" type="submit" class="alt_btn" value="<!--<lang package='Template'>-->发布<!--</lang>-->" />
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->" />
+					</div>
+				</footer>
+			</div>
+		</article>
+
+<!--<include file="public+footer">-->

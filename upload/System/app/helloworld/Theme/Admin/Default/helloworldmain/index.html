@@ -1,0 +1,22 @@
+<!--<include file="public+header" />-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='__APPHELLOWORLD_COMMON_LANG__@Template'>-->Helloworld入口<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='__APPHELLOWORLD_COMMON_LANG__@Template'>-->Helloworld入口<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='__APPHELLOWORLD_COMMON_LANG__@Template'>-->Helloworld入口<!--</lang>--></h3>
+				<ul class="tabs">
+					<li class="active"><a href="<!--{:Admin_Extend::base()}-->"><!--<lang package='Template'>-->应用入口<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('app/index')}-->"><!--<lang package='Template'>-->应用列表<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<div class="module_content">
+				<p>Hello world!</p>
+			</div>
+		</article>
+
+<!--<include file="public+footer">-->

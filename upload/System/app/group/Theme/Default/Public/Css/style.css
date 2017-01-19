@@ -1,0 +1,306 @@
+/*
+File Name: style.css
+File Type: 不必需
+Description: Group应用模块CSS
+*/
+
+/**===============================
+           查看帖子
+================================*/
+[CURSCRIPT=group::grouptopic::view,group::group::show]
+.floor{margin:0px;padding:0px;}
+.floor_footerpost{margin-top:10px;padding-bottom:10px;}
+.floor_headerpost{margin-top:-20px;padding:0;}
+.floor_left{vertical-align:top;width:140px;}
+.floor_right{vertical-align:top;padding:10px 20px;border-bottom:0 none;}
+.floor_bottom{border-top:0 none;vertical-align:bottom;padding:0 20px;}
+.floor_table{table-layout:fixed;}
+.floor_grouptopictable{background: none repeat scroll 0 0 #FFFFFF;border: 1px solid;border-bottom:none;}
+.floor_grouptopictd1{text-align:center;border:1px solid;border-bottom:none;{SIDE_BG_CODE};color:{MEDIUM_TEXTCOLOR};}
+.floor_grouptopictd1 a{color:{MEDIUM_TEXTCOLOR};}
+.floor_grouptopictd2{border-bottom:none;}
+.floor_grouptopicbottomtd1{height: 4px;padding: 0;margin:0;border:1px solid;border-top:none;}
+.floor_grouptopicbottomtd2{height: 4px;padding: 0;margin:0;border-top:none;}
+
+.floor_grouptopiccommenttable{border-top:none;border:1px solid;border-top:none; border-bottom:none;}
+.floor_grouptopiccommenttd1{padding-bottom:80px;padding-top:10px;border: 1px solid;border-top:none;border-bottom:none;text-align:center;{SIDE_BG_CODE};color:{MEDIUM_TEXTCOLOR};}
+.floor_grouptopiccommenttd1 a{color:{MEDIUM_TEXTCOLOR};}
+.floor_grouptopiccommenttd2{border-top:none;}
+.floor_grouptopiccommentbottomtd1{height: 4px;padding: 0;margin:0;border-right:1px solid;border-top:none;}
+.floor_grouptopiccommentbottomtd2{height: 4px;padding: 0;margin:0;border-top:none;}
+.floor_grouptopiccommentbottom{border-bottom:none;padding: 0;margin:0;}
+
+.floor_footerposttable{table-layout:fixed;margin-top:-15px;margin-bottom:-20px;}
+.grouptopiccomment_form{margin-bottom:-15px;}
+.floor_footerpostcontenttable{background: none repeat scroll 0 0 #FFFFFF;border: 1px solid;}
+.floor_footerpostcontenttd1{padding-bottom:80px;padding-top:10px;text-align:center;border:1px solid;border-top:none;}
+
+.floor_footerposttitle{padding:5px 10px;color:#fff;}
+
+.grouptopiccontent_box{min-height:100px;}
+.grouptopiccomment_title h1{font-size:13px;color:#999;line-height:20px;margin-bottom:10px;}
+
+.post_num{float:right;overflow:hidden;margin-top:2px;*width:150px;}
+.post_num ul{margin-left:-1px;float:right;}
+.post_num li{list-style:none;float:left;padding:0 10px;border-left:1px solid #ccc;line-height:14px;color:#999999;}
+
+.floor_info{padding:0 0 30px 0;}
+.floor_title{padding:5px 0 15px;border-bottom:1px dashed #dddddd;margin-bottom:10px;}
+.floor_title h1{font-size:14px;line-height:16px;}
+.floor_category a{}
+.floor_category a:hover{}
+.floor_top_tips{padding:0 0 10px;margin-bottom:5px;color:#666;}
+.floor_bottom_tips{padding:10px 0;color:#666;height:20px;}
+.floor_bottom_tips a{color:#666;}
+.floor_userinfooperate{margin-top:10px;text-align:center;}
+
+.floor_quickreply{margin-bottom:5px;margin-top:5px;}
+.grouptopiccomment_quickmessage{margin-bottom:0px;width:70%;height:16px;border-color:#f2f2f4;}
+.grouptopiccomment_reply{display:none;line-height:32px;margin-left:4px;}
+.grouptopiccomment_btn{margin:8px 8px 8px 0px;}
+
+.topic_share{position:relative;top:-5px;width:200px;}
+
+.clear:after,.clearfix:after{content:".";display:none;height:0;clear:both;visibility:hidden;}
+.clear,.clearfix{display:inline;}
+
+.floor_groupuserfollow {padding: 10px 0;color: {MEDIUM_TEXTCOLOR};margin:auto;width:80%;text-align:left;}
+.floor_groupuserfollow th {border-right: 1px dashed #CCCCCC;font-weight:normal;}
+.floor_groupuserfollow th, .floor_groupuserfollow td {font-size: 12px;text-align: center;}
+
+.floor_userinforating{margin:auto;width:75%;text-align:left;margin-bottom:5px;}
+.floor_userinforating a{text-decoration:underline;font-weight:bold;}
+.floor_userinforating a:hover{text-decoration:none;}
+
+.floor_userinfoname {padding-left: 15px;}
+.floor_userinfoname {height: 16px;margin-bottom: 10px;overflow: hidden;padding: 5px 0;}
+
+.floor_userinfonameinner{margin:auto;text-align:left;width:75%;}
+.floor_userinfonikename, .floor_userinfonikename a {color: #fff !important;font-style:normal;}
+
+.grouptopicview_info{ display:none;}
+.grouptopicview_tip{padding:12px 11px 25px 11px; margin:-1px 0 0 -1px;border:1px solid #DDDDDD;width:450px;display:none;-webkit-border-radius: 0px 5px 5px 0px;-moz-border-radius: 0px 5px 5px 0px;border-radius: 0px 5px 5px 0px;-webkit-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);-moz-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);-webkit-background-clip: padding-box;-moz-background-clip: padding;background-clip: padding-box;}
+.grouptopicview_tip .grouptopicview_info{ display:block; position:absolute; top:10px; left:150px; line-height:25px;}
+.grouptopicview_info table td{padding:0 8px;}
+.group_avatar{background:#FFFFFF;padding: 4px 4px 6px 4px;}
+.grouptopicview_tablebox{ margin-left:-8px; }
+
+.grouptopicthumb{}
+.grouptopicthumb .grouptopicthumb_title{font-size:13px;font-weight:bold;color:#CDCDCD;}
+
+.love_tools{text-align:center;margin:15px 0;}
+
+.floor_title .floor_copy{font-size:12px;color:#bbb;line-height:1.3;margin-left:1px;font-weight:normal;}
+.floor_title .floor_copy sup{font-size:8px;}
+
+/* 帖子工具条 */
+.extend_tool{border-top:1px dashed #CDCDCD;padding:10px 0px 0px 5px;}
+.extend_tool a{color:#cacbca;}
+.extend_tool em a{padding:5px 6px 5px 22px;}
+.extend_tool .fastre{background:url('{fastreply.gif}') no-repeat 8px 50%;}
+.extend_tool .editp{background:url('{edit.gif}') no-repeat 8px 50%;}
+.extend_tool .floor_copy{font-size:12px;color:#bbb;line-height:1.3;margin-left:12px;}
+.extend_tool .floor_copy sup{font-size:8px;}
+
+/* 小组新风格 */
+.grouptopic-title{height:15px;line-height:15px;padding:5px 0px;}
+.grouptopic-title .floor_category{font-size: 15px;line-height: 17px;}
+.grouptopic-titletext{font-size: 15px;line-height: 17px;}
+#grouptopicnew_show h1{font-size:22px;color:#333;text-align:left;line-height:100%;margin-bottom:8px}
+#grouptopicnew_show .infos{position:relative;margin-bottom:10px;margin-right:0px;padding:0 0px 15px 0px;margin-top:10px;}
+
+#grouptopicnew_show .avatar_large{width:48px;}
+.grouptopicsnew .grouptopic a:link,.grouptopicsnew .grouptopic a:visited{}
+.grouptopicsnew .grouptopic .title a:hover{}
+.grouptopicsnew .grouptopic .avatar{width:56px;margin-left:10px;}
+.grouptopicsnew .grouptopic .infos{padding-right:74px;}
+.grouptopicsnew .grouptopic .info{color:#bbb;margin-bottom:2px;font-size:12px;margin-top:8px;}
+.grouptopicsnew .grouptopic .info a{color:#778087;}
+.grouptopicsnew .grouptopic .info .grouptopiccategory{padding:1px 5px;color:#778087;}
+.grouptopicsnew .grouptopic .info em{font-style:normal;}
+.grouptopicsnew .grouptopic a:link,.grouptopicsnew .grouptopic a:visited{}
+.grouptopic .grouptopic-content{margin-bottom:10px;margin-top:8px;}
+.grouptopic .grouptopic-content img{max-width:690px;}
+
+#grouptopiccomments{margin-top:20px;}
+#grouptopiccomments .total{padding:0 10px 6px 10px;border-bottom:1px dashed #DDD;color:#999;margin-bottom:10px;}
+#grouptopiccomments .grouptopiccomment_items{padding:5px 10px;}
+#grouptopiccomments .grouptopiccommentnew_reply{background:#fff;padding:3px 0px;-webkit-border-radius: 5px;-moz-border-radius:5px;border-radius:5px;margin-bottom:10px;}
+#grouptopiccomments .info a,#grouptopiccomments .grouptopiccomment-content a{color:#778087;}
+#grouptopiccomments .grouptopiccomment-content i a{margin-left:6px;}
+#grouptopiccomments .grouptopiccommentnew_reply .face{padding-right:8px;width:48px;margin-left:0;position:relative;top:12px;}
+#grouptopiccomments .grouptopiccommentnew_reply .infos{padding-left:65px;}
+#grouptopiccomments .grouptopiccommentnew_reply .info{font-size:12px;color:#bbb;height:14px;}
+#grouptopiccomments .grouptopiccommentnew_reply .info a:link,#replies .reply .info a:visited{color:#999;}
+#grouptopiccomments .grouptopiccommentnew_reply .info .name{float:left;}
+#grouptopiccomments .grouptopiccommentnew_reply .info .name a{margin-right:8px;}
+#grouptopiccomments .grouptopiccomment_title{margin:15px 0;}
+#grouptopiccomments .grouptopiccomment_title h1{font-size:13px;color:#999;line-height:20px;}
+#grouptopiccomments .grouptopiccomment_parent{margin:15px 0;}
+.grouptopiccomment_parent i a{margin-left:6px;}
+.grouptopiccomment_parent{width:98%;}
+.grouptopiccomment_parent .title{font-size:12px;line-height:13px;font-weight:normal;}
+.grouptopiccomment_parentcontent{-moz-border-bottom-colors: none;-moz-border-left-colors: none;-moz-border-right-colors: none;-moz-border-top-colors: none;background-color: #FFF;border-color: #E6E6E6 #E6E6E6 #D6D6D6;border-image: none;border-style: solid;border-width: 1px;box-shadow: 0 1px 0 white inset, 0 1px 5px #EEEEEE;padding: 10px;color: #666666;line-height: 1.6;margin: 15px 0 2px;}
+#grouptopiccomments .grouptopiccommentnew_reply .grouptopiccomment-content{margin-bottom:20px;margin-top:10px;}
+#grouptopiccomments .grouptopiccommentnew_reply .grouptopiccomment-content img{max-width:900px;}
+
+.grouptopicsnew .grouptopic .grouptopic-content,#grouptopiccomments .grouptopiccommentnew_reply .grouptopiccomment-content{position:relative;line-height:160%;text-overflow:ellipsis;word-wrap:break-word;}
+.grouptopicsnew .grouptopic .grouptopic-content p,#grouptopiccomments .grouptopiccommentnew_reply .grouptopiccomment-content p{line-height:160%;margin-bottom:10px;}
+.grouptopicsnew .grouptopic .grouptopic-content blockquote p,#grouptopiccomments .grouptopiccommentnew_reply .grouptopiccomment-content blockquote p{color:#666;font-weight:normal;line-height:150%;}
+.grouptopicsnew .grouptopic .grouptopic-content code,#grouptopiccomments .grouptopiccommentnew_reply .grouptopiccomment-content code{margin:0 2px;font-family:Monaco,Menlo, "Courier New", monospace;}
+.grouptopicsnew .grouptopic .grouptopic-content pre,#grouptopiccomments .grouptopiccommentnew_reply .grouptopiccomment-content pre{font-family:Monaco,Menlo,"Courier New", monospace;}
+.grouptopicsnew .grouptopic .grouptopic-content a:link,.grouptopicsnew .grouptopic .grouptopic-content a:visited,#grouptopiccomments .grouptopiccommentnew_reply .grouptopiccomment-content a:link,#grouptopiccomments .grouptopiccommentnew_reply .grouptopiccomment-content a:visited{}
+.grouptopicsnew .grouptopic .grouptopic-content a:hover,#grouptopiccomments .grouptopiccommentnew_reply .grouptopiccomment-content a:hover{}
+.grouptopicsnew .grouptopic .grouptopic-content strong,#grouptopiccomments .grouptopiccommentnew_reply .grouptopiccomment-content strong{color:#000;}
+.grouptopicsnew .grouptopic .grouptopic-content ul,.grouptopicsnew .grouptopic .grouptopic-content ol,#grouptopiccomments .grouptopiccommentnew_reply .grouptopiccomment-content ul,#grouptopiccomments .grouptopiccommentnew_reply .grouptopiccomment-content ol{list-style-position:inside;margin:0;padding:5px 14px;}
+.grouptopicsnew .grouptopic .grouptopic-content ul p,.grouptopicsnew .grouptopic .grouptopic-content ol p,#grouptopiccomments .grouptopiccommentnew_reply .grouptopiccomment-content ul p,#grouptopiccomments .grouptopiccommentnew_reply .grouptopiccomment-content ol p{margin:0;}
+.grouptopicsnew .grouptopic .grouptopic-content ul li,.grouptopicsnew .grouptopic .grouptopic-content ol li,#grouptopiccomments .grouptopiccommentnew_reply .grouptopiccomment-content ul li,#grouptopiccomments .grouptopiccommentnew_reply .grouptopiccomment-content ol li{line-height:160%;color:#333;}
+.grouptopicsnew .grouptopic .grouptopic-content img,#grouptopiccomments .grouptopiccommentnew_reply .grouptopiccomment-content img{vertical-align:top;}
+
+/* 回帖仅自己可见 */
+.locked{overflow:hidden;margin:10px 0;padding:8px 8px 8px 24px;border:1px dashed #FF9A9A;background:#FFF url('{locked.gif}') no-repeat 6px 50%;font-size:12px;zoom:1;}
+.locked:hover background-color:#F7F7F7;}
+.locked strong{color:#F26C4F;}
+.locked a{color:#369;}
+
+.locked_highlight{background-color:#feebc5;}
+
+/* 帖子标签 */
+.grouptopictag{padding-left:25px;background:url('{tag.gif}') no-repeat 0px 2px;}
+[/CURSCRIPT]
+
+/**===============================
+           小组公用头部
+================================*/
+[CURSCRIPT=group::group::show,group::group::user,group::grouptopic::view,group::grouptopic::reply,group::grouptopic::add,group::grouptopic::edit,group::groupadmin]
+#groupcontent_commontop{padding: 10px 0 0;position: relative;}
+.group_commontitle{border-radius: 10px 10px 0 0;height: 150px;position: relative;}
+.group_commontitle .group_info{background-color: rgba(0, 0, 0, 0.5);left: 20px;overflow: hidden;padding: 7px 10px 8px;position: absolute;top: 14px;color:#fff;}
+.group_commontitle .group_info a{color:#fff;}
+.group_commontitle .groupinfo_todaynum{font-size:13px;font-weight:bold;color:{NOTICETEXT_COLOR};}
+.group_joinleave{color:#000;background:#F0F0F0;text-align:center;padding:2px 5px;font-size:12px;}
+.group_commonmenu{position: absolute;bottom:-1px;left:15px;}
+.group_commonmenu .nav-groupmenu li a{}
+.group_commonmenu .nav-groupmenu li a:hover{}
+.group_commonmenu .nav-groupmenu .active a{font-weight:bold;}
+.group_commonmenu .nav-groupmenu li{border-bottom:1px solid #ffffff;}
+.group_commonmenu .nav-tabs > .active > a,.group_commonmenu .nav-tabs > .active > a:hover {height:18px;}
+[/CURSCRIPT]
+
+/**===============================
+           小组查看
+================================*/
+[CURSCRIPT=group::group::show]
+.groupshow_thumbtopic{background-color: #FFFFFF;border: 1px solid #EEEEEE;height: 260px;margin-top: -80px;padding: 3px;position: absolute;width:200px;}
+.groupshow_todayinfo{margin-left:20px;font-size:13px;color:#999;font-weight:normal;}
+.groupshow_todaynum{color:{NOTICETEXT_COLOR};}
+.group_description{margin: 5px 0 5px 0px;padding: 5px 0px; border-radius: 10px 10px 10px 10px;line-height:22px;}
+.group_createdateline{color:#999;}
+[/CURSCRIPT]
+
+/**===============================
+           添加和编辑帖子
+================================*/
+[CURSCRIPT=group::grouptopic::add,group::grouptopic::edit]
+.grouptopic_tabs{margin-top:10px;}
+.grouptopictabs_title{width:80px;}
+.grouptopictabs_description{margin-top:10px;}
+[/CURSCRIPT]
+
+/**===============================
+           帖子管理
+================================*/
+[CURSCRIPT=group::grouptopic::view,group::group::show]
+/* 帖子管理相关 */
+.moderatereason_title{margin-bottom:5px;}
+
+.highlight_color{background-color: #666666;background-image: url('{color_down.png}') !important;background-position: 0 0;background-repeat: no-repeat;margin-left: 3px;width: 23px !important;}
+.highlight_item{background: url('{color.png}') repeat-x scroll 0 0 #E5E5E5;border: 1px solid #999999;box-shadow: 0 1px 0 #E5E5E5;cursor: pointer;height: 23px;margin-right: 3px;overflow: hidden;padding: 0;vertical-align: middle;}
+.highlightoperating .currenthighlightstyle{background-color: #FFFFFF;border: 1px solid #999999;}
+.highlightoperating a{float: left;height: 21px;line-height: 21px;margin-right: 3px;text-align: center;width: 21px !important;}
+.highlightoperating_b,.highlightoperating_i,.highlightoperating_l{border: 1px solid #F1F5FA;outline: medium none;}
+
+/* 多选公用停留框 */
+#modActionSelect{position:absolute;right:0;margin-top:-16px;padding:10px 25px;width:380px;height:100px;line-height:32px;overflow:hidden;border:1px solid #999;background:#F5F5F5;}
+#modActionSelect h2.title{font-size:12px;margin:0 -10px;padding:0 10px;margin-bottom:8px;color:#999;line-height:100%;border-bottom:1px solid #ddd;padding-bottom:8px;}
+#modActionSelect a{color:#06C;}
+.smallmodaction{position:absolute;top:7px;right:10px;width:50px;height:14px;line-height:100px;overflow:hidden;background:url({arrow_go.png}) no-repeat center center;}
+.checkbox_checkall{position:absolute;top:7px;right:50px;}
+#modActionSelect.smallmodaction_done{margin-top:4px;margin-right:-3px;padding:0;width:35px;height:32px;border:none;background-position:0 -128px;}
+#modActionSelect.smallmodaction_done .smallmodaction{display:none;}
+#modActionSelect.smallmodaction_done #modActionSelectnum {-webkit-border-radius:6px;-moz-border-radius:6px;border-radius:6px;-webkit-box-shadow:0 0px 2px rgba(0,0,0,0.05);-moz-box-shadow:0 0px 2px rgba(0,0,0,0.1);box-shadow:0 0px 2px rgba(0,0,0,0.05);background:#F5F5F5;border:1px solid #999;color: #F26C4F;cursor: pointer;display: block;height: 20px;left: 0px; margin:0;position: absolute;text-align: center;top: 0;width: 32px;z-index: 999;padding-top:7px;}
+[/CURSCRIPT]
+
+/**===============================
+           首页和小组分类
+================================*/
+[CURSCRIPT=group::public::index,group::public::group,group::public::newtopic]
+#groups_list_box{margin-top:10px;}
+#groups_list_box .title{border-bottom:1px solid #F2F2F2;padding-bottom:6px;}
+#groups_list_box .groups_list_sort{float:right;position:relative;top:-5px;}
+#groupcategory label{line-height:100%;padding-top:8px;}
+#groupcategory label a{font-size:12px;color:#000;}
+[/CURSCRIPT]
+
+/**===============================
+           首页模块列表
+================================*/
+[CURSCRIPT=group::public::index,group::public::newtopic]
+.publicmodule_list li{line-height:26px;height:26px;overflow:hidden;}
+.publicmodule_list_sort ul{background:url({sort.png}) 0 7px no-repeat;}
+.publicmodule_list_sort ul li{padding-left:20px;}
+.publicmodule_list_line li{border-bottom:1px dotted #ccc;line-height:25px;height:25px;}
+
+/* 工具栏子分类 */
+.child_groupcategory a{font-weight:normal;font-size:12px;}
+.public_todaynum{color:{NOTICETEXT_COLOR};}
+
+/* 小组子分类 */
+.groupcategory_mainbox{margin-bottom: 20px;border: 1px solid #F7E6ED;height:auto;padding:0px 0px 15px 0px;margin-top:10px;}
+.groupcategory_maintitle{line-height: 31px;white-space: nowrap;background:#FFE4E4;padding-left:15px;}
+.groupcategory_maintitle a{font-weight:bold;}
+[/CURSCRIPT]
+
+/**===============================
+           帖子列表
+================================*/
+[CURSCRIPT=group::public::newtopic,group::group::show,group::space::index,group::tag::show,group::public::index,group::search::result,group::ucenter::index,group::ucenter::lovetopic]
+.newtopic_currentmenu{color:#999999;}
+.topic_list_box .num {display:inline-block;color:#FFF;font-weight:bold;padding:1px 12px;margin:11px 5px 0 5px;border-radius: 8px;-moz-border-radius: 8px;-webkit-border-radius: 8px;}
+.topic_list_box .num:visited {background:#C2E7D9;}
+.topic_list_box .info,.info a {color: #999999;}
+.topic_list_box .info span {margin-right: 10px;}
+.topic_list_box .title {padding-bottom: 5px;line-height:25px;}
+.topic_list_box .title a{}
+.topic_list_box .title em, .topic_list_box .title em a {font-style:normal;}
+.topic_list_box .subject em {padding: 10px 0 !important;font-size: 14px;margin-right: 5px;}
+.topic_list_box .author {width: 55px;}
+.topic_list_box .author a {display: block;}
+.topic_list_box .ordinary{background:#FFF;padding:5px 8px;color:#666;}
+.topic_list_box .highlight{background:#feebc5;}
+.topic_list_box a.current-menu{color:gray;}
+.topic_list_box .last_reply{color: #999999;font-style:italic;margin-top:5px;font-size:12px;}
+.topic_list_box .last_reply a{}
+.topic_list_box thead a{font-weight:normal;}
+.topic_list_box .commentbox{margin-top:15px;}
+.topic_list_box .grouptopiclove_note{color:#CCC;padding:3px 0px;}
+.topic_list_box .topic_toolbar .btn{background:orange;}
+.topic_list_box .topic_toolbar .btn:hover{background:red;text-decoration:underline;}
+[/CURSCRIPT]
+
+/**===============================
+           标签列表
+================================*/
+[CURSCRIPT=group::public::newtopic,group::tag::show,group::public::index]
+.tags_hot{padding:5px 0;}
+.tags_hot ul{margin-left:0px;}
+.tags_hot li{float:left;margin:0 5px 5px 0px;}
+.tags_hot li {list-style: none outside none;}
+[/CURSCRIPT]
+
+/**===============================
+           新贴右边用户栏
+================================*/
+[CURSCRIPT=group::public::newtopic,group::public::index]
+.group_sidebar_userinfo{padding:15px 0 0;}
+[/CURSCRIPT]

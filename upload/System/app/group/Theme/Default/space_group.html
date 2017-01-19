@@ -1,0 +1,52 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('group://public/index')}-->" title="<!--<lang package='Template'>-->小组<!--</lang>-->"><!--<lang package='Template'>-->小组<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('group://space@?id='.$nId)}-->"><!--{$arrUserInfo.user_name}--></a> <span class="divider">/</span></li>
+			<li><!--<lang package='Template'>-->我的小组<!--</lang>--></li>
+		</ul>
+	</div>
+		
+	<div class="container_12 container_box">
+		<!--<include file="space+menu" />-->
+	
+		<div class="grid_12">
+			<div id="my_groups" class="commonbox clearfix">
+				<ul class="groups" id="space_mygroup_box">
+					<!--{if !empty($arrGroups)}-->
+					<!--<foreach for=arrGroups value=arrGroup>-->
+					<!--{~$nGroupuser=Groupadmin_Extend::getGroupuser($arrGroup['group_id'])}-->
+					<li>
+						<a href="<!--{:Group_Extend::getGroupurl($arrGroup)}-->" class="grouplist_pic">
+							<img src="<!--{:Group_Extend::getGroupIcon($arrGroup)}-->" alt="<!--{$arrGroup['group_nikename']}-->" width="48" height="48" class="thumbnail need_lazyload"/>
+						</a>
+						<div class="grouplist_txt">
+							<h3><a href="<!--{:Group_Extend::getGroupurl($arrGroup)}-->" style="<!--{if $arrGroup['group_color']}-->color:<!--{$arrGroup['group_color']}-->;<!--{/if}-->" title="<!--{$arrGroup['group_nikename']}-->"><!--{$arrGroup['group_nikename']|C+subString=0,15}--></a><!--{if $arrGroup['group_totaltodaynum']}-->&nbsp;<span class="grouplist_todaynum" title="<!--<lang package='Template'>-->今日发帖量<!--</lang>-->">(<!--{$arrGroup['group_totaltodaynum']}-->)</span><!--{/if}--></h3>
+							<!--{if $arrGroup['group_isrecommend']}-->
+							<span>&nbsp;<img title="<!--<lang package='Template'>-->推荐<!--</lang>-->" src="<!--{:Appt::path('group_recommend_mini.gif','group')}-->" /></span>
+							<!--{/if}-->
+							<!--{if !in_array($arrGroup['group_id'],$arrGroupuser)}-->
+							&nbsp;<span id="listgroup_<!--{$arrGroup['group_id']}-->" class="commonjoinleave_group"><a href="javascript:void(0);" onclick="joinGroup(<!--{$arrGroup['group_id']}-->,'listgroup_<!--{$arrGroup['group_id']}-->');">+</a></span>
+							<!--{d*else}-->
+							&nbsp;<span id="listgroup_<!--{$arrGroup['group_id']}-->" class="commonjoinleave_group"><a href="javascript:void(0);" onclick="leaveGroup(<!--{$arrGroup['group_id']}-->,'listgroup_<!--{$arrGroup['group_id']}-->');">-</a></span>
+							<!--{/if}-->
+							<div class="grouplist_num">
+								<span title="<!--<lang package='Template'>-->主题数<!--</lang>-->"><!--<lang package='Template'>-->主题<!--</lang>-->&nbsp;<!--{$arrGroup['group_topicnum']}--></span>,&nbsp;&nbsp;
+								<span title="<!--<lang package='Template'>-->帖子数<!--</lang>-->"><!--<lang package='Template'>-->帖子<!--</lang>-->&nbsp;<!--{$arrGroup['group_topiccomment']}--></span>,&nbsp;&nbsp;
+								<span title="<!--<lang package='Template'>-->成员数<!--</lang>-->"><!--<lang package='Template'>-->成员<!--</lang>-->&nbsp;<!--{$arrGroup['group_usernum']}--></span>
+							</div>
+							<p class="grouplist_description"><!--{$arrGroup['group_listdescription']|C+subString=0,15}--></p>
+						</div>
+					</li>
+					<!--</foreach>-->
+					<!--{d*else}-->
+					<li><!--<lang package='Template'>-->暂时没有发现任何小组<!--</lang>-->&nbsp;<a href="<!--{:Q::U('group://create/index')}-->"><!--<lang package='Template'>-->申请创建小组<!--</lang>--></a></li>
+					<!--{/if}-->
+				</ul>
+			</div>
+		</div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

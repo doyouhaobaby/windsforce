@@ -1,0 +1,178 @@
+<include file="common+header">
+
+{script}
+function testDb(){
+	var dbhost=$WF('dbhost').value;
+	var dbuser=$WF('dbuser').value;
+	var dbpwd=$WF('dbpwd').value;
+
+	$WF('dbpwdsta').innerHTML="<img src='{:__PUBLIC__}/images/common/ajax/loading.gif'>";
+
+	Q.AjaxSend('{:Q::U('public/check_database')}','ajax=1&dbhost='+dbhost+'&dbuser='+dbuser+'&dbpwd='+dbpwd,'',function(data,status,info){ 
+		$WF('dbpwdsta').innerHTML=info; 
+	});
+
+	haveDb();
+};
+
+function haveDb(){
+	var dbhost=$WF('dbhost').value;
+	var dbname=$WF('dbname').value;
+	var dbuser=$WF('dbuser').value;
+	var dbpwd=$WF('dbpwd').value;
+
+	$WF('havedbsta').innerHTML="<img src='{:__PUBLIC__}/images/common/ajax/loading.gif'>";
+
+	Q.AjaxSend('{:Q::U('public/check_database')}','ajax=1&dbhost='+dbhost+'&dbuser='+dbuser+'&dbpwd='+dbpwd+'&dbname='+dbname,'',function(data,status,info){ 
+		$WF('havedbsta').innerHTML=info; 
+	});
+};
+
+function doInstall(){
+	document.form1.submit();
+};
+{/script}
+
+	<ul class="breadcrumb">
+		<li><a href="{:__APP__}" title="<lang package='Template/Default/Common'>主页</lang>"><lang package='Template/Default/Common'>主页</lang></a>&nbsp;<span class="divider">/</span></li>
+		<li><lang package='Template/Default/Install'>参数配置</lang></li>
+	</ul>
+
+	<include file="install+process">
+
+	<form action="{:Q::U( 'public/install' )}" method="post" name="form1">
+		<div class="row">
+			<div class="span12">
+				<h2><lang package='Template/Default/Install'>数据库设定</lang></h2>
+				<p><table border="0" align="center" cellpadding="0" cellspacing="0" class="table table-striped table-bordered">
+					<tbody>
+						<tr>
+							<td><strong><lang package='Template/Default/Install'>数据库主机</lang></strong></td>
+							<td><input name="dbhost" id="dbhost" type="text" value="localhost" />
+								<small style="margin-left:10px;"><lang package='Template/Default/Install'>一般为localhost</lang></small>
+							</td>
+						</tr>
+						<tr>
+							<td><strong><lang package='Template/Default/Install'>数据库用户</lang></strong></td>
+							<td><input name="dbuser" id="dbuser" type="text" value="root"/></td>
+						</tr>
+						<tr>
+							<td><strong><lang package='Template/Default/Install'>数据库密码</lang></strong></td>
+							<td>
+								<div style='float:left;margin-right:3px;'>
+									<input name="dbpwd" id="dbpwd" type="password" onChange="testDb()" onBlur="testDb()"/>
+								</div>
+								<div style='float:left;margin-left:10px;' id='dbpwdsta'>&nbsp;</div>
+							</td>
+						</tr>
+						<tr>
+							<td><strong><lang package='Template/Default/Install'>数据表前缀</lang></strong></td>
+							<td><input name="dbprefix" id="dbprefix" type="text" value="windsforce_" class="input-txt" />
+								<small style="margin-left:10px;"><lang package='Template/Default/Install'>如无特殊需要,请不要修改</lang></small>
+							</td>
+						</tr>
+						<tr>
+							<td><strong><lang package='Template/Default/Install'>数据库名称</lang></strong></td>
+							<td><div style='float:left;margin-right:3px;'>
+									<input name="dbname" id="dbname" type="text" value="{:WINDSFORCE_DATABASE}" onChange="haveDb()" onBlur="haveDb()"/>
+								</div>
+								<div style='float:left;margin-left:10px;' id='havedbsta'>&nbsp;</div>
+							</td>
+						</tr>
+					</tbody>
+				</table></p>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="span12">
+				<h2><lang package='Template/Default/Install'>管理员数据初始化</lang></h2>
+				<p><table border="0" align="center" cellpadding="0" cellspacing="0" class="table table-striped table-bordered">
+					<tbody>
+						<tr>
+							<td><strong><lang package='Template/Default/Install'>用户名</lang></strong></td>
+							<td><input name="adminuser" type="text" value="admin" />
+								<small style="margin-left:10px;"><lang package='Template/Default/Install'>只能用以数字、字母、下划线组成的字符</lang></small>
+							</td>
+						</tr>
+						<tr>
+							<td><strong><lang package='Template/Default/Install'>密　码</lang></strong></td>
+							<td><input name="adminpwd" type="password" value="123456" />
+								<small style="margin-left:10px;"><lang package='Template/Default/Install'>管理员默认密码为123456</lang></small>
+							</td>
+						</tr>
+						<tr>
+							<td><strong><lang package='Template/Default/Install'>Cookie前缀</lang></strong></td>
+							<td><input name="cookieprefix" type="text" value="wf{:C::randString(6)}_" /></td>
+						</tr>
+						<tr>
+							<td><strong><lang package='Template/Default/Install'>Rbac前缀</lang>：</strong></td>
+							<td><input name="rbacprefix" type="text" value="rbac_" class="input-txt" /></td>
+						</tr>
+					</tbody>
+				</table></p>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="span12">
+				<h2><lang package='Template/Default/Install'>社区设置</lang></h2>
+				<p><table border="0" align="center" cellpadding="0" cellspacing="0" class="table table-striped table-bordered">
+					<tbody>
+						<tr>
+							<td><strong><lang package='Template/Default/Install'>社区名称</lang></strong></td>
+							<td>
+								<input name="webname" type="text" value="WindsForce" />
+							</td>
+						</tr>
+						<tr>
+							<td><strong><lang package='Template/Default/Install'>管理员邮箱</lang></strong></td>
+							<td><input name="adminmail" type="text" value="admin@admin.com" /></td>
+						</tr>
+						<tr>
+							<td><strong><lang package='Template/Default/Install'>社区地址</lang></strong></td>
+							<td><input name="baseurl" type="text" value="{$sBaseurl}" />
+								<small style="margin-left:10px;"><lang package='Template/Default/Install'>社区地址由程序自动获取，如果错误请自己修正，注意结尾不要有“/”</lang></small>
+							</td>
+						</tr>
+					</tbody>
+				</table></p>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="span12">
+				<h2><lang package='Template/Default/Install'>安装应用</lang></h2>
+				<p><table border="0" align="center" cellpadding="0" cellspacing="0" class="table table-striped table-bordered">
+					<tbody>
+						<foreach for=arrApps value=sApp>
+						<tr>
+							<td><strong>{$sApp}</strong></td>
+							<td>
+								{if $sApp=='group'}
+								<input type="checkbox" name="" value="{$sApp}" checked="true" disabled="true">
+								<input type="hidden" name="app[]" value="{$sApp}">
+								{d*else}
+								<input type="checkbox" name="app[]" value="{$sApp}" checked="true">
+								{/if}
+							</td>
+						</tr>
+						</foreach>
+					</tbody>
+				</table></p>
+			</div>
+		</div>
+	</form>
+
+	<div class="row">
+		<div class="span12">
+			<div class="well">
+				<p><input type="button" class="btn" value="<lang package='Template/Default/Common'>后退</lang>" onclick="window.location.href='{:Q::U( 'public/step2' )}';" />
+					<span class="pipe">|</span>
+					<input type="button" class="btn btn-success" value="<lang package='Template/Default/Install'>开始安装</lang>" onclick="doInstall();" />
+				</p>
+			</div>
+		</div>
+	</div>
+
+<include file="common+footer">

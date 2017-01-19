@@ -1,0 +1,220 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{:Core_Extend::emotion()}-->
+<!--{:Core_Extend::validate()}-->
+
+<script src="<!--{:__PUBLIC__}-->/js/jquery/jquery.insertcontent.js"></script>
+<script src="<!--{:__PUBLIC__}-->/js/jquery/autoresize/jquery.autoresize.js"></script>
+
+<!--{script}-->
+$(function(){
+	$('.event-content').emotionsToHtml();
+});
+
+function joinEvent(nId){
+	oJoinevents=windsforceAjax(Q.U('event://event/join?id='+nId),'<!--<lang package='Template'>-->参加活动<!--</lang>-->','',completeJoinevent,'',400,100);
+}
+
+function completeJoinevent(){
+	Q.AjaxSubmit("joineventform",'<!--{:Q::U('event://event/join_in')}-->','result',function(data,status){
+		if(status==1){
+			setTimeout("window.location.replace(_SELF_);",1000);
+			return true;
+		}
+	});
+	return false;
+}
+
+function attentionEvent(nId){
+	Q.AjaxSend(Q.U('event://event/attention'),'ajax=1&id='+nId,'',function(data,status){
+		if(status==1){
+			setTimeout("window.location.replace(_SELF_);",1000);
+		}
+	});
+}
+
+$(function(){
+	$('.eventcomment-content').emotionsToHtml();
+	
+	$('#eventcomment_content').autoResize({
+		onResize:function(){
+			$(this).css({opacity:0.8});
+		},
+		animateCallback:function(){
+			$(this).css({opacity:1});
+		},
+		animateDuration:300,
+		extraSpace:0,
+		min:'100px'
+	});
+
+	$(".face-icon").jqfaceedit({txtAreaObj:$("#eventcomment_content"),textareaid:'eventcomment_content',containerObj:$('#emotion_parentcontainer'),top:25,left:-27});
+});
+
+function commentSubmit(){
+	var comment_name=$.trim($('#eventcomment_name').val());
+	var comment_content=$.trim($("#eventcomment_content").val());
+	var bResult=commentCheckForm_(comment_name,comment_content);
+	if(bResult===false){
+		return false;
+	}
+
+	$("#comment-submit").val(Q.L('正在提交评论','Common'));
+	$("#comment-submit").attr("disabled", "disabled");
+	Q.AjaxSubmit('event-commentform',Q.U('event://event/add_eventcomment'),'',function(data,status){
+		$("#comment-submit").attr("disabled", false);
+		$("#comment-submit").val(Q.L('提交评论','Common'));
+		if(status==1){
+			setTimeout(function(){window.location.href=data.jumpurl;},1000);
+		}
+	});
+}
+
+function deleteEvent(nEventid){
+	windsforceConfirm('<!--<lang package='Template'>-->你确定要删除活动吗?<!--</lang>-->',function(){
+		Q.AjaxSend(Q.U('event://event/delete?id='+nEventid),
+			'ajax=1','',
+			function(data,status){
+				if(status==1){
+					setTimeout("window.location.replace('<!--{:Q::U('event://public/index')}-->');",1000);
+				}
+			}
+		);
+	});
+}
+
+function endEvent(nEventid){
+	windsforceConfirm('<!--<lang package='Template'>-->你确定要提前结束活动吗?<!--</lang>-->',function(){
+		Q.AjaxSend(Q.U('event://event/end?id='+nEventid),
+			'ajax=1','',
+			function(data,status){
+				if(status==1){
+					setTimeout("window.location.replace(_SELF_);",1000);
+				}
+			}
+		);
+	});
+}
+
+sCurrentTextareaContent='eventcomment_content';
+
+checkForm(commentSubmit);
+<!--{/script}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('event://public/index')}-->" title="<!--<lang package='Template'>-->活动<!--</lang>-->"><!--<lang package='Template'>-->活动<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->活动详情<!--</lang>--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+		<div class="grid_8">
+			<h3 class="event_title" style="margin-bottom:10px;" title="<!--{$arrEvent['event_title']}-->"><!--{$arrEvent['event_title']|C+subString=0,35}--></h3>
+			
+			<!--<include file="event+menu" />-->
+
+			<div class="container_12">
+				<div class="grid_3">
+					<img class="thumbnail" src="<!--{:Event_Extend::getEventcover($arrEvent)}-->" alt="<!--{$arrEvent['event_title']}-->" width="220px" height="147px">
+					<br/>
+					<button class="btn" onclick="attentionEvent('<!--{$arrEvent['event_id']}-->');" <!--{if $bEventend || $bAttentionuser}-->disabled="disabled"<!--{/if}-->><!--<lang package='Template'>-->我感兴趣<!--</lang>--></button>&nbsp;<button class="btn" onclick="joinEvent('<!--{$arrEvent['event_id']}-->');" <!--{if $bEventend || $bJoinuser || $bLimituser}-->disabled="disabled"<!--{/if}-->><!--<lang package='Template'>-->我要参加<!--</lang>--></button>
+				</div>
+				<div class="grid_5">
+					<table class="table">
+						<thead>
+							<tr>
+								<th colspan="2"><!--<lang package='Template'>-->活动项目<!--</lang>--></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><!--<lang package='Template'>-->发起者<!--</lang>--></td>
+								<td><a href="<!--{:Q::U('home://space@?id='.$arrEvent['user_id'])}-->"><!--{$arrEvent['event_username']}--></a></td>
+							</tr>
+							<tr>
+								<td><!--<lang package='Template'>-->联系方式<!--</lang>--></td>
+								<td><!--{if $arrEvent['event_contactsite']}--><a href="<!--{$arrEvent['event_contactsite']}-->"><!--{$arrEvent['event_contact']}--></a><!--{d*else}--><!--{$arrEvent['event_contact']}--><!--{/if}--></td>
+							</tr>
+							<tr>
+								<td><!--<lang package='Template'>-->联合联系方式<!--</lang>--></td>
+								<td><!--{if $arrEvent['event_jointcontactsite']}--><a href="<!--{$arrEvent['event_jointcontactsite']}-->"><!--{$arrEvent['event_jointcontact']}--></a><!--{d*else}--><!--{$arrEvent['event_jointcontact']}--><!--{/if}--></td>
+							</tr>
+							<tr>
+								<td><!--<lang package='Template'>-->活动时间<!--</lang>--></td>
+								<td><!--{$arrEvent['event_starttime']|date="Y-m-d H:i",**}-->&nbsp;<!--<lang package='Template'>-->至<!--</lang>-->&nbsp;<!--{$arrEvent['event_endtime']|date="Y-m-d H:i",**}--></td>
+							</tr>
+							<tr>
+								<td><!--<lang package='Template'>-->活动地点<!--</lang>--></td>
+								<td><!--{$arrEvent['event_address']}--></td>
+							</tr>
+							<tr>
+								<td><!--<lang package='Template'>-->活动经费<!--</lang>--></td>
+								<td><!--{$arrEvent['event_cost']}--><!--{if $arrEvent['event_costdescription']}-->&nbsp;(<!--{$arrEvent['event_costdescription']}-->)<!--{/if}--></td>
+							</tr>
+							<tr>
+								<td><!--<lang package='Template'>-->报名截止时间<!--</lang>--></td>
+								<td><!--{$arrEvent['event_deadline']|date="Y-m-d H:i",**}--></td>
+							</tr>
+							<tr>
+								<td><!--<lang package='Template'>-->剩余名额<!--</lang>--></td>
+								<td><!--{if $arrEvent['event_limitcount']>0}--><!--{$arrEvent['event_limitcount']-$arrEvent['event_joincount']}--><!--{d*else}--><!--<lang package='Template'>-->参加人数不限制<!--</lang>--><!--{/if}--></td>
+							</tr>
+							<tr>
+								<td><!--<lang package='Template'>-->参加是否需要审核<!--</lang>--></td>
+								<td><b><!--{if $arrEvent['event_isaudit']==1}--><!--<lang package='__COMMON_LANG__@Common'>-->是<!--</lang>--><!--{d*else}--><!--<lang package='__COMMON_LANG__@Common'>-->否<!--</lang>--><!--{/if}--></b></td>
+							</tr>
+							<tr>
+								<td colspan="2"><b><!--{$arrEvent['event_attentioncount']}--></b><!--<lang package='Template'>-->人感兴趣<!--</lang>-->&nbsp; <b><!--{$arrEvent['event_joincount']}--></b><!--<lang package='Template'>-->人参加<!--</lang>--></td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<!--{if $arrEvent['event_starttime']>CURRENT_TIMESTAMP}-->
+									<b style="color:gray;"><!--<lang package='Template'>-->活动未开始<!--</lang>--></b>
+									<!--{elseif $arrEvent['event_starttime']<=CURRENT_TIMESTAMP && $arrEvent['event_endtime']>=CURRENT_TIMESTAMP}-->
+									<b style="color:green;"><!--<lang package='Template'>-->活动正在进行<!--</lang>--></b>
+									<!--{d*else}-->
+									<b style="color:red;"><!--<lang package='Template'>-->活动已经结束<!--</lang>--></b>
+									<!--{/if}-->
+								</td>
+							</tr>
+							<!--{if Eventadmin_Extend+checkEvent($arrEvent)}-->
+							<tr>
+								<td colspan="2">
+									<!--{if $arrEvent['event_endtime']>=CURRENT_TIMESTAMP}-->
+									<a href="javascript:void(0);" onclick="endEvent(<!--{$arrEvent['event_id']}-->)" class="btn btn-mini"><!--<lang package='Template'>-->提前结束<!--</lang>--></a>&nbsp;&nbsp;
+									<!--{/if}-->
+									<a class="btn btn-mini" href="<!--{:Q::U('event://event/edit?id='.$arrEvent['event_id'])}-->"><!--<lang package='Template'>-->编辑活动<!--</lang>--></a>&nbsp;&nbsp;
+									<a href="javascript:void(0);" onclick="deleteEvent(<!--{$arrEvent['event_id']}-->)" class="btn btn-mini"><!--<lang package='Template'>-->删除活动<!--</lang>--></a>
+								</td>
+							</tr>
+							<!--{/if}-->
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div class="commonbox" style="margin-top:20px;">
+				<div class="commonboxtitle"><!--<lang package='Template'>-->活动介绍<!--</lang>--></div>
+				<div class="backgroup_box">
+					<div class="event-content"><!--{$arrEvent['event_content']|Core_Extend+ubb=false}--></div>
+				</div>
+			</div>
+
+			<div class="common_share">
+				<!--{:Core_Extend::share()}-->
+			</div>
+			<div class="clearfix"></div>
+			
+			<!--{# 评论列表}-->
+			<!--<include file="event+commentlist" />-->
+
+			<!--{# 评论表单}-->
+			<!--<include file="event+commentform" />-->
+		</div>
+
+		<!--<include file="event+sidebar" />-->
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

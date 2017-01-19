@@ -1,0 +1,21 @@
+<include file="common+header">
+
+	<ul class="breadcrumb">
+		<li><a href="{:__APP__}" title="<lang package='Template/Default/Common'>主页</lang>"><lang package='Template/Default/Common'>主页</lang></a>&nbsp;<span class="divider">/</span></li>
+		<li><lang package='Template/Default/Update'>升级完毕</lang></li>
+	</ul>
+
+	<include file="update+process">
+
+	<div class="row">
+		<div class="span12">
+			<h2><lang package='Template/Default/Update'>恭喜你成功升级</lang></h2>
+			<p><lang package='Template/Default/Update'>升级成功，请进入后台重建数据以及更新缓存并仔细检查系统设置以完成整个升级过程。</lang><br/>
+				<blockquote><em><lang package='Template/Default/Update'>浏览器会在5秒后自动跳转页面，无需人工干预</lang></em></blockquote>
+			</p>
+		</div>
+	</div>
+
+{script}setTimeout(function(){window.location='{:__ROOT__}/index.php';},5000);{/script}
+
+<include file="common+footer">

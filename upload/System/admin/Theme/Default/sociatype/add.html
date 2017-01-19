@@ -1,0 +1,86 @@
+<!--<include file="public+header">-->
+
+<!--{script}-->
+checkForm(SubmitFormCheckform);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<if condition="empty( $nId )" >--><!--<lang package='Template'>-->添加社会化帐号<!--</lang>--><!--<else/>--><!--<lang package='Template'>-->编辑社会化帐号<!--</lang>--><!--</if>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<if condition="empty( $nId )" >--><!--<lang package='Template'>-->添加社会化帐号<!--</lang>--><!--<else/>--><!--<lang package='Template'>-->编辑社会化帐号<!--</lang>-->_<!--{$nId}--><!--</if>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->您可以在这里添加或编辑社会化帐号<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->社会化帐号绑定的LOGO，请将设计好的图标放置到 System/extension/socialization/static/images 中<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<if condition="empty( $nId )" >--><!--<lang package='Template'>-->添加社会化帐号<!--</lang>--><!--<else/>--><!--<lang package='Template'>-->编辑社会化帐号<!--</lang>--><!--</if>--></h3>
+				<ul class="tabs">
+					<li class="active"><a href="<!--{:Q::U('sociatype/index')}-->"><!--<lang package='Template'>-->社会化帐号列表<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="" method="post" id="sociatypeAdd" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="sociatype_title"><!--<lang package='Template'>-->社会化帐号标题<!--</lang>--></label>
+						<input type="text" name="sociatype_title" id="sociatype_title" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:sociatype_title}--><!--</if>-->" class="{required:true}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->社会化帐号的名字，不能为空<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="sociatype_identifier"><!--<lang package='Template'>-->社会化唯一值<!--</lang>--></label>
+						<input type="text" name="sociatype_identifier" id="sociatype_identifier" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:sociatype_identifier}--><!--</if>-->" class="{required:true,stringCheckThree:true,remote:Q.U('sociatype/check_identifier'<!--<if condition="!empty( $nId )" >-->+'?id=<!--{$nId}-->'<!--</if>-->),messages:{remote:'<!--<lang package='Template'>-->社会化唯一值重复<!--</lang>-->'}}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->社会化帐号的唯一值，请勿修改<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="sociatype_status"><!--<lang package='Template'>-->状态<!--</lang>--></label>
+						<select class="field" name="sociatype_status">
+							<option value="1" <!--<if condition="!isset( $oValue ) || ( isset( $oValue ) && $oValue:sociatype_status==1)">-->selected<!--</if>-->><!--<lang package='Template'>-->启用<!--</lang>--></option>
+							<option value="0" <!--<if condition="isset( $oValue ) && $oValue:sociatype_status==0">-->selected<!--</if>--> ><!--<lang package='Template'>-->禁用<!--</lang>--></option>
+							<option value="9" <!--<if condition="isset( $oValue ) && $oValue:sociatype_status==9">-->selected<!--</if>-->><!--<lang package='Template'>-->回收站<!--</lang>--></option>
+						</select>
+						<div class="description"><!--<lang package='Template'>-->社会化帐号状态，决定链接是否在前台显示。<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="sociatype_appid"><!--<lang package='Template'>-->社会化帐号AppID<!--</lang>--></label>
+						<input type="text" name="sociatype_appid" id="sociatype_appid" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:sociatype_appid}--><!--</if>-->"/>
+						<div class="description"><!--<lang package='Template'>-->这里你申请到的服务商的AppID<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="sociatype_appkey"><!--<lang package='Template'>-->社会化帐号AppKEY<!--</lang>--></label>
+						<input type="text" name="sociatype_appkey" id="sociatype_appkey" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:sociatype_appkey}--><!--</if>-->"/>
+						<div class="description"><!--<lang package='Template'>-->这里你申请到的服务商的AppKEY<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="sociatype_callback"><!--<lang package='Template'>-->社会化帐号回调地址<!--</lang>--></label>
+						<input type="text" name="sociatype_callback" id="sociatype_callback" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:sociatype_callback}--><!--</if>-->"/>
+						<div class="description"><!--<lang package='Template'>-->这里是你的服务商的回调地址<!--</lang>--><br/>
+						http://<font color="red">youdomain.com</font>/index.php?app=home&c=public&a=socia_callback&vendor=<font color="red">qq</font></div>
+					</fieldset>
+					<fieldset>
+						<label for="sociatype_scope"><!--<lang package='Template'>-->社会化帐号允许的权限<!--</lang>--></label>
+						<input type="text" name="sociatype_scope" id="sociatype_scope" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:sociatype_scope}--><!--</if>-->"/>
+						<div class="description"><!--<lang package='Template'>-->这里是你允许用户的权限<!--</lang>--></div>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="hidden" name="ajax" value="1">
+						<input type="hidden" name="id" id="id" value="<!--<if condition="isset( $nId )">--><!--{$nId}--><!--</if>-->"/>
+						<input type="submit" id="submit_button" value="" class="alt_btn">
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->">
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

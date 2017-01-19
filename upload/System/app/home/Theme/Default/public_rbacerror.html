@@ -1,0 +1,28 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->你没有权限访问<!--</lang>--></li>
+		</ul>
+	</div>
+		
+	<div class="container_12 container_box">
+		<div class="grid_2">&nbsp;</div>
+		<div class="grid_8" style="text-align:center;">
+			<div style="margin-bottom:50px;">
+				<img src="<!--{:Core_Extend::path('rbacerror.png')}-->"/>
+			</div>
+			<h1><!--<lang package='Template'>-->访问权限<!--</lang>--></h1>
+			<p><!--<lang package='Template'>-->尊敬的用户你好，你没有权限访问本页!<!--</lang>--></p>
+			<div style="margin-top:10px;">
+				<a href="<!--{$sRbacerrorreferer}-->" class="btn"><!--<lang package='Template'>-->重试<!--</lang>--></a>
+				&nbsp;
+				<a href="<!--{:Q::U('home://public/myrbac')}-->" class="btn"><!--<lang package='Template'>-->查看我的权限<!--</lang>--></a>
+			</div>
+		</div>
+		<div class="grid_2">&nbsp;</div>
+		<div class="clearfix"></div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

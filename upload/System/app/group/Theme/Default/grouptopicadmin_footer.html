@@ -1,0 +1,28 @@
+		<p class="moderatereason_title">
+			<select name="reason_tools" id="reason_tools">
+				<option value=""><!--<lang package='Template'>-->操作原因<!--</lang>-->:</option>
+				<!--{~$arrReasonopposition=explode("\n",str_replace(array("\r","\n\n"),array("\r","\n"),$GLOBALS['_cache_']['group_option']['group_reason_opposition']))}-->
+				<!--<foreach for=arrReasonopposition value=sReasonopposition>-->
+				<option value="<!--{$sReasonopposition|trim}-->"><!--{$sReasonopposition}--></option>
+				<!--</foreach>-->
+				<option value="">-----</option>
+				<!--{~$arrReasonsupport=explode("\n",str_replace(array("\r","\n\n"),array("\r","\n"),$GLOBALS['_cache_']['group_option']['group_reason_support']))}-->
+				<!--<foreach for=arrReasonsupport value=sReasonsupport>-->
+				<option value="<!--{$sReasonsupport|trim}-->"><!--{$sReasonsupport}--></option>
+				<!--</foreach>-->
+			</select>
+		</p>
+		<div class="clearfix"></div>
+		<p><textarea id="reason" name="reason" style="width:300px;height:80px;" rows="3"></textarea></p>
+		<input type="hidden" name="grouptopics" value="<!--{$sGrouptopics}-->">
+		<input type="hidden" name="groupid" value="<!--{$nGroupid}-->">
+	</form>
+</div>
+
+<!--{script}-->
+$(document).ready(function(){
+	$('#reason_tools').change(function(){
+		$('#reason').val($(this).val());
+	});
+});
+<!--{/script}-->

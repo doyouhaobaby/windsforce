@@ -1,0 +1,18 @@
+	<div class="row">
+		<div class="span12">
+			<table class="table table-bordered">
+				<tbody>
+					<tr>
+						<td width="20%" {if ACTION_NAME==="step1"}class="alert alert_success"{/if}><lang package='Template/Default/Install'>许可协议</lang>&nbsp;<i class="icon-arrow-right"></i></td>
+						<td width="20%" {if ACTION_NAME==="step2"}class="alert alert_success"{/if}><lang package='Template/Default/Install'>环境检测</lang>&nbsp;<i class="icon-arrow-right"></i></td>
+						<td width="20%" {if ACTION_NAME==="step3"}class="alert alert_success"{/if}><lang package='Template/Default/Install'>参数配置</lang>&nbsp;<i class="icon-arrow-right"></i></td>
+						<td width="20%" {if ACTION_NAME==="install"}class="alert alert_success"{/if}><lang package='Template/Default/Install'>正在安装</lang>&nbsp;<i class="icon-arrow-right"></i></td>
+						<td width="20%" {if ACTION_NAME==="success"}class="alert alert_success"{/if}><lang package='Template/Default/Install'>安装成功</lang></td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="progress progress-striped active">
+				<div class="bar" style="width: {$TheController->get_progress()}%;"></div>
+			</div>
+		</div>
+	</div>

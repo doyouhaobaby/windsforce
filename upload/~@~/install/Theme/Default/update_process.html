@@ -1,0 +1,18 @@
+	<div class="row">
+		<div class="span12">
+			<table class="table table-bordered">
+				<tbody>
+					<tr>
+						<td width="20%" {if ACTION_NAME==="index"}class="alert alert_success"{/if}><lang package='Template/Default/Update'>升级确认页</lang>&nbsp;<i class="icon-arrow-right"></i></td>
+						<td width="20%" {if ACTION_NAME==="step2"}class="alert alert_success"{/if}><lang package='Template/Default/Update'>环境检测</lang>&nbsp;<i class="icon-arrow-right"></i></td>
+						<td width="20%" {if ACTION_NAME==="step3"}class="alert alert_success"{/if}><lang package='Template/Default/Update'>升级数据库确认</lang>&nbsp;<i class="icon-arrow-right"></i></td>
+						<td width="20%" {if in_array(ACTION_NAME,array('first','second','three'))}class="alert alert_success"{/if}><lang package='Template/Default/Update'>正在升级</lang>&nbsp;<i class="icon-arrow-right"></i></td>
+						<td width="20%" {if ACTION_NAME==="success"}class="alert alert_success"{/if}><lang package='Template/Default/Update'>升级成功</lang></td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="progress progress-striped active">
+				<div class="bar" style="width: {$TheController->get_progress()}%;"></div>
+			</div>
+		</div>
+	</div>

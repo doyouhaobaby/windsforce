@@ -1,0 +1,193 @@
+<!--<include file="public+header" />-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->应用列表<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->应用列表<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->你可以在这里卸载已经安装的应用，注意，需要数据库的应用可能需要将相关数据一块卸载，并且不可恢复<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->这里你可以导出一个应用，设计一个新的应用<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->这里的主菜单和下拉菜单对应前台的应用<!--</lang>--></li>
+					<li class="message-display common-message-display" style="list-style:none;"><a href="javascript:void(0);" onclick="messageDisplay();"><!--<lang package='Template'>-->展开更多<!--</lang>-->&gt;&gt;</a></li>
+					<div class="message_display none">
+						<li><!--<lang package='Template'>-->你可以在全局配置中打开应用开发者中心，这样你可以看到设计应用的菜单<!--</lang>-->&nbsp;
+							<a href="<!--{:Q::U('appconfigtool/index')}-->#changeappconfig"><!--<lang package='Template'>-->修改全局配置<!--</lang>--></a>
+						</li>
+						<li style="list-style:none;" class="common_message_display"><a href="javascript:void(0);" onclick="messageDisplay();"><!--<lang package='Template'>-->收起<!--</lang>-->&lt;&lt;&lt;&lt;</a></li>
+					</div>
+				</ul>
+			</div>
+			<div class="module_content">
+				<form method='get' action="<!--{:Q::U( 'app/index' )}-->" class="quick_search">
+					<table cellspacing="3" cellpadding="3">
+						<tr>
+							<th><!--<lang package='Template'>-->编号<!--</lang>--></th>
+							<td><input type="text" name="app_id" title="<!--<lang package='Template'>-->编号<!--</lang>-->" value="<!--{:Q::G('app_id')}-->" onkeyup="this.value = this.value.replace(/[^-0-9]/g, '');" />
+							</td>
+							<th><!--<lang package='Template'>-->结果排序<!--</lang>--></th>
+							<td>
+								<select name="order_">
+									<option value="" <!--{if !Q+G('order_')}-->selected<!--{/if}-->><!--<lang package='Template'>-->排序字段<!--</lang>--></option>
+									<option value="app_id" <!--{if Q+G('order_')=='app_id'}-->selected<!--{/if}-->><!--<lang package='Template'>-->编号<!--</lang>--></option>
+									<option value="app_status" <!--{if Q+G('order_')=='app_status'}-->selected<!--{/if}-->><!--<lang package='Template'>-->状态<!--</lang>--></option>
+									<option value="create_dateline" <!--{if Q+G('order_')=='create_dateline'}-->selected<!--{/if}-->><!--<lang package='Template'>-->添加时间<!--</lang>--></option>
+									<option value="app_name" <!--{if Q+G('order_')=='app_name'}-->selected<!--{/if}-->><!--<lang package='Template'>-->应用名称<!--</lang>--></option>
+								</select>
+								<select name="sort_">
+									<option value="" <!--{if !Q+G('sort_')}-->selected<!--{/if}-->><!--<lang package='Template'>-->默认排序<!--</lang>--></option>
+									<option value="desc" <!--{if Q+G('sort_')=='desc'}-->selected<!--{/if}-->><!--<lang package='Template'>-->递增<!--</lang>--></option>
+									<option value="asc" <!--{if Q+G('sort_')=='asc'}-->selected<!--{/if}-->><!--<lang package='Template'>-->递减<!--</lang>--></option>
+								</select>
+								<select name="perpage">
+									<option value="" <!--{if !Q+G('perpage')}-->selected<!--{/if}-->><!--<lang package='Template'>-->默认每页数量<!--</lang>--></option>
+									<option value="10" <!--{if Q+G('perpage')==10}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(10)</option>
+									<option value="20" <!--{if Q+G('perpage')==20}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(20)</option>
+									<option value="50" <!--{if Q+G('perpage')==50}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(50)</option>
+									<option value="100" <!--{if Q+G('perpage')==100}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(100)</option>
+									<option value="200" <!--{if Q+G('perpage')==200}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(200)</option>
+									<option value="500" <!--{if Q+G('perpage')==500}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(500)</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th><!--<lang package='Template'>-->应用描述<!--</lang>--></th>
+							<td><input type="text" name="app_description" title="<!--<lang package='Template'>-->应用描述<!--</lang>-->" value="<!--{:Q::G('app_description')}-->"></td>
+							<th><!--<lang package='Template'>-->应用唯一识别符<!--</lang>--></th>
+							<td><input type="text" name="app_identifier" title="<!--<lang package='Template'>-->应用唯一识别符<!--</lang>-->" value="<!--{:Q::G('app_identifier')}-->">
+							</td>
+						</tr>
+						<tr>
+							<th><!--<lang package='Template'>-->应用作者个人主页<!--</lang>--></th>
+							<td><input type="text" name="app_url" title="<!--<lang package='Template'>-->应用官方网站<!--</lang>-->" value="<!--{:Q::G('app_url')}-->">
+							</td>
+							<th><!--<lang package='Template'>-->应用作者<!--</lang>--></th>
+							<td><input type="text" name="app_author" title="<!--<lang package='Template'>-->应用作者<!--</lang>-->" value="<!--{:Q::G('app_author')}-->">
+							</td>
+						</tr>
+						<tr>
+							<th><!--<lang package='Template'>-->应用作者Email<!--</lang>--></th>
+							<td><input type="text" name="app_email" title="<!--<lang package='Template'>-->应用作者Email<!--</lang>-->" value="<!--{:Q::G('app_email')}-->"></td>
+							<th><!--<lang package='Template'>-->应用官方网站<!--</lang>--></th>
+							<td><input type="text" name="app_url" title="<!--<lang package='Template'>-->应用官方网站<!--</lang>-->" value="<!--{:Q::G('app_url')}-->">
+							</td>
+						</tr>
+						<tr>
+							<th><!--<lang package='Template'>-->状态<!--</lang>--></th>
+							<td><select name="app_status">
+									<option value="" <!--{if !isset($nIsStatus)}-->selected<!--{/if}-->><!--<lang package='Template'>-->全部<!--</lang>--></option>
+									<option value="1" <!--{if isset($nIsStatus) && $nIsStatus==1}-->selected<!--{/if}-->><!--<lang package='Template'>-->已审<!--</lang>--></option>
+									<option value="0" <!--{if isset($nIsStatus) && $nIsStatus===0}-->selected<!--{/if}-->><!--<lang package='Template'>-->待审<!--</lang>--></option>
+								</select>
+							</td>
+							<td colspan="2">
+								<input type="text" name="app_name" title="<!--<lang package='Template'>-->应用名称<!--</lang>-->" value="<!--{:Q::G('app_name')}-->" class="quicksearch_text">
+								&nbsp;<input type="submit" id="" value="<!--<lang package='Template'>-->查询<!--</lang>-->" onclick="" class="alt_btn">
+							</td>
+						</tr>
+					</table>
+					<input type="hidden" name="c" value="<!--{:MODULE_NAME}-->"/>
+					<input type="hidden" name="a" value="<!--{:ACTION_NAME}-->"/>
+				</form>
+			</div>
+		</article>
+		
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><a href="<!--{:Q::U('app/index')}-->"><!--<lang package='Template'>-->应用列表<!--</lang>--></a></h3>
+				<ul class="tabs">
+					<!--{ifQ+C('APP_DEVELOP')}--><li><a href="<!--{:Q::U('app/add')}-->"><!--<lang package='Template'>-->设计新应用<!--</lang>--></a></li><!--{/if}-->
+					<li class="active"><a href="<!--{:Q::U('installapp/index')}-->"><!--<lang package='Template'>-->安装新应用<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<div class="module_content">
+				<table class="tablesorter" cellspacing="0" id="checkList">
+					<thead>
+						<tr>
+							<th width="85"><!--<lang package='Template'>-->编号<!--</lang>--></th>
+							<th><!--<lang package='Template'>-->应用名称<!--</lang>--></th>
+							<th width="70"><!--<lang package='Template'>-->版本<!--</lang>--></th>
+							<th width="100"><!--<lang package='Template'>-->管理<!--</lang>--></th>
+							<th width="100"><!--<lang package='Template'>-->菜单<!--</lang>--></th>
+							<th width="50"><a href="javascript:sortBy('app_status','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('app_status')}-->><!--<lang package='Template'>-->状态<!--</lang>--></a></th>
+							<th width="100"><!--<lang package='Template'>-->安装<!--</lang>--></th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--{if is_array($arrLists)}-->
+						<!--<foreach for=arrLists>-->
+						<tr id="datalist-<!--{$value:app_id}-->">
+							<td><!--{$value:app_id}--></td>
+							<td><img height="40" align="left" width="40" style="margin: 0pt 8px 0pt 0px;" src="<!--{:Core_Extend::appLogo($value['app_identifier'])}-->"/>
+								<!--{$value:app_name}--><br/>
+								<span><!--{$value:app_identifier}--></span>&nbsp;
+								<a style="color:#E0E2E4;" onclick="showDiv('app-<!--{$key}-->')" href="javascript:void(0);">[<!--<lang package='Template'>-->介绍<!--</lang>-->]</a><br/>
+								<div style="display: none; margin: 12px 5px 0pt 0px;background:#f9fafb;width:70%;padding:5px 10px;" id="app-<!--{$key}-->"><!--{$value['app_description']}--> <br/><!--<lang package='Template'>-->作者<!--</lang>-->:&nbsp;&nbsp;
+								<!--{if $value['app_authorurl']}-->
+								<a href="<!--{$value['app_authorurl']}-->" target="_blank"><!--{$value:app_author}--></a>
+								<!--{d*else}-->
+								<!--{$value:app_authorurl}-->
+								<!--{/if}--> 
+								[<!--{if $value['app_email']}-->
+								<a href="mailto:<!--{$value['app_email']}-->"><!--{$value:app_email}--></a>
+								<!--{/if}-->]
+								<!--{if $value['app_url']}--><br/>
+								<!--<lang package='Template'>-->官方网站<!--</lang>-->:&nbsp;&nbsp;<a href="<!--{$value['app_url']}-->" target="_blank"><!--{$value['app_url']}--></a>
+								<!--{/if}-->
+								</div>
+							</td>
+							<td><!--{$value:app_version}--></td>
+							<td><!--{if $value['app_isadmin']}-->
+									<!--{if $value['app_status']}-->
+									<a href="<!--{:Q::U('app/config?id='.$value['app_id'])}-->"><!--<lang package='Template'>-->管理入口<!--</lang>--></a>
+									<!--{d*else}-->
+									<span title="<!--<lang package='Template'>-->应用尚未开启无法管理<!--</lang>-->">NAV</span>
+									<!--{/if}-->
+								<!--{d*else}-->
+								<span title="<!--<lang package='Template'>-->该应用不需要管理入口<!--</lang>-->">NAV</span>
+								<!--{/if}-->
+							</td>
+							<td><!--{if $value['app_isappnav']}-->
+									<!--{if $TheController->app_nav_exists($value['app_id'])}--><a href="<!--{:Q::U('app/unnav?id='.$value['app_id'])}-->"><!--<lang package='Template'>-->取消菜单<!--</lang>--></a>
+									<!--{d*else}--><a href="<!--{:Q::U('app/nav?id='.$value['app_id'])}-->"><!--<lang package='Template'>-->加入菜单<!--</lang>--></a>
+									<!--{/if}-->
+								<!--{d*else}-->
+									<span title="<!--<lang package='Template'>-->该应用不需要设置菜单<!--</lang>-->">NAV</span>
+								<!--{/if}-->
+							</td>
+							<td><!--{:Admin_Extend::getStatus($value->app_status)}--></td>
+							<td><!--{if $value['app_status']}-->
+								<a href="<!--{:Q::U('app/disable?id='.$value['app_id'])}-->"><!--<lang package='Template'>-->关闭<!--</lang>--></a>
+								<!--{d*else}-->
+								<a href="<!--{:Q::U('app/enable?id='.$value['app_id'])}-->"><!--<lang package='Template'>-->开启<!--</lang>--></a>
+								<!--{/if}-->&nbsp;
+								<!--{ifQ+C('APP_DEVELOP')}-->
+								<a href="<!--{:Q::U('app/edit?id='.$value['app_id'])}-->"><!--<lang package='Template'>-->设计<!--</lang>--></a>&nbsp;
+								<!--{/if}-->
+								<!--{if !in_array($value['app_identifier'],array('home','group','wap'))}-->
+								<a href="<!--{:Q::U('installapp/uninstall_app?name='.$value['app_identifier'])}-->"><!--<lang package='Template'>-->卸载<!--</lang>--></a>
+								<!--{/if}-->
+							</td>
+						</tr>
+						<!--</foreach>-->
+						<!--{d*else}-->
+						<tr>
+							<td colspan="7"><!--<lang package='Template'>-->暂时没有发现任何记录<!--</lang>--></td>
+						</tr>
+						<!--{/if}-->
+					</tbody>
+				</table>
+			</div>
+
+			<div class="module_content operate_box">
+				<div class="left">
+					<!--{$sPageNavbar}-->
+				</div>
+			</div>
+		</article>
+
+<!--<include file="public+footer">-->

@@ -1,0 +1,83 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+function option(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'update...' );
+	$("#submit_button").attr("disabled", false);
+	$('.validate')(0).submit();
+}
+
+checkForm(option);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->搜索设置<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->搜索设置<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->搜索设置<!--</lang>--></h3>
+			</header>
+			<form action="<!--{:Q::U('searchoption/update_option')}-->" method="post" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="allow_search_user"><!--<lang package='Template'>-->开启用户搜索功能<!--</lang>--></label>
+						<input type="radio" id="allow_search_user" name="options[allow_search_user]" value="1" <!--{if $arrOptions['allow_search_user']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[allow_search_user]" value="0" <!--{if $arrOptions['allow_search_user']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->开启用户搜索功能，才能够检索用户，用户搜索设置独立于下面的普通搜索设置<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="searchuser_list_num"><!--<lang package='Template'>-->用户搜索结果每页数量<!--</lang>--></label>
+						<input type="text" name="options[searchuser_list_num]" id="searchuser_list_num" size="40" value="<!--{$arrOptions['searchuser_list_num']}-->" class="{required:true,digits:true,min: 10,max:100}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->用户搜索结果每页分页数量，可以稍微设置大一些<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="allow_search"><!--<lang package='Template'>-->开启搜索功能<!--</lang>--></label>
+						<input type="radio" id="allow_search" name="options[allow_search]" value="1" <!--{if $arrOptions['allow_search']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[allow_search]" value="0" <!--{if $arrOptions['allow_search']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->这是通用的搜索开关，它不约束用户搜索<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="search_fulltext"><!--<lang package='Template'>-->是否允许全文检索<!--</lang>--></label>
+						<input type="radio" id="search_fulltext" name="options[search_fulltext]" value="1" <!--{if $arrOptions['search_fulltext']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[search_fulltext]" value="0" <!--{if $arrOptions['search_fulltext']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->启用全文检索将会占有大量服务器资源，建议关闭<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="search_list_num"><!--<lang package='Template'>-->搜索结果每页数量<!--</lang>--></label>
+						<input type="text" name="options[search_list_num]" id="search_list_num" size="40" value="<!--{$arrOptions['search_list_num']}-->" class="{required:true,digits:true,min: 15,max:100}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->搜索结果每页分页数量，可以稍微设置大一些<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="search_keywords_minlength"><!--<lang package='Template'>-->搜索最小的关键字<!--</lang>--></label>
+						<input type="text" name="options[search_keywords_minlength]" id="search_keywords_minlength" size="40" value="<!--{$arrOptions['search_keywords_minlength']}-->" class="{required:true,digits:true,min: 1,max:32}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->设置搜索的最小的关键字可以限制低级频繁的搜索<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="search_post_space"><!--<lang package='Template'>-->搜索间隔时间<!--</lang>--></label>
+						<input type="text" name="options[search_post_space]" id="search_post_space" size="40" value="<!--{$arrOptions['search_post_space']}-->" class="{required:true,digits:true,min: 0}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->置搜索限制，单位为秒，0表示不限制，可以最大化链接用户过频地搜索从而占有较高的服务器资源<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="show_search_result_message"><!--<lang package='Template'>-->搜索结果是否显示跳转消息<!--</lang>--></label>
+						<textarea name="options[show_search_result_message]" rows="5"><!--{$arrOptions['show_search_result_message']}--></textarea>
+						<div class="description"><!--<lang package='Template'>-->如果为空，那么会直接跳转至结果页面<!--</lang>--></div>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input id="submit_button" type="submit" class="alt_btn" value="<!--<lang package='Template'>-->发布<!--</lang>-->" />
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->" />
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

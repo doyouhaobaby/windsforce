@@ -1,0 +1,38 @@
+<include file="common+header">
+
+{script}
+function showMessage(sMessage){
+	$WF('message-list').innerHTML+=sMessage+'<br />';
+	$WF('message-list').scrollTop=100000000;
+}
+
+function initInput(){
+	window.location='{:Q::U('update/success')}';
+}
+{/script}
+
+	<ul class="breadcrumb">
+		<li><a href="{:__APP__}" title="<lang package='Template/Default/Common'>主页</lang>"><lang package='Template/Default/Common'>主页</lang></a>&nbsp;<span class="divider">/</span></li>
+		<li>{$sUpdateTitle}&nbsp;<span class="divider">/</span></li>
+		<li><lang package='Template/Default/Install'>正在升级</lang></li>
+	</ul>
+
+	<include file="update+process">
+
+	<div class="row">
+		<div class="span12">
+			<h2><lang package='Template/Default/Install'>请仔细查看升级过程消息</lang></h2>
+			<div id="message-list"></div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="span12">
+			<div class="well">
+				<p><input type="button" class="btn btn-success" name="submit" value="<lang package='Template/Default/Install'>正在升级</lang>..." disabled="disabled" id="laststep" onclick="initInput()" />
+				</p>
+			</div>
+		</div>
+	</div>
+
+<include file="common+footer">

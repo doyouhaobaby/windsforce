@@ -1,0 +1,10 @@
+			<div class="nav_tabcontainer nav_tab">
+				<ul>
+					<li <!--{if MODULE_NAME==='public' && ACTION_NAME==='index'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('group://public/index')}-->"><!--<lang package='Template'>-->首页<!--</lang>--></a></li>
+					<li <!--{if ACTION_NAME==='newtopic'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('group://public/newtopic')}-->"><!--{if $GLOBALS['_cache_']['group_option']['newtopic_default']==1}--><!--<lang package='Template'>-->小组<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->新帖<!--</lang>--><!--{/if}--></a></li>
+					<li <!--{if MODULE_NAME==='tag'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('group://tag/index')}-->"><!--<lang package='Template'>-->标签<!--</lang>--></a></li>
+					<!--{if $GLOBALS['___login___']!==false}-->
+					<li><a href="<!--{:Q::U('group://space@?id='.$GLOBALS['___login___']['user_id'].'&type=group')}-->"><!--<lang package='Template'>-->我的小组<!--</lang>--></a></li>
+					<!--{/if}-->
+				</ul>
+			</div>

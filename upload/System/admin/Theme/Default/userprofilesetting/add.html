@@ -1,0 +1,95 @@
+<!--<include file="public+header">-->
+
+<!--{script}-->
+checkForm(updateForm);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->编辑用户栏目<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->编辑用户栏目<!--</lang>-->_<!--{$oValue:userprofilesetting_id}-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->用户栏目标题不能为空<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->编辑用户栏目<!--</lang>--></h3>
+				<ul class="tabs">
+					<li class="active"><a href="<!--{:Q::U('userprofilesetting/index')}-->"><!--<lang package='Template'>-->用户栏目列表<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="" method="post" id="userprofilesettingAdd" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="userprofilesetting_sort"><!--<lang package='Template'>-->序号<!--</lang>--></label>
+						<input type="text" name="userprofilesetting_sort" id="userprofilesetting_sort" size="40" value="<!--{$oValue:userprofilesetting_sort}-->" class="{required:true,digits:true,min:0,max:999}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->用户栏目序号，用于排列用户栏目顺序<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="userprofilesetting_title"><!--<lang package='Template'>-->栏目标题<!--</lang>--></label>
+						<input type="text" name="userprofilesetting_title" id="userprofilesetting_title" size="40" value="<!--{$oValue:userprofilesetting_title}-->" class="{required:true,remote:Q.U('userprofilesetting/check_title?id=<!--{$oValue:userprofilesetting_id}-->'),messages:{remote:'<!--<lang package='Template'>-->栏目标题重复<!--</lang>-->'}}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->栏目标题不能为空<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="userprofilesetting_description"><!--<lang package='Template'>-->栏目介绍<!--</lang>--></label>
+						<p><!--{$oValue:userprofilesetting_description}--></p>
+						<div class="description"><!--<lang package='Template'>-->栏目介绍由系统指定，用户无法编辑<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="userprofilesetting_allowsearch"><!--<lang package='Template'>-->是否允许搜索<!--</lang>--></label>
+						<select name="userprofilesetting_allowsearch">
+							<option value="1" <!--<if condition="$oValue:userprofilesetting_allowsearch==1">-->selected<!--</if>-->><!--<lang package='Template'>-->是<!--</lang>--></option>
+							<option value="0" <!--<if condition="$oValue:userprofilesetting_allowsearch eq 0">-->selected<!--</if>-->><!--<lang package='Template'>-->否<!--</lang>--></option>
+						</select>
+						<div class="description"><!--<lang package='Template'>-->是否允许搜索，这决定能否在搜索中使用它<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="userprofilesetting_showinfo"><!--<lang package='Template'>-->是否显示在个人信息中<!--</lang>--></label>
+						<select name="userprofilesetting_showinfo">
+							<option value="1" <!--<if condition="$oValue:userprofilesetting_showinfo==1">-->selected<!--</if>-->><!--<lang package='Template'>-->是<!--</lang>--></option>
+							<option value="0" <!--<if condition="$oValue:userprofilesetting_showinfo eq 0">-->selected<!--</if>-->><!--<lang package='Template'>-->否<!--</lang>--></option>
+						</select>
+						<div class="description"><!--<lang package='Template'>-->这决定着是否在个人资料中显示栏目信息<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="userprofilesetting_privacy"><!--<lang package='Template'>-->默认隐私<!--</lang>--></label>
+						<select name="userprofilesetting_privacy">
+							<option value="0" <!--<if condition="$oValue:userprofilesetting_privacy eq 0">-->selected<!--</if>-->>
+							<!--<lang package='Template'>-->公开<!--</lang>--></option>
+							<option value="1" <!--<if condition="$oValue:userprofilesetting_privacy==1">-->selected<!--</if>-->><!--<lang package='Template'>-->好友可见<!--</lang>--></option>
+							<option value="3" <!--<if condition="$oValue:userprofilesetting_privacy==3">-->selected<!--</if>-->>
+							<!--<lang package='Template'>-->好友保密<!--</lang>--></option>
+						</select>
+						<div class="description"><!--<lang package='Template'>-->用户栏目默认隐私设置<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="userprofilesetting_status"><!--<lang package='Template'>-->状态<!--</lang>--></label>
+						<select name="userprofilesetting_status">
+							<option value="1" <!--<if condition="$oValue:userprofilesetting_status==1">-->selected<!--</if>-->><!--<lang package='Template'>-->启用<!--</lang>--></option>
+							<option value="0" <!--<if condition="$oValue:userprofilesetting_status eq 0">-->selected<!--</if>-->><!--<lang package='Template'>-->禁用<!--</lang>--></option>
+						</select>
+						<div class="description"><!--<lang package='Template'>-->是否启用用户栏目，启用用户栏目才能够使用<!--</lang>--></div>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="hidden" name="ajax" value="1">
+						<input type="hidden" name="id" id="id" value="<!--{$oValue:userprofilesetting_id}-->"/>
+						<input type="submit" id="submit_button" value="<!--<lang package='Template'>-->更新<!--</lang>-->" class="alt_btn">
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->">
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

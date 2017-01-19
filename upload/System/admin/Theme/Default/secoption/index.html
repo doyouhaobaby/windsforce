@@ -1,0 +1,71 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+function option(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'update...' );
+	$("#submit_button").attr("disabled", false);
+	$('.validate')(0).submit();
+}
+
+checkForm(option);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->防灌水基本设置<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->防灌水基本设置<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->防灌水基本设置<!--</lang>--></h3>
+				<ul class="tabs">
+					<li class="active"><a href="<!--{:Q::U('secoption/index')}-->"><!--<lang package='Template'>-->防灌水基本设置<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('secoption/seccode_option')}-->"><!--<lang package='Template'>-->验证码设置<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('badword/index')}-->"><!--<lang package='Template'>-->词语过滤<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('app/config?id=1&type=comment')}-->"><!--<lang package='Template'>-->评论防灌水限制<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="<!--{:Q::U('secoption/update_option')}-->" method="post" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="flood_ctrl"><!--<lang package='Template'>-->两次发表时间间隔(秒)<!--</lang>--></label>
+						<input type="text" name="options[flood_ctrl]" id="flood_ctrl" size="40" value="<!--{$arrOptions['flood_ctrl']}-->" class="{required:true,digits:true,min: 0}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->两次发布信息间隔小于此时间，0 为不限制<!--</lang>--><br/>
+						<!--<lang package='Template'>-->此限制可以用于发布新鲜事等限制，短消息不受此控制，其它应用也可以调用判断限制恶意灌水<!--</lang>-->
+						</div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="need_email"><!--<lang package='Template'>-->强制用户验证激活邮箱<!--</lang>--></label>
+						<input type="radio" id="need_email" name="options[need_email]" value="1" <!--{if $arrOptions['need_email']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[need_email]" value="0" <!--{if $arrOptions['need_email']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->选择是的话，用户必须验证激活自己的邮箱后，才可以进行发布操作<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="need_avatar"><!--<lang package='Template'>-->强制用户上传头像<!--</lang>--></label>
+						<input type="radio" id="need_avatar" name="options[need_avatar]" value="1" <!--{if $arrOptions['need_avatar']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[need_avatar]" value="0" <!--{if $arrOptions['need_avatar']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->选择是的话，用户必须设置自己的头像后才能进行发布操作<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="need_friendnum"><!--<lang package='Template'>-->强制用户好友个数<!--</lang>--></label>
+						<input type="text" name="options[need_friendnum]" id="need_friendnum" size="40" value="<!--{$arrOptions['need_friendnum']}-->" class="{digits:true,min:0}"/>
+						<div class="description input_tips">
+							<!--<lang package='Template'>-->设置用户必须拥有多少个好友后，才可以进行发布操作<!--</lang>--><br/>
+							<!--<lang package='Template'>-->留空或者0为不限制<!--</lang>-->
+						</div>
+						<p class="input_errortips"></p>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input id="submit_button" type="submit" class="alt_btn" value="<!--<lang package='Template'>-->发布<!--</lang>-->" />
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->" />
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

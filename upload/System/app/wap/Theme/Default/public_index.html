@@ -1,0 +1,30 @@
+<!--<include file="header">-->
+
+<style type="text/css" id="internalStyle">
+.site_description{}
+.homefresh_box{border-top: 1px solid #E3E6EB;padding: 8px 0 8px 4px;word-wrap: break-word;}
+.homefresh_extend{padding:5px 5px 5px 0;}
+</style>
+
+	<div id="content">
+		<div class="site_description light_box"><!--{$GLOBALS['_option_']['site_description']}--></div>
+		
+		<!--{if !empty($arrHomefreshs)}-->
+		<!--<foreach for=arrHomefreshs value=arrHomefresh>-->
+		<div class="homefresh_box">
+			<div class="homefresh_content">
+				<!--{$arrHomefresh['homefresh_message']|Core_Extend+subString=100,true}-->
+			</div>
+			<div class="homefresh_extend gray_color font_small">
+				<!--{$arrHomefresh['create_dateline']|Core_Extend+timeFormat}--> by <a href="<!--{:Q::U('wap://space@?id='.$arrHomefresh['user_id'])}-->"><!--{$arrHomefresh['user_name']}--></a> <span class="pipe">|</span> <a href="<!--{:Q::U('wap://fresh@?id='.$arrHomefresh['homefresh_id'])}-->"><!--<lang package='Template'>-->查看<!--</lang>--></a>
+			</div>
+		</div>
+		<!--</foreach>-->
+		<!--{d*else}-->
+		<div class="light_box"><!--<lang package='Template'>-->暂时没有发现任何新鲜事<!--</lang>--></div>
+		<!--{/if}-->
+	</div>
+
+	<!--{$sPageNavbar}-->
+
+<!--<include file="footer">-->

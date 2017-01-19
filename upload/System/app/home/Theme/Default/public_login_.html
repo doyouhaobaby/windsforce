@@ -1,0 +1,111 @@
+<script src="<!--{:__ROOT__}-->/System/extension/socialization/static/js/socia.js"></script>
+
+<!--{:Core_Extend::validate()}-->
+
+<!--{script}-->
+function submitLogin(){
+	$("#submit_button").attr("disabled","disabled");
+	$("#submit_button").text('<!--<lang package='__COMMON_LANG__@Common'>-->登录<!--</lang>-->...');
+	Q.AjaxSubmit('login_form','<!--{:Q::U('home://public/check_login')}-->','result',login_handle);
+}
+
+checkForm(submitLogin);
+<!--{/script}-->
+
+				<!--{if $sReferer && $nRbac==1}-->
+				<div class="tips">
+					<!--<lang package='Template'>-->你没有权限访问!<!--</lang>-->&nbsp;<a href="<!--{$sReferer}-->"><!--<lang package='Template'>-->重试<!--</lang>--></a>
+				</div>
+				<!--{/if}-->
+				
+				<form class="form-horizontal validate" method='post' name="login_form" id="login_form">
+					<fieldset>
+						<div class="control-group">
+							<div class="controls">
+								<div id="result" class="none"></div>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="user_name"><!--<lang package='Template'>-->用户名/E-mail<!--</lang>--></label>
+							<div class="controls">
+								<input class="input-xlarge" id="user_name" name="user_name" type="text" class="email" value="" required title="<!--<lang package='Template'>-->用户名/E-mail不能为空<!--</lang>-->">
+								<p class="input_tips none"><!--<lang package='Template'>-->用户名/E-mail不能为空<!--</lang>--></p>
+								<p class="input_errortips"></p>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="user_password"><!--<lang package='Template'>-->密码<!--</lang>--></label>
+							<div class="controls">
+								<input class="input-xlarge" type="password" id="user_password" name="user_password" type="text" class="required" value="" <!--{if !$nDisplaySeccode}-->onkeypress="submitKeycode(event,submitLogin);"<!--{/if}--> required title="<!--<lang package='Template'>-->用户密码不能为空<!--</lang>-->">
+								<p class="input_tips none"><!--<lang package='Template'>-->用户密码不能为空<!--</lang>--></p>
+								<p class="input_errortips"></p>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="remember_me"></label>
+							<div class="controls">
+								<label class="checkbox">
+									<input id="remember_me" type="checkbox" class="input-short" name="remember_me" value="1" onclick="rememberme();" checked style="position:relative;top:2px;"><span class="remember_me"><!--<lang package='__COMMON_LANG__@Common'>-->记住我<!--</lang>--></span>
+									<span class="pipe">,</span>
+									<a href="<!--{:Q::U('home://getpassword/index')}-->" class="resetpassword-link"><!--<lang package='__COMMON_LANG__@Common'>-->忘记密码?<!--</lang>--></a>&nbsp;
+									<span class="pipe">|</span>&nbsp;
+									<a href="<!--{:Q::U('home://public/clear')}-->"><!--<lang package='__COMMON_LANG__@Common'>-->清除痕迹<!--</lang>--></a>
+									<span class="pipe">,</span>
+									<a href="<!--{:Q::U('home://public/register')}-->"><!--<lang package='__COMMON_LANG__@Common'>-->新用户注册<!--</lang>--></a>
+									<!--{if count($arrBindeds)>=3}-->
+									<span class="pipe">|</span>
+									<a href="javascript:void(0);" onclick="showSocialogin();"><!--<lang package='__COMMON_LANG__@Common'>-->社交帐号<!--</lang>--></a>
+									<!--{/if}-->
+								</label>
+							</div>
+						</div>
+						<div id="remember_time" class="none">
+							<div class="control-group">
+								<label class="control-label" for="remember_time"><!--<lang package='__COMMON_LANG__@Common'>-->COOKIE有效期<!--</lang>--></label>
+								<div class="controls">
+									<select name="remember_time" id="remembertime">
+										<option value="0" <!--{if $nRememberTime==0}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->及时<!--</lang>--></option>
+										<option value="3600" <!--{if $nRememberTime==3600}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一小时<!--</lang>--></option>
+										<option value="86400" <!--{if $nRememberTime==86400}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一天<!--</lang>--></option>
+										<option value="604800" <!--{if $nRememberTime==604800}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一星期<!--</lang>--></option>
+										<option value="2592000" <!--{if $nRememberTime==2592000}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一月<!--</lang>--></option>
+										<option value="31536000" <!--{if $nRememberTime==31536000}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一年<!--</lang>--></option>
+									</select>
+									<p class="help-block">
+										<!--<lang package='__COMMON_LANG__@Common'>-->注意在网吧等共同场所请不要记住我<!--</lang>-->
+										<span class="pipe">|</span> 
+										<a href="javascript:void(0);" onclick="rememberme(1);"><!--<lang package='__COMMON_LANG__@Common'>-->关闭<!--</lang>--></a>
+									</p>
+								</div>
+							</div>
+						</div>
+						<!--{if $nDisplaySeccode==1}-->
+						<div class="control-group">
+							<label class="control-label" for="seccode"><!--<lang package='__COMMON_LANG__@Common'>-->验证码<!--</lang>--></label>
+							<div class="controls">
+								<input name="seccode" id="seccode" type="text" class="input-small {required:true,remote:Q.U('home://public/validate_seccode'),messages:{remote:'<!--<lang package='__COMMON_LANG__@Common'>-->验证码错误<!--</lang>-->'}} left" value="" onkeypress="submitKeycode(event,submitLogin);" />&nbsp;
+								<span class="validate_seccode"><span class="input_errortips"></span></span>
+								<p class="help-block" style="clear:both;padding-top:10px;"><span id="seccodeImage"><img style="cursor:pointer" onclick="updateSeccode()" src="<!--{:Q::U('home://public/seccode')}-->" /></span></p>
+							</div>
+						</div>
+						<!--{/if}-->
+						<div class="form-actions">
+							<input type="hidden" name="ajax" value="1">
+							<input type="hidden" name="windsforce_referer" value="<!--{$sReferer}-->">
+							<button id="submit_button" name="submit_button" type="submit" class="btn btn-large width_300"><!--<lang package='__COMMON_LANG__@Common'>-->登录<!--</lang>--></button>
+						</div>
+					</fieldset>
+				</form>
+				<div class="socialogin_box">
+					<div class="socialogin_content">
+						<!--<foreach for=arrBindeds value=arrBinded>-->
+						<!--{if $i==3}-->
+						<div id="socailogin_more" class="none">
+						<!--{/if}-->
+						<a style="border-bottom: none;" href="javascript:void(0);" onclick="sociaWinopen('<!--{:Q::U('home://public/socia_login?vendor='.$arrBinded['sociatype_identifier'])}-->');"><img style="margin:0px 3px 5px 3px; vertical-align: middle;" src="<!--{$arrBinded['sociatype_logo']}-->" /></a>
+						<!--{if $i>=3 && $i==count($arrBindeds)}-->
+						</div>
+						<!--{/if}-->
+						<!--</foreach>-->
+					</div>
+				</div>

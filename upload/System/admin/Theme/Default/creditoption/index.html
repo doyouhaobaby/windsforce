@@ -1,0 +1,137 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+function option(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'update...' );
+	$("#submit_button").attr("disabled", false);
+	$('.validate')(0).submit();
+}
+
+checkForm(option);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->基本设置<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->基本设置<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->兑换比率为单项积分对应一个单位标准积分的值。<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->一旦设置兑换比率，则用户将可以在个人中心自行兑换各项设置了兑换比率的积分，如不希望实行积分自由兑换，请将其兑换比率设置为 0<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->本系统只有金币种类积分才能够用于买卖，发布悬赏等等<!--</lang>--></li>
+					<li class="message-display common-message-display" style="list-style:none;"><a href="javascript:void(0);" onclick="messageDisplay();"><!--<lang package='Template'>-->展开更多<!--</lang>-->&gt;&gt;</a></li>
+					<div class="message_display none">
+						<li><!--<lang package='Template'>-->系统的经验，金币和贡献是系统的核心积分类型，它们的每一种都有自己的特殊意义，系统拒绝进行转换等等<!--</lang>--></li>
+						<li style="list-style:none;" class="common_message_display"><a href="javascript:void(0);" onclick="messageDisplay();"><!--<lang package='Template'>-->收起<!--</lang>-->&lt;&lt;&lt;&lt;</a></li>
+					</div>
+				</ul>
+			</div>
+		</article>
+
+		<form action="<!--{:Q::U('creditoption/update_option')}-->" method="post" class="validate">
+			<article class="module width_full">
+				<header><h3 class="tabs_involved"><!--<lang package='Template'>-->扩展积分设置<!--</lang>--></h3>
+					<ul class="tabs">
+						<li class="active"><a href="<!--{:Q::U('creditoption/index')}-->"><!--<lang package='Template'>-->基本设置<!--</lang>--></a></li>
+						<li><a href="<!--{:Q::U('creditoption/policytable')}-->"><!--<lang package='Template'>-->积分策略<!--</lang>--></a></li>
+					</ul>
+				</header>
+				<div class="module_content">
+					<table class="tablesorter" cellspacing="0" id="checkList">
+						<thead>
+							<tr>
+								<th width="180px"><!--<lang package='Template'>-->启用<!--</lang>--></th>
+								<th><!--<lang package='Template'>-->积分名称<!--</lang>--></th>
+								<th width="120px"><!--<lang package='Template'>-->积分单位<!--</lang>--></th>
+								<th width="120px"><!--<lang package='Template'>-->初始积分<!--</lang>--></th>
+								<th width="120px"><!--<lang package='Template'>-->积分下限<!--</lang>--></th>
+								<th width="120px"><!--<lang package='Template'>-->兑换比率<!--</lang>--></th>
+								<th width="80px"><!--<lang package='Template'>-->积分兑出<!--</lang>--></th>
+								<th width="80px"><!--<lang package='Template'>-->积分兑入<!--</lang>--></th>
+							</tr>
+						</thead>
+						<tbody>
+							<!--<foreach for=arrExtendCredits value=arrExtendCredit>-->
+							<tr>
+								<td>
+									<!--{if $key<=3}-->
+									<input type="checkbox" name="" value="1" checked disabled/>
+									<input type="hidden" name="options[extend_credit][<!--{$key}-->][available]" value="1">
+									<!--{d*else}-->
+									<input type="checkbox" name="options[extend_credit][<!--{$key}-->][available]" value="1" <!--{if $arrExtendCredit['available']==1}-->checked<!--{/if}-->/>
+									<!--{/if}-->
+									extendcredit<!--{$key}-->
+								</td>
+								<td><input type="text" size="4" name="options[extend_credit][<!--{$key}-->][title]" value="<!--{$arrExtendCredit['title']}-->" <!--{if $key<=3}-->class="{required:true}"<!--{/if}-->>&nbsp;
+								<!--{if $key<=3}-->(<!--{if $key==1}-->
+										<!--<lang package='Template'>-->经验<!--</lang>-->
+									<!--{elseif $key==2}-->
+										<!--<lang package='Template'>-->金币<!--</lang>-->
+									<!--{d*else}--><!--<lang package='Template'>-->贡献<!--</lang>--><!--{/if}-->)
+								<!--{/if}-->
+								</td>
+								<td><input type="text" size="4" name="options[extend_credit][<!--{$key}-->][unit]" value="<!--{$arrExtendCredit['unit']}-->" class="{required:true,digits:true,min: 0}"></td>
+								<td><input type="text" size="2" name="options[extend_credit][<!--{$key}-->][initcredits]" value="<!--{$arrExtendCredit['initcredits']}-->" class="{required:true,digits:true,min: 0}"></td>
+								<td><input type="text" size="2" name="options[extend_credit][<!--{$key}-->][lowerlimit]" value="<!--{$arrExtendCredit['lowerlimit']}-->" class="{required:true,digits:true,min: 0}"></td>
+								<td><input type="text" size="2" name="options[extend_credit][<!--{$key}-->][ratio]" value="<!--{$arrExtendCredit['ratio']}-->" class="{required:true,digits:true,min: 0}"></td>
+								<td><!--{if in_array($key,array(1,3))}-->
+									<input type="checkbox" name="options[extend_credit][<!--{$key}-->][allowexchangeout]" value="0" disabled/>
+									<input type="hidden" name="options[extend_credit][<!--{$key}-->][allowexchangeout]" value="0">
+									<!--{d*else}-->
+									<input type="checkbox" name="options[extend_credit][<!--{$key}-->][allowexchangeout]" value="1" <!--{if $arrExtendCredit['allowexchangeout']==1}-->checked<!--{/if}-->/>
+									<!--{/if}-->
+								</td>
+								<td>
+									<!--{if $key==2}-->
+									<input type="checkbox" name="options[extend_credit][<!--{$key}-->][allowexchangein]" value="0" disabled/>
+									<input type="hidden" name="options[extend_credit][<!--{$key}-->][allowexchangein]" value="0">
+									<!--{d*else}-->
+									<input type="checkbox" name="options[extend_credit][<!--{$key}-->][allowexchangein]" value="1" <!--{if $arrExtendCredit['allowexchangein']==1}-->checked<!--{/if}-->/>
+									<!--{/if}-->
+								</td>
+							</tr>
+							<!--</foreach>-->
+						</tbody>
+					</table>
+				</div>
+			</article>
+
+			<article class="module width_full">
+				<header><h3 class="tabs_involved"><!--<lang package='Template'>-->积分设置<!--</lang>--></h3>
+				</header>
+				<div class="module_content">
+					<fieldset>
+						<label for="credit_stax"><!--<lang package='Template'>-->积分交易税<!--</lang>--></label>
+						<input type="text" name="options[credit_stax]" id="credit_stax" size="40" value="<!--{$arrOptions['credit_stax']}-->" class="{required:true,number:true,min: 0,max:1}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->积分交易税(损失率)为用户在利用积分进行转让、兑换、买卖时扣除的税率，范围为 0～1 之间的浮点数，例如设置为 0.2，则用户在转换 100 个单位积分时，损失掉的积分为 20 个单位，0 为不损失<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="transfermin_credits"><!--<lang package='Template'>-->转账最低余额<!--</lang>--></label>
+						<input type="text" name="options[transfermin_credits]" id="transfermin_credits" size="40" value="<!--{$arrOptions['transfermin_credits']}-->" class="{required:true,ints:true,min: -100000}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->积分转账后要求用户所拥有的余额最小数值。利用此功能，您可以设置较大的余额限制，使积分小于这个数值的用户无法转账；也可以将余额限制设置为负数，使得转账在限额内可以透支<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="exchange_mincredits"><!--<lang package='Template'>-->兑换最低余额<!--</lang>--></label>
+						<input type="text" name="options[exchange_mincredits]" id="exchange_mincredits" size="40" value="<!--{$arrOptions['exchange_mincredits']}-->" class="{required:true,ints:true,min: -100000}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->积分兑换后要求用户所拥有的余额最小数值。利用此功能，您可以设置较大的余额限制，使积分小于这个数值的用户无法兑换；也可以将余额限制设置为负数，使得兑换在限额内可以透支<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input id="submit_button" type="submit" class="alt_btn" value="<!--<lang package='Template'>-->发布<!--</lang>-->" />
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->" />
+					</div>
+				</footer>
+			</article>
+		</form>
+
+<!--<include file="public+footer">-->

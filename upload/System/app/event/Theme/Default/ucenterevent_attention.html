@@ -1,0 +1,67 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{script}-->
+function deleteEventattention(){
+	windsforceConfirm(Q.L('确实要永久删除选择项吗？','Common'),function(){
+		$('#eventattention_form').submit();
+	});
+}
+<!--{/script}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('event://ucenter/index')}-->"><!--<lang package='Template'>-->活动个人中心<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->我感兴趣的活动<!--</lang>--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+		<div class="grid_3">
+			<!--<include file="Core_Extend::template('ucenter_sidebar','home')" />-->
+		</div>
+
+		<div class="grid_9">
+			<!--<include file="ucenterevent+menu" />-->
+
+			<form method='post' action="<!--{:Q::U('event://ucenter/attention_delete')}-->" name="eventattention_form" id="eventattention_form">
+				<div id="event_list_box" class="event_list_box">
+					<div class="event_toolbar">
+						<span class="right">
+							<a href="javascript:void(0);" onclick="deleteEventattention();" class="btn btn-mini"><!--<lang package='__COMMON_LANG__@Common'>-->删除<!--</lang>--></a>
+						</span>
+						<span><input type="checkbox" class="input-short" onclick="checkAll('event_list_box')">&nbsp;<!--<lang package='Template'>-->全选<!--</lang>--></span>
+					</div>
+
+					<!--{if !empty($arrEventattentionusers)}-->
+					<ul>
+						<!--<foreach for=arrEventattentionusers value=arrEvent>-->
+						<li>
+							<div class="event_list_content">
+								<div class="event_list_contentpic">
+									<a href="<!--{:Q::U('event://e@?id='.$arrEvent['event_id'])}-->" title="<!--{$arrEvent['event_title']}-->"><img src="<!--{:Event_Extend::getEventcover($arrEvent)}-->" alt="<!--{$arrEvent['event_title']}-->" width="300" height="200" class="need_lazyload"></a>
+								</div>
+								<div class="event_list_description">
+									<div class="event_list_attention"><font class="event_list_attentionnum"><!--{$arrEvent['event_joincount']+$arrEvent['event_attentioncount']}--></font>&nbsp;<!--<lang package='Template'>-->人关注<!--</lang>--></div>
+									<div class="event_list_endtime"><!--<lang package='Template'>-->结束时间<!--</lang>-->：<!--{$arrEvent['event_endtime']|date='Y-m-d',**}--></div>
+								</div>
+							</div>
+							<div class="event_list_title"><a href="<!--{:Q::U('event://e@?id='.$arrEvent['event_id'])}-->" title="<!--{$arrEvent['event_title']}-->"><!--{$arrEvent['event_title']|C+subString=0,20}--></a></div>
+							<div class="event_list_address">
+								<!--{$arrEvent['event_address']|C+subString=0,20}-->
+							</div>
+						</li>
+						<!--</foreach>-->
+					</ul>
+					<!--{d*else}-->
+					<p><!--<lang package='Template'>-->暂时没有发现任何活动！<!--</lang>--></p>
+					<!--{/if}-->
+				</div>
+			</form>
+
+			<!--{$sPageNavbar}-->
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

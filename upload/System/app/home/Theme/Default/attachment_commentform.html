@@ -1,0 +1,38 @@
+					<div class="clearfix"></div>
+					<div id="attachmentcommentform_box" class="commoncommentform_box">
+						<h3><!--<lang package='__COMMON_LANG__@Common'>-->发表评论<!--</lang>--></h3>
+						<!--{if $GLOBALS['_cache_']['home_option']['audit_comment']==1}-->
+						<div class="tips"><!--<lang package='__COMMON_LANG__@Common'>-->系统开启了评论审核功能，你发表的评论只有审核通过了才能够显示<!--</lang>--></div>
+						<!--{/if}-->
+						<form method="post" name="attachment-commentform" action="<!--{:Q::U('home://attachment/add_attachmentcomment')}-->" id="attachment-commentform" class="validate">
+							<!--{if $GLOBALS['___login___']===false}-->
+							<div class="commoncommentform_needloginbox">
+								<div class="commoncommentform_needloginboxinner">
+									<a onclick="ajaxLogin('<!--{:__SELF__}-->');" href="javascript:void(0);"><!--<lang package='__COMMON_LANG__@Common'>-->登录<!--</lang>--></a> <span class="pipe">|</span> 
+									<a href="<!--{:Core_Extend::windsforceReferer(true)}-->" rel="nofollow"><!--<lang package='__COMMON_LANG__@Common'>-->用户注册<!--</lang>--></a>
+								</div>
+							</div>
+							<!--{d*else}-->
+							<input type="hidden" name="attachmentcomment_name" id="attachmentcomment_name" value="<!--{$GLOBALS['___login___']['user_name']}-->" class="attachmentcommentform_name">
+							<div id="attachmentcomment-media-box" class="common-media-box">
+								<a href="javascript:void(0);" class="face-icon icon_add_face" ><!--<lang package='__COMMON_LANG__@Common'>-->表情<!--</lang>--></a>
+								<a href="javascript:void(0);" onclick="globalAddattachment('insertAttachment_');" class="icon_add_img"><!--<lang package='__COMMON_LANG__@Common'>-->媒体<!--</lang>--></a>
+								<a href="javascript:void(0);" onclick="addVideo('insertVideo_');" class="icon_add_video" ><!--<lang package='__COMMON_LANG__@Common'>-->视频<!--</lang>--></a>
+								<a href="javascript:void(0);" onclick="addMusic('insertMusic_');" class="icon_add_music"><!--<lang package='__COMMON_LANG__@Common'>-->音乐<!--</lang>--></a>
+							</div>
+							<div id="emotion_parentcontainer">
+								<textarea name="attachmentcomment_content" id="attachmentcomment_content" rows="6" class="commoncommentform_content attachmentcommentform_area {required:true}"></textarea>
+							</div>
+							<input type="hidden" name="ajax" value="1" />
+							<input type="hidden" name="page" value="<!--{if isset($_GET['page'])}--><!--{$_GET['page']}--><!--{/if}-->"/>
+							<input type="hidden" name="attachment_id" value="<!--{$arrAttachment['attachment_id']}-->"/>
+							<input id="comment-submit" type="submit" class="btn right" value="<!--<lang package='__COMMON_LANG__@Common'>-->提交评论<!--</lang>-->" style="margin-right:20%;"/>
+							<!--{if $nDisplaySeccode==1}-->
+							<p style="margin:10px 0px 0px 0;"><label class="control-label" for="seccode"><!--<lang package='__COMMON_LANG__@Common'>-->验证码<!--</lang>--></label></p>
+							<input name="seccode" id="seccode" type="text" class="input-small {required:true,remote:Q.U('home://public/validate_seccode'),messages:{remote:'<!--<lang package='__COMMON_LANG__@Common'>-->验证码错误<!--</lang>-->'}} left" value="">&nbsp;
+							<span class="validate_seccode"><span class="input_errortips"></span></span>
+							<p class="help-block" style="clear:both;padding-top:10px;"><span id="seccodeImage"><img style="cursor:pointer" onclick="updateSeccode()" src="<!--{:Q::U('home://public/seccode')}-->" /></span></p>
+							<!--{/if}-->
+							<!--{/if}-->
+						</form>
+					</div>

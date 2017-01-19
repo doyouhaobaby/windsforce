@@ -1,0 +1,14 @@
+	<!--<include file="grouptopicadmin+header" />-->
+		
+		<p>
+			<select name="status">
+				<option value="0"><!--<lang package='Template'>-->取消置顶<!--</lang>--></option>
+				<!--<for start='1' end='3' var='nMyvalue'>-->
+				<!--{if $nMyvalue<3 || ($nMyvalue==3 && Core_Extend+isAdmin())}-->
+				<option value="<!--{$nMyvalue}-->" <!--{if isset($nStatus) && $nStatus==$nMyvalue}-->selected<!--{/if}-->><!--{if $nMyvalue==3}--><!--<lang package='Template'>-->全局置顶主题<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->小组置顶主题<!--</lang>-->&nbsp;<!--{$nMyvalue}--><!--{/if}--></option>
+				<!--{/if}-->
+				<!--</for>-->
+			</select>
+		</p>
+
+	<!--<include file="grouptopicadmin+footer" />-->

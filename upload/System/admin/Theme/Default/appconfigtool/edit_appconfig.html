@@ -1,0 +1,27 @@
+				<form action="<!--{:Q::U('appconfigtool/save_appconfig')}-->" method="post" id="appconfigAdd" name="appconfigAdd" >
+					<div style="height: 300px; width: 100%; overflow:auto;">
+						<ul class="global_tips">
+							<li><!--<lang package='Template'>-->请直接在文本域中修改源代码，然后点击确定即可保存<!--</lang>--></li>
+							<li><!--<lang package='Template'>-->注意修改源代码的时候，一定要确保代码为正确的PHP脚本，否则将使系统崩溃<!--</lang>--></li>
+							<li><!--<lang package='Template'>-->如果因为修改配置文件源文件导致系统崩溃，你可以通过FTP来修改正确<!--</lang>--></li>
+							<li><!--<lang package='Template'>-->应用的配置文件修改后，它的配置缓存文件也会自动被删除，不用人工再次清理<!--</lang>--></li>
+						</ul>
+						<table class="tablesorter" cellspacing="0">
+							<thead>
+								<tr>
+									<th><!--<lang package='Template'>-->编辑配置文件<!--</lang>--></th>
+								</tr>
+							</thead>
+							<tbody>
+								<!--<foreach for=arrConfigfiles value=arrConfigfile>-->
+								<tr>
+									<td><b><a href="javascript:void(0);" onclick="resizeUp('<!--{$arrConfigfile['file']|md5}-->');">[+]</a><a href="javascript:void(0);" onclick="resizeDown('<!--{$arrConfigfile['file']|md5}-->');">[-]</a></b>&nbsp;<!--<lang package='Template'>-->文件<!--</lang>--><!--{$arrConfigfile['file']}--><br/>
+										<textarea id="<!--{$arrConfigfile['file']|md5=**}-->" cols="85" rows="10" name="data[<!--{$arrConfigfile['file']}-->]" style="width:95%;height:200px;font: 12px 'Courier New';margin-left:-1px;"><!--{$arrConfigfile['content']}--></textarea>
+									</td>
+								</tr>
+								<!--</foreach>-->
+							</tbody>
+						</table>
+					</div>
+					<input type="hidden" name="app" value="<!--{$sApp}-->" />
+				</form>

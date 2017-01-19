@@ -1,0 +1,88 @@
+<!--<include file="public+header">-->
+
+<script type="text/javascript" src="<!--{:__PUBLIC__}-->/js/calendar/datepicker/WdatePicker.js"></script>
+<!--{~$sCalendarLang=Core_Extend::calendar()}-->
+
+<!--{script}-->
+checkForm(SubmitFormCheckform);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<if condition="empty( $nId )" >--><!--<lang package='Template'>-->添加公告<!--</lang>--><!--<else/>--><!--<lang package='Template'>-->编辑公告<!--</lang>--><!--</if>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<if condition="empty( $nId )" >--><!--<lang package='Template'>-->添加公告<!--</lang>--><!--<else/>--><!--<lang package='Template'>-->编辑公告<!--</lang>-->_<!--{$nId}--><!--</if>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->您可以在这里添加或编辑公告。<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<if condition="empty( $nId )" >--><!--<lang package='Template'>-->添加公告<!--</lang>--><!--<else/>--><!--<lang package='Template'>-->编辑公告<!--</lang>--><!--</if>--></h3>
+				<ul class="tabs">
+					<li class="active"><a href="<!--{:Q::U('announcement/index')}-->"><!--<lang package='Template'>-->公告列表<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="" method="post" id="announcementAdd" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="announcement_sort"><!--<lang package='Template'>-->序号<!--</lang>--></label>
+						<input type="text" name="announcement_sort" id="announcement_sort" size="40" value="<!--<if condition="isset( $oValue ) && $oValue:announcement_sort">--><!--{$oValue:announcement_sort}--><!--<else/>-->0<!--</if>-->" class="{required:true,digits:true,min:0,max:999}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->公告序号，用于排列公告顺序<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="announcement_title"><!--<lang package='Template'>-->公告标题<!--</lang>--></label>
+						<input type="text" name="announcement_title" id="announcement_title" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:announcement_title}--><!--</if>-->" class="{required:true}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->公告的标题，不能为空<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="announcement_status"><!--<lang package='Template'>-->状态<!--</lang>--></label>
+						<select class="field" name="announcement_status">
+							<option value="1" <!--<if condition="!isset( $oValue ) || ( isset( $oValue ) && $oValue:announcement_status==1)">-->selected<!--</if>-->><!--<lang package='Template'>-->启用<!--</lang>--></option>
+							<option value="0" <!--<if condition="isset( $oValue ) && $oValue:announcement_status==0">-->selected<!--</if>--> ><!--<lang package='Template'>-->禁用<!--</lang>--></option>
+							<option value="9" <!--<if condition="isset( $oValue ) && $oValue:announcement_status==9">-->selected<!--</if>-->><!--<lang package='Template'>-->回收站<!--</lang>--></option>
+						</select>
+					</fieldset>
+					<fieldset>
+						<label for="create_dateline"><!--<lang package='Template'>-->起始时间<!--</lang>--></label>
+						<input type="text" name="create_dateline" id="create_dateline" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:create_dateline|date='Y-m-d H:i:s',**}--><!--<else/>--><!--{:date('Y-m-d H:i:s',CURRENT_TIMESTAMP)}--><!--</if>-->" onclick="WdatePicker({el:'create_dateline',skin:'ext',lang:'<!--{$sCalendarLang}-->',dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="{required:true}"/>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="announcement_endtime"><!--<lang package='Template'>-->终止时间<!--</lang>--></label>
+						<input type="text" name="announcement_endtime" id="announcement_endtime" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:announcement_endtime|date='Y-m-d H:i:s',**}--><!--<else/>--><!--{:date('Y-m-d H:i:s',(CURRENT_TIMESTAMP+604800))}--><!--</if>-->" onclick="WdatePicker({el:'announcement_endtime',skin:'ext',lang:'<!--{$sCalendarLang}-->',dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'create_dateline\')}'})" class="{required:true}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->注意，默认终止时间为一周，请根据你的实际情况调整。<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="announcement_type"><!--<lang package='Template'>-->公告类型<!--</lang>--></label>
+						<input class="radio" type="radio" name="announcement_type" value="0" <!--<if condition="!isset( $oValue ) || ( isset( $oValue ) && $oValue:announcement_type==0 ) ">-->checked<!--</if>-->>&nbsp;<!--<lang package='Template'>-->文字公告<!--</lang>-->
+						<input class="radio" type="radio" name="announcement_type" value="1" <!--<if condition="isset( $oValue ) && $oValue:announcement_type==1">-->checked<!--</if>-->>&nbsp;<!--<lang package='Template'>-->网址链接<!--</lang>-->
+					</fieldset>
+					<fieldset>
+						<label for="announcement_message"><!--<lang package='Template'>-->公告内容<!--</lang>--></label>
+						<textarea name="announcement_message" id="announcement_message" rows="5" class="{required:true}"><!--<if condition="isset( $oValue )">--><!--{$oValue:announcement_message}--><!--</if>--></textarea>
+						<div class="description input_tips"><!--<lang package='Template'>-->如果公告为网址类型，这里为链接的URL地址。<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="hidden" name="ajax" value="1">
+						<input type="hidden" name="id" id="id" value="<!--<if condition="isset( $nId )">--><!--{$nId}--><!--</if>-->"/>
+						<input type="submit" id="submit_button" value="" class="alt_btn">
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->">
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

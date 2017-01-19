@@ -1,0 +1,136 @@
+<!--{:Core_Extend::editorInclude()}-->
+<!--{:Core_Extend::emotion()}-->
+<!--{:Core_Extend::validate()}-->
+
+<!--{script}-->
+$(function(){
+	editor=loadEditorThin('grouptopiccomment_message');
+	$(".grouptopiccomment-face-icon").jqfaceedit({txtAreaObj:editor,containerObj:$('#grouptopiccomment_emotion_parentcontainer'),top:25,left:-27});
+	$('.grouptopiccomment_parentcontent').emotionsToHtml();
+});
+
+function addGrouptopiccomment(){
+	$("#grouptopiccomment_message").val(editor.html());
+
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'add...' );
+
+	var sSeccode=$('#seccode').val();
+	if($("#seccode").length>0){
+		if(!sSeccode){
+			windsforceAlert(Q.L('验证码不能为空','Common'),'',3);
+			return false;
+		}
+
+		if(windsforceAjaxhtml(Q.U('home://public/validate_seccode?seccode='+encodeURIComponent(sSeccode)),-1)=='false'){
+			windsforceAlert(Q.L('验证码错误','Common'),'',3);
+			return false;
+		}
+	}
+
+	if($("#grouptopiccomment_message").val()==""){
+		windsforceAlert('<!--<lang package='Template'>-->回复内容不能为空<!--</lang>-->','',3);
+		$("#submit_button").attr("disabled", false);
+		$("#submit_button").val( '<!--<lang package='Template'>-->发布<!--</lang>-->' );
+		return false;
+	}
+
+	Q.AjaxSubmit("grouptopiccomment_form",'<!--{:Q::U('group://grouptopic/'.(!isset($arrEditGrouptopiccomment)?'add_reply':'submit_reply'))}-->','<!--{if ACTION_NAME!=='reply'}-->result<!--{/if}-->',function(data,status){
+		$("#submit_button").attr("disabled", false);
+		$("#submit_button").val( '<!--<lang package='Template'>-->发布<!--</lang>-->' );
+		if(status==1){
+			setTimeout(function(){window.location.href=data.url;},1000);
+			return true;
+		}
+
+		return false;
+	});
+
+	return false;
+}
+
+function backTopic(){
+	window.location.href='<!--{:Q::U('group://topic@?id='.$arrGrouptopic['grouptopic_id'])}-->';
+}
+
+checkForm(addGrouptopiccomment);
+<!--{/script}-->
+			
+			<form method="post" name="grouptopiccomment_form" id="grouptopiccomment_form" class="validate">
+				<!--{if (isset($nDialog) && $nDialog==1) || isset($arrEditGrouptopiccomment)}-->
+				<div style="height: 350px; width: 100%;overflow-y:auto;overflow-x:hidden;">
+				<!--{/if}-->
+					<div <!--{if (isset($nDialog) && $nDialog==1) || isset($arrEditGrouptopiccomment)}-->style="width:600px;"<!--{d*else}-->class="grid_12"<!--{/if}-->">
+						<!--{if ACTION_NAME!=='reply'}-->
+						<div id="result" class="none"></div>
+						<!--{/if}-->
+						<span id="grouptopiccommenttitle_show"><input type="text" class="span<!--{if (isset($nDialog) && $nDialog==1) || isset($arrEditGrouptopiccomment)}-->4<!--{d*else}-->8<!--{/if}-->" value="<!--{if isset($arrEditGrouptopiccomment)}--><!--{$arrEditGrouptopiccomment['grouptopiccomment_title']}--><!--{d*else}-->Reply:<!--{$arrGrouptopic['grouptopic_title']}--><!--{/if}-->" readonly style="display:inline;margin-bottom:10px;">&nbsp;[<a href="javascript:void(0);" onclick="showDiv('grouptopiccommenttitle_hide');showDiv('grouptopiccommenttitle_show');$('#grouptopiccomment_title').val('<!--{if isset($arrEditGrouptopiccomment)}--><!--{$arrEditGrouptopiccomment['grouptopiccomment_title']}--><!--{d*else}-->Reply:<!--{$arrGrouptopic['grouptopic_title']}--><!--{/if}-->');"><!--<lang package='Template'>-->修改<!--</lang>--></a>]</span>
+						<span style="display:none" id="grouptopiccommenttitle_hide"><input type="text" class="span<!--{if (isset($nDialog) && $nDialog==1) || isset($arrEditGrouptopiccomment)}-->4<!--{d*else}-->8<!--{/if}-->" name="grouptopiccomment_title" id="grouptopiccomment_title" value="" style="display:inline;margin-bottom:10px;">
+						&nbsp;[<a href="javascript:void(0);" onclick="showDiv('grouptopiccommenttitle_show');showDiv('grouptopiccommenttitle_hide');$('#grouptopiccomment_title').val('<!--{if isset($arrEditGrouptopiccomment)}--><!--{$arrEditGrouptopiccomment['grouptopiccomment_title']}--><!--{/if}-->');"><!--<lang package='Template'>-->放弃<!--</lang>--></a>]</span>
+						
+						<!--{if isset($arrGrouptopiccomment)}-->
+						<div class="grouptopiccomment_parent tips">
+							<div class="">
+								<h2 class="title">
+									<!--<lang package='Template'>-->你正在参与<!--</lang>-->&nbsp;<a class="bind_hover_card" href="<!--{:Q::U('group://space@?id='.$arrGrouptopiccomment['user_id'])}-->" bm_user_id="<!--{$arrGrouptopiccomment.user_id}-->"><img alt="<!--{$arrGrouptopiccomment.grouptopiccomment_name}-->" src="<!--{:Core_Extend::avatar($arrGrouptopiccomment['user_id'],'small')}-->" width="32px" height="32px"></a>
+									&nbsp;<!--<lang package='Template'>-->他的回帖<!--</lang>-->&nbsp;<a href="<!--{:Q::U('group://space@?id='.$arrGrouptopiccomment['user_id'])}-->" class="bind_hover_card" bm_user_id="<!--{$arrGrouptopiccomment.user_id}-->"><!--{$arrGrouptopiccomment.grouptopiccomment_name}--></a>
+								</h2>
+								<div class="grouptopiccomment_parentcontent">
+									<p><!--{$arrGrouptopiccomment['grouptopiccomment_content']|strip_tags|C+subString=0,100|Core_Extend+ubb}--></p>
+								</div>
+							</div>
+						</div>
+						<!--{/if}-->
+
+						<!--{if $GLOBALS['___login___']!==false}-->
+						<div id="grouptopicreply-media-box" class="common-media-box">
+							<a href="javascript:void(0);" class="grouptopiccomment-face-icon face-icon icon_add_face" <!--{if (isset($nDialog) && $nDialog==1) || isset($arrEditGrouptopiccomment)}-->onclick="notWork();"<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->表情<!--</lang>--></a>
+							<a href="javascript:void(0);" onclick="globalAddattachment('insertAttachment_');" class="icon_add_img"><!--<lang package='__COMMON_LANG__@Common'>-->媒体<!--</lang>--></a>
+							<a href="javascript:void(0);" onclick="addVideo('insertVideo_');" class="icon_add_video" ><!--<lang package='__COMMON_LANG__@Common'>-->视频<!--</lang>--></a>
+							<a href="javascript:void(0);" onclick="addMusic('insertMusic_');" class="icon_add_music"><!--<lang package='__COMMON_LANG__@Common'>-->音乐<!--</lang>--></a>
+						</div>
+						<div id="grouptopiccomment_emotion_parentcontainer">
+							<textarea class="input-xlarge" name="grouptopiccomment_message" id="grouptopiccomment_message" <!--{if (isset($nDialog) && $nDialog==1) || isset($arrEditGrouptopiccomment)}-->rows="10" style="width:95%;"<!--{d*else}-->rows="16" style="height:<!--{:Core_Extend::getEditor()}-->px;width:95%;"<!--{/if}-->><!--{if isset($arrEditGrouptopiccomment)}--><!--{$arrEditGrouptopiccomment['grouptopiccomment_content']|htmlspecialchars}--><!--{/if}--></textarea>
+						</div>
+
+						<!--{if $nDisplaySeccode==1}-->
+						<div style="margin-top:10px;">
+							<input name="seccode" id="seccode" type="text" class="input-small {required:true,remote:Q.U('home://public/validate_seccode'),messages:{remote:'<!--<lang package='__COMMON_LANG__@Common'>-->验证码错误<!--</lang>-->'}} left" value="">&nbsp;
+							<span class="validate_seccode"><span class="input_errortips"></span></span>
+							<p class="help-block" style="clear:both;padding-top:10px;"><span id="seccodeImage"><img style="cursor:pointer" onclick="updateSeccode()" src="<!--{:Q::U('home://public/seccode')}-->" /></span></p>
+						</div>
+						<!--{/if}-->
+						
+						<!--{if !isset($arrEditGrouptopiccomment)}-->
+						<input type="hidden" name="grouptopiccomment_name" id="grouptopiccomment_name" value="<!--{$GLOBALS['___login___']['user_name']}-->" class="grouptopiccomment_name">
+						<!--{/if}-->
+
+						<input type="hidden" name="ajax" value="1">
+						<input type="hidden" name="tid" value="<!--{$arrGrouptopic['grouptopic_id']}-->">
+						<!--{if isset($arrGrouptopiccomment)}-->
+						<input type="hidden" name="grouptopiccomment_parentid" value="<!--{$arrGrouptopiccomment['grouptopiccomment_id']}-->">
+						<!--{/if}-->
+						<!--{if isset($arrEditGrouptopiccomment)}-->
+						<input type="hidden" name="editcid" value="<!--{$arrEditGrouptopiccomment['grouptopiccomment_id']}-->">
+						<!--{/if}-->
+						
+						<!--{if !isset($nDialog) && !isset($arrEditGrouptopiccomment)}-->
+						<div class="form-actions">
+							<input id="submit_button" type="submit" class="btn btn-middle" value="<!--<lang package='Template'>-->发布<!--</lang>-->">&nbsp;
+							<input id="back_button" onclick="backTopic();" type="button" class="btn btn-middle" value="<!--<lang package='Template'>-->返回帖子<!--</lang>-->">
+						</div>
+						<!--{/if}-->
+
+						<!--{d*else}-->
+						<div class="commoncommentform_needloginbox">
+							<div class="commoncommentform_needloginboxinner">
+								<a onclick="ajaxLogin('<!--{:__SELF__}-->');" href="javascript:void(0);"><!--<lang package='__COMMON_LANG__@Common'>-->登录<!--</lang>--></a> <span class="pipe">|</span>
+								<a href="<!--{:Core_Extend::windsforceReferer(true)}-->"><!--<lang package='__COMMON_LANG__@Common'>-->用户注册<!--</lang>--></a>
+							</div>
+						</div>
+						<!--{/if}-->
+					</div>
+				<!--{if (isset($nDialog) && $nDialog==1) || isset($arrEditGrouptopiccomment)}-->
+				</div>
+				<!--{/if}-->
+			</form>

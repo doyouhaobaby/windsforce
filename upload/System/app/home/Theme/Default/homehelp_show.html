@@ -1,0 +1,49 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{:Core_Extend::emotion()}-->
+
+<!--{script}-->
+$(function(){
+	$('.homehelp-content').emotionsToHtml();
+});
+<!--{/script}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--{$oHomehelp['homehelp_title']}--></li>
+		</ul>
+	</div>
+		
+	<div class="container_12 container_box">
+		<div class="grid_2">
+			<ul class="nav-list">
+				<li class="nav-header"><!--<lang package='__COMMON_LANG__@Common'>-->帮助信息<!--</lang>--></li>
+				<li <!--{if !$oHomehelp['homehelpcategory_id']}-->class="active"<!--{/if}-->><a href="<!--{:Q::U(Q::C('DEFAULT_APP').'://homehelp/index')}-->"><!--<lang package='__COMMON_LANG__@Common'>-->所有帮助<!--</lang>--></a></li>
+				<!--<foreach for=arrHomehelpcategorys value=oHomehelpcategory>-->
+				<li <!--{if $oHomehelp['homehelpcategory_id']==$oHomehelpcategory['homehelpcategory_id']}-->class="active"<!--{/if}-->><a href="<!--{:Q::U(Q::C('DEFAULT_APP').'://homehelp/index?cid='.$oHomehelpcategory['homehelpcategory_id'])}-->"><!--{$oHomehelpcategory['homehelpcategory_name']}--></a></li>
+				<!--</foreach>-->
+			</ul>
+		</div>
+
+		<div class="grid_10">
+			<h3><!--{$oHomehelp['homehelp_title']}--></h3>
+			<div class="homehelp_title" style="margin:5px auto 10px auto;"><!--{$oHomehelp['user_id']|Core_Extend+getUsericon}-->&nbsp;<a href="<!--{:Q::U('home://space@?id='.$oHomehelp['user_id'])}-->"><!--{$oHomehelp['homehelp_username']}--></a>&nbsp;<!--<lang package='__COMMON_LANG__@Common'>-->发表于<!--</lang>-->&nbsp;<span><!--{$oHomehelp['create_dateline']|Core_Extend+timeFormat}--></span>&nbsp;<!--<lang package='__COMMON_LANG__@Common'>-->已被阅读<!--</lang>-->&nbsp;<span><!--{$oHomehelp['homehelp_viewnum']}--></span>&nbsp;<!--<lang package='__COMMON_LANG__@Common'>-->次<!--</lang>--></div>
+
+			<div class="homehelp-content"><!--{$oHomehelp['homehelp_content']|Core_Extend+ubb=false}--></div>
+
+			<!--{if !empty($oHomehelp['update_dateline'])}-->
+			<div class="tips" style="margin-top:20px;">
+			<!--<lang package='__COMMON_LANG__@Common'>-->本文最后由<!--</lang>-->&nbsp;<a href="<!--{:Q::U('home://space@?id='.$oHomehelp['homehelp_updateuserid'])}-->"><!--{$oHomehelp['homehelp_updateusername']}--></a>&nbsp;<!--<lang package='__COMMON_LANG__@Common'>-->于<!--</lang>--> <!--{$oHomehelp['update_dateline']|Core_Extend+timeFormat}-->&nbsp;<!--<lang package='__COMMON_LANG__@Common'>-->更新<!--</lang>-->
+			</div>
+			<!--{/if}-->
+
+			<div class="common_share">
+				<!--{:Core_Extend::share()}-->
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

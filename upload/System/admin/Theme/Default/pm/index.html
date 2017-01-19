@@ -1,0 +1,199 @@
+<!--<include file="public+header" />-->
+
+<!--{~$sCalendarLang=Core_Extend::calendar()}-->
+<script type="text/javascript" src="<!--{:__PUBLIC__}-->/js/calendar/datepicker/WdatePicker.js"></script>
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->短消息列表<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->短消息列表<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->你可以在这里对短消息进行管理，发送系统短消息等等<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->短消息被删除后，不可恢复<!--</lang>--></li>
+				</ul>
+			</div>
+
+			<div class="module_content">
+				<form method='get' action="<!--{:Q::U( 'pm/index' )}-->" class="quick_search">
+					<table cellspacing="3" cellpadding="3">
+						<tr>
+							<th><!--<lang package='Template'>-->编号<!--</lang>--></th>
+							<td><input type="text" name="pm_id" title="<!--<lang package='Template'>-->编号<!--</lang>-->" value="<!--{:Q::G('pm_id')}-->" onkeyup="this.value = this.value.replace(/[^-0-9]/g, '');" />
+							</td>
+							<th><!--<lang package='Template'>-->结果排序<!--</lang>--></th>
+							<td>
+								<select name="order_">
+									<option value="" <!--{if !Q+G('order_')}-->selected<!--{/if}-->><!--<lang package='Template'>-->排序字段<!--</lang>--></option>
+									<option value="pm_id" <!--{if Q+G('order_')=='pm_id'}-->selected<!--{/if}-->><!--<lang package='Template'>-->编号<!--</lang>--></option>
+									<option value="pm_status" <!--{if Q+G('order_')=='pm_status'}-->selected<!--{/if}-->><!--<lang package='Template'>-->状态<!--</lang>--></option>
+									<option value="create_dateline" <!--{if Q+G('order_')=='create_dateline'}-->selected<!--{/if}-->><!--<lang package='Template'>-->添加时间<!--</lang>--></option>
+									<option value="pm_msgfrom" <!--{if Q+G('order_')=='pm_msgfrom'}-->selected<!--{/if}-->><!--<lang package='Template'>-->短消息来源<!--</lang>--></option>
+									<option value="pm_msgtoid" <!--{if Q+G('order_')=='pm_msgtoid'}-->selected<!--{/if}-->><!--<lang package='Template'>-->短消息接收者<!--</lang>--></option>
+								</select>
+								<select name="sort_">
+									<option value="" <!--{if !Q+G('sort_')}-->selected<!--{/if}-->><!--<lang package='Template'>-->默认排序<!--</lang>--></option>
+									<option value="desc" <!--{if Q+G('sort_')=='desc'}-->selected<!--{/if}-->><!--<lang package='Template'>-->递增<!--</lang>--></option>
+									<option value="asc" <!--{if Q+G('sort_')=='asc'}-->selected<!--{/if}-->><!--<lang package='Template'>-->递减<!--</lang>--></option>
+								</select>
+								<select name="perpage">
+									<option value="" <!--{if !Q+G('perpage')}-->selected<!--{/if}-->><!--<lang package='Template'>-->默认每页数量<!--</lang>--></option>
+									<option value="10" <!--{if Q+G('perpage')==10}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(10)</option>
+									<option value="20" <!--{if Q+G('perpage')==20}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(20)</option>
+									<option value="50" <!--{if Q+G('perpage')==50}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(50)</option>
+									<option value="100" <!--{if Q+G('perpage')==100}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(100)</option>
+									<option value="200" <!--{if Q+G('perpage')==200}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(200)</option>
+									<option value="500" <!--{if Q+G('perpage')==500}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(500)</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th><!--<lang package='Template'>-->短消息接收者<!--</lang>-->(UID)</th>
+							<td><input type="text" name="pm_msgtoid" title="<!--<lang package='Template'>-->短消息接收者<!--</lang>-->" value="<!--{:Q::G('pm_msgtoid')}-->" onkeyup="this.value = this.value.replace(/[^-0-9]/g, '');" /></td>
+							<th><!--<lang package='Template'>-->添加时间<!--</lang>--></th>
+							<td>
+								<input type="text" id="start_time" name="start_time" value="<!--{:Q::G('start_time')}-->" onfocus="WdatePicker({el:'start_time',skin:'ext',lang:'<!--{$sCalendarLang}-->',dateFmt:'yyyy-MM-dd'})">
+								&nbsp;~&nbsp;
+								<input type="text" id="end_time" name="end_time" value="<!--{:Q::G('end_time')}-->"  onfocus="WdatePicker({el:'end_time',skin:'ext',lang:'<!--{$sCalendarLang}-->',dateFmt:'yyyy-MM-dd'})">
+							</td>
+						</tr>
+						<tr>
+							<th><!--<lang package='Template'>-->短消息来源<!--</lang>--></th>
+							<td><input type="text" name="pm_msgfrom" title="<!--<lang package='Template'>-->短消息来源<!--</lang>-->" value="<!--{:Q::G('pm_msgfrom')}-->"></td>
+							<th><!--<lang package='Template'>-->短消息来源<!--</lang>-->(UID)</th>
+							<td>
+								<input type="text" name="pm_msgfromid" title="<!--<lang package='Template'>-->短消息来源<!--</lang>-->" value="<!--{:Q::G('pm_msgfromid')}-->" onkeyup="this.value = this.value.replace(/[^-0-9]/g, '');" />
+							</td>
+						</tr>
+						<tr>
+							<th><!--<lang package='Template'>-->来源应用<!--</lang>--></th>
+							<td><input type="text" name="pm_fromapp" title="<!--<lang package='Template'>-->来源应用<!--</lang>-->" value="<!--{:Q::G('pm_fromapp')}-->"></td>
+							<th><!--<lang package='Template'>-->短消息主题<!--</lang>--></th>
+							<td>
+								<input type="text" name="pm_subject" title="<!--<lang package='Template'>-->短消息来源<!--</lang>-->" value="<!--{:Q::G('pm_subject')}-->"/>
+							</td>
+						</tr>
+						<tr>
+							<th><!--<lang package='Template'>-->状态<!--</lang>--></th>
+							<td><select name="pm_status">
+									<option value="" <!--{if !isset($nIsStatus)}-->selected<!--{/if}-->><!--<lang package='Template'>-->全部<!--</lang>--></option>
+									<option value="1" <!--{if isset($nIsStatus) && $nIsStatus==1}-->selected<!--{/if}-->><!--<lang package='Template'>-->已审<!--</lang>--></option>
+									<option value="0" <!--{if isset($nIsStatus) && $nIsStatus===0}-->selected<!--{/if}-->><!--<lang package='Template'>-->待审<!--</lang>--></option>
+								</select>
+							</td>
+							<td colspan="2">
+								<input type="text" name="pm_message" title="<!--<lang package='Template'>-->短消息内容<!--</lang>-->" value="<!--{:Q::G('pm_message')}-->" class="quicksearch_text">
+								&nbsp;<input type="submit" id="" value="<!--<lang package='Template'>-->查询<!--</lang>-->" onclick="" class="alt_btn">
+							</td>
+						</tr>
+					</table>
+					<!--{if isset($bIsRecycleList)}-->
+					<input type="hidden" name="recycle_" value="1"/>
+					<!--{/if}-->
+					<input type="hidden" name="c" value="<!--{:MODULE_NAME}-->"/>
+					<input type="hidden" name="a" value="<!--{:ACTION_NAME}-->"/>
+				</form>
+			</div>
+		</article>
+		
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><a href="<!--{:Q::U('pm/index')}-->"><!--<lang package='Template'>-->短消息列表<!--</lang>--></a>
+					<!--{if isset($bIsRecycleList)}-->&nbsp;<sup><a href="<!--{:Q::U(MODULE_NAME.'/index?recycle_=1')}-->" title="<!--<lang package='Template'>-->回收站<!--</lang>-->" style="color:red;">[<!--<lang package='Template'>-->回收站<!--</lang>-->]</a></sup>
+					<!--{/if}-->
+				</h3>
+				<ul class="tabs">
+					<li <!--{if empty($sType)}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('pm/index')}-->"><!--<lang package='Template'>-->所有短消息<!--</lang>--></a></li>
+					<li <!--{if $sType=='system'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('pm/index?type=system')}-->"><!--<lang package='Template'>-->系统(System)<!--</lang>--></a></li>
+					<li <!--{if $sType=='user'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('pm/index?type=user')}-->"><!--<lang package='Template'>-->用户(User)<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('pm/add')}-->"><!--<lang package='Template'>-->发送短消息<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('pmoption/index')}-->"><!--<lang package='Template'>-->短消息设置<!--</lang>--></a></li>
+					<!--{if isset($bIsRecycleList)}-->
+					<li><a class="tab_clearrecycle" href="javascript:void(0);" onclick="clearRecycle()"><!--<lang package='Template'>-->清空回收站<!--</lang>--></a></li>
+					<!--{/if}-->
+					<li><a class="tab_add" href="javascript:void(0);" onclick="add()"><!--<lang package='Template'>-->新增<!--</lang>--></a></li>
+					<li><a class="tab_delete" href="javascript:void(0);" onclick="foreverdel<!--{if isset($bIsRecycleList)}-->Deep<!--{/if}-->()"><!--{if isset($bIsRecycleList)}--><!--<lang package='Template'>-->彻底删除<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->删除<!--</lang>--><!--{/if}--></a></li>
+					<li><!--{if isset($bIsRecycleList)}-->
+						<a class="tab_list" href="<!--{:Q::U(MODULE_NAME.'/index')}-->" title="<!--<lang package='Template'>-->列表<!--</lang>-->"><img src="<!--{:At::path('icn_list.png')}-->"/></a>
+						<!--{d*else}-->
+						<a class="tab_recycle" href="<!--{:Q::U(MODULE_NAME.'/index?recycle_=1')}-->" title="<!--<lang package='Template'>-->回收站<!--</lang>-->"><img src="<!--{:At::path('icn_recycle.png')}-->"/></a>
+						<!--{/if}-->
+					</li>
+				</ul>
+			</header>
+			<div class="module_content">
+				<table class="tablesorter" cellspacing="0" id="checkList">
+					<thead>
+						<tr>
+							<th width="20"><input type="checkbox" onclick="checkAll('checkList')"></th> 
+							<th width="85"><a href="javascript:sortBy('pm_id','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('pm_id')}-->><!--<lang package='Template'>-->编号<!--</lang>--></a></th> 
+							<th width="150"><a href="javascript:sortBy('pm_msgfrom','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('pm_msgfrom')}-->><!--<lang package='Template'>-->短消息来源<!--</lang>--></a></th>
+							<th width="150"><a href="javascript:sortBy('pm_msgtoid','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('pm_msgtoid')}-->><!--<lang package='Template'>-->短消息接收者<!--</lang>--></a></th>
+							<th><a href="javascript:sortBy('pm_message','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('pm_message')}-->><!--<lang package='Template'>-->短消息内容<!--</lang>--></a></th>
+							<th width="110"><a href="javascript:sortBy('pm_fromapp','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('pm_fromapp')}-->><!--<lang package='Template'>-->来源应用<!--</lang>--></a></th>
+							<th width="100"><a href="javascript:sortBy('pm_type','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('pm_type')}-->><!--<lang package='Template'>-->短消息类型<!--</lang>--></a></th>
+							<th width="100"><a href="javascript:sortBy('create_dateline','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('create_dateline')}-->><!--<lang package='Template'>-->添加时间<!--</lang>--></a></th>
+							<th width="50"><a href="javascript:sortBy('pm_status','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('pm_status')}-->><!--<lang package='Template'>-->状态<!--</lang>--></a></th>
+							<th width="50"><!--<lang package='Template'>-->操作<!--</lang>--></th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--{if is_array($arrLists)}-->
+						<!--<foreach for=arrLists>-->
+						<tr id="datalist-<!--{$value:pm_id}-->">
+							<td><input type="checkbox" name="key" value="<!--{$value:pm_id}-->"></td>
+							<td><!--{$value:pm_id}--></td>
+							<td><!--{$value:pm_msgfrom}--></td>
+							<td><!--{if empty( $value:pm_msgtoid )}--><!--<lang package='Template'>-->所有用户<!--</lang>--><!--{d*else}--><!--{:Core_Extend::getUsernameById( $value->pm_msgtoid )}--><!--{/if}-->
+								<div class="row-actions">
+									<span class='view'><a href="<!--{:Q::U('pm/show?id='.$value->pm_id)}-->"><!--<lang package='Template'>-->查看<!--</lang>--></a>|</span>
+									<span class='delete'><a href="javascript:foreverdel<!--{if isset($bIsRecycleList)}-->Deep<!--{/if}-->('<!--{$value:pm_id}-->');"><!--{if isset($bIsRecycleList)}--><!--<lang package='Template'>-->彻底删除<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->删除<!--</lang>--><!--{/if}--></a>|</span>
+									<span class='hide'><!--<if condition="$value:pm_status eq 1" >--><a href="javascript:forbid('<!--{$value:pm_id}-->')"><!--<lang package='Template'>-->禁用<!--</lang>--></a><!--<else/>--><a href="javascript:resume('<!--{$value:pm_id}-->')"><!--<lang package='Template'>-->恢复<!--</lang>--></a><!--</if>--></span>
+								</div>
+							</td>
+							<td><!--{if $value['pm_subject']}-->
+								<b><!--{$value:pm_subject}--></b><br/>
+								<!--{/if}-->
+								<!--{$value:pm_message}-->
+							</td>
+							<td><!--{$value:pm_fromapp}--></td>
+							<td><a href="<!--{:Q::U('pm/index?type='.$value->pm_type)}-->"><!--{$value:pm_type}--></a></td>
+							<td><span class="<!--{:Admin_Extend::dateColor($value['create_dateline'])}-->"><!--{$value['create_dateline']|date='Y-m-d',**}--></span><br/>
+								<span class="smallDatecolor"><!--{$value['create_dateline']|date='H:i',**}--></span>
+							</td>
+							<td><!--{:Admin_Extend::getStatus($value->pm_status)}--></td>
+							<td><!--{if $value:pm_status==1}-->
+								<a href="javascript:forbid('<!--{$value:pm_id}-->')"><input type="image" src="<!--{:At::path('icn_trash.png')}-->" title="<!--<lang package='Template'>-->禁用<!--</lang>-->"></a>
+								<!--{d*else}-->
+								<a href="javascript:resume('<!--{$value:pm_id}-->')"><input type="image" src="<!--{:At::path('icn_jump_back.png')}-->" title="<!--<lang package='Template'>-->恢复<!--</lang>-->"></a>
+								<!--{/if}-->
+							</td>
+						</tr>
+						<!--</foreach>-->
+						<!--{d*else}-->
+						<tr>
+							<td colspan="10"><!--<lang package='Template'>-->暂时没有发现任何记录<!--</lang>--></td>
+						</tr>
+						<!--{/if}-->
+					</tbody>
+				</table>
+			</div>
+
+			<div class="module_content operate_box">
+				<div class="left">
+					<!--{$sPageNavbar}-->
+				</div>
+				<div class="right operate" style="text-align:right;">
+					<!--{if isset($bIsRecycleList)}--><input type="button" name="clear_recycle" value="<!--<lang package='Template'>-->清空回收站<!--</lang>-->" onclick="clearRecycle()">&nbsp;<!--{/if}-->
+					<input type="button" name="add" value="<!--<lang package='Template'>-->新增<!--</lang>-->" onclick="add()" class="alt_btn">&nbsp;
+					<input type="button" name="delete" value="<!--{if isset($bIsRecycleList)}--><!--<lang package='Template'>-->彻底删除<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->删除<!--</lang>--><!--{/if}-->" onclick="foreverdel<!--{if isset($bIsRecycleList)}-->Deep<!--{/if}-->()" class="alt_btn">
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</article>
+
+<!--<include file="public+footer">-->

@@ -1,0 +1,82 @@
+<!--<include file="public+header">-->
+
+<!--{:Core_Extend::editorInclude()}-->
+<!--{:Core_Extend::emotion()}-->
+
+<!--{script}-->
+$(function(){
+	editor=loadEditor('grouptopiccomment_content');
+	$(".face-icon").jqfaceedit({txtAreaObj:editor,containerObj:$('#emotion_parentcontainer'),top:25,left:-27});
+});
+
+currentBeforeFun=function(){
+	$('#grouptopiccomment_content').val(editor.html());
+};
+
+checkForm(updateForm);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->编辑回帖<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->编辑回帖<!--</lang>-->_<!--{$_GET['value']}-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+				<div class="module_content">
+					<ul>
+						<li><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->如果没有必要请不要编辑回帖<!--</lang>--></li>
+					</ul>
+				</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->编辑回帖<!--</lang>--></h3>
+				<ul class="tabs">
+					<li class="active"><a href="<!--{:Admin_Extend::index(array('controller'=>'grouptopiccomment'))}-->"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->回帖列表<!--</lang>--></a></li>
+					<li><a href="<!--{:Admin_Extend::base()}-->"><!--<lang package='Template'>-->应用入口<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="" method="post" id="grouptopiccommentAdd" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="grouptopiccomment_title"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->回帖标题<!--</lang>--></label>
+						<input type="text" name="grouptopiccomment_title" id="grouptopiccomment_title" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:grouptopiccomment_title}--><!--</if>-->"/>
+						<div class="description"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->回帖标题可以为空<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="grouptopiccomment_content"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->帖子内容<!--</lang>--></label>
+						<div id="grouptopiccommentcontent-media-box" class="common-media-box">
+							<a href="javascript:void(0);" class="face-icon icon_add_face" ><!--<lang package='Template'>-->表情<!--</lang>--></a> 
+							<a href="javascript:void(0);" onclick="globalAddattachment('insertAttachment_');" class="icon_add_img"><!--<lang package='Template'>-->媒体<!--</lang>--></a>
+							<a href="javascript:void(0);" onclick="addVideo('insertVideo_');" class="icon_add_video" ><!--<lang package='Template'>-->视频<!--</lang>--></a>
+							<a href="javascript:void(0);" onclick="addMusic('insertMusic_');" class="icon_add_music"><!--<lang package='Template'>-->音乐<!--</lang>--></a>
+						</div>
+						<p id="emotion_parentcontainer">
+							<textarea name="grouptopiccomment_content" id="grouptopiccomment_content" style="width:700px;height:<!--{:Core_Extend::getEditor()}-->px;visibility:hidden;"><!--<if condition="isset( $oValue )">--><!--{$oValue:grouptopiccomment_content|htmlspecialchars}--><!--</if>--></textarea>
+						</p>
+						<div class="description"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->网站回帖内容<!--</lang>-->&nbsp;<a href="<!--{:Core_Extend::windsforceOuter('app=home&c=misc&a=ubb')}-->" target="_blank"><!--<lang package='__COMMON_LANG__@Common'>-->查看内容支持的UBB代码<!--</lang>--></a></div>
+					</fieldset>
+					<fieldset>
+						<label for="grouptopiccomment_status"><!--<lang package='Template'>-->状态<!--</lang>--></label>
+						<select class="field" name="grouptopiccomment_status" id="grouptopiccomment_status">
+							<option value="1" <!--<if condition="!isset( $oValue ) || ( isset( $oValue ) && $oValue:grouptopiccomment_status==1)">-->selected<!--</if>-->><!--<lang package='Template'>-->启用<!--</lang>--></option>
+							<option value="0" <!--<if condition="isset( $oValue ) && $oValue:grouptopiccomment_status==0">-->selected<!--</if>--> ><!--<lang package='Template'>-->禁用<!--</lang>--></option>
+							<option value="9" <!--<if condition="isset( $oValue ) && $oValue:grouptopiccomment_status==9">-->selected<!--</if>-->><!--<lang package='Template'>-->回收站<!--</lang>--></option>
+						</select>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="hidden" name="ajax" value="1">
+						<input type="hidden" name="value" id="value" value="<!--<if condition="isset( $_GET['value'] )">--><!--{$_GET['value']}--><!--</if>-->"/>
+						<input type="submit" id="submit_button" value="<!--<lang package='Template'>-->更新<!--</lang>-->" class="alt_btn">
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->">
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

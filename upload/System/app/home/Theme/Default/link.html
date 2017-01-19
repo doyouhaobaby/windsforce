@@ -1,0 +1,26 @@
+		<!--{~Core_Extend::loadCache('link');}-->
+		<!--{~$arrLinkDatas=$GLOBALS['_cache_']['link']}-->
+		<!--{if $arrLinkDatas['link_content'] || $arrLinkDatas['link_text'] || $arrLinkDatas['link_logo']}-->
+		<div class="grid_12 commonbox">
+			<div class="commonboxtitle"><!--<lang package='__COMMON_LANG__@Common'>-->友情链接<!--</lang>--></div>
+			<!--{if $arrLinkDatas['link_content']}-->
+			<div class="home-links">
+				<ul class="grid_12">
+					<!--{$arrLinkDatas['link_content']}-->
+				</ul>
+			</div>
+			<!--{/if}-->
+			<!--{if $arrLinkDatas['link_logo']}-->
+				<div class="home-img-link grid_12">
+					<!--{$arrLinkDatas['link_logo']}-->
+				</div>
+			<!--{/if}-->
+			<!--{if $arrLinkDatas['link_text']}-->
+			<div class="home-txt-link">
+				<ul class="grid_12">
+					<!--{$arrLinkDatas['link_text']}-->
+				</ul>
+			</div>
+			<!--{/if}-->
+		</div>
+		<!--{/if}-->

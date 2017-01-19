@@ -1,0 +1,193 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+function option(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'update...' );
+	$("#submit_button").attr("disabled", false);
+	$('.validate')(0).submit();
+}
+
+function checkPreviewSeccode(sTarget){
+	Q.Ajax.Q.UpdateTips='check...';
+	var sSeccode=$('#seccode').val();
+	Q.AjaxSend(Q.U('check_seccode'),'ajax=1&seccode='+sSeccode,sTarget,function(data,status){});
+}
+
+checkForm(option);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->验证码设置<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->验证码设置<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->使用图片作为验证码的背景，把制作好的 JPG 图片上传到 System/include/QeePHP/Resource_/Images/Seccode/Background/ 目录下，站点将随机使用里面的图片作为验证码的背景<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->使用 TTF 字体作为验证码文字，把下载的 TTF 英文字体文件上传到 System/include/QeePHP/Resource_/Images/Seccode/Fonts/En-us/ 目录下，站点将随机使用里面的字体文件作为验证码的文字<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->使用中文图片验证码前，需要把包含完整中文汉字的 TTF 中文字体文件上传到 System/include/QeePHP/Resource_/Images/Seccode/Fonts/Zh-cn/ 目录下，站点将随机使用里面的字体文件作为验证码的文字<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+		<form action="<!--{:Q::U('secoption/update_option')}-->" method="post" class="validate">
+			<article class="module width_full">
+				<header><h3 class="tabs_involved"><!--<lang package='Template'>-->启用验证码<!--</lang>--></h3>
+					<ul class="tabs">
+						<li><a href="<!--{:Q::U('secoption/index')}-->"><!--<lang package='Template'>-->防灌水基本设置<!--</lang>--></a></li>
+						<li class="active"><a href="<!--{:Q::U('secoption/seccode_option')}-->"><!--<lang package='Template'>-->验证码设置<!--</lang>--></a></li>
+					</ul>
+				</header>
+				<div class="module_content">
+					<p><!--<lang package='Template'>-->注意，验证码设置仅对前台有效果，后台的相关验证码无法关闭<!--</lang>--></p>
+					<fieldset>
+						<label for="seccode_register_status"><!--<lang package='Template'>-->新用户注册<!--</lang>--></label>
+						<input type="radio" id="seccode_register_status" name="options[seccode_register_status]" value="1" <!--{if $arrOptions['seccode_register_status']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[seccode_register_status]" value="0" <!--{if $arrOptions['seccode_register_status']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->验证码可以避免恶意注册及恶意灌水，请选择需要打开验证码的操作。注意: 启用验证码会使得部分操作变得繁琐，建议仅在必需时打开。<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="seccode_login_status"><!--<lang package='Template'>-->用户登录<!--</lang>--></label>
+						<input type="radio" id="seccode_login_status" name="options[seccode_login_status]" value="1" <!--{if $arrOptions['seccode_login_status']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[seccode_login_status]" value="0" <!--{if $arrOptions['seccode_login_status']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+					</fieldset>
+					<fieldset>
+						<label for="seccode_publish_status"><!--<lang package='Template'>-->发表信息<!--</lang>--></label>
+						<input type="radio" id="seccode_publish_status" name="options[seccode_publish_status]" value="1" <!--{if $arrOptions['seccode_publish_status']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[seccode_publish_status]" value="0" <!--{if $arrOptions['seccode_publish_status']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+					</fieldset>
+					<fieldset>
+						<label for="seccode_changepassword_status"><!--<lang package='Template'>-->修改密码<!--</lang>--></label>
+						<input type="radio" id="seccode_changepassword_status" name="options[seccode_changepassword_status]" value="1" <!--{if $arrOptions['seccode_changepassword_status']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[seccode_changepassword_status]" value="0" <!--{if $arrOptions['seccode_changepassword_status']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+					</fieldset>
+					<fieldset>
+						<label for="seccode_changeinformation_status"><!--<lang package='Template'>-->修改个人信息<!--</lang>--></label>
+						<input type="radio" id="seccode_changeinformation_status" name="options[seccode_changeinformation_status]" value="1" <!--{if $arrOptions['seccode_changeinformation_status']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[seccode_changeinformation_status]" value="0" <!--{if $arrOptions['seccode_changeinformation_status']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+					</fieldset>
+					<fieldset>
+						<label for="pmsend_seccode"><!--<lang package='Template'>-->发送短消息<!--</lang>--></label>
+						<input type="radio" id="pmsend_seccode" name="options[pmsend_seccode]" value="1" <!--{if $arrOptions['pmsend_seccode']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[pmsend_seccode]" value="0" <!--{if $arrOptions['pmsend_seccode']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->短消息验证码在短消息管理面板也可以设置，它们是同一设置<!--</lang>-->&nbsp;<a href="<!--{:Q::U('pmoption/index')}-->"><!--<lang package='Template'>-->查看<!--</lang>--></a></div>
+					</fieldset>
+				</div>
+			</article>
+			
+			<article class="module width_full">
+				<header><h3 class="tabs_involved"><!--<lang package='Template'>-->验证码设置<!--</lang>--></h3>
+				</header>
+				<div class="module_content">
+					<fieldset>
+						<label for="seccode_type"><!--<lang package='Template'>-->验证码类型<!--</lang>--></label>
+						<input type="radio" name="options[seccode_type]" value="1" onclick="$WF('seccode_option').style.display='';" <!--{if $arrOptions['seccode_type']==1}-->checked<!--{/if}-->>英文图片验证码
+						<input type="radio" name="options[seccode_type]" value="2" onclick="$WF('seccode_option').style.display='';" <!--{if $arrOptions['seccode_type']==2}-->checked<!--{/if}-->>中文图片验证码
+						<input type="radio" name="options[seccode_type]" value="3" onclick="$WF('seccode_option').style.display='none';" <!--{if $arrOptions['seccode_type']==3}-->checked<!--{/if}-->>位图验证码</li>
+					</fieldset>
+					<fieldset>
+						<label for="seccode"><!--<lang package='Template'>-->验证码预览<!--</lang>--></label>
+						<p><input type="text" name="seccode" size="10" class="left" id="seccode" style="width:50px;" value="" onblur="checkPreviewSeccode('result');"/><a href="javascript:void(0);" onclick="updateSeccode()"><!--<lang package='Template'>-->换一个<!--</lang>--></a></p>
+						<div class="description">
+							<p><div id="result" class="none"></div></p>
+							<p><span id="seccodeImage"><img style="cursor:pointer" onclick="updateSeccode()" src="<!--{:Q::U('public/seccode')}-->" /></span></p>
+							<p><!--<lang package='Template'>-->输入图中的字符，然后移开就可以测试验证码是否正确<!--</lang>--><br/>
+							<!--<lang package='Template'>-->此处的验证码仅供测试，提交设置的时候不用填写<!--</lang>--></p>
+						</div>
+					</fieldset>
+					<div id="seccode_option">
+						<fieldset>
+							<label for="seccode_image_width_size"><!--<lang package='Template'>-->验证码图片宽度<!--</lang>--></label>
+							<input type="text" name="options[seccode_image_width_size]" id="seccode_image_width_size" size="40" value="<!--{$arrOptions['seccode_image_width_size']}-->" class="{required:true,digits:true,range:[100,160]}"/>
+							<div class="description input_tips"><!--<lang package='Template'>-->验证码图片的宽度，范围在 100～160 之间<!--</lang>--></div>
+							<p class="input_errortips"></p>
+						</fieldset>
+						<fieldset>
+							<label for="seccode_image_height_size"><!--<lang package='Template'>-->验证码图片高度<!--</lang>--></label>
+							<input type="text" name="options[seccode_image_height_size]" id="seccode_image_height_size" size="40" value="<!--{$arrOptions['seccode_image_height_size']}-->" class="{required:true,digits:true,range:[30,60]}"/>
+							<div class="description input_tips"><!--<lang package='Template'>-->验证码图片的高度，范围在 30～60 之间<!--</lang>--></div>
+							<p class="input_errortips"></p>
+						</fieldset>
+						<fieldset>
+							<label for="seccode_adulterate"><!--<lang package='Template'>-->随机背景字体颜色<!--</lang>--></label>
+							<input type="radio" id="seccode_adulterate" name="options[seccode_adulterate]" value="1" <!--{if $arrOptions['seccode_adulterate']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+							<input type="radio" id="" name="options[seccode_adulterate]" value="0" <!--{if $arrOptions['seccode_adulterate']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+							<div class="description"><!--<lang package='Template'>-->选择“是”将随机背景字体的颜色<!--</lang>--></div>
+						</fieldset>
+						<fieldset>
+							<label for="seccode_image_background"><!--<lang package='Template'>-->系统背景图像<!--</lang>--></label>
+							<input type="radio" id="seccode_image_background" name="options[seccode_image_background]" value="1" <!--{if $arrOptions['seccode_image_background']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+							<input type="radio" id="" name="options[seccode_image_background]" value="0" <!--{if $arrOptions['seccode_image_background']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+							<div class="description"><!--<lang package='Template'>-->选择“是”将随机使用 System/include/QeePHP/Resource_/Images/Seccode/Background/ 目录下的 JPG 图片作为验证码的背景图片<!--</lang>--></div>
+						</fieldset>
+						<fieldset>
+							<label for="seccode_ttf"><!--<lang package='Template'>-->随机 TTF 字体<!--</lang>--></label>
+							<input type="radio" id="seccode_ttf" name="options[seccode_ttf]" value="1" <!--{if $arrOptions['seccode_ttf']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+							<input type="radio" id="" name="options[seccode_ttf]" value="0" <!--{if $arrOptions['seccode_ttf']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+							<div class="description"><!--<lang package='Template'>-->选择“是”将随机使用 System/include/QeePHP/Resource_/Images/Seccode/Fonts/En-us/ 目录下的 TTF 字体文件生成验证码文字，选择“否”将随机使用 System/include/QeePHP/Resource_/Images/Seccode/Gif/ 目录中的 GIF 图片生成验证码文字。中文图片验证码将随机使用 System/include/QeePHP/Resource_/Images/Seccode/Fonts/Zh-cn/ 目录下的 TTF 字体文件，无需进行此设置<!--</lang>--></div>
+						</fieldset>
+						<fieldset>
+							<label for="seccode_tilt"><!--<lang package='Template'>-->随机倾斜度<!--</lang>--></label>
+							<input type="radio" id="seccode_tilt" name="options[seccode_tilt]" value="1" <!--{if $arrOptions['seccode_tilt']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+							<input type="radio" id="" name="options[seccode_tilt]" value="0" <!--{if $arrOptions['seccode_tilt']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+							<div class="description"><!--<lang package='Template'>-->选择“是”将给验证码文字增加随机的倾斜度，本设置只针对 TTF 字体的验证码<!--</lang>--></div>
+						</fieldset>
+						<fieldset>
+							<label for="seccode_color"><!--<lang package='Template'>-->随机颜色<!--</lang>--></label>
+							<input type="radio" id="seccode_color" name="options[seccode_color]" value="1" <!--{if $arrOptions['seccode_color']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+							<input type="radio" id="" name="options[seccode_color]" value="0" <!--{if $arrOptions['seccode_color']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+							<div class="description"><!--<lang package='Template'>-->选择“是”将给文字增加随机的颜色<!--</lang>--></div>
+						</fieldset>
+						<fieldset>
+							<label for="seccode_background"><!--<lang package='Template'>-->背景图像<!--</lang>--></label>
+							<input type="radio" id="seccode_background" name="options[seccode_background]" value="1" <!--{if $arrOptions['seccode_background']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+							<input type="radio" id="" name="options[seccode_background]" value="0" <!--{if $arrOptions['seccode_background']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+							<div class="description"><!--<lang package='Template'>-->选择“是”将给验证码增加背景图片<!--</lang>--></div>
+						</fieldset>
+						<fieldset>
+							<label for="seccode_norise"><!--<lang package='Template'>-->背景干扰<!--</lang>--></label>
+							<input type="radio" id="seccode_norise" name="options[seccode_norise]" value="1" <!--{if $arrOptions['seccode_norise']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+							<input type="radio" id="" name="options[seccode_norise]" value="0" <!--{if $arrOptions['seccode_norise']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+							<div class="description"><!--<lang package='Template'>-->选择“是”将给验证码背景增加识别难度，可能会影响用户识别<!--</lang>--></div>
+						</fieldset>
+						<fieldset>
+							<label for="seccode_curve"><!--<lang package='Template'>-->弧线干扰<!--</lang>--></label>
+							<input type="radio" id="seccode_curve" name="options[seccode_curve]" value="1" <!--{if $arrOptions['seccode_curve']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+							<input type="radio" id="" name="options[seccode_curve]" value="0" <!--{if $arrOptions['seccode_curve']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+							<div class="description"><!--<lang package='Template'>-->选择“是”将给验证码背景增加一条弧线来干扰识别<!--</lang>--></div>
+						</fieldset>
+						<fieldset>
+							<label for="seccode_size"><!--<lang package='Template'>-->随机大小<!--</lang>--></label>
+							<input type="radio" id="seccode_size" name="options[seccode_size]" value="1" <!--{if $arrOptions['seccode_size']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+							<input type="radio" id="" name="options[seccode_size]" value="0" <!--{if $arrOptions['seccode_size']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+							<div class="description"><!--<lang package='Template'>-->选择“是”验证码文字的大小随机显示<!--</lang>--></div>
+						</fieldset>
+						<fieldset>
+							<label for="seccode_shadow"><!--<lang package='Template'>-->文字阴影<!--</lang>--></label>
+							<input type="radio" id="seccode_shadow" name="options[seccode_shadow]" value="1" <!--{if $arrOptions['seccode_shadow']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+							<input type="radio" id="" name="options[seccode_shadow]" value="0" <!--{if $arrOptions['seccode_shadow']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+							<div class="description"><!--<lang package='Template'>-->选择“是”将给验证码文字增加阴影<!--</lang>--></div>
+						</fieldset>
+						<fieldset>
+							<label for="seccode_animator"><!--<lang package='Template'>-->GIF 动画<!--</lang>--></label>
+							<input type="radio" id="seccode_animator" name="options[seccode_animator]" value="1" <!--{if $arrOptions['seccode_animator']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+							<input type="radio" id="" name="options[seccode_animator]" value="0" <!--{if $arrOptions['seccode_animator']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+							<div class="description"><!--<lang package='Template'>-->选择“是”验证码将显示成 GIF 动画方式，选择“否”验证码将显示成静态图片方式<!--</lang>--></div>
+						</fieldset>
+					</div>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input id="submit_button" type="submit" class="alt_btn" value="<!--<lang package='Template'>-->发布<!--</lang>-->" />
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->" />
+					</div>
+				</footer>
+				</div>
+			</article>
+		</form>
+
+<!--<include file="public+footer">-->

@@ -1,0 +1,128 @@
+<!--<include file="public+indexcommon" />-->
+
+<!--{~$sIndex=$GLOBALS['_cache_']['group_option']['newtopic_default']==1?'newtopic':'index'}-->
+
+		<div class="grid_9">
+			<div id="groupcategory">
+				<!--{if !empty($arrGroupcategorys)}-->
+				<div class="nav_tabcontainer nav_pills">
+					<ul>
+						<!--<foreach for=arrGroupcategorys value=arrGroupcategory>-->
+						<li class="<!--{if !empty($arrGroupcategory['child'])}-->dropdown<!--{/if}-->">
+							<a href="<!--{if ACTION_NAME==='index'}--><!--{:Q::U('group://list@?page=[page:1]&cid='.$arrGroupcategory['groupcategory_id'])}--><!--{d*else}--><!--{:Q::U('group://public/'.$sIndex.'?cid='.$arrGroupcategory['groupcategory_id'])}--><!--{/if}-->"><!--{$arrGroupcategory['groupcategory_name']}--><!--{if !empty($arrGroupcategory['child'])}--><b class="caret"></b><!--{/if}--></a>
+							<!--{if !empty($arrGroupcategory['child'])}-->
+							<ul class="dropchild"> 
+								<!--<foreach for="arrGroupcategory['child']" value=arrChildGroupcategory>-->
+								<li><a href="<!--{if ACTION_NAME==='index'}--><!--{:Q::U('group://list@?page=[page:1]&cid='.$arrChildGroupcategory['groupcategory_id'])}--><!--{d*else}--><!--{:Q::U('group://public/'.$sIndex.'?cid='.$arrChildGroupcategory['groupcategory_id'])}--><!--{/if}-->"><!--{$arrChildGroupcategory['groupcategory_name']}--></a></li>
+								<!--</foreach>-->
+							</ul>
+							<!--{/if}-->
+						</li>
+						<!--</foreach>-->
+					</ul>
+				</div>
+				<div class="clearfix"></div>
+				<!--{/if}-->
+			</div>
+
+			<div id="groups_list_box" class="clearfix">
+				<div class="groups_list_sort">
+					<div class="nav_text">
+						<ul>
+							<li <!--{if $nType==0}-->class="active"<!--{/if}-->><a href="<!--{if ACTION_NAME==='index'}--><!--{:Q::U('group://list@?page=[page:1]'.(isset($arrParentGroupcategory)?'&cid='.$arrParentGroupcategory['groupcategory_id']:''))}--><!--{d*else}--><!--{:Q::U('group://public/'.$sIndex.(isset($arrParentGroupcategory)?'?cid='.$arrParentGroupcategory['groupcategory_id']:''))}--><!--{/if}-->"><!--<lang package='Template'>-->创建时间<!--</lang>--></a></li>
+							<li <!--{if $nType==1}-->class="active"<!--{/if}-->><a href="<!--{if ACTION_NAME==='index'}--><!--{:Q::U('group://list@?page=[page:1]&model=1'.(isset($arrParentGroupcategory)?'&cid='.$arrParentGroupcategory['groupcategory_id']:''))}--><!--{d*else}--><!--{:Q::U('group://public/'.$sIndex.'?model=1'.(isset($arrParentGroupcategory)?'&cid='.$arrParentGroupcategory['groupcategory_id']:''))}--><!--{/if}-->"><!--<lang package='Template'>-->今日发帖量<!--</lang>--></a></li>
+							<li <!--{if $nType==2}-->class="active"<!--{/if}-->><a href="<!--{if ACTION_NAME==='index'}--><!--{:Q::U('group://list@?page=[page:1]&model=2'.(isset($arrParentGroupcategory)?'&cid='.$arrParentGroupcategory['groupcategory_id']:''))}--><!--{d*else}--><!--{:Q::U('group://public/'.$sIndex.'?model=2'.(isset($arrParentGroupcategory)?'&cid='.$arrParentGroupcategory['groupcategory_id']:''))}--><!--{/if}-->"><!--<lang package='Template'>-->用户数量<!--</lang>--></a></li>
+						</ul>
+					</div>
+				</div>
+				<h4 class="title">
+					<!--{if isset($arrParentGroupcategory)}-->
+					<!--{$arrParentGroupcategory['groupcategory_name']}-->
+					<!--{d*else}-->
+					<!--<lang package='Template'>-->全部小组<!--</lang>-->
+					<!--{/if}-->
+					&nbsp;<!--{if isset($arrParentGroupcategory)}-->-
+					&nbsp;<a href="<!--{:Q::U('group://public/'.$sIndex)}-->" title="<!--<lang package='Template'>-->返回全部小组分类<!--</lang>-->"><!--<lang package='Template'>-->返回<!--</lang>--></a><!--{/if}-->
+				</h4>
+
+				<!--{if !empty($arrGroupLists)}-->
+				<!--<foreach for=arrGroupLists value=arrGroupList>-->
+				<!--{if !empty($arrGroupList['data'])}-->
+				<div class="groupcategory_mainbox WindsforceSystem-interval_line_color-border">
+					<div class="groupcategory_maintitle WindsforceSystem-common_background_color WindsforceSystem-link_color"><a href="<!--{if ACTION_NAME==='index'}--><!--{:Q::U('group://list@?page=[page:1]&cid='.$key)}--><!--{d*else}--><!--{:Q::U('group://public/'.$sIndex.'?cid='.$key)}--><!--{/if}-->"><!--{$arrGroupList['title']}--></a></div>
+					<div class="groupcategory_maincontent">
+						<ul class="groups clearfix" id="home_recommendgroup_box">
+							<!--<foreach for="arrGroupList['data']" value=arrGroup>-->
+							<li>
+								<a href="<!--{:Group_Extend::getGroupurl($arrGroup)}-->" class="grouplist_pic">
+									<img src="<!--{:Group_Extend::getGroupIcon($arrGroup)}-->" alt="<!--{$arrGroup['group_nikename']}-->" width="48" height="48" class="thumbnail need_lazyload"/>
+								</a>
+								<div class="grouplist_txt">
+									<h3><a href="<!--{:Group_Extend::getGroupurl($arrGroup)}-->" style="<!--{if $arrGroup['group_color']}-->color:<!--{$arrGroup['group_color']}-->;<!--{/if}-->" title="<!--{$arrGroup['group_nikename']}-->"><!--{$arrGroup['group_nikename']|C+subString=0,15}--></a><!--{if $arrGroup['group_totaltodaynum']}-->&nbsp;<span class="grouplist_todaynum" title="<!--<lang package='Template'>-->今日发帖量<!--</lang>-->">(<!--{$arrGroup['group_totaltodaynum']}-->)</span><!--{/if}--></h3>
+									<!--{if $arrGroup['group_isrecommend']}-->
+									<span>&nbsp;<img title="<!--<lang package='Template'>-->推荐<!--</lang>-->" src="<!--{:Appt::path('group_recommend_mini.gif','group')}-->" /></span>
+									<!--{/if}-->
+									<!--{if !in_array($arrGroup['group_id'],$arrGroupuser)}-->
+									&nbsp;<span id="listgroup_<!--{$arrGroup['group_id']}-->" class="commonjoinleave_group"><a href="javascript:void(0);" onclick="joinGroup(<!--{$arrGroup['group_id']}-->,'listgroup_<!--{$arrGroup['group_id']}-->');">+</a></span>
+									<!--{d*else}-->
+									&nbsp;<span id="listgroup_<!--{$arrGroup['group_id']}-->" class="commonjoinleave_group"><a href="javascript:void(0);" onclick="leaveGroup(<!--{$arrGroup['group_id']}-->,'listgroup_<!--{$arrGroup['group_id']}-->');">-</a></span>
+									<!--{/if}-->
+									<div class="grouplist_num">
+										<span title="<!--<lang package='Template'>-->主题数<!--</lang>-->"><!--<lang package='Template'>-->主题<!--</lang>-->&nbsp;<!--{$arrGroup['group_topicnum']}--></span>,&nbsp;&nbsp;
+										<span title="<!--<lang package='Template'>-->帖子数<!--</lang>-->"><!--<lang package='Template'>-->帖子<!--</lang>-->&nbsp;<!--{$arrGroup['group_topiccomment']}--></span>,&nbsp;&nbsp;
+										<span title="<!--<lang package='Template'>-->成员数<!--</lang>-->"><!--<lang package='Template'>-->成员<!--</lang>-->&nbsp;<!--{$arrGroup['group_usernum']}--></span>
+									</div>
+									<p class="grouplist_description"><!--{$arrGroup['group_listdescription']|C+subString=0,15}--></p>
+								</div>
+							</li>
+							<!--</foreach>-->
+						</ul>
+					</div>
+				</div>
+				<!--{/if}-->
+				<!--</foreach>-->
+				<!--{/if}-->
+			</div>
+
+			<!--{$sPageNavbar}-->
+		</div>
+
+		<div class="grid_3">
+			<div class="commonbox">
+				<div class="creategroup_box">
+					<p><a class="btn" href="<!--{:Q::U('group://create/index')}-->"><!--<lang package='Template'>-->申请创建小组<!--</lang>--></a></p>
+					<p><a href="<!--{:Q::U('home://homehelp/index?cid=4')}-->" target="_blank" >&gt;&gt;<!--<lang package='Template'>-->小组管理秘籍<!--</lang>--></a></p>
+				</div>
+			</div>
+			
+			<div class="commonbox">
+				<div class="commonboxtitle"><!--<lang package='Template'>-->最新小组<!--</lang>--></div>
+				<div class="commonlist">
+					<ul id="new_grouplist_box" class="grouplist_box">
+						<!--{if !empty($arrNewgroups)}-->
+						<!--<foreach for=arrNewgroups value=arrNewgroup>-->
+						<li>
+							<a href="<!--{:Group_Extend::getGroupurl($arrNewgroup)}-->"><!--{$arrNewgroup['group_nikename']}--></a>
+							<!--{if !in_array($arrNewgroup['group_id'],$arrGroupuser)}-->
+							&nbsp;<span id="newgroup_<!--{$arrNewgroup['group_id']}-->" class="right"><a href="javascript:void(0);" onclick="joinGroup(<!--{$arrNewgroup['group_id']}-->,'newgroup_<!--{$arrNewgroup['group_id']}-->');">+</a></span>
+							<!--{d*else}-->
+							&nbsp;<span id="newgroup_<!--{$arrNewgroup['group_id']}-->" class="right"><a href="javascript:void(0);" onclick="leaveGroup(<!--{$arrNewgroup['group_id']}-->,'newgroup_<!--{$arrNewgroup['group_id']}-->');">-</a></span>
+							<!--{/if}-->
+						</li>
+						<!--</foreach>-->
+						<!--{d*else}-->
+						<li><!--<lang package='Template'>-->暂时没有发现任何最新小组<!--</lang>-->&nbsp;<a href="<!--{:Q::U('group://create/index')}-->"><!--<lang package='Template'>-->申请创建小组<!--</lang>--></a></li>
+						<!--{/if}-->
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+
+		<!--{if $GLOBALS['_cache_']['group_option']['newtopic_default']==0 &&Q+C('DEFAULT_APP')===APP_NAME}-->
+		<div style="height:25px;"></div>
+		<!--<include file="Core_Extend::template('link','home')" />-->
+		<!--{/if}-->
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

@@ -1,0 +1,216 @@
+<!--<include file="public+header" />-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->查看用户<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->查看用户<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->这里会详细地列出用户的相关信息<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+		
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->用户基本信息<!--</lang>--></h3>
+				<ul class="tabs">
+					<li class="active"><a href="<!--{:Q::U('user/index')}-->"><!--<lang package='Template'>-->用户列表<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<div class="module_content">
+				<table class="tablesorter" cellspacing="0" id="checkList">
+					<thead>
+						<tr>
+							<th width="130px"><!--<lang package='Template'>-->当前用户<!--</lang>--></th>
+							<th><a href="<!--{:Core_Extend::windsforceOuter('app=home&c=space&a=index&id='.$arrValue['user_id'])}-->" target="_blank"><!--{$arrValue['user_name']}--></a></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><!--<lang package='Template'>-->用户名<!--</lang>--></td>
+							<td><!--{$arrValue['user_name']}--></td>
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->昵称<!--</lang>--></td>
+							<td><!--{$arrValue['user_nikename']}--></td>
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->状态<!--</lang>--></td>
+							<td><img src="<!--{:At::path($arrValue['user_status']==1?'yes.gif':'no.gif')}-->"/></td>
+						</tr>
+						<tr>
+							<td>Email</td>
+							<td><!--{$arrValue['user_email']}--></td>
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->注册时间<!--</lang>--></td>
+							<td><!--{$arrValue['create_dateline']|date='Y-m-d H:i:s',**}--></td>
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->注册IP<!--</lang>--></td>
+							<td><!--{$arrValue.user_registerip}--></td>
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->最后登录时间<!--</lang>--></td>
+							<td><!--{$arrValue['user_lastlogintime']|date='Y-m-d H:i:s',**}--></td>
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->最后登录IP<!--</lang>--></td>
+							<td><!--{$arrValue.user_lastloginip}--></td>
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->登陆次数<!--</lang>--></td>
+							<td><!--{$arrValue.user_logincount}--></td>
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->用户签名<!--</lang>--></td>
+							<td><!--{$arrValue.user_sign}--></td>
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->备注<!--</lang>--></td>
+							<td><!--{$arrValue.user_remark}--></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</article>
+		
+		<a name="userprofile">&nbsp;</a>
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->用户个人配置信息<!--</lang>--></h3>
+				<ul class="tabs">
+					<!--<foreach for=arrInfoMenus key=sInfoMenuKey value=sInfoMenu>-->
+					<li <!--{if (!$sDo && !$sInfoMenuKey) || $sDo==$sInfoMenuKey}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('user/show?id='.$arrValue['user_id'].(!empty($sInfoMenuKey)?'&do='.$sInfoMenuKey:''))}-->#userprofile"><!--{$sInfoMenu}--></a></li>
+					<!--</foreach>-->
+				</ul>
+			</header>
+			<div class="module_content">
+				<table class="tablesorter" cellspacing="0" id="checkList">
+					<tbody>
+					<!--{if !$sDo}-->
+						<!--<foreach for=arrBases value=sBase>-->
+						<!--{if array_key_exists($sBase,$arrUserprofilesettingDatas)}-->
+						<tr>
+							<td width="130px"><!--{$arrUserprofilesettingDatas[$sBase]['userprofilesetting_title']}--></td>
+							<td><!--{if $sBase=='userprofile_gender'}-->
+									<!--{:Profile_Extend::getGender($arrValue['userprofile_gender'])}-->
+								<!--{elseif $sBase=='userprofile_birthday'}-->
+									<!--{$arrValue['userprofile_birthyear']}--><!--<lang package='__COMMON_LANG__@Common'>-->年<!--</lang>--><!--{$arrValue['userprofile_birthmonth']}--><!--<lang package='__COMMON_LANG__@Common'>-->月<!--</lang>--><!--{$arrValue['userprofile_birthday']}--><!--<lang package='__COMMON_LANG__@Common'>-->日<!--</lang>-->
+								<!--{elseif $sBase=='userprofile_birthcity'}-->
+									<!--{$sDirthDistrict}-->
+								<!--{elseif $sBase=='userprofile_residecity'}-->
+									<!--{$sResideDistrict}-->
+								<!--{d*else}-->
+									<!--{$arrValue[$sBase]}-->
+								<!--{/if}-->
+							</td>
+						</tr>
+						<!--{/if}-->
+						<!--</foreach>-->
+
+						<!--<for start='1' end='8' var='nCustomFieldId'>-->
+						<!--{~$sCustomField='userprofile_field'.$nCustomFieldId}-->
+						<!--{if array_key_exists($sCustomField,$arrUserprofilesettingDatas)}-->
+						<tr>
+							<td width="130px"><!--{$arrUserprofilesettingDatas[$sCustomField]['userprofilesetting_title']}--></td>
+							<td><!--{$arrValue[$sCustomField]}--></td>
+						<tr/>
+						<!--{/if}-->
+						<!--</for>-->
+					<!--{elseif $sDo=='contact'}-->
+						<!--<foreach for=arrContacts value=sContact>-->
+						<!--{if array_key_exists($sContact,$arrUserprofilesettingDatas)}-->
+						<tr>
+							<td width="130px"><!--{$arrUserprofilesettingDatas[$sContact]['userprofilesetting_title']}--></td>
+							<td><!--{$arrValue[$sContact]}--></td>
+						<tr/>
+						<!--{/if}-->
+						<!--</foreach>-->
+						<tr>
+							<td width="130px">Email</td>
+							<td><!--{$arrValue['user_email']}--></td>
+						<tr/>
+					<!--{elseif $sDo=='edu'}-->
+						<!--<foreach for=arrEdus value=sEdu>-->
+						<!--{if array_key_exists($sEdu,$arrUserprofilesettingDatas)}-->
+						<tr>
+							<td width="130px"><!--{$arrUserprofilesettingDatas[$sEdu]['userprofilesetting_title']}--></td>
+							<td><!--{$arrValue[$sEdu]}--></td>
+						<tr/>
+						<!--{/if}-->
+						<!--</foreach>-->
+					<!--{elseif $sDo=='work'}-->
+						<!--<foreach for=arrWorks value=sWork>-->
+						<!--{if array_key_exists($sWork,$arrUserprofilesettingDatas)}-->
+						<tr>
+							<td width="130px"><!--{$arrUserprofilesettingDatas[$sWork]['userprofilesetting_title']}--></td>
+							<td><!--{$arrValue[$sWork]}--></td>
+						<tr/>
+						<!--{/if}-->
+						<!--</foreach>-->
+					<!--{elseif $sDo=='info'}-->
+						<!--<foreach for=arrInfos value=sInfo>-->
+						<!--{if array_key_exists($sInfo,$arrUserprofilesettingDatas)}-->
+						<tr>
+							<td width="130px"><!--{$arrUserprofilesettingDatas[$sInfo]['userprofilesetting_title']}--></td>
+							<td><!--{$arrValue[$sInfo]}--></td>
+						<tr/>
+						<!--{/if}-->
+						<!--</foreach>-->
+						<tr>
+							<td width="130px"><!--<lang package='Template'>-->昵称<!--</lang>--></td>
+							<td><!--{$arrValue.user_nikename}--></td>
+						<tr/>
+						<tr>
+							<td width="130px">Email</td>
+							<td><!--{$arrValue.user_email}--></td>
+						<tr/>
+						<tr>
+							<td width="130px"><!--<lang package='Template'>-->用户备注<!--</lang>--></td>
+							<td><!--{$arrValue.user_remark}--></td>
+						<tr/>
+						<tr>
+							<td width="130px"><!--<lang package='Template'>-->用户签名<!--</lang>--></td>
+							<td><!--{$arrValue.user_sign}--></td>
+						<tr/>
+					<!--{/if}-->
+					</tbody>
+				</table>
+			</div>
+		</article>
+		
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->用户统计信息<!--</lang>--></h3>
+			</header>
+			<div class="module_content">
+				<table class="tablesorter" cellspacing="0" id="checkList">
+					<tbody>
+						<tr>
+							<td width="260px"><!--<lang package='Template'>-->好友数量<!--</lang>--></td>
+							<td><!--{$arrValue.usercount_friends}--></td>
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->粉丝数量<!--</lang>--></td>
+							<td><!--{$arrValue.usercount_fans}--></td>
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->在线时间<!--</lang>--> (<!--<lang package='__COMMON_LANG__@Common'>-->小时<!--</lang>-->)</td>
+							<td><!--{$arrValue['usercount_oltime']}--></td>
+						</tr>
+						<!--<foreach for=arrUserCounts value=arrUserCount>-->
+						<tr>
+							<td><!--{$arrUserCount['title']}--></td>
+							<td><!--{$arrUserCount['value']}--></td>
+						</tr>
+						<!--</foreach>-->
+					</tbody>
+				</table>
+			</div>
+		</article>
+
+<!--<include file="public+footer">-->

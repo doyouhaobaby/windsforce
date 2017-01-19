@@ -1,0 +1,115 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{style}-->
+.style_extend .dropdown ul li a:hover{background:#545656;}
+<!--{/style}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->设置中心<!--</lang>--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+		<div class="grid_12">
+			<div class="tips">
+				<!--<lang package='Template'>-->这为系统一些配置项，主题、语言包等等<!--</lang>-->
+			</div>
+
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th colspan="<!--{:count($GLOBALS['_cache_']['nav']['header'])}-->"><!--<lang package='Template'>-->基本功能<!--</lang>--></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<!--<foreach for="GLOBALS['_cache_']['nav']['header']" value=arrHeaderNav>-->
+						<td>
+							<a <!--{$arrHeaderNav['style']}--> title="<!--{$arrHeaderNav['description']}-->" href="<!--{$arrHeaderNav['link']}-->" <!--{$arrHeaderNav['target']}--> class="topheader_normalmenu <!--{if $arrHeaderNav['app']===APP_NAME}-->headernav_active<!--{/if}-->">
+							<!--{$arrHeaderNav['title']}-->
+							</a>
+						</td>
+						<!--</foreach>-->
+					</tr>
+				</tbody>
+			</table>
+
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th colspan="3"><!--<lang package='Template'>-->主题<!--</lang>-->&nbsp;/&nbsp;
+						<!--<lang package='Template'>-->语言包<!--</lang>--></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td width="70px"><!--<lang package='Template'>-->主题列表<!--</lang>--></td>
+						<td colspan="2">
+							<!--{if $GLOBALS['_option_']['style_switch_on']==1 && count($GLOBALS['_style_']['_style_icons_'])>1}-->
+							<div id="style_switch_box">
+								<ul id="style_switch">
+									<!--<foreach for="GLOBALS['_style_']['_style_icons_']" key=nStyleicon value=sStyleicon>-->
+									<li <!--{if Core_Extend+getStyleId()==$nStyleicon}-->class="current"<!--{/if}-->><a  href="javascript:void(0);" onclick="<!--{if Core_Extend+getStyleId()==$nStyleicon}-->javascript:void(0);<!--{d*else}-->setStyle(<!--{$nStyleicon}-->)<!--{/if}-->" title="<!--{$nStyleicon}-->" style="background: <!--{$sStyleicon}-->;"><!--{$nStyleicon}--></a></li>
+									<!--</foreach>-->
+								</ul>
+							</div>
+							<!--{d*else}-->
+							<p><!--<lang package='Template'>-->切换主题尚未开启或者只有一款主题无需切换<!--</lang>--></p>
+							<!--{/if}-->
+						</td>
+					</tr>
+					<tr>
+						<td width="70px"><!--<lang package='Template'>-->主题扩展<!--</lang>--></td>
+						<td>
+							<!--{if $GLOBALS['_option_']['extendstyle_switch_on']==1 && !empty($GLOBALS['_style_']['_style_extend_icons_'])}-->
+							<div class="nav_tabcontainer nav_pills style_extend">
+								<ul>
+									<li class="dropdown">
+										<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
+											<img src="<!--{:__PUBLIC__}-->/images/common/style.gif" style="position:relative;top:-2px;"/>&nbsp;<!--<lang package='Template'>-->主题扩展<!--</lang>-->
+											<b class="caret"></b>
+										</a>
+										<ul class="dropchild"> 
+											<!--<foreach for="GLOBALS['_style_']['_style_extend_icons_']" key=sStyleextendicon value=arrStyleextendicon>-->
+											<!--{if $sStyleextendicon=='0' && count($GLOBALS['_style_']['_style_extend_icons_'])!=1}-->
+											<!--{/if}-->
+											<li style="background:<!--{$arrStyleextendicon[2]}-->;"><a href="javascript:void(0);" onclick="<!--{if count($GLOBALS['_style_']['_style_extend_icons_'])==1}-->javascript:void(0);<!--{d*else}-->setExtendstyle('<!--{$sStyleextendicon}-->','<!--{if $sStyleextendicon!='0'}--><!--{:Core_Extend::getCurstyleCacheurl()}-->/t_<!--{$sStyleextendicon}-->.css<!--{/if}-->');<!--{/if}-->" style="color:#FFF;<!--{if $GLOBALS['_extend_style_']==$sStyleextendicon}-->font-weight:bold;border:2px solid #FFF;<!--{/if}-->"><!--{$arrStyleextendicon[1]}--></a></li>
+											<!--</foreach>-->
+										</ul>
+									</li>
+								</ul>
+							</div>
+							<!--{d*else}-->
+							<p><!--<lang package='Template'>-->当前主题扩展尚未开启或者只有一种配色无需切换<!--</lang>--></p>
+							<!--{/if}-->
+						</td>
+						<td>
+							<!--{if $GLOBALS['_option_']['language_switch_on']==1 && count($GLOBALS['_cache_']['lang'])>1}-->
+							<div class="nav_tabcontainer nav_pills">
+								<ul>
+									<li class="dropdown">
+										<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
+											Language
+											<b class="caret"></b>
+										</a>
+										<ul class="dropchild"> 
+											<!--<foreach for="GLOBALS['_cache_']['lang']" value=sLang>-->
+											<li><a href="?l=<!--{$sLang}-->" <!--{if strtolower(Q+cookie('language'))==$sLang}-->style="font-weight:bold;"<!--{/if}-->><!--{$sLang}--></a></li>
+											<!--</foreach>-->
+										</ul>
+									</li>
+								</ul>
+							</div>
+							<!--{d*else}-->
+							<p><!--<lang package='Template'>-->语言包尚未开启或者只有一种语言无需切换<!--</lang>--></p>
+							<!--{/if}-->
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

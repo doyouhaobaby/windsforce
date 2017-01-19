@@ -1,0 +1,188 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+$(document).ready(function(){
+	$("#groupoption_tab ul").idTabs();
+});
+
+function option(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'update...' );
+	$("#submit_button").attr("disabled", false);
+	$('.validate')(0).submit();
+}
+
+checkForm(option);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组功能设置<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组功能设置<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->小组功能设置<!--</lang>--></h3>
+				<ul class="tabs">
+					<li class="active"><a href="<!--{:Admin_Extend::base()}-->"><!--<lang package='Template'>-->应用入口<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('app/index')}-->"><!--<lang package='Template'>-->应用列表<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="<!--{:Q::U('app/config?id='.$nId.'&action=update_option')}-->" method="post" class="validate">
+				<div class="module_content"></div>
+				<div class="module_content">
+					<!--<include file="Admin_Extend::template('group','groupoption/menu')" />-->
+					
+					<div id="groupoption_tab" class="windsforce_tab">
+						<div class="windsforce_tabtitlebox">
+							<ul class="windsforce_tabtitle">
+								<li><a href="#tab1"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->基本功能<!--</lang>--></a></li>
+								<li><a href="#tab2"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->发布功能<!--</lang>--></a></li>
+								<li><a href="#tab3"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->管理功能<!--</lang>--></a></li>
+							</ul>
+						</div>
+						<div id="tab1" class="windsforce_tabcontent">
+							<fieldset class="fieldset_bordernone">
+								<label for="allowed_creategroup"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->是否允许创建新小组<!--</lang>--></label>
+								<input type="radio" class="input-short" id="allowed_creategroup" name="options[allowed_creategroup]" value="1" <!--{if $arrOptions['allowed_creategroup']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+								<input type="radio" class="input-short" id="" name="options[allowed_creategroup]" value="0" <!--{if $arrOptions['allowed_creategroup']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+								<div class="description"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->我们建议网站建设初期尽量关闭此功能，不然网站的人气很容易被分散。<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="group_isaudit"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->审核新群组<!--</lang>--></label>
+								<input type="radio" class="input-short" id="group_isaudit" name="options[group_isaudit]" value="1" <!--{if $arrOptions['group_isaudit']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+								<input type="radio" class="input-short" id="" name="options[group_isaudit]" value="0" <!--{if $arrOptions['group_isaudit']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+								<div class="description"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->管理员建立群组时不需要审核<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="group_icon_uploadfile_maxsize"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->群组图标最大上传限制(B)<!--</lang>--> (<!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->当前最大上传尺寸<!--</lang>--> <!--{:C::changeFileSize($nUploadSize)}-->)</label>
+								<input type="text" name="options[group_icon_uploadfile_maxsize]" id="group_icon_uploadfile_maxsize" size="60" value="<!--{$arrOptions['group_icon_uploadfile_maxsize']}-->" class="{required:true,digits:true,min: 10240}"/>
+								<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->系统最大附件上传大小，单位为B，-1表示不限制<!--</lang>--> <br/>
+									<!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->服务器最大上传值<!--</lang>--> <!--{$nUploadMaxFilesize}--> (<!--{$nUploadMaxFilesize*1048576}-->B) <!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->请注意最好不要超过这个值，否则不会有任何效果<!--</lang>-->
+								</div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="group_headbg_uploadfile_maxsize"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->群组头部背景最大上传限制(B)<!--</lang>--> (<!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->当前最大上传尺寸<!--</lang>--> <!--{:C::changeFileSize($nUploadSizeTwo)}-->)</label>
+								<input type="text" name="options[group_headbg_uploadfile_maxsize]" id="group_headbg_uploadfile_maxsize" size="60" value="<!--{$arrOptions['group_headbg_uploadfile_maxsize']}-->" class="{required:true,digits:true,min: 40960}"/>
+								<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->系统最大附件上传大小，单位为B，-1表示不限制<!--</lang>--> <br/>
+									<!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->服务器最大上传值<!--</lang>--> <!--{$nUploadMaxFilesize}--> (<!--{$nUploadMaxFilesize*1048576}-->B) <!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->请注意最好不要超过这个值，否则不会有任何效果<!--</lang>-->
+								</div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="group_deletetopic_recyclebin"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->删除的主题是否放置到回收站<!--</lang>--></label>
+								<input type="radio" class="input-short" id="group_deletetopic_recyclebin" name="options[group_deletetopic_recyclebin]" value="1" <!--{if $arrOptions['group_deletetopic_recyclebin']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+								<input type="radio" class="input-short" id="" name="options[group_deletetopic_recyclebin]" value="0" <!--{if $arrOptions['group_deletetopic_recyclebin']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+								<div class="description"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->启用回收站功能可以防止误删，便于系统恢复数据<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="group_deletecomment_recyclebin"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->删除的回帖是否放置到回收站<!--</lang>--></label>
+								<input type="radio" class="input-short" id="group_deletecomment_recyclebin" name="options[group_deletecomment_recyclebin]" value="1" <!--{if $arrOptions['group_deletecomment_recyclebin']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+								<input type="radio" class="input-short" id="" name="options[group_deletecomment_recyclebin]" value="0" <!--{if $arrOptions['group_deletecomment_recyclebin']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+								<div class="description"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->启用回收站功能可以防止误删，便于系统恢复数据<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="group_hottopic1_comments"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->火帖1的规则<!--</lang>--></label>
+								<span class="left"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->最少回帖数量<!--</lang>-->&nbsp;</span><input type="text" name="options[group_hottopic1_comments]" id="group_hottopic1_comments" size="60" value="<!--{$arrOptions['group_hottopic1_comments']}-->" style="width:50px;" class="{required:true,digits:true,min: 3}"/>
+								<div style="height:8px;"></div>
+								<span class="left"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->最少浏览数量<!--</lang>-->&nbsp;</span><input type="text" name="options[group_hottopic1_views]" id="group_hottopic1_views" size="60" value="<!--{$arrOptions['group_hottopic1_views']}-->" style="width:50px;" class="{required:true,digits:true,min: 20}"/>
+								<div class="description">
+									<!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->注意，火帖的配置数量必须为依次递增<!--</lang>--><br/>
+									<img src="<!--{:__ROOT__}-->/System/app/group/Theme/Default/Public/Images/hot_1.gif" />
+								</div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="group_hottopic2_comments"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->火帖2的规则<!--</lang>--></label>
+								<span class="left"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->最少回帖数量<!--</lang>-->&nbsp;</span><input type="text" name="options[group_hottopic2_comments]" id="group_hottopic2_comments" size="60" value="<!--{$arrOptions['group_hottopic2_comments']}-->" style="width:50px;" class="{required:true,digits:true,min: 5}"/>
+								<div style="height:8px;"></div>
+								<span class="left"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->最少浏览数量<!--</lang>-->&nbsp;</span><input type="text" name="options[group_hottopic2_views]" id="group_hottopic2_views" size="60" value="<!--{$arrOptions['group_hottopic2_views']}-->" style="width:50px;" class="{required:true,digits:true,min: 50}"/>
+								<div class="description input_tips">
+									<!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->注意，火帖的配置数量必须为依次递增<!--</lang>--><br/>
+									<img src="<!--{:__ROOT__}-->/System/app/group/Theme/Default/Public/Images/hot_2.gif" />
+								</div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="group_hottopic3_comments"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->火帖3的规则<!--</lang>--></label>
+								<span class="left"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->最少回帖数量<!--</lang>-->&nbsp;</span><input type="text" name="options[group_hottopic3_comments]" id="group_hottopic3_comments" size="60" value="<!--{$arrOptions['group_hottopic3_comments']}-->" style="width:50px;" class="{required:true,digits:true,min: 10}"/>
+								<div style="height:8px;"></div>
+								<span class="left"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->最少浏览数量<!--</lang>-->&nbsp;</span><input type="text" name="options[group_hottopic3_views]" id="group_hottopic3_views" size="60" value="<!--{$arrOptions['group_hottopic3_views']}-->" style="width:50px;" class="{required:true,digits:true,min: 100}"/>
+								<div class="description input_tips">
+									<!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->注意，火帖的配置数量必须为依次递增<!--</lang>--><br/>
+									<img src="<!--{:__ROOT__}-->/System/app/group/Theme/Default/Public/Images/hot_3.gif" />
+								</div>
+								<p class="input_errortips"></p>
+							</fieldset>
+						</div>
+						<div id="tab2" class="windsforce_tabcontent">
+							<fieldset class="fieldset_bordernone">
+								<label><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->注意，这里受系统系统通用评论限制<!--</lang>-->&nbsp;<a href="<!--{:Q::U('app/config?id=1&type=comment')}-->"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->评论防灌水限制<!--</lang>--></a>
+								</label>
+								<div class="description"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->注意，由于回帖一般在字数上比较大，所以这里最大的评论字数由这里独立设置<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="comment_max_len"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->评论内容允许最大字数<!--</lang>--></label>
+								<input name="options[comment_max_len]" value="<!--{$arrOptions['comment_max_len']}-->" type="text" class="{required:true,digits:true,min: 50}">
+								<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->可以有效控制游客输入内容的数据量<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="comment_spam_content_size"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->评论内容字节数<!--</lang>--></label>
+								<input name="options[comment_spam_content_size]" value="<!--{$arrOptions['comment_spam_content_size']}-->" type="text" class="{required:true,digits:true,min: 10}">
+								<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->和上面的评论内容允许最大字数不同,超过这里设置的字节数则怀疑是垃圾信息,需要人工审核,如果设置为0或大于上面的最大字数则不启用此设置<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="grouptopic_edit_limittime"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->帖子发布后用户多长时间可以编辑帖子<!--</lang>--></label>
+								<select name="options[grouptopic_edit_limittime]" id="grouptopic_edit_limittime">
+									<option value="3600" <!--{if $arrOptions['grouptopic_edit_limittime']==3600}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一小时<!--</lang>--></option>
+									<option value="86400" <!--{if $arrOptions['grouptopic_edit_limittime']==86400}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一天<!--</lang>--></option>
+									<option value="604800" <!--{if $arrOptions['grouptopic_edit_limittime']==604800}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一星期<!--</lang>--></option>
+									<option value="2592000" <!--{if $arrOptions['grouptopic_edit_limittime']==2592000}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一月<!--</lang>--></option>
+									<option value="31536000" <!--{if $arrOptions['grouptopic_edit_limittime']==31536000}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一年<!--</lang>--></option>
+								</select>
+								<div class="description"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->用户发布帖子后一般一天之内可以编辑帖子<!--</lang>-->
+								</div>
+							</fieldset>
+							<fieldset>
+								<label for="grouptopiccomment_edit_limittime"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->帖子回复发布后用户多长时间可以编辑回帖<!--</lang>--></label>
+								<select name="options[grouptopiccomment_edit_limittime]" id="grouptopiccomment_edit_limittime">
+									<option value="3600" <!--{if $arrOptions['grouptopiccomment_edit_limittime']==3600}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一小时<!--</lang>--></option>
+									<option value="86400" <!--{if $arrOptions['grouptopiccomment_edit_limittime']==86400}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一天<!--</lang>--></option>
+									<option value="604800" <!--{if $arrOptions['grouptopiccomment_edit_limittime']==604800}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一星期<!--</lang>--></option>
+									<option value="2592000" <!--{if $arrOptions['grouptopiccomment_edit_limittime']==2592000}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一月<!--</lang>--></option>
+									<option value="31536000" <!--{if $arrOptions['grouptopiccomment_edit_limittime']==31536000}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一年<!--</lang>--></option>
+								</select>
+								<div class="description"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->用户发布回帖后一般一天之内可以编辑回帖<!--</lang>-->
+								</div>
+							</fieldset>
+						</div>
+						<div id="tab3" class="windsforce_tabcontent">
+							<fieldset class="fieldset_bordernone">
+								<label for="group_reason_support"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->主题和回帖管理支持原因<!--</lang>--></label>
+								<textarea name="options[group_reason_support]" rows="5" class="{required:true}"><!--{$arrOptions['group_reason_support']}--></textarea>
+								<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->用于支持方面的原因，每行一条<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="group_reason_opposition"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->主题和回帖管理反对原因<!--</lang>--></label>
+								<textarea name="options[group_reason_opposition]" rows="5" class="{required:true}"><!--{$arrOptions['group_reason_opposition']}--></textarea>
+								<div class="description input_tips"><!--<lang package='__APPGROUP_COMMON_LANG__@Template'>-->用于反对方面的原因，每行一条<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+						</div>
+					</div>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input id="submit_button" type="submit" class="alt_btn" value="<!--<lang package='Template'>-->发布<!--</lang>-->" />
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->" />
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

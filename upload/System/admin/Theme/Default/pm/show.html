@@ -1,0 +1,67 @@
+<!--<include file="public+header" />-->
+
+<!--{style}-->
+.tips {
+  padding: 8px 35px 8px 14px;
+  background-color: #f3f3f3;
+}
+<!--{/style}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->查看短消息<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->查看短消息<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->在这里你会看到短消息的详情<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+		
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--{if $oValue['pm_type']=='system'}--><!--<lang package='Template'>-->系统短消息<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->私人短消息<!--</lang>--><!--{/if}--></h3>
+				<ul class="tabs">
+					<li><a href="<!--{:Q::U('pm/add')}-->"><!--<lang package='Template'>-->发送短消息<!--</lang>--></a></li>
+					<li class="active"><a href="<!--{:Q::U('pm/index')}-->"><!--<lang package='Template'>-->短消息列表<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<div class="module_content">
+				<table class="tablesorter" cellspacing="0" id="checkList">
+					<!--{if $oValue['pm_type']=='system'}-->
+					<thead>
+						<tr>
+							<th colspan="2"><!--<lang package='Template'>-->系统短消息发布者<!--</lang>--> <a href="<!--{:Core_Extend::windsforceOuter('app=home&c=space&a=index&id='.$oValue['pm_msgfromid'])}-->" target="_blank"><!--{:Core_Extend::getUsernameById($oValue['pm_msgfromid'])}--></a></th>
+						</tr>
+					</thead>
+					<!--{d*else}-->
+					<thead>
+						<tr>
+							<th width="140px"><!--<lang package='Template'>-->短消息来源<!--</lang>--> <a href="<!--{:Core_Extend::windsforceOuter('app=home&c=space&a=index&id='.$oValue['pm_msgfromid'])}-->" target="_blank"><!--{$oValue['pm_msgfrom']}--></a></th>
+							<th><!--<lang package='Template'>-->短消息接收者<!--</lang>--> <a href="<!--{:Core_Extend::windsforceOuter('app=home&c=space&a=index&id='.$oValue['pm_msgtoid'])}-->" target="_blank"><!--{:Core_Extend::getUsernameById($oValue['pm_msgtoid'])}--></a></th>
+						</tr>
+					</thead>
+					<!--{/if}-->
+					<tbody>
+						<tr>
+							<td width="140px"><!--<lang package='Template'>-->短消息主题<!--</lang>--></td>
+							<td><!--{if !empty($oValue['pm_subject'])}--><!--{$oValue['pm_subject']}--><!--{d*else}--><!--<lang package='Template'>-->该消息没有主题<!--</lang>--><!--{/if}--></td>
+						</tr>
+						<tr>
+							<td width="140px"><!--<lang package='Template'>-->短消息发送日期<!--</lang>--></td>
+							<td><!--{$oValue:create_dateline|date='Y-m-d H:i',**}--></td>
+						</tr>
+						<tr>
+							<td width="140px"><!--<lang package='Template'>-->短消息内容<!--</lang>--></td>
+							<td><!--{$oValue:pm_message|Pm_Extend+ubb}--></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</article>
+
+<!--<include file="public+footer">-->

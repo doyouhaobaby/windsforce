@@ -1,0 +1,17 @@
+﻿/**
+ * WindsForce APP Framework (风动社区)
+ *
+ * @copyright  Copyright (C)WindsForce TEAM Since 2012.03.17.
+ * @license    This is NOT a freeware
+ */
+
+【WindsForce 即将做的】
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+如下的功能已经纳入下一个版本开发计划中：
+
+    插件
+    小组举报功能
+
+@---------------
+2014-10-17 By 小牛哥

@@ -1,0 +1,180 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+$(document).ready(function() {
+	$("#homeoption_tab ul").idTabs();
+});
+
+function option(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'update...' );
+	$("#submit_button").attr("disabled", false);
+	$('.validate')(0).submit();
+}
+
+checkForm(option);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->评论设置<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->评论设置<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->主页入口<!--</lang>--></h3>
+				<ul class="tabs">
+					<li class="active"><a href="<!--{:Admin_Extend::base()}-->"><!--<lang package='Template'>-->应用入口<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('app/index')}-->"><!--<lang package='Template'>-->应用列表<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="<!--{:Q::U('app/config?id='.$nId.'&action=update_option')}-->" method="post" class="validate">
+				<div class="module_content"></div>
+				<div class="module_content">
+					<!--<include file="Admin_Extend::template('home','homeoption/menu')" />-->
+
+					<div id="homeoption_tab" class="windsforce_tab">
+						<div class="windsforce_tabtitlebox">
+							<ul class="windsforce_tabtitle">
+								<li><a href="#tab1"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->基本<!--</lang>--></a></li>
+								<li><a href="#tab2"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->验证<!--</lang>--></a></li>
+								<li><a href="#tab3"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->显示<!--</lang>--></a></li>
+							</ul>
+						</div>
+
+						<div id="tab1" class="windsforce_tabcontent">
+							<fieldset class="fieldset_bordernone">
+								<label><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->注意，这里受系统全局防灌水影响<!--</lang>-->&nbsp;<a href="<!--{:Q::U('secoption/index')}-->"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->全局防灌水设置<!--</lang>--></a>
+								</label>
+								<div class="description"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->注意，这里也为系统通用评论设置<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="homefreshcomment_child"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->是否开启二级评论<!--</lang>--></label>
+								<input type="radio" class="input-short" name="options[homefreshcomment_child]" value="1" <!--{if $arrOptions['homefreshcomment_child']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+								<input type="radio" class="input-short" name="options[homefreshcomment_child]" value="0" <!--{if $arrOptions['homefreshcomment_child']==0}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->否<!--</lang>-->
+								<div class="description"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->开启二级评论将使得新鲜事评论更加互动，但会加大服务器负担。<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="close_comment_feature"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->是否关闭评论功能<!--</lang>--></label>
+								<input type="radio" class="input-short" name="options[close_comment_feature]" value="1" <!--{if $arrOptions['close_comment_feature']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+								<input type="radio" class="input-short" name="options[close_comment_feature]" value="0" <!--{if $arrOptions['close_comment_feature']==0}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->否<!--</lang>-->
+								<div class="description"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->如果关闭了评论，那么新鲜事将无法进行评论<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="audit_comment"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->评论是否审核<!--</lang>--></label>
+								<input type="radio" class="input-short" name="options[audit_comment]" value="1" <!--{if $arrOptions['audit_comment']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+								<input type="radio" class="input-short" name="options[audit_comment]" value="0" <!--{if $arrOptions['audit_comment']==0}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->否<!--</lang>-->
+								<div class="description"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->如果开启了，那么评论只有通过作者审核后才能够显示出来<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="seccode_comment_status"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->评论是否开启验证码<!--</lang>--></label>
+								<input type="radio" class="input-short" name="options[seccode_comment_status]" value="1" <!--{if $arrOptions['seccode_comment_status']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+								<input type="radio" class="input-short" name="options[seccode_comment_status]" value="0" <!--{if $arrOptions['seccode_comment_status']==0}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->否<!--</lang>-->
+								<div class="description"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->开启验证码会影响用户发布评论体验，建议没有特别必要不要开启<!--</lang>--></div>
+							</fieldset>
+						</div>
+						<div id="tab2" class="windsforce_tabcontent">
+							<fieldset class="fieldset_bordernone">
+								<label for="comment_repeat_check"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->评论是否验证重复数据<!--</lang>--></label>
+								<input type="radio" class="input-short" name="options[comment_repeat_check]" value="1" <!--{if $arrOptions['comment_repeat_check']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+								<input type="radio" class="input-short" name="options[comment_repeat_check]" value="0" <!--{if $arrOptions['comment_repeat_check']==0}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->否<!--</lang>-->
+								<div class="description"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->开启此项后，同一个用户24小时之内将不能发布重复评论<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="comment_min_len"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->评论内容的最少字节数<!--</lang>--></label>
+								<input name="options[comment_min_len]" value="<!--{$arrOptions['comment_min_len']}-->" type="text" class="{required:true,digits:true,min: 2}">
+								<div class="description input_tips"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->两个字节是一个汉字，这里主要是限制垃圾评论<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="comment_max_len"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->评论内容允许最大字数<!--</lang>--></label>
+								<input name="options[comment_max_len]" value="<!--{$arrOptions['comment_max_len']}-->" type="text" class="{required:true,digits:true,min: 30}">
+								<div class="description input_tips"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->可以有效控制游客输入内容的数据量<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="comment_post_space"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->提交评论时间间隔<!--</lang>--></label>
+								<input name="options[comment_post_space]" value="<!--{$arrOptions['comment_post_space']}-->" type="text" class="{required:true,digits:true,min: 0}">
+								<div class="description input_tips"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->可以防止他人灌水，设为0则不限制<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="comment_banip_enable"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->开启IP禁止功能<!--</lang>--></label>
+								<input type="radio" class="input-short" name="options[comment_banip_enable]" value="1" <!--{if $arrOptions['comment_banip_enable']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+								<input type="radio" class="input-short" name="options[comment_banip_enable]" value="0" <!--{if $arrOptions['comment_banip_enable']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+								<div class="description"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->选择是将杜绝下面设置的IP提交评论<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="comment_ban_ip"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->禁止IP<!--</lang>--></label>
+								<textarea name="options[comment_ban_ip]" id="comment_ban_ip" cols="70" rows="5"><!--{$arrOptions['comment_ban_ip']}--></textarea>
+								<div class="description"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->输入禁止发表评论的IP地址,可以使用“*”作为通配符禁止某段地址,用“,”隔开<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="comment_spam_enable"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->开启Spam机制<!--</lang>--></label>
+								<input type="radio" class="input-short" name="options[comment_spam_enable]" value="1" <!--{if $arrOptions['comment_spam_enable']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+								<input type="radio" class="input-short" name="options[comment_spam_enable]" value="0" <!--{if $arrOptions['comment_spam_enable']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+								<div class="description"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->Spam是指利用程序进行广播式的广告宣传的行为.这种行为给很多人的信箱、留言、评论里塞入大量无关或无用的信息.开启后以下设置才生效<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="comment_spam_words"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->垃圾词语特征<!--</lang>--></label>
+								<textarea name="options[comment_spam_words]" id="comment_spam_words" cols="70" rows="5"><!--{$arrOptions['comment_spam_words']}--></textarea>
+								<div class="description"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->开启Spam机制后,系统将用这里设置的词语匹配,不管程序还是人工发表,如果包含了则表示有可能是垃圾信息,需要人工审核.用“,”格开.<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="comment_spam_url_num"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->评论中允许出现的链接次数<!--</lang>--></label>
+								<td><input name="options[comment_spam_url_num]" value="<!--{$arrOptions['comment_spam_url_num']}-->" type="text" class="{required:true,digits:true,min: 0,max:30}">
+								<div class="description input_tips"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->如果出现的链接数大于所设置的数量,则怀疑是垃圾信息,需要人工审核.如果设置为0则不限制<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="comment_spam_content_size"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->评论内容字节数<!--</lang>--></label>
+								<input name="options[comment_spam_content_size]" value="<!--{$arrOptions['comment_spam_content_size']}-->" type="text" class="{required:true,digits:true,min: 150}">
+								<div class="description input_tips"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->和上面的评论内容允许最大字数不同,超过这里设置的字节数则怀疑是垃圾信息,需要人工审核,如果设置为0或大于上面的最大字数则不启用此设置<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="disallowed_all_english_word"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->阻止纯英文评论<!--</lang>--></label>
+								<input type="radio" class="input-short" name="options[disallowed_all_english_word]" value="1" <!--{if $arrOptions['disallowed_all_english_word']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+								<input type="radio" class="input-short" name="options[disallowed_all_english_word]" value="0" <!--{if $arrOptions['disallowed_all_english_word']==0}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->否<!--</lang>-->
+								<div class="description"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->开启此项后，所有纯英文评论将会被阻止<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="disallowed_spam_word_to_database"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->是否拒绝垃圾数据入库<!--</lang>--></label>
+								<input type="radio" class="input-short" name="options[disallowed_spam_word_to_database]" value="1" <!--{if $arrOptions['disallowed_spam_word_to_database']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+								<input type="radio" class="input-short" name="options[disallowed_spam_word_to_database]" value="0" <!--{if $arrOptions['disallowed_spam_word_to_database']==0}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->否<!--</lang>-->
+								<div class="description"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->如果不开启此项，那么垃圾数据会被变成待审核状态，但是还是会写入数据库<!--</lang>--><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->如果，你启用了此项，所有被系统鉴别为垃圾的数据都会被拒绝<!--</lang>--></div>
+							</fieldset>
+						</div>
+						<div id="tab3" class="windsforce_tabcontent">
+							<fieldset class="fieldset_bordernone">
+								<label for="homefreshcomment_limit_num"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->新鲜事最新评论数量<!--</lang>--></label>
+								<input type="text" id="homefreshcomment_limit_num" name="options[homefreshcomment_limit_num]" value="<!--{$arrOptions['homefreshcomment_limit_num']}-->" class="{required:true,digits:true,min: 4,max:30}"/>
+								<div class="description input_tips"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->这里的评论数量为新鲜事列表的评论数量<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="homefreshchildcomment_limit_num"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->新鲜事最新子评论数量<!--</lang>--></label>
+								<input type="text" id="homefreshchildcomment_limit_num" name="options[homefreshchildcomment_limit_num]" value="<!--{$arrOptions['homefreshchildcomment_limit_num']}-->" class="{required:true,digits:true,min: 4,max:30}"/>
+								<div class="description input_tips"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->这里的评论数量为新鲜事列表的子评论数量，程序支持二级评论<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="homefreshchildcomment_list_num"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->新鲜事最新子评论每页分页数量<!--</lang>--></label>
+								<input type="text" id="homefreshchildcomment_list_num" name="options[homefreshchildcomment_list_num]" value="<!--{$arrOptions['homefreshchildcomment_list_num']}-->" class="{required:true,digits:true,min: 4,max:30}"/>
+								<div class="description input_tips"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->程序支持二级评论，二级评论可以Ajax分页，这里为其每页分页数量<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+						</div>
+					</div>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input id="submit_button" type="submit" class="alt_btn" value="<!--<lang package='Template'>-->发布<!--</lang>-->" />
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->" />
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

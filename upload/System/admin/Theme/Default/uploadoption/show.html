@@ -1,0 +1,93 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+function option(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'update...' );
+	$("#submit_button").attr("disabled", false);
+	$('.validate')(0).submit();
+}
+
+checkForm(option);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->媒体显示<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->媒体显示<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->媒体显示<!--</lang>--></h3>
+				<ul class="tabs">
+					<li><a href="<!--{:Q::U('uploadoption/index')}-->"><!--<lang package='Template'>-->基本设置<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('uploadoption/avatar')}-->"><!--<lang package='Template'>-->头像设置<!--</lang>--></a></li>
+					<li class="active"><a href="<!--{:Q::U('uploadoption/show')}-->"><!--<lang package='Template'>-->媒体显示<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('uploadoption/ubb')}-->"><!--<lang package='Template'>-->Ubb设置<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('uploadoption/attachment')}-->"><!--<lang package='Template'>-->相册<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="<!--{:Q::U('uploadoption/update_option')}-->" method="post" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="upload_loginuser_view"><!--<lang package='Template'>-->只有会员才能查看附件<!--</lang>--></label>
+						<input type="radio" id="upload_loginuser_view" name="options[upload_loginuser_view]" value="1" <!--{if $arrOptions['upload_loginuser_view']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[upload_loginuser_view]" value="0" <!--{if $arrOptions['upload_loginuser_view']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->设置是否只有会员才能够查看附件，这里为ubb中的权限<!--</lang>-->&nbsp;
+						<a href="<!--{:Q::U('uploadoption/ubb')}-->"><!--<lang package='Template'>-->Ubb设置<!--</lang>--></a>
+						</div>
+					</fieldset>
+					<fieldset>
+						<label for="upload_ishide_reallypath"><!--<lang package='Template'>-->是否隐藏附件真实路径<!--</lang>--></label>
+						<input type="radio" id="upload_ishide_reallypath" name="options[upload_ishide_reallypath]" value="1" <!--{if $arrOptions['upload_ishide_reallypath']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[upload_ishide_reallypath]" value="0" <!--{if $arrOptions['upload_ishide_reallypath']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->隐藏附件的真实地址会加强附件的安全性，但是会加大服务器开销<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="upload_img_ishide_reallypath"><!--<lang package='Template'>-->是否隐藏图像真实路径<!--</lang>--></label>
+						<input type="radio" id="upload_img_ishide_reallypath" name="options[upload_img_ishide_reallypath]" value="1" <!--{if $arrOptions['upload_img_ishide_reallypath']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[upload_img_ishide_reallypath]" value="0" <!--{if $arrOptions['upload_img_ishide_reallypath']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->隐藏图像的真实地址可以防止附件被引用，但是会加大服务器开销，我们建议不隐藏图像的地址<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="upload_attach_expirehour"><!--<lang package='Template'>-->附件过期时间<!--</lang>--></label>
+						<input type="text" name="options[upload_attach_expirehour]" id="upload_attach_expirehour" size="60" value="<!--{$arrOptions['upload_attach_expirehour']}-->" class="{required:true,digits:true,min:0}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->单位：小时，0 或留空表示附件链接永久有效，过期后链接自动更新。本功能可有效防止附件被盗链或附件被软件批量下载，但是会给会员的正常下载带来不便。<!--</lang>-->
+						</div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="upload_limit_leech"><!--<lang package='Template'>-->附件是否进行防盗链处理<!--</lang>--></label>
+						<input type="radio" id="upload_limit_leech" name="options[upload_limit_leech]" value="1" <!--{if $arrOptions['upload_limit_leech']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[upload_limit_leech]" value="0" <!--{if $arrOptions['upload_limit_leech']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->设置附件是否进行防盗链处理，这有助于保持自己网站的附件，防止被引用耗尽网站的流量<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="upload_notlimit_leechdomail"><!--<lang package='Template'>-->附件允许的盗链的域名<!--</lang>--></label>
+						<textarea name="options[upload_notlimit_leechdomail]" rows="5"><!--{$arrOptions['upload_notlimit_leechdomail']}--></textarea>
+						<div class="description"><!--<lang package='Template'>-->多个域名用|分割，注意qeephp.114.ms和qeephp.114.ms是两个不同的域名。<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="upload_directto_reallypath"><!--<lang package='Template'>-->附件是否真实地址重定向<!--</lang>--></label>
+						<input type="radio" id="upload_directto_reallypath" name="options[upload_directto_reallypath]" value="1" <!--{if $arrOptions['upload_directto_reallypath']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[upload_directto_reallypath]" value="0" <!--{if $arrOptions['upload_directto_reallypath']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->如果设置附件重定向，这个时候，打开一个动态附件的地址，URL 会直接掉转到真实的地址。<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="uplod_isinline"><!--<lang package='Template'>-->附件是否直接读取<!--</lang>--></label>
+						<input type="radio" id="uplod_isinline" name="options[uplod_isinline]" value="1" <!--{if $arrOptions['uplod_isinline']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[uplod_isinline]" value="0" <!--{if $arrOptions['uplod_isinline']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->Content-Disposition参数，attachment（作为附件下载），inline（在线打开），具体使用如header("Content-Disposition: inline; filename=文件名.txt")。<!--</lang>--></div>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input id="submit_button" type="submit" class="alt_btn" value="<!--<lang package='Template'>-->发布<!--</lang>-->" />
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->" />
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

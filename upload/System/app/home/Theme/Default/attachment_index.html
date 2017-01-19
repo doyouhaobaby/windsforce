@@ -1,0 +1,152 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{script}-->
+var oEditNewattachmentcategory;
+
+function editAttachmentcategory(id){
+	oEditNewattachmentcategory=windsforceAjax(Q.U('home://attachment/edit_attachmentcategory?id='+id),'<!--<lang package='Template'>-->编辑专辑<!--</lang>-->','',saveAttachmentcategory,'',450,200);
+}
+
+function saveAttachmentcategory(){
+	var id=$('#attachmentcategory_id').val();
+	Q.AjaxSend(Q.U('home://attachment/edit_attachmentcategorysave'),
+		'ajax=1&attachmentcategory_name='+encodeURIComponent($('#attachmentcategory_name').val())+
+		'&attachmentcategory_compositor='+encodeURIComponent( $('#attachmentcategory_compositor').val())+
+		'&attachmentcategory_name='+encodeURIComponent( $('#attachmentcategory_name').val())+
+		'&attachmentcategory_description='+encodeURIComponent( $('#attachmentcategory_description').val())+
+		'&attachmentcategory_id='+ $('#attachmentcategory_id').val()+
+		'&attachmentcategory_cover='+ $('#attachmentcategory_cover').val(),'result',
+		function(data,status){
+			if(status==1){
+				oEditNewattachmentcategory.close();
+				return true;
+			}
+		}
+	);
+
+	return false;
+}
+
+function deleteAttachmentcategory(id){
+	windsforceConfirm('<!--<lang package='Template'>-->你确定要删除专辑吗?<!--</lang>-->',function(){
+		Q.AjaxSend(Q.U('home://attachment/delete_attachmentcategory?id='+id),
+			'ajax=1','',
+			function(data,status){
+				if(status==1){
+					$('#attachmentcategory_item_'+id).remove();
+					return true;
+				}
+			}
+		);
+		return true;
+	});
+
+	return false;
+}
+
+var oEditCreateNewattachmentcategory;
+
+function createAttachmentcategory(){
+	oEditCreateNewattachmentcategory=windsforceAjax(Q.U('home://attachment/new_attachmentcategory'),'<!--<lang package='Template'>-->新建专辑<!--</lang>-->','',saveNewattachmentcategory,cancelNewattachmentcategory,450,200);
+}
+
+function saveNewattachmentcategory(){
+	Q.AjaxSend(Q.U('home://attachment/new_attachmentcategorysave'),
+		'ajax=1&attachmentcategory_compositor='+encodeURIComponent($('#new_attachmentcategory_compositor').val())+
+		'&attachmentcategory_name='+encodeURIComponent( $('#new_attachmentcategory_name').val())+
+		'&attachmentcategory_description='+encodeURIComponent( $('#new_attachmentcategory_description').val()),'result',
+		function(data,status){
+			if(status==1){
+				oEditCreateNewattachmentcategory.close();
+				setTimeout("window.location.replace(_SELF_);",1000);
+				return true;
+			}
+		}
+	);
+
+	return false;
+}
+
+function cancelNewattachmentcategory(){
+	if($('#new_attachmentcategory_name').val()!=''){
+		windsforceConfirm('<!--<lang package='Template'>-->你确定要放弃新建专辑?<!--</lang>-->',function(){
+			oEditCreateNewattachmentcategory.close();
+			return true;
+		});
+
+		return false;
+	}
+}
+
+$(function(){
+	$('.thumbnail img').mousemove(function(e){
+		$('#imgdescription-box').show();
+		$('#imgdescription-box').text($(this).attr('data')).css({ top: (e.pageY + 5), left: (e.pageX + 5) }).show();
+	});
+
+	$('.thumbnail img').mouseleave(function(){
+		$('#imgdescription-box').hide();
+	})
+})
+<!--{/script}-->
+
+	<div id="imgdescription-box"></div>
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('home://attachment/lists')}-->"><!--<lang package='Template'>-->我的相册<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->我的专辑<!--</lang>--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+	
+		<!--<include file="attachment+menu" />-->
+
+		<div class="grid_12" style="margin-bottom:10px;">
+			<span class="right">
+				<a href="<!--{:Q::U('home://attachment/add')}-->" class="btn btn-mini"><!--<lang package='Template'>-->上传照片<!--</lang>--></a>
+				<span class="pipe">|</span>
+				<a href="javascript:void(0);" onclick="createAttachmentcategory();">+<!--<lang package='Template'>-->新建专辑<!--</lang>--></a>
+			</span>
+			<span></span>
+		</div>
+
+		<div class="grid_12">
+			<!--{if !empty($arrAttachmentcategorys)}-->
+			<ul class="thumbnails">
+				<!--<foreach for=arrAttachmentcategorys value=oAttachmentcategory>-->
+				<li style="width:220px;" id="attachmentcategory_item_<!--{$oAttachmentcategory['attachmentcategory_id']}-->">
+					<div class="thumbnail">
+						<div class="img attachmentcategory_thumb">
+							<a href="<!--{:Q::U('home://attachment/lists?cid='.$oAttachmentcategory['attachmentcategory_id'])}-->">
+								<img src="<!--{:Attachment_Extend::getAttachmentcategoryPreview($oAttachmentcategory)}-->" alt="<!--{$oAttachmentcategory['attachmentcategory_name']}-->" height="180px" width="165px" data="<!--{$oAttachmentcategory['attachmentcategory_name']}--> @ <!--{$oAttachmentcategory['create_dateline']|Core_Extend+timeFormat}-->" class="need_lazyload">
+							</a>
+						</div>
+						<div class="caption" style="text-align:center;">
+							<p><a href="javascript:void(0);" onclick="editAttachmentcategory(<!--{$oAttachmentcategory['attachmentcategory_id']}-->);" class="btn btn-mini"><!--<lang package='Template'>-->编辑<!--</lang>--></a>
+							<!--{if $oAttachmentcategory['attachmentcategory_attachmentnum']<1}-->
+							<span class="pipe">|</span>
+							<a href="javascript:void(0);" onclick="deleteAttachmentcategory(<!--{$oAttachmentcategory['attachmentcategory_id']}-->);" class="btn btn-mini"><!--<lang package='Template'>-->删除<!--</lang>--></a>
+							<!--{/if}-->
+							<!--{if $oAttachmentcategory['attachmentcategory_cover']}-->
+							<span class="pipe">|</span>
+							<a href="<!--{:Q::U('attachment/uncover?id='.$oAttachmentcategory['attachmentcategory_id'])}-->" class="btn btn-mini"><!--<lang package='Template'>-->删除封面<!--</lang>--></a>
+							<span class="pipe">|</span>
+							<a href="<!--{:Q::U('home://attachment/add?cid='.$oAttachmentcategory['attachmentcategory_id'])}-->" class="btn btn-mini"><!--<lang package='Template'>-->上传<!--</lang>--></a>
+							<!--{/if}-->
+							</p>
+						</div>
+					</div>
+				</li>
+				<!--</foreach>-->
+			</ul>
+			<!--{/if}-->
+			
+			<!--{$sPageNavbar}-->
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

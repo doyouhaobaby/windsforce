@@ -1,0 +1,78 @@
+<!--<include file="Core_Extend::template('cheader')" />-->
+
+<link rel="stylesheet" type="text/css" href="<!--{:Core_Extend::path('login.css','css')}-->"/>
+
+<!--<php>-->
+echo Core_Extend::getBgjs('Public/images/common/login');
+<!--</php>-->
+
+<!--{script}-->
+var sBgextendRepeat='repeat';
+$(document).ready(function(){
+	setInterval("changeGlobalbg();",10000);
+});
+<!--{/script}-->
+
+<div class="wrap_content">
+	<div class="container_12">
+		<div class="loginviewbox">
+			<div id="headerloginview" class="headerloginview">
+				<div class="grid_7">
+					<a href="<!--{:__APP__}-->" title="<!--{$GLOBALS['_option_']['site_name']}-->"><img src="<!--{:Core_Extend::getLogo()}-->" alt="<!--{$GLOBALS['_option_']['site_name']}-->"/></a>
+				</div>
+				<div class="grid_5">
+					<div class="right">
+						<h5><!--<lang package='Template'>-->没有帐号？请立刻注册<!--</lang>--></h5>
+						<p style="margin-top:5px;"><a href="<!--{:Q::U('home://public/register')}-->" class="btn btn-mini"><!--<lang package='Template'>-->用户注册<!--</lang>--></a></p>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+
+			<div id="loginview-content">
+				<div class="grid_12">
+					<!--{if $sReferer && $nRbac==1}-->
+					<div class="tips">
+						<!--<lang package='Template'>-->你没有权限访问!<!--</lang>-->&nbsp;<a href="<!--{$sReferer}-->"><!--<lang package='Template'>-->重试<!--</lang>--></a>
+					</div>
+					<!--{/if}-->
+				</div>
+				<div class="clearfix"></div>
+
+				<div class="grid_12">
+					<!--{if $sReferer && $nLoginview==1}-->
+					<div class="tips">
+						<!--<lang package='Template'>-->你需要登陆后才能够访问!<!--</lang>-->&nbsp;<a href="<!--{$sReferer}-->"><!--<lang package='Template'>-->重试<!--</lang>--></a>
+					</div>
+					<!--{/if}-->
+				</div>
+				<div class="clearfix"></div>
+
+				<div class="grid_8">
+					<!--<include file="public+login_" />-->
+				</div>
+				<div class="clearfix"></div>
+			</div>
+
+			<footer id="footerviewlogin" class="footerviewlogin">
+				<div class="grid_5">
+					<p>Copyright &copy; <!--{$GLOBALS['_option_']['site_year']}--> &nbsp;<!--{$GLOBALS['_option_']['site_name']}-->.</p>
+				</div>
+				<div class="grid_7" style="text-align:right;">
+					<p>Powered by <strong><a href="<!--{$GLOBALS['_option_']['windsforce_program_url']}-->" title="<!--{$GLOBALS['_option_']['windsforce_program_year']}-->"><!--{$GLOBALS['_option_']['windsforce_program_name']}--></a></strong>
+						<em><!--{$GLOBALS['_option_']['windsforce_program_version']}--></em>.&nbsp;
+						<!--{if !empty($GLOBALS['_option_']['icp'])}-->
+						<span class="pipe">|</span>
+						<a href="http://www.miitbeian.gov.cn/"><!--{$GLOBALS['_option_']['icp']}--></a>&nbsp;
+						<!--{/if}-->
+						<!--{$GLOBALS['_option_']['stat_code']}-->
+					</p>
+				</div>
+				<div class="clearfix"></div>
+			</footer>
+		</div>
+
+	</div>
+</div>
+
+<!--<include file="Core_Extend::template('cfooter')" />-->

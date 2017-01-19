@@ -1,0 +1,119 @@
+<!--<include file="public+header">-->
+
+<!--{script}-->
+$(document).ready(function(){
+	$("#node_access").change(function(){
+		if (this.value != 0){
+			$("#ajaxSelect").css('display','block');
+			$("#ajaxSelect").load("<!--{:Q::U('node/get_access')}-->",{
+				access: this.value
+			});
+		}else{
+			$("#ajaxSelect").css('display','none');
+		}
+	});
+});
+
+checkForm(SubmitFormCheckform);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<if condition="empty( $nId )" >--><!--<lang package='Template'>-->添加节点<!--</lang>--><!--<else/>--><!--<lang package='Template'>-->编辑节点<!--</lang>--><!--</if>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<if condition="empty( $nId )" >--><!--<lang package='Template'>-->添加节点<!--</lang>--><!--<else/>--><!--<lang package='Template'>-->编辑节点<!--</lang>-->_<!--{$nId}--><!--</if>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<h4 class="alert_info"><!--<lang package='Template'>-->在这里你可以对节点进行编辑,应用,模块,方法之间是可以相互转换的<!--</lang>--></h4>
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->选择“授权”，系统将会使用Ajax 提取数据供你选择<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->节点的应用名不能为空，显示名不能为空<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<if condition="empty( $nId )" >--><!--<lang package='Template'>-->添加节点<!--</lang>--><!--<else/>--><!--<lang package='Template'>-->编辑节点<!--</lang>--><!--</if>--></h3>
+				<ul class="tabs">
+					<!--<if condition="isset( $oValue ) && !empty( $oValue['nodegroup_id'] )">-->
+					<!--{~$oCurrentNodegroup=$TheController->get_nodegroup($oValue['nodegroup_id'])}-->
+					<li><a href="<!--{:Q::U('node/index?nodegroup_id='.$oValue->nodegroup_id)}-->"><!--{$oCurrentNodegroup['nodegroup_name']}--></a>
+					<!--</if>-->
+					<li class="active"><a href="<!--{:Q::U('node/index')}-->"><!--<lang package='Template'>-->节点列表<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="" method="post" id="nodeAdd" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="node_access"><!--<lang package='Template'>-->授权<!--</lang>--></label>
+						<select name="node_access" id="node_access">
+							<option value="0" <!--<if condition="isset( $oValue ) && $oValue:node_level==1">-->selected<!--</if>-->>-- <!--<lang package='Template'>-->请选择<!--</lang>--> --</option>
+							<option value="app" <!--<if condition="isset( $oValue ) && $oValue:node_level==2">-->selected<!--</if>-->><!--<lang package='Template'>-->应用<!--</lang>--></option>
+							<option value="module" <!--<if condition="isset( $oValue ) && $oValue:node_level==3">-->selected<!--</if>-->><!--<lang package='Template'>-->模块<!--</lang>--></option>
+						</select>
+						<div class="description"><!--<lang package='Template'>-->请选择授权应用和模块<!--</lang>--></div>
+					</fieldset>
+					<fieldset class="none" id="ajaxSelect">
+						<label><img src="<!--{:At::path('ajaxloading.gif')}-->"></img><!--<lang package='Template'>-->数据加载中<!--</lang>-->...</label>
+						<!--<if condition="empty( $nId )">--><input type="hidden" name="node_level" value="1"><!--</if>-->
+						<input type="hidden" name="node_parentid" value="<!--<if condition="isset( $oValue ) && $oValue:node_parentid">--><!--{$oValue:node_parentid}--><!--<else/>-->0<!--</if>-->">
+					</fieldset>
+					<fieldset>
+						<label for="node_sort"><!--<lang package='Template'>-->序号<!--</lang>--></label>
+						<input type="text" name="node_sort" id="node_sort" size="40" value="<!--<if condition="isset( $oValue ) && $oValue:node_sort">--><!--{$oValue:node_sort}--><!--<else/>-->0<!--</if>-->" class="{required:true,digits:true,min:0,max:999}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->节点序号，用于排列节点顺序<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="node_name"><!--<lang package='Template'>-->节点名字<!--</lang>--></label>
+						<input type="text" name="node_name" id="node_name" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:node_name}--><!--</if>-->" class="{required:true,remote:Q.U('node/check_nodename'<!--<if condition="!empty( $nId )" >-->+'?id=<!--{$nId}-->'<!--</if>-->),messages:{remote:'<!--<lang package='Template'>-->节点重复<!--</lang>-->'}}"/>
+						<div class="description input_tips">
+							<!--<lang package='Template'>-->节点名字的格式如下:应用@模块@方法，其中模块和方法可以没有，应用、模块和方法都只能是小写英文字母<!--</lang>-->
+						</div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="node_title"><!--<lang package='Template'>-->显示名<!--</lang>--></label>
+						<input type="text" name="node_title" id="node_title" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:node_title}--><!--</if>-->" class="{required:true}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->节点的别名<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="nodegroup_id"><!--<lang package='Template'>-->分组<!--</lang>--></label>
+						<select name="nodegroup_id" id="nodegroup_id">
+							<!--<foreach for=arrNodegroup>-->
+							<option value="<!--{$value['nodegroup_id']}-->" <!--{if isset( $oValue ) && $value['nodegroup_id']==$oValue->nodegroup_id}-->selected<!--{/if}-->><!--{$value['nodegroup_title']}--></option>
+							<!--</foreach>-->
+						</select>
+						<div class="description"><!--<lang package='Template'>-->节点的分组<!--</lang>--><!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="node_status"><!--<lang package='Template'>-->状态<!--</lang>--></label>
+						<select name="node_status">
+							<option value="1" <!--<if condition="!isset( $oValue ) || (isset( $oValue ) && $oValue:node_status==1)">-->selected<!--</if>-->><!--<lang package='Template'>-->启用<!--</lang>--></option>
+							<option value="0" <!--<if condition="isset( $oValue ) && $oValue:node_status eq 0">-->selected<!--</if>-->><!--<lang package='Template'>-->禁用<!--</lang>--></option>
+							<option value="9" <!--<if condition="isset( $oValue ) && $oValue:node_status==9">-->selected<!--</if>-->><!--<lang package='Template'>-->回收站<!--</lang>--></option>
+						</select>
+						<div class="description"><!--<lang package='Template'>-->是否启用节点，启用节点才能够使用<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label><!--<lang package='Template'>-->备注<!--</lang>--></label>
+						<textarea name="node_remark" id="node_remark" rows="5"><!--<if condition="isset( $oValue )">--><!--{$oValue:node_remark}--><!--</if>--></textarea>
+						<div class="description"><!--<lang package='Template'>-->节点其它相关信息<!--</lang>--></div>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="hidden" name="ajax" value="1">
+						<input type="hidden" name="id" id="id" value="<!--<if condition="isset( $nId )">--><!--{$nId}--><!--</if>-->"/>
+						<input type="submit" id="submit_button" value="" class="alt_btn">
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->">
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

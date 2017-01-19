@@ -1,0 +1,10 @@
+		<div class="nav_tabcontainer nav_tab">
+			<ul>
+				<!--{if $GLOBALS['___login___']!==false}-->
+				<li <!--{if ACTION_NAME==='index'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://attachment/index')}-->"><!--<lang package='Template'>-->我的专辑<!--</lang>--></a></li>
+				<li <!--{if ACTION_NAME==='lists'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://attachment/lists')}-->"><!--<lang package='Template'>-->我的附件<!--</lang>--></a></li>
+				<li <!--{if in_array(ACTION_NAME,array('add','attachmentinfo'))}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://attachment/add')}-->"><!--<lang package='Template'>-->上传附件<!--</lang>--></a></li>
+				<!--{/if}-->
+			</ul>
+		</div>
+		<div class="clearfix"></div>

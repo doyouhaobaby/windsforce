@@ -1,0 +1,113 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{script}-->
+function findUser(){
+	if(!$('#keywords').val()){
+		windsforceAlert(Q.L('用户关键字不能为空','App'),'',3);
+		return false;
+	}else{
+		return true;
+	}
+}
+
+function changeDiv(buddyid){
+	showDiv('commenthide_'+buddyid);
+	showDiv('commentbox_'+buddyid);
+	showDiv('commentedit_'+buddyid);
+}
+
+function editComment(buddyid){
+	changeDiv(buddyid);
+	$WF('comment_'+buddyid).focus();
+}
+
+function updateComment(buddyid,fan){
+	changeDiv(buddyid);
+	var comment=Q.Browser.Ie && document.charset=='utf-8'?encodeURIComponent($WF('comment_'+buddyid).value):$WF('comment_'+ buddyid).value;
+	$WF('commenthide_'+buddyid).innerHTML=preg_replace(['&','<','>','"'],['&amp;','&lt;','&gt;','&quot;'], comment);
+	Q.AjaxSend('<!--{:Q::U('home://friend/edit')}-->','ajax=1&friendid='+buddyid+'&comment='+comment+(fan=='1'?'&fan=1':''),'');
+}
+
+function preg_replace(search, replace, str){
+	var len=search.length;
+	for(var i=0;i < len;i++){
+		re=new RegExp(search[i], "ig");
+		str=str.replace(re,typeof replace=='string'?replace:(replace[i]?replace[i]:replace[0]));
+	}
+	
+	return str;
+}
+
+function deleteFriend(friendid,fan){
+	windsforceConfirm(Q.L('确实要永久删除选择项吗？','Common'),function(){
+		Q.AjaxSend(Q.U('home://friend/delete?friendid='+friendid+(fan=='1'?'&fan=1':'')),'','',function(data,status){
+			if(status==1){
+				setTimeout("window.location.replace(_SELF_);",1000);
+			}
+		});
+	});
+}
+<!--{/script}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--{if $sType=='fan'}--><!--<lang package='Template'>-->我的粉丝<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->我的好友<!--</lang>--><!--{/if}--></li>
+		</ul>
+	</div>
+	
+	
+	<div class="container_12 container_box">
+		<!--<include file="friend+menu" />-->
+
+		<div class="grid_10">
+			<div class="nav_tabcontainer nav_pills">
+				<ul>
+					<li <!--{if !$sType=='fan'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://friend/index')}-->"><!--<lang package='Template'>-->我的好友<!--</lang>--></a></li>
+					<li <!--{if $sType=='fan'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://friend/index?type=fan')}-->"><!--<lang package='Template'>-->我的粉丝<!--</lang>--></a></li>
+				</ul>
+			</div>
+			
+			<form class="well form-search" action="<!--{:Q::U('home://friend/index')}-->" method="get" onsubmit="return findUser();">
+				<input type="hidden" name="app" value="home" />
+				<input type="hidden" name="c" value="friend" />
+				<input type="hidden" name="a" value="index" />
+				<!--{if $sType=='fan'}--><input type="hidden" name="type" value="fan"><!--{/if}-->
+				<input type="text" class="input-medium search-query" name="key" id="keywords" value="">&nbsp;
+				<button type="submit" class="btn"><!--{if $sType=='fan'}--><!--<lang package='Template'>-->查找粉丝<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->查找好友<!--</lang>--><!--{/if}--></button>
+			</form>
+			<!--{if $sKey}-->
+			<div class="tips">
+				<!--<lang package='Template'>-->你搜索的关键字为<!--</lang>-->&nbsp;<strong><span><a href="<!--{:Q::U('home://friend/index?key='.$sKey.($sType=='fan'?'&type=fan':''))}-->"><!--{$sKey}--></a></span></strong>，<!--<lang package='Template'>-->你可以查看<!--</lang>-->&nbsp;<a href="<!--{if $sType=='fan'}--><!--{:Q::U('home://friend/index?type=fan')}--><!--{d*else}--><!--{:Q::U('home://friend/index')}--><!--{/if}-->"><!--{if $sType=='fan'}--><!--<lang package='Template'>-->粉丝列表<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->好友列表<!--</lang>--><!--{/if}--></a>
+			</div>
+			<!--{/if}-->
+			<!--{if !empty($arrFriends)}-->
+			<ul class="thumbnails">
+				<!--<foreach for=arrFriends value=arrFriend>-->
+				<!--{~$nUserId=($sType=='fan'?$arrFriend['user_id']:$arrFriend['friend_friendid'])}-->
+				<li class="grid_3">
+					<div class="thumbnail">
+						<img src="<!--{:Core_Extend::avatar( $nUserId,'middle' )}-->" width="120px" height="120px" alt="">
+						<div class="caption" style="text-align:center;">
+							<p style="margin-bottom:10px;"><a href="<!--{:Q::U('home://space@?id='.$nUserId)}-->"><h5><img src="<!--{$TheController:get_gender_icon($nUserId)}-->" border="0" align="absmiddle" class="need_lazyload" />&nbsp;<!--{$arrFriend['user_name']}-->@<!--{$nUserId}--><!--{$nUserId|Core_Extend+getUseronlineicon}--></h5></a></p>
+							<p><!--{if $arrFriend['user_sign']}--><!--{$arrFriend['user_sign']|strip_tags|C+subString=0,10}--><!--{d*else}--><!--<lang package='Template'>-->该用户很懒，暂时没有签名<!--</lang>--><!--{/if}--><br/>
+								<span id="commenthide_<!--{$nUserId}-->"><!--{if $sType=='fan'}--><!--{$arrFriend['friend_fancomment']}--><!--{d*else)}--><!--{$arrFriend['friend_comment']}--><!--{/if}--></span> <span id="commentedit_<!--{$nUserId}-->">[<a href="javascript:;" onclick="editComment(<!--{$nUserId}-->)">+<!--<lang package='Template'>-->添加备注<!--</lang>--></a>]</span>
+								<span id="commentbox_<!--{$nUserId}-->" style="display:none"><input name="comment_<!--{$nUserId}-->" value="" id="comment_<!--{$nUserId}-->" onBlur="updateComment(<!--{$nUserId}-->,'<!--{if $sType=='fan'}-->1<!--{d*else}-->0<!--{/if}-->')" class="input-small"></span>
+							</p>
+							<p><a href="<!--{:Q::U('home://pm/pmnew?uid='.$nUserId)}-->" class="btn btn-mini"><!--<lang package='Template'>-->短消息<!--</lang>--></a>&nbsp;
+							<a href="javascript:void(0);" onclick="deleteFriend('<!--{$nUserId}-->','<!--{if $sType=='fan'}-->1<!--{d*else}-->0<!--{/if}-->');" class="btn btn-mini"><!--<lang package='__COMMON_LANG__@Common'>-->删除<!--</lang>--></a></p>
+						</div>
+					</div>
+				</li>
+				<!--</foreach>-->
+			</ul>
+			<!--{d*else}-->
+			<!--{if $sType=='fan'}--><!--<lang package='Template'>-->暂时没有发现任何粉丝<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->暂时没有发现任何好友<!--</lang>--><!--{/if}-->
+			<!--{/if}-->
+	
+			<!--{$sPageNavbar}-->
+		</div>
+		<div class="clearfix"></div>
+	</div>
+		
+<!--<include file="Core_Extend::template('footer')" />-->

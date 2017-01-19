@@ -1,0 +1,139 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{script}-->
+var oEditNewattachment;
+
+function editAttachment(id){
+	oEditNewattachment=windsforceAjax(Q.U('home://attachment/edit_attachment?id='+id),'<!--<lang package='Template'>-->编辑附件<!--</lang>-->','',saveAttachment,'',500,300);
+}
+
+function saveAttachment(){
+	var id=$('#attachment_id').val();
+	Q.AjaxSend(Q.U('home://attachment/edit_attachmentsave'),
+		'ajax=1&attachment_name='+encodeURIComponent($('#attachment_name').val())+
+		'&attachment_id='+ $('#attachment_id').val()+'&attachmentcategory_id='+$('#attachmentcategory_id').val(),'result',
+		function(data,status){
+			if(status==1){
+				oEditNewattachment.close();
+				setTimeout("window.location.replace(_SELF_);",1000);
+				return true;
+			}
+		}
+	);
+
+	return false;
+}
+
+function deleteAttachment(id){
+	windsforceConfirm('<!--<lang package='Template'>-->你确定要删除附件吗?<!--</lang>-->',function(){
+		Q.AjaxSend(Q.U('home://attachment/delete_attachment?id='+id),
+			'ajax=1','',
+			function(data,status){
+				if(status==1){
+					$('#attachment_item_'+id).remove();
+					return true;
+				}
+			}
+		);
+		return true;
+	});
+
+	return false;
+}
+
+$(function(){
+	$('.thumbnail img').mousemove(function(e){
+		$('#imgdescription-box').show();
+		$('#imgdescription-box').text($(this).attr('data')).css({ top: (e.pageY + 5), left: (e.pageX + 5) }).show();
+	});
+
+	$('.thumbnail img').mouseleave(function(){
+		$('#imgdescription-box').hide();
+	})
+})
+<!--{/script}-->
+
+	<div id="imgdescription-box"></div>
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('home://attachment/index')}-->"><!--<lang package='Template'>-->我的相册<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->我的附件<!--</lang>--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+		<!--<include file="attachment+menu" />-->
+
+		<div class="grid_12">
+			<!--{if !empty($arrAttachments)}-->
+			<ul class="thumbnails">
+				<!--<foreach for=arrAttachments value=oAttachment>-->
+				<li style="width:220px;margin-bottom:15px;" id="attachment_item_<!--{$oAttachment['attachment_id']}-->">
+					<div class="thumbnail">
+						<div class="img attachment_thumb">
+							<a href="<!--{:Q::U('home://file@?id='.$oAttachment['attachment_id'])}-->">
+								<img src="<!--{:Attachment_Extend::getAttachmentPreview($oAttachment)}-->" alt="<!--{$oAttachment['attachment_name']}-->" height="250px" width="200px" data="<!--{$oAttachment['attachment_name']}--> @ <!--{$oAttachment['create_dateline']|Core_Extend+timeFormat}-->" class="need_lazyload">
+							</a>
+						</div>
+						<div class="caption" style="text-align:center;">
+							<p><a href="javascript:void(0);" onclick="editAttachment(<!--{$oAttachment['attachment_id']}-->);" class="btn btn-mini"><!--<lang package='Template'>-->编辑<!--</lang>--></a>
+								<!--{if $oAttachment['attachment_isimg']==1 && $oAttachment['attachmentcategory_id']>0}-->&nbsp;
+								<a href="<!--{:Q::U('home://attachment/cover?id='.$oAttachment['attachment_id'])}-->" class="btn btn-mini"><!--<lang package='Template'>-->封面<!--</lang>--></a>
+								<!--{/if}-->
+							</p>
+						</div>
+					</div>
+				</li>
+				<!--</foreach>-->
+			</ul>
+			<!--{/if}-->
+
+			<!--{$sPageNavbar}-->
+		</div>
+		<div class="clearfix"></div>
+
+		<!--{if !empty($arrAttachmetncategoryinfo)}-->
+		<div class="grid_12" style="margin-top:15px;">
+			<h3><!--<lang package='Template'>-->专辑信息<!--</lang>--></h3>
+			<p><table class="table table-striped">
+					<!--{if $nAttachmentcategoryid>0}-->
+					<thead>
+						<tr>
+							<td width="150px"><!--<lang package='Template'>-->专辑描述<!--</lang>--></td>
+							<td><a href="<!--{:Q::U('home://attachment/lists?cid='.$nAttachmentcategoryid)}-->"><!--{$arrAttachmetncategoryinfo['attachmentcategory_name']}--></a></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><!--<lang package='Template'>-->创建时间<!--</lang>--></td>
+							<td><!--{$arrAttachmetncategoryinfo['create_dateline']|Core_Extend+timeFormat}--></td>
+						</tr>
+						<tr>
+							<td width="150px"><!--<lang package='Template'>-->附件数量<!--</lang>--></td>
+							<td><!--{$arrAttachmetncategoryinfo['attachmentcategory_attachmentnum']}--></td>
+						</tr>
+					</tbody>
+					<!--{d*else}-->
+					<thead>
+						<tr>
+							<td width="150px"><!--<lang package='Template'>-->专辑描述<!--</lang>--></td>
+							<td><a href="<!--{:Q::U('home://attachment/lists?cid='.$nAttachmentcategoryid)}-->"><!--<lang package='Template'>-->默认专辑<!--</lang>--></a></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td width="150px"><!--<lang package='Template'>-->附件数量<!--</lang>--></td>
+							<td><!--{$arrAttachmetncategoryinfo['totalnum']}--></td>
+						</tr>
+					</tbody>
+					<!--{/if}-->
+				</table>
+			</p>
+		</div>
+		<div class="clearfix"></div>
+		<!--{/if}-->
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

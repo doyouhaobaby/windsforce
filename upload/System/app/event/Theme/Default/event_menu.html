@@ -1,0 +1,7 @@
+			<div class="nav_tabcontainer nav_tab">
+				<ul>
+					<li <!--{if empty($sType)}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('event://e@?id='.$arrEvent['event_id'])}-->"><!--<lang package='Template'>-->活动<!--</lang>--></a></li>
+					<li <!--{if $sType=='user'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('event://e@?id='.$arrEvent['event_id'].'&type=user')}-->"><!--<lang package='Template'>-->成员<!--</lang>-->&nbsp;(<!--{$arrEvent['event_joincount']}-->)</a></li>
+					<li <!--{if $sType=='attentionuser'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('event://e@?id='.$arrEvent['event_id'].'&type=attentionuser')}-->"><!--<lang package='Template'>-->关注者<!--</lang>-->&nbsp;(<!--{$arrEvent['event_attentioncount']}-->)</a></li>
+				</ul>
+			</div>

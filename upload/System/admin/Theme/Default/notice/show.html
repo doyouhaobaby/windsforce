@@ -1,0 +1,67 @@
+<!--<include file="public+header" />-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->查看提醒<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->查看提醒<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->在这里你会看到提醒的详情<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+		
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--{if $oValue['notice_type']=='system'}--><!--<lang package='Template'>-->系统提醒<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->其它提醒<!--</lang>--><!--{/if}-->&nbsp;(<!--{$oValue['notice_type']}-->)</h3>
+				<ul class="tabs">
+					<li class="active"><a href="<!--{:Q::U('notice/index')}-->"><!--<lang package='Template'>-->提醒列表<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<div class="module_content">
+				<table class="tablesorter" cellspacing="0" id="checkList">
+					<tbody>
+						<tr>
+							<td width="80px"><!--<lang package='Template'>-->提醒来源<!--</lang>--></td>
+							<td>
+								<!--{if $oValue['notice_type']=='system'}-->
+								<img src="<!--{:__PUBLIC__}-->/images/common/systempm.png" width="48px" height="48px" title="<!--<lang package='Template'>-->系统提醒<!--</lang>-->" alt="<!--<lang package='Template'>-->系统提醒<!--</lang>-->" style="margin:auto;"/>
+								<!--{d*else}-->
+								<a title="<!--{$arrNoticedata['notice_username']}-->" href="<!--{:Core_Extend::windsforceOuter('app=home&c=space&a=index&id='.$arrNoticedata['user_id'])}-->" target="_blank">
+									<img src="<!--{:Core_Extend::avatar( $arrNoticedata['user_id'],'small' )}-->" width="48px" height="48px" title="<!--{$arrNoticedata['notice_username']}-->" alt="<!--{$arrNoticedata['notice_username']}-->" style="margin:auto;"/>
+								</a><br/>
+								<a title="<!--{$arrNoticedata['notice_username']}-->" href="<!--{:Core_Extend::windsforceOuter('app=home&c=space&a=index&id='.$arrNoticedata['user_id'])}-->" target="_blank"><!--{$arrNoticedata['notice_username']}--></a>
+								<!--{/if}-->
+							</td>
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->提醒日期<!--</lang>--></td>
+							<td><!--{$arrNoticedata['create_dateline']|date='Y-m-d H:i',**}--></td>
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->提醒内容<!--</lang>--></td>
+							<td>
+								<!--{if $arrNoticedata['notice_type']=='system'}-->
+								<!--{$arrNoticedata['notice_content']|Core_Extend+replaceSiteVar|nl2br|Core_Extend+ubb=false}-->
+								<!--{d*else}-->
+								<!--{if $arrNoticedata['notice_type']=='athomefresh'}-->
+								<!--{$arrNoticedata['notice_content']|Core_Extend+ubb}-->
+								<!--{d*else}-->
+								<!--{$arrNoticedata['notice_content']|Core_Extend+ubb=false}-->
+								<!--{/if}-->
+								<!--{/if}-->
+								<!--{if $arrNoticedata['notice_fromnum']>1}-->
+								<div style="color:#999;"><!--<lang package='Template'>-->还有<!--</lang>-->&nbsp;<!--{$arrNoticedata['notice_fromnum']-1}-->&nbsp;<!--<lang package='Template'>-->个相同通知被忽略<!--</lang>--></div>
+								<!--{/if}-->
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</article>
+
+<!--<include file="public+footer">-->

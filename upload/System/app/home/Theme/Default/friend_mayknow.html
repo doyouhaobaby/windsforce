@@ -1,0 +1,65 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->可能认识的人<!--</lang>--></li>
+		</ul>
+	</div>
+		
+	<div class="container_12 container_box">
+		<!--<include file="friend+menu" />-->
+
+		<div class="grid_10">
+			<!--{if !empty($arrFriendlists)}-->
+			<div class="well">
+				<h4><!--<lang package='Template'>-->可能认识的人<!--</lang>--></h4>
+			</div>
+			<p>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th colspan="2"><!--<lang package='Template'>-->用户名<!--</lang>--></th>
+							<th>UID</th>
+							<th><!--<lang package='Template'>-->性别<!--</lang>--></th>
+							<th><!--<lang package='Template'>-->注册日期<!--</lang>--></th>
+							<th><!--<lang package='Template'>-->上次访问<!--</lang>--></th>
+							<th><!--<lang package='Template'>-->登陆次数<!--</lang>--></th>
+							<th><!--<lang package='Template'>-->状态<!--</lang>--></th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--<foreach for=arrFriendlists value=oUser>-->
+						<tr>
+							<td><a href="<!--{:Q::U('home://space@?id='.$oUser['user_id'])}-->"><img src="<!--{:Core_Extend::avatar( $oUser['user_id'],'small' )}-->" width="48px" height="48px" class="thumbnail need_lazyload" /></a></td>
+							<td><p style="margin-bottom:10px;"><!--{$oUser['user_id']|Core_Extend+getUsericon}-->&nbsp;<a href="<!--{:Q::U('home://space@?id='.$oUser['user_id'])}-->" class="bind_hover_card" bm_user_id="<!--{$oUser['user_id']}-->" ><!--{$oUser:user_name}--></a>&nbsp;<!--{if $oUser['user_nikename']}-->(<!--{$oUser['user_nikename']}-->)<!--{/if}--><!--{$oUser['user_id']|Core_Extend+getUseronlineicon}--></p>
+								<!--{if $GLOBALS['___login___']!==false}-->
+								<!--{~$nAlreadyFriendId=Core_Extend::isAlreadyFriend($oUser['user_id'])}-->
+								<!--{if $nAlreadyFriendId==1}--><span class="label label-warning"><a href="javascript:void(0);" onclick="deleteFriend('<!--{$oUser['user_id']}-->','0');return false;"><!--<lang package='Template'>-->取消关注<!--</lang>--></a></span>
+								<!--{elseif $nAlreadyFriendId==2}--><span class="label"><!--<lang package='Template'>-->你自己<!--</lang>--></span>
+								<!--{elseif $nAlreadyFriendId==3}--><span class="label" ><!--<lang package='Template'>-->你粉丝<!--</lang>--></span><p style="margin-top:10px;"><span><a href="javascript:void(0);" onclick="addFriend('<!--{$oUser:user_id}-->');return false;"><!--<lang package='Template'>-->关注<!--</lang>--></a></span>&nbsp;<span class="label label-warning"><a href="javascript:void(0);" onclick="deleteFriend('<!--{$oUser['user_id']}-->','1');return false;"><!--<lang package='Template'>-->移除粉丝<!--</lang>--></a></span></p>
+								<!--{elseif $nAlreadyFriendId==4}--><span class="label" ><!--<lang package='Template'>-->相互关注<!--</lang>--></span><p style="margin-top:10px;"><span class="label label-warning"><a href="javascript:void(0);" onclick="deleteFriend('<!--{$oUser['user_id']}-->','0');return false;"><!--<lang package='Template'>-->取消关注<!--</lang>--></a></span>&nbsp;<span class="label label-warning"><a href="javascript:void(0);" onclick="deleteFriend('<!--{$oUser['user_id']}-->','1');return false;"><!--<lang package='Template'>-->移除粉丝<!--</lang>--></a></span></p>
+								<!--{d*else}--><span><a href="javascript:void(0);" onclick="addFriend('<!--{$oUser:user_id}-->');return false;"><!--<lang package='Template'>-->关注<!--</lang>--></a></span>
+								<!--{/if}-->
+								<p style="margin-top:5px;"><a href="<!--{:Q::U('home://pm/pmnew?uid='.$oUser->user_id)}-->"><!--<lang package='Template'>-->发送短消息<!--</lang>--></a></p>
+								<!--{/if}-->
+							</td>
+							<td><!--{$oUser:user_id}--></td>
+							<td><img src="<!--{:Profile_Extend::getUserprofilegender($oUser->userprofile->userprofile_gender)}-->" border="0" align="absmiddle" />&nbsp;<!--{:Profile_Extend::getGender($oUser->userprofile->userprofile_gender)}--></td>
+							<td><!--{$oUser:create_dateline|Core_Extend+timeFormat}--></td>
+							<td><!--{if $oUser['user_lastlogintime']}--><!--{$oUser:user_lastlogintime|Core_Extend+timeFormat}--><!--{d*else}--><!--<lang package='Template'>-->注册访问<!--</lang>--><!--{/if}--></td>
+							<td><span class="badge badge-label-info"><!--{$oUser:user_logincount}--></span></td>
+							<td><!--{if $oUser['user_status']}-->√<!--{d*else}-->X<!--{/if}--></td>
+						</tr>
+						<!--</foreach>-->
+					</tbody>
+				</table>
+			</p>
+			<!--{d*else}-->
+			<p class="hero-unit"><!--<lang package='Template'>-->没有可能认识的人<!--</lang>--></p>
+			<!--{/if}-->
+		</div>
+		<div class="clearfix"></div>
+	</div>
+		
+<!--<include file="Core_Extend::template('footer')" />-->

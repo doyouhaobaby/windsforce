@@ -1,0 +1,151 @@
+/*
+Style Name: 简单主题
+Style URI: http://qeephp.114.ms/
+Description: 这是由WindsForce 的系统自带模板
+Author: 小牛哥QEEPHP
+Author URI: http://qeephp.114.ms
+Version: 2.0
+License: BSD
+License URI: http://qeephp.114.ms/page/license.html
+Tags: admin, simplde
+*/
+
+/** 导入样式进行重写 */
+{admin/Theme/Default/Public/Css/style.css}
+
+/**===============================
+           重写基本元素
+================================*/
+html,body{background-color:#ebebeb;color:#464646; }
+.fmenu-body{background-color:#ebebeb;}
+a:link, a:visited{color:#30a4b1; text-decoration:none;}
+a:hover{color:#f7941d;}
+
+/**===============================
+           重写标签样式和内容tab样式
+================================*/
+.content-tab-active,.content-tab,.tags{ color: #fff !important; background-color: #30a4b1; margin-right: 10px;}
+.content-tab-active:hover,.content-tab:hover,.tags:hover{ background-color: #C2E4EB; }
+
+/* Jquery idTabs */
+.windsforce_tab{padding:5px 20px;}
+.windsforce_tab .windsforce_tabtitle li{margin-top:-15px;}
+.windsforce_tab .windsforce_tabtitlebox a {border-color: #FFFFFF;border-style: solid solid dashed;border-width: 2px 1px 1px;}
+.windsforce_tab .windsforce_tabtitle a {background: none repeat scroll 0 0 #30a4b1;color: #fff !important;display: block;font-size: 12px;margin: 1px 1px 1px 0;}
+.windsforce_tab .windsforce_tabtitle a.selected {background: none repeat scroll 0 0 #f7941d;border-bottom: 1px solid #FFFFFF;color: #000000;}
+
+#main-menu{margin-left:10px;}
+
+/**===============================
+           重写头部
+================================*/
+header#header {height: 65px;width: 100%;background: transparent;}
+
+#header-links {position:absolute;padding:5px;color:#aaaaaa;right:30px;top:15px;font-size:14px;}
+#header-links a {color:#f7941d;padding:0;text-decoration:none;font-size:14px;font-weight:bold;}
+#header-links a:hover,
+#header-links a:focus,
+#header-links a:active{text-decoration:underline;color:#30a4b1;}
+
+/* 头部菜单 */
+.navigation{ background-color:#464646; float: left; margin-bottom:20px; width:100%; position:relative;}
+.navigation ul{ margin:0px; padding:0px; }
+.navigation ul li{list-style:none; float: left; margin: 0; padding: 0; font-weight:bold;}
+.navigation li a{float:left;color:#fff; margin: 0; font-size: 14px; text-decoration: none; padding:20px 30px; }
+.navigation li a:hover { color:#FFFFFF; background-color:#30a4b1; }
+.navigation .current a{background:#30a4b1;padding:20px 30px;}
+
+/**===============================
+           重写侧边栏菜单
+================================*/
+#sidebar{background:#ebebeb;width: 100%;}
+.sidemenu_title,section.secondary_bar {background:#d9d8d8;height: 38px;position: fixed;width: 100%;}
+.sidemenu_title{height:38px;}
+article.breadcrumbs {text-shadow:none;border: none;box-shadow:none;float: left;height: 23px;margin: 4px 1%;padding: 0 10px;}
+.breadcrumbs a.current, .breadcrumbs a.current:hover {text-shadow:none;}
+.breadcrumbs a:link, .breadcrumbs a:visited {text-shadow:none;}
+
+#sidemenu li a {border-bottom: 1px solid #d9d8d8;color: #30a4b1;padding-top:12px;padding-bottom:12px;font-size:13px;}
+#sidemenu li.active a {background: none repeat scroll 0 0 #f7941d;color:#fff;border-radius:0;text-decoration: none;}
+#sidemenu li a:hover,#sidemenu li.active a:hover{color:#fff;background:#30a4b1;border-radius:0;}
+
+/**===============================
+           重写主内容
+================================*/
+
+/* 主内容模块 */
+.module_content {margin: 5px 0px;color: #666;}
+.module {background: #FFFFFF;border:none;border-radius: 0;padding:0px 0px;}
+.module header{background: #464646;border-top-left-radius: 0;border-top-right-radius:0;}
+#main h3{color: #fff;text-shadow: none;}
+.module fieldset p{padding-left:0px;}
+
+.module_content ul{padding:15px 30px;}
+.module_content .operate,.module_content p,.module_content .systemmessage-box,.content-tab-box{padding:10px 20px;}
+.module_content #pagenav{padding:15px 0px;}
+.module_content fieldset p{padding-left:0;}
+.operate_box{height:50px;}
+
+/* 数据列表管理 */
+.tablesorter {border-top: 1px solid #bab9b9; border-right: 1px solid #bab9b9; border-left: 1px solid #bab9b9}
+.tablesorter tr td {border-bottom: 1px solid #bab9b9;}
+.tablesorter thead tr {height: 34px;background:#d9d8d8;cursor:default;}
+.tablesorter td {padding: 15px 10px;}
+.tablesorter tbody .data_odd {background-color:#fff;}
+.tablesorter tbody .data_even {background-color:#f7f7f7;}
+.tablesorter tbody .data_tr {background-color: #f5f5f5;border:1px solid #dddddd;}
+
+/* 滑动条 */
+ul.tabs {border: none;border-radius: none;box-shadow: none;float: right;font-weight: bold;height: 24px;list-style: none ;margin: 3px 10px 0 0;padding: 0;text-shadow: none;}
+ul.tabs li:first-child,  ul.tabs li:first-child a {border-bottom-left-radius: 0;border-top-left-radius: 0;}
+ul.tabs li a {color: #999999;display: block;height: 24px;padding: 0 10px;text-decoration: none;}
+ul.tabs li a:hover {color: #fff;}
+ul.tabs li.active a {color: #fff;}
+html ul.tabs li.active,  html ul.tabs li.active a:hover {box-shadow: none;border-bottom:none;}
+html ul.tabs li.active a {background: none;border-bottom: none;box-shadow: none;color:#30a4b1;}
+html ul.tabs li.active, html ul.tabs li.active a:hover {background: none;border-bottom: none;box-shadow: none;color:#fff;}
+
+/**===============================
+           重写底部
+================================*/
+.module footer{background:none;height:50px;}
+#footer{color:#aaaaaa;margin-top:-5px;font-size:15px;font-weight:bold;}
+#footer a{ color:#f7941d; text-decoration:none;}
+#footer a:hover{ text-decoration:underline; }
+
+/**===============================
+           重写表单及form
+================================*/
+fieldset{background: none;border: none;border-radius:0;}
+
+/* 基本表单 */
+input[type=text],input[type=password]{padding:6px 2px;margin:1px;}
+input[type=button],input[type=submit], input[type=reset],input.alt_btn[type="submit"], input.alt_btn[type="button"],input[type=button].d-state-highlight,input[type=button].btn-success{background: #D0D1D4;border: none;border-radius: 0;box-shadow: 0;cursor: pointer;font-weight: bold;height:30px;padding: 0 10px;text-shadow:none;}
+input.alt_btn[type="submit"], input.alt_btn[type="button"] {background-color:#f7941d;color:#fff; }
+input[type=button],input[type=submit],input[type=reset] {margin:0; padding:5px 20px; border:0px;  font-size:14px;color: #666666;}
+input.alt_btn[type="submit"]:hover, input.alt_btn[type="button"]:hover {background-color: #30a4b1;color: #FFFFFF;}
+
+fieldset input[type="text"], fieldset input[type="password"], fieldset input[type="file"],fieldset textarea {border-radius: 0;box-shadow: 0;display: block;border:1px solid #bab9b9; padding:10px; color:#707070; font-size:14px; }
+fieldset select {border: 1px solid #BBBBBB;height: 40px;margin: 0 10px;padding:10px; color:#707070; font-size:14px; }
+
+/* 对话框按钮分开 */
+input.d-button{margin-right:10px;}
+
+/**===============================
+           重写搜索
+================================*/
+.quick_search{padding-left:15px;}
+.quick_search input[type="text"]{background: none;border-radius: 0;box-shadow: none;}
+
+/**===============================
+           重写全局消息提示
+================================*/
+#main h4.alert_info,#main h4.alert_warning,#main h4.alert_error,#main h4.alert_success{border-radius: 0;border:1px solid #bab9b9; background-color:#f7f7f7;}
+
+/**===============================
+           重写分页条
+================================*/
+#pagenav span.disabled {border-radius: none;padding: 5px 8px;color:#999;}
+#pagenav a {background: none repeat scroll 0 0 #30a4b1;border-radius:none;color: #fff;margin-right: 3px;padding: 5px 8px;}
+#pagenav a:hover {background: none repeat scroll 0 0 #f7941d;color: #FFFFFF;border: 1px solid #f7941d;}
+#pagenav span.current{background-color: #EEEEEE;border: 1px solid #30a4b1;border-radius: none;color: #30a4b1;padding: 5px 8px;}

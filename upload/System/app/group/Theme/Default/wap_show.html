@@ -1,0 +1,27 @@
+<!--<include file="Core_Extend::template('header','wap')">-->
+
+<style type="text/css" id="internalStyle">
+.grouptopic_title{padding: 5px 0 8px 0px;font-size:14px;font-weight:bold;}
+.grouptopic_box{padding: 8px 0 8px 4px;word-wrap: break-word;}
+.grouptopic_extend{padding:5px 5px 5px 0;}
+</style>
+
+	<div id="content">
+		<div class="grouptopic_box">
+			<div class="grouptopic_title">
+				<!--{$arrGrouptopic['grouptopic_title']}-->
+			</div>
+			<div class="grouptopic_content">
+				<!--{$arrGrouptopic['grouptopic_content']|Core_Extend+ubb=false}-->
+			</div>
+			<div class="grouptopic_extend gray_color font_small">
+				<!--{$arrGrouptopic['create_dateline']|Core_Extend+timeFormat}--> by <a href="<!--{:Q::U('wap://space@?id='.$arrGrouptopic['user_id'],array(),true)}-->"><!--{$arrGrouptopic['user_name']}--></a>
+			</div>
+		</div>
+
+		<div class="link"><a href="<!--{:Q::U('wap://public/index')}-->"><!--<lang package='__APPGROUP_APP_LANG__@Template'>-->返回首页<!--</lang>--></a>
+		<span class="pipe">|</span>
+		<a href="<!--{:Q::U('group://wap/index')}-->"><!--<lang package='Template'>-->返回小组<!--</lang>--></a></div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer','wap')">-->

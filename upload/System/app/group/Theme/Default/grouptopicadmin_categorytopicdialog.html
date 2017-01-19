@@ -1,0 +1,12 @@
+	<!--<include file="grouptopicadmin+header" />-->
+		
+		<p>
+			<select name="category_id">
+				<option value="0"><!--<lang package='Template'>-->未分类<!--</lang>--></option>
+				<!--<foreach for=arrGrouptopiccategorys value=arrGrouptopiccategory>-->
+				<option value="<!--{$arrGrouptopiccategory['grouptopiccategory_id']}-->" <!--{if isset($nCategoryid) && $nCategoryid==$arrGrouptopiccategory['grouptopiccategory_id']}-->selected<!--{/if}-->><!--{$arrGrouptopiccategory['grouptopiccategory_name']}--></option>
+				<!--</foreach>-->
+			</select>
+		</p>
+
+	<!--<include file="grouptopicadmin+footer" />-->

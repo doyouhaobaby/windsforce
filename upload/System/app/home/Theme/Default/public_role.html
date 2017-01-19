@@ -1,0 +1,43 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->系统角色<!--</lang>--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">	
+		<div class="grid_12">
+			<div class="tips">
+				<!--<lang package='Template'>-->一个会员可以加入多个角色<!--</lang>-->
+			</div>
+
+			<!--<include file="public+myrbacrolemenu" />-->
+		</div>
+		<div class="clearfix"></div>
+
+		<div class="grid_9">
+			<!--{if !empty($arrRoles)}-->
+			<!--<foreach for=arrRoles value=arrRole>-->
+			<a href="<!--{:Q::U('home://public/myrbac?rid='.$arrRole['role_id'])}-->" class="btn" title="<!--<lang package='Template'>-->角色权限<!--</lang>-->"><!--{$arrRole.role_name}--></a>&nbsp;&nbsp;
+			<!--</foreach>-->
+			<!--{d*else}-->
+			<p><!--<lang package='Template'>-->暂时没有发现任何角色<!--</lang>--></p>
+			<!--{/if}-->
+		</div>
+
+		<div class="grid_3">
+			<ul class="nav-list">
+				<li class="nav-header"><!--<lang package='Template'>-->角色分组<!--</lang>--></li>
+				<li <!--{if empty($nGId)}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://public/role')}-->"><!--<lang package='Template'>-->全部<!--</lang>--></a></li>
+				<!--<foreach for=arrRolegroups value=arrRolegroup>-->
+				<li <!--{if $nGId==$arrRolegroup['rolegroup_id']}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://public/role?gid='.$arrRolegroup['rolegroup_id'])}-->"><!--{$arrRolegroup['rolegroup_title']}-->&nbsp;(<!--{$arrRolegroup['rolegroup_name']}-->)</a></li>
+				<!--</foreach>-->
+			</ul>
+			<div class="clearfix"></div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

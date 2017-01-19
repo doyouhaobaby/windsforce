@@ -1,0 +1,76 @@
+<!--<include file="public+header">-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->个人中心<!--</lang>--></a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->个人后台菜单<!--</lang>--></h3></header>
+			<div class="module_content">
+				<p><!--<lang package='Template'>-->这里可以进行一些管理员自己的简单信息设置<!--</lang>--></p>
+				<table class="tablesorter" cellspacing="0">
+					<thead>
+						<tr>
+							<th width="180px"><!--<lang package='Template'>-->名称<!--</lang>--></th> 
+							<th><!--<lang package='Template'>-->操作<!--</lang>--></th> 
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><!--<lang package='Template'>-->修改资料<!--</lang>--></td> 
+							<td><img src="<!--{:At::path('write.gif')}-->" border="0" alt="" align="absmiddle">&nbsp;<a href="<!--{:Q::U('public/information')}-->" title="<!--<lang package='Template'>-->修改资料<!--</lang>-->" ><!--{$sUserName}--></a></td> 
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->修改密码<!--</lang>--></td> 
+							<td><img src="<!--{:At::path('checked_out.png')}-->" border="0" alt="" align="absmiddle">&nbsp;<a href="<!--{:Q::U('public/password')}-->"><!--<lang package='Template'>-->修改密码<!--</lang>--></a></td> 
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->修改头像<!--</lang>--></td> 
+							<td><a href="<!--{:Q::U('avatar/index')}-->" title="<!--<lang package='Template'>-->修改头像<!--</lang>-->" >
+									<img class="avatar" SRC="<!--{:Core_Extend::avatar( $GLOBALS['___login___']['user_id'],'middle' )}-->" width="120px" height="120px" alt=""/>
+								</a>
+							</td> 
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->登出<!--</lang>--></td> 
+							<td><img src="<!--{:At::path('error.gif')}-->" border="0" alt="" align="absmiddle">
+									&nbsp;<a href="<!--{:Q::U('public/logout')}-->" target="_top"><!--<lang package='Template'>-->登出<!--</lang>-->
+									</a>
+							</td> 
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</article>
+
+		<!--{if APP_NAME==='admin'}-->
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->常用设置<!--</lang>--></h3></header>
+			<div class="module_content">
+				<p><!--<lang package='Template'>-->这里可以进行一些网站基本的一些设置菜单<!--</lang>--></p>
+				<table class="tablesorter" cellspacing="0">
+					<thead>
+						<tr>
+							<th width="180px"><!--<lang package='Template'>-->名称<!--</lang>--></th> 
+							<th><!--<lang package='Template'>-->操作<!--</lang>--></th> 
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><!--<lang package='Template'>-->网站设置<!--</lang>--></td> 
+							<td><img src="<!--{:At::path('setting.gif')}-->" style="margin-right:2px;" />&nbsp;<a href="<!--{:Q::U('option/index')}-->" onclick="currentClass(1);parent.menu.location=Q.U( 'public/fmenu?tag=2&title=<!--<lang package='Template'>-->设置<!--</lang>-->' );return false;"><!--<lang package='Template'>-->网站设置<!--</lang>--></a></td> 
+						</tr>
+						<tr>
+							<td><!--<lang package='Template'>-->更换模板<!--</lang>--></td> 
+							<td><img src="<!--{:At::path('skin.gif')}-->" style="margin-right:2px;"/>&nbsp;<a href="<!--{:Q::U('style/index')}-->"><!--<lang package='Template'>-->更换模板<!--</lang>--></a></td> 
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</article>
+		<!--{/if}-->
+
+<!--<include file="public+footer">-->

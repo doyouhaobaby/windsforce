@@ -1,0 +1,107 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+function option(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'update...' );
+	$("#submit_button").attr("disabled", false);
+	$('.validate')(0).submit();
+}
+
+checkForm(option);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->邮件设置<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->邮件设置<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->为了防止管理员丢失系统登录密码，请确保系统管理员邮件正确<!--</lang>-->&nbsp;<a href="<!--{:Q::U('option/admin')}-->"><!--<lang package='Template'>-->系统管理员邮箱<!--</lang>--></a></li>
+				</ul>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->邮件设置<!--</lang>--></h3>
+				<ul class="tabs">
+					<li class="active"><a href="<!--{:Q::U('mailoption/index')}-->"><!--<lang package='Template'>-->基本设置<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('mailoption/check')}-->"><!--<lang package='Template'>-->邮件发送检测<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('mail/index')}-->"><!--<lang package='Template'>-->邮件列表<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="<!--{:Q::U('mailoption/update_option')}-->" method="post" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="mail_default"><!--<lang package='Template'>-->邮件来源地址<!--</lang>--></label>
+						<input type="text" name="options[mail_default]" id="mail_default" size="40" value="<!--{$arrOptions['mail_default']}-->" class="{email:true}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->当发送邮件不指定邮件来源时，默认使用此地址作为邮件来源<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="mail_sendtype"><!--<lang package='Template'>-->邮件发送方式<!--</lang>--></label>
+						<input id="mail_send" name="options[mail_sendtype]" value="1" <!--{if $arrOptions['mail_sendtype']==1}-->checked="checked"<!--{/if}--> onclick="$WF('hidden1').style.display = 'none';$WF('hidden2').style.display = 'none';" type="radio">&nbsp;<!--<lang package='Template'>-->通过 PHP 函数的 sendmail 发送(推荐此方式)<!--</lang>--><br />
+						<input name="options[mail_sendtype]" value="2" <!--{if $arrOptions['mail_sendtype']==2}-->checked="checked"<!--{/if}--> onclick="$WF('hidden1').style.display = '';$WF('hidden2').style.display = '';" type="radio">&nbsp;<!--<lang package='Template'>-->通过 SOCKET 连接 SMTP 服务器发送(支持 ESMTP 验证)<!--</lang>--><br />
+						<input name="options[mail_sendtype]" value="3" <!--{if $arrOptions['mail_sendtype']==3}-->checked="checked"<!--{/if}--> onclick="$WF('hidden1').style.display = '';$WF('hidden2').style.display = 'none';" type="radio">&nbsp;<!--<lang package='Template'>-->通过 PHP 函数 SMTP 发送 Email(仅 Windows 主机下有效, 不支持 ESMTP 验证)<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->请根据服务器的具体情况来设置适合你的邮件发送方式<!--</lang>--></div>
+					</fieldset>
+					<div id="hidden1" <!--{if $arrOptions['mail_sendtype']==1}-->style="display:none"<!--{/if}-->>
+						<fieldset>
+							<label for="mail_server"><!--<lang package='Template'>-->SMTP 服务器<!--</lang>--></label>
+							<input type="text" name="options[mail_server]" id="mail_server" size="40" value="<!--{$arrOptions['mail_server']}-->"/>
+							<div class="description"><!--<lang package='Template'>-->设置 SMTP 服务器的地址<!--</lang>--></div>
+						</fieldset>
+						<fieldset>
+							<label for="mail_port"><!--<lang package='Template'>-->SMTP 端口<!--</lang>--></label>
+							<input type="text" name="options[mail_port]" id="mail_port" size="60" value="<!--{$arrOptions['mail_port']}-->" class="{required:true,digits:true}"/>
+							<div class="description input_tips"><!--<lang package='Template'>-->设置 SMTP 服务器的端口，默认为 25<!--</lang>--></div>
+							<p class="input_errortips"></p>
+						</fieldset>
+					</div>
+					<div id="hidden2" <!--{if $arrOptions['mail_sendtype']!=2}-->style="display:none"<!--{/if}-->>
+						<fieldset>
+							<label for="mail_auth"><!--<lang package='Template'>-->SMTP 服务器要求身份验证<!--</lang>--></label>
+							<input type="radio" id="mail_auth" name="options[mail_auth]" value="1" <!--{if $arrOptions['mail_auth']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+							<input type="radio" id="" name="options[mail_auth]" value="0" <!--{if $arrOptions['mail_auth']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+							<div class="description"><!--<lang package='Template'>-->如果 SMTP 服务器要求身份验证才可以发信，请选择“是”<!--</lang>--></div>
+						</fieldset>
+						<fieldset>
+							<label for="mail_from"><!--<lang package='Template'>-->发信人邮件地址<!--</lang>--></label>
+							<input type="text" name="options[mail_from]" id="mail_from" size="60" value="<!--{$arrOptions['mail_from']}-->" class="{email:true}"/>
+							<div class="description input_tips"><!--<lang package='Template'>-->如果需要验证, 必须为本服务器的邮件地址。邮件地址中如果要包含用户名，格式为username &lt;user@domain.com&gt;<!--</lang>--></div>
+							<p class="input_errortips"></p>
+						</fieldset>
+						<fieldset>
+							<label for="mail_auth_username"><!--<lang package='Template'>-->SMTP 身份验证用户名<!--</lang>--></label>
+							<input type="text" name="options[mail_auth_username]" id="mail_auth_username" size="60" value="<!--{$arrOptions['mail_auth_username']}-->"/>
+							<div class="description"><!--<lang package='Template'>-->邮件服务器认证用户名<!--</lang>--></div>
+						</fieldset>
+						<fieldset>
+							<label for="mail_auth_password"><!--<lang package='Template'>-->SMTP 身份验证密码<!--</lang>--></label>
+							<input type="password" name="options[mail_auth_password]" id="mail_auth_password" size="60" value="<!--{$arrOptions['mail_auth_password']}-->"/>
+							<div class="description"><!--<lang package='Template'>-->邮件服务器认证用户密码<!--</lang>--></div>
+						</fieldset>
+					</div>
+					<fieldset>
+						<label for="mail_delimiter"><!--<lang package='Template'>-->发信人邮件地址<!--</lang>--></label>
+						<input name="options[mail_delimiter]" <!--{if $arrOptions['mail_delimiter']==1}-->checked="checked"<!--{/if}--> value="1" type="radio">&nbsp;<!--<lang package='Template'>-->使用 CRLF 作为分隔符<!--</lang>-->(<!--<lang package='Template'>-->通常为 Windows 主机<!--</lang>-->)<br />
+						<input name="options[mail_delimiter]" <!--{if $arrOptions['mail_delimiter']==0}-->checked="checked"<!--{/if}--> value="0" type="radio">&nbsp;<!--<lang package='Template'>-->使用 LF 作为分隔符<!--</lang>-->(<!--<lang package='Template'>-->通常为 Unix/Linux 主机<!--</lang>-->)<br />
+						<input name="options[mail_delimiter]" <!--{if $arrOptions['mail_delimiter']==2}-->checked="checked"<!--{/if}--> value="2" type="radio">&nbsp;<!--<lang package='Template'>-->使用 CR 作为分隔符<!--</lang>-->(<!--<lang package='Template'>-->通常为 Mac 主机<!--</lang>-->)
+						<div class="description"><!--<lang package='Template'>-->请根据您邮件服务器的设置调整此参数<!--</lang>--></div>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input id="submit_button" type="submit" class="alt_btn" value="<!--<lang package='Template'>-->发布<!--</lang>-->" />
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->" />
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

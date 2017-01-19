@@ -1,0 +1,17 @@
+<!--<include file="Core_Extend::template('header','wap')">-->
+
+	<div id="content">
+		<!--{if !empty($arrGrouptopics)}-->
+		<!--<foreach for=arrGrouptopics value=arrGrouptopic>-->
+		<div class="content-list">
+			<a href="<!--{:Q::U('group://wap/show?id='.$arrGrouptopic['grouptopic_id'])}-->" title="<!--{$arrGrouptopic['grouptopic_title']}-->"><!--{$arrGrouptopic['grouptopic_title']}--></a>
+		</div>
+		<!--</foreach>-->
+		<!--{d*else}-->
+		<div class="light_box"><!--<lang package='Template'>-->暂时没有发现任何帖子<!--</lang>--></div>
+		<!--{/if}-->
+	</div>
+
+	<!--{$sPageNavbar}-->
+
+<!--<include file="Core_Extend::template('footer','wap')">-->

@@ -1,0 +1,10 @@
+			<div class="grid_2">
+				<ul class="nav nav-list">
+					<li class="nav-header"><!--<lang package='Template'>-->我的好友<!--</lang>--></li>
+					<li <!--{if ACTION_NAME=='index' && !isset($_GET['type'])}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://friend/index')}-->"><!--<lang package='Template'>-->好友列表<!--</lang>--></a></li>
+					<li <!--{if in_array(ACTION_NAME,array('search','searchresult'))}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://friend/search')}-->"><!--<lang package='Template'>-->查找好友<!--</lang>--></a></li>
+					<li <!--{if ACTION_NAME=='mayknow'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://friend/mayknow')}-->"><!--<lang package='Template'>-->可能认识的人<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('home://spaceadmin/index')}-->"><!--<lang package='Template'>-->修改资料<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('home://ucenter/index')}-->"><!--<lang package='Template'>-->返回个人中心<!--</lang>--></a></li>
+				</ul>
+			</div>

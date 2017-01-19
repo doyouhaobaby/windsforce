@@ -1,0 +1,68 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{:Core_Extend::validate()}-->
+<script src="<!--{:__APPPUB__}-->/Js/register.js"></script>
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->用户绑定<!--</lang>--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+		<div class="grid_12">
+			<div class="tips">
+				<img src="<!--{$arrUser['sociauser_img']}-->" />&nbsp;
+				<!--{$arrUser['sociauser_name']}-->,<!--<lang package='Template'>-->欢迎使用<!--</lang>-->&nbsp;<!--{$arrUser['sociauser_vendor']}-->&nbsp;<!--<lang package='Template'>-->登录本站，初次使用需要绑定一下帐号<!--</lang>-->
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		
+		<div class="grid_7">
+			<form class="form-horizontal" method='post' name="register_form" id="register_form">
+				<fieldset>
+					<div class="control-group">
+						<div class="controls">
+							<div id="result" class="none"></div>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="user_name"><!--<lang package='Template'>-->用户名<!--</lang>--><em class="red">*</em></label>
+						<div class="controls">
+							<input class="input-xlarge" id="user_name" name="user_name" type="text" value="<!--{$arrUser['sociauser_name']}-->">
+							<span></span>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="user_nikename"><!--<lang package='Template'>-->用户昵称<!--</lang>--></label>
+						<div class="controls">
+							<input class="input-xlarge" id="user_nikename" name="user_nikename" type="text" value="<!--{$arrUser['sociauser_name']}-->">
+							<span></span>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="user_email">Email<em class="red">*</em></label>
+						<div class="controls">
+							<input class="input-xlarge" id="user_email" name="user_email" type="text" value="">
+							<span></span>
+						</div>
+					</div>
+					<div class="form-actions">
+						<input type="hidden" name="user_password" value="<!--{$sRandPassword}-->">
+						<input type="hidden" name="user_password_confirm" value="<!--{$sRandPassword}-->">
+						<input type="hidden" name="ajax" value="1">
+						<input type="hidden" name="sociabind" value="1">
+						<button type="submit" class="btn btn-large width_300" id="register_submit"><!--<lang package='__COMMON_LANG__@Common'>-->绑定新用户<!--</lang>--></button>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		<div class="grid_5">
+			<h3><!--<lang package='Template'>-->已有帐号？请直接登录绑定<!--</lang>--></h3>
+			<p><a href="<!--{:Q::U('home://public/login')}-->" class="btn"><!--<lang package='Template'>-->用户登录<!--</lang>--></a></p>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

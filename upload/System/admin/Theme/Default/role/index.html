@@ -1,0 +1,221 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+function app(id){
+	window.location.href=Q.U('app?group_id='+id);
+}
+
+function user(id){
+	window.location.href=Q.U('user?id='+id);
+}
+
+function quickUserrole(){
+	window.location.href=Q.U('quickuserrole');
+}
+
+function changeRolegroup(oObj,id){
+	var keyValue;
+	var rolegroup_id=oObj.value;
+	if(id){
+		keyValue=id;
+	}else{
+		keyValue=getSelectValues();
+	}
+	
+	if(!keyValue){
+		windsforceAlert(Q.L('请选择操作项','Common'),'',3);
+		return false;
+	}
+	
+	window.location.href=Q.U('change_rolegroup?id='+keyValue+'&rolegroup_id='+rolegroup_id);
+}
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->角色列表<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->角色列表<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->角色是一个抽象的概念，不是具体的个人，它本质上反映一种社会关系，具体的个人是一定角色的扮演者<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->利用RBAC来管理程序权限是一个非常方便的权限管理系统<!--</lang>--></li>
+				</ul>
+			</div>
+			<div class="module_content">
+				<form method='get' action="<!--{:Q::U( 'role/index' )}-->" class="quick_search">
+					<table cellspacing="3" cellpadding="3">
+						<tr>
+							<th><!--<lang package='Template'>-->状态<!--</lang>--></th>
+							<td><select name="role_status">
+									<option value="" <!--{if !isset($nIsStatus)}-->selected<!--{/if}-->><!--<lang package='Template'>-->全部<!--</lang>--></option>
+									<option value="1" <!--{if isset($nIsStatus) && $nIsStatus==1}-->selected<!--{/if}-->><!--<lang package='Template'>-->已审<!--</lang>--></option>
+									<option value="0" <!--{if isset($nIsStatus) && $nIsStatus===0}-->selected<!--{/if}-->><!--<lang package='Template'>-->待审<!--</lang>--></option>
+								</select>
+							</td>
+							<th><!--<lang package='Template'>-->结果排序<!--</lang>--></th>
+							<td>
+								<select name="order_">
+									<option value="" <!--{if !Q+G('order_')}-->selected<!--{/if}-->><!--<lang package='Template'>-->排序字段<!--</lang>--></option>
+									<option value="role_id" <!--{if Q+G('order_')=='role_id'}-->selected<!--{/if}-->><!--<lang package='Template'>-->编号<!--</lang>--></option>
+									<option value="role_status" <!--{if Q+G('order_')=='role_status'}-->selected<!--{/if}-->><!--<lang package='Template'>-->状态<!--</lang>--></option>
+									<option value="create_dateline" <!--{if Q+G('order_')=='create_dateline'}-->selected<!--{/if}-->><!--<lang package='Template'>-->添加时间<!--</lang>--></option>
+									<option value="role_name" <!--{if Q+G('order_')=='role_name'}-->selected<!--{/if}-->><!--<lang package='Template'>-->角色名<!--</lang>--></option>
+								</select>
+								<select name="sort_">
+									<option value="" <!--{if !Q+G('sort_')}-->selected<!--{/if}-->><!--<lang package='Template'>-->默认排序<!--</lang>--></option>
+									<option value="desc" <!--{if Q+G('sort_')=='desc'}-->selected<!--{/if}-->><!--<lang package='Template'>-->递增<!--</lang>--></option>
+									<option value="asc" <!--{if Q+G('sort_')=='asc'}-->selected<!--{/if}-->><!--<lang package='Template'>-->递减<!--</lang>--></option>
+								</select>
+								<select name="perpage">
+									<option value="" <!--{if !Q+G('perpage')}-->selected<!--{/if}-->><!--<lang package='Template'>-->默认每页数量<!--</lang>--></option>
+									<option value="10" <!--{if Q+G('perpage')==10}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(10)</option>
+									<option value="20" <!--{if Q+G('perpage')==20}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(20)</option>
+									<option value="50" <!--{if Q+G('perpage')==50}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(50)</option>
+									<option value="100" <!--{if Q+G('perpage')==100}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(100)</option>
+									<option value="200" <!--{if Q+G('perpage')==200}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(200)</option>
+									<option value="500" <!--{if Q+G('perpage')==500}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(500)</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th><!--<lang package='Template'>-->角色分组<!--</lang>--></th>
+							<td>
+								<select name="rolegroup_id" id="rolegroup_id">
+									<option value="" <!--{if Q+G('rolegroup_id')===null || Q+G('rolegroup_id')==''}-->selected<!--{/if}-->><!--<lang package='Template'>-->选择分组<!--</lang>--></option>
+									<!--<volist name="arrRolegroup" id="value">-->
+									<option value="<!--{$value['rolegroup_id']}-->" <!--{if isset($_GET['rolegroup_id']) && $_GET['rolegroup_id']!='' && $_GET['rolegroup_id']==$value['rolegroup_id']}-->selected<!--{/if}-->><!--{$value['rolegroup_title']}--></option>
+									<!--</volist>-->
+								</select>
+							</td>
+							<th><!--<lang package='Template'>-->编号<!--</lang>--></th>
+							<td><input type="text" name="role_id" title="<!--<lang package='Template'>-->编号<!--</lang>-->" value="<!--{:Q::G('role_id')}-->" onkeyup="this.value = this.value.replace(/[^-0-9]/g, '');" />
+							</td>
+						</tr>
+						<tr>
+							<td colspan="4">
+								<input type="text" name="role_name" title="<!--<lang package='Template'>-->角色名<!--</lang>-->" value="<!--{:Q::G('role_name')}-->" class="quicksearch_text">
+								&nbsp;<input type="submit" id="" value="<!--<lang package='Template'>-->查询<!--</lang>-->" onclick="" class="alt_btn">
+							</td>
+						</tr>
+					</table>
+					<!--{if isset($bIsRecycleList)}-->
+					<input type="hidden" name="recycle_" value="1"/>
+					<!--{/if}-->
+					<input type="hidden" name="c" value="<!--{:MODULE_NAME}-->"/>
+					<input type="hidden" name="a" value="<!--{:ACTION_NAME}-->"/>
+				</form>
+			</div>
+		</article>
+		
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><a href="<!--{:Q::U('role/index')}-->"><!--<lang package='Template'>-->角色列表<!--</lang>--></a>
+					<!--{if isset($bIsRecycleList)}-->&nbsp;<sup><a href="<!--{:Q::U(MODULE_NAME.'/index?recycle_=1')}-->" title="<!--<lang package='Template'>-->回收站<!--</lang>-->" style="color:red;">[<!--<lang package='Template'>-->回收站<!--</lang>-->]</a></sup>
+					<!--{/if}-->
+				</h3>
+				<ul class="tabs">
+					<!--<volist name="arrRolegroup" id="value">-->
+					<li class="<!--{if isset($_GET['rolegroup_id']) && ($_GET['rolegroup_id']===$value['rolegroup_id'] || (!$_GET['rolegroup_id']) && !$value['rolegroup_id'])}-->active<!--{/if}-->"><a href="<!--{:Q::U('role/index?rolegroup_id='.$value['rolegroup_id'].'&sort_=asc' )}-->"><!--{$value['rolegroup_title']}--></a></li>
+					<!--</volist>-->
+					<li class="<!--{if !isset($_GET['rolegroup_id'])}-->active<!--{/if}-->"><a href="<!--{:Q::U('role/index?sort_=asc' )}-->"><!--<lang package='Template'>-->所有<!--</lang>--></a></li>
+					<!--{ifQ+C('APP_DEVELOP')}-->
+					<!--{if isset($bIsRecycleList)}-->
+					<li><a class="tab_clearrecycle" href="javascript:void(0);" onclick="clearRecycle()"><!--<lang package='Template'>-->清空回收站<!--</lang>--></a></li>
+					<!--{/if}-->
+					<li><a class="tab_add" href="javascript:void(0);" onclick="add()"><!--<lang package='Template'>-->新增<!--</lang>--></a></li>
+					<li><a class="tab_edit" href="javascript:void(0);" onclick="edit()"><!--<lang package='Template'>-->编辑<!--</lang>--></a></li>
+					<li><a href="javascript:void(0);" onclick="quickUserrole()"><!--<lang package='Template'>-->快捷用户角色授权<!--</lang>--></a></li>
+					<li><a class="tab_delete" href="javascript:void(0);" onclick="foreverdel<!--{if isset($bIsRecycleList)}-->Deep<!--{/if}-->()"><!--{if isset($bIsRecycleList)}--><!--<lang package='Template'>-->彻底删除<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->删除<!--</lang>--><!--{/if}--></a></li>
+					<!--{/if}-->
+					<li><!--{if isset($bIsRecycleList)}-->
+						<a class="tab_list" href="<!--{:Q::U(MODULE_NAME.'/index')}-->" title="<!--<lang package='Template'>-->列表<!--</lang>-->"><img src="<!--{:At::path('icn_list.png')}-->"/></a>
+						<!--{d*else}-->
+						<a class="tab_recycle" href="<!--{:Q::U(MODULE_NAME.'/index?recycle_=1')}-->" title="<!--<lang package='Template'>-->回收站<!--</lang>-->"><img src="<!--{:At::path('icn_recycle.png')}-->"/></a>
+						<!--{/if}-->
+					</li>
+				</ul>
+			</header>
+			<div class="module_content">
+				<table class="tablesorter" cellspacing="0" id="checkList">
+					<thead>
+						<tr>
+							<th width="20"><input type="checkbox" onclick="checkAll('checkList')"></th> 
+							<th width="85"><a href="javascript:sortBy('role_id','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('role_id')}-->><!--<lang package='Template'>-->编号<!--</lang>--></a></th> 
+							<th><a href="javascript:sortBy('role_name','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('role_name')}-->><!--<lang package='Template'>-->角色名<!--</lang>--></a></th>
+							<th width="140"><a href="javascript:sortBy('role_parentid','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('role_parentid')}-->><!--<lang package='Template'>-->上级角色<!--</lang>--></a></th>
+							<th width="180"><a href="javascript:sortBy('rolegroup_id','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('rolegroup_id')}-->><!--<lang package='Template'>-->角色分组<!--</lang>--></a></th>
+							<th width="50"><a href="javascript:sortBy('role_status','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('role_status')}-->><!--<lang package='Template'>-->状态<!--</lang>--></a></th>
+							<th width="140"><!--<lang package='Template'>-->操作<!--</lang>--></th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--{if !empty($arrLists)}-->
+						<!--<foreach for=arrLists>-->
+						<tr id="datalist-<!--{$value.role_id}-->">
+							<td><input type="checkbox" name="key" value="<!--{$value.role_id}-->" <!--{if $TheController->is_system_role($value['role_id'])}-->disabled="disabled"<!--{/if}-->></td>
+							<td><!--{$value.role_id}--></td>
+							<td><a href="javascript:edit('<!--{$value.role_id}-->')"><!--{$value.role_name}--></a>
+								<!--{ifQ+C('APP_DEVELOP')}-->
+								<div class="row-actions">
+									<span class='edit'><a href="javascript:edit('<!--{$value.role_id}-->')"><!--<lang package='Template'>-->编辑<!--</lang>--></a>|</span>
+									<span class='delete'><a href="javascript:foreverdel<!--{if isset($bIsRecycleList)}-->Deep<!--{/if}-->('<!--{$value.role_id}-->');"><!--{if isset($bIsRecycleList)}--><!--<lang package='Template'>-->彻底删除<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->删除<!--</lang>--><!--{/if}--></a>|</span>
+									<span class='hide'><!--<if condition="$value['role_status'] eq 1" >--><a href="javascript:forbid('<!--{$value.role_id}-->')"><!--<lang package='Template'>-->禁用<!--</lang>--></a>
+									<!--<else/>--><a href="javascript:resume('<!--{$value.role_id}-->')"><!--<lang package='Template'>-->恢复<!--</lang>--></a><!--</if>--></span>
+								</div>
+								<!--{/if}-->
+							</td>
+							<td><!--{$TheController:get_parent_role( $value['role_parentid'] )}--></td>
+							<td><!--<if condition="!empty( $value['rolegroup_name'] )">--><a href="<!--{:Q::U('role/index?rolegroup_id='.$value['rolegroup_id'].'&sort_=asc')}-->"><!--{$value['rolegroup_title']}-->-<!--{$value['rolegroup_name']}--></a><!--<else/>--><!--<lang package='Template'>-->未分组<!--</lang>--><!--</if>--></td>
+							<td><!--{:Admin_Extend::getStatus($value['role_status'])}--></td>
+							<td><!--{ifQ+C('APP_DEVELOP')}-->
+								<!--<if condition="$value['role_status'] eq 1" >-->
+								<a href="javascript:forbid('<!--{$value.role_id}-->')"><input type="image" src="<!--{:At::path('icn_trash.png')}-->" title="<!--<lang package='Template'>-->禁用<!--</lang>-->"></a>
+								<!--<else/>-->
+								<a href="javascript:resume('<!--{$value.role_id}-->')"><input type="image" src="<!--{:At::path('icn_jump_back.png')}-->" title="<!--<lang package='Template'>-->恢复<!--</lang>-->"></a>
+								<!--</if>-->
+								&nbsp;<a href="javascript:edit('<!--{$value.role_id}-->')"><input type="image" src="<!--{:At::path('icn_edit.png')}-->" title="<!--<lang package='Template'>-->编辑<!--</lang>-->"></a><br/>
+								<!--{/if}-->
+								<a href="javascript:app('<!--{$value.role_id}-->')"><!--<lang package='Template'>-->授权<!--</lang>--></a>
+								<!--{if $value['role_id']!=4}-->
+								&nbsp;<a href="javascript:user('<!--{$value.role_id}-->')"><!--<lang package='Template'>-->用户<!--</lang>--></a>
+								&nbsp;<a href="<!--{:Q::U('role/quickuserrole?rid='.$value['role_id'])}-->"><!--<lang package='Template'>-->快捷用户<!--</lang>--></a>
+								<!--{/if}-->
+							</td>
+						</tr>
+						<!--</foreach>-->
+						<!--{d*else}-->
+						<tr>
+							<td colspan="<!--{ifQ+C('APP_DEVELOP')}-->7<!--{d*else}-->6<!--{/if}-->"><!--<lang package='Template'>-->暂时没有发现任何记录<!--</lang>--></td>
+						</tr>
+						<!--{/if}-->
+					</tbody>
+				</table>
+			</div>
+
+			<div class="module_content operate_box">
+				<div class="left">
+					<!--{$sPageNavbar}-->
+				</div>
+				<!--{ifQ+C('APP_DEVELOP')}-->
+				<div class="right operate" style="text-align:right;width:450px;">
+					<!--{if isset($bIsRecycleList)}--><input type="button" name="clear_recycle" value="<!--<lang package='Template'>-->清空回收站<!--</lang>-->" onclick="clearRecycle()">&nbsp;<!--{/if}-->
+					<input type="button" name="add" value="<!--<lang package='Template'>-->新增<!--</lang>-->" onclick="add()" class="alt_btn">&nbsp;
+					<input type="button" name="edit" value="<!--<lang package='Template'>-->编辑<!--</lang>-->" onclick="edit()" class="alt_btn">&nbsp;
+					<input type="button" name="delete" value="<!--{if isset($bIsRecycleList)}--><!--<lang package='Template'>-->彻底删除<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->删除<!--</lang>--><!--{/if}-->" onclick="foreverdel<!--{if isset($bIsRecycleList)}-->Deep<!--{/if}-->()" class="alt_btn">&nbsp;
+					<select name="rolegroup" id="rolegroup" onChange="changeRolegroup(this);">
+						<option value="0">-<!--<lang package='Template'>-->移动角色分组<!--</lang>-->-</option>
+						<!--<volist name="arrRolegroup" id="value">-->
+						<option value="<!--{$value['rolegroup_id']}-->" <!--{if isset($_GET['rolegroup_id']) && ($_GET['rolegroup_id']===$value['rolegroup_id'] || (!$_GET['rolegroup_id']) && !$value['rolegroup_id'])}-->selected<!--{/if}-->><!--{$value['rolegroup_title']}--></option>
+						<!--</volist>-->
+					</select>
+				</div>
+				<!--{/if}-->
+				<div class="clearfix"></div>
+			</div>
+		</article>
+
+<!--<include file="public+footer">-->

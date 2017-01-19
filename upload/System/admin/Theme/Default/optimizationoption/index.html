@@ -1,0 +1,155 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+$(document).ready(function() {
+	$("#option_tab ul").idTabs();
+});
+
+function option(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'update...' );
+	$("#submit_button").attr("disabled", false);
+	$('.validate')(0).submit();
+}
+
+checkForm(option);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->性能优化<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->性能优化<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->设置在线统计的时间间隔，以及最大在线人数的限制<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->性能优化<!--</lang>--></h3>
+			</header>
+			<form action="<!--{:Q::U('optimizationoption/update_option')}-->" method="post" class="validate">
+				<div class="module_content">
+					<div id="option_tab" class="windsforce_tab">
+						<div class="windsforce_tabtitlebox">
+							<ul class="windsforce_tabtitle">
+								<li><a href="#tab1"><!--<lang package='Template'>-->在线统计<!--</lang>--></a></li>
+								<li><a href="#tab2"><!--<lang package='Template'>-->杂项优化<!--</lang>--></a></li>
+							</ul>
+						</div>
+						<div id="tab1" class="windsforce_tabcontent">
+							<fieldset class="fieldset_bordernone">
+								<label for="online_on"><!--<lang package='Template'>-->是否开启在线统计<!--</lang>--></label>
+								<input type="radio" id="online_on" name="options[online_on]" value="1" <!--{if $arrOptions['online_on']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+								<input type="radio" id="" name="options[online_on]" value="0" <!--{if $arrOptions['online_on']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+								<div class="description"><!--<lang package='Template'>-->关闭本功能后系统不再统计在线数据，将节省很大的开销<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="online_keeptime"><!--<lang package='Template'>-->在线保持时间(分钟)<!--</lang>--></label>
+								<input type="text" name="options[online_keeptime]" id="online_keeptime" size="60" value="<!--{$arrOptions['online_keeptime']}-->" class="{required:true,digits:true,min: 30}"/>
+								<div class="description input_tips"><!--<lang package='Template'>-->网站统计在线人数的延迟时间<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="online_mostnum"><!--<lang package='Template'>-->网站最大在线人数<!--</lang>--></label>
+								<input type="text" name="options[online_mostnum]" id="online_mostnum" size="60" value="<!--{$arrOptions['online_mostnum']}-->" class="{required:true,digits:true,min: 0}"/>
+								<div class="description input_tips"><!--<lang package='Template'>-->超过该限制之后，访客暂时无法访问论坛，填写0为无限制<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="online_commonshowip"><!--<lang package='Template'>-->系统全局是否显示访问IP地址<!--</lang>--></label>
+								<input type="radio" id="online_commonshowip" name="options[online_commonshowip]" value="1" <!--{if $arrOptions['online_commonshowip']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+								<input type="radio" id="" name="options[online_commonshowip]" value="0" <!--{if $arrOptions['online_commonshowip']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+								<div class="description"><!--<lang package='Template'>-->如果开启后，你将看到用户的在线IP地址<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="online_indexon"><!--<lang package='Template'>-->是否开启首页在线信息<!--</lang>--></label>
+								<input type="radio" id="online_indexon" name="options[online_indexon]" value="1" <!--{if $arrOptions['online_indexon']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+								<input type="radio" id="" name="options[online_indexon]" value="0" <!--{if $arrOptions['online_indexon']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+								<div class="description"><!--<lang package='Template'>-->如果网站刚开始运营人气不佳时，建议关闭本功能<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="online_indexmost"><!--<lang package='Template'>-->网站首页详细在线列表人数<!--</lang>--></label>
+								<input type="text" name="options[online_indexmost]" id="online_indexmost" size="60" value="<!--{$arrOptions['online_indexmost']}-->" class="{required:true,digits:true,min: 0}"/>
+								<div class="description input_tips"><!--<lang package='Template'>-->在首页显示的详细在线列表的人数，0则只显示在线统计人数，而不显示详细在线列表<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="online_indexgueston"><!--<lang package='Template'>-->首页详细在线列表人数是否包含游客<!--</lang>--></label>
+								<input type="radio" id="online_indexgueston" name="options[online_indexgueston]" value="1" <!--{if $arrOptions['online_indexgueston']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+								<input type="radio" id="" name="options[online_indexgueston]" value="0" <!--{if $arrOptions['online_indexgueston']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+								<div class="description"><!--<lang package='Template'>-->如果游客过多，建议关闭<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="online_indexshowip"><!--<lang package='Template'>-->首页详细在线列表人数是否显示访问IP地址<!--</lang>--></label>
+								<input type="radio" id="online_indexshowip" name="options[online_indexshowip]" value="1" <!--{if $arrOptions['online_indexshowip']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+								<input type="radio" id="" name="options[online_indexshowip]" value="0" <!--{if $arrOptions['online_indexshowip']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+								<div class="description"><!--<lang package='Template'>-->如果开启后，你将看到用户的在线IP地址<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="online_detailon"><!--<lang package='Template'>-->详细在线列表页面是否开启<!--</lang>--></label>
+								<input type="radio" id="online_detailon" name="options[online_detailon]" value="1" <!--{if $arrOptions['online_detailon']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+								<input type="radio" id="" name="options[online_detailon]" value="0" <!--{if $arrOptions['online_detailon']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+								<div class="description"><!--<lang package='Template'>-->本页面和首页是分开的，单独控制<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="online_list_num"><!--<lang package='Template'>-->网站详细在线列表每页数量<!--</lang>--></label>
+								<input type="text" name="options[online_list_num]" id="online_list_num" size="60" value="<!--{$arrOptions['online_list_num']}-->" class="{required:true,digits:true,min: 10,max:100}"/>
+								<div class="description input_tips"><!--<lang package='Template'>-->用户在线列表，这个可以设置大一点<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="online_listshowip"><!--<lang package='Template'>-->详细在线列表人数是否显示访问IP地址<!--</lang>--></label>
+								<input type="radio" id="online_listshowip" name="options[online_listshowip]" value="1" <!--{if $arrOptions['online_listshowip']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+								<input type="radio" id="" name="options[online_listshowip]" value="0" <!--{if $arrOptions['online_listshowip']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+								<div class="description"><!--<lang package='Template'>-->如果开启后，你将看到用户的在线IP地址<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="online_stealtholtime"><!--<lang package='Template'>-->隐身会员是否统计其在线时间<!--</lang>--></label>
+								<input type="radio" id="online_stealtholtime" name="options[online_stealtholtime]" value="1" <!--{if $arrOptions['online_stealtholtime']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+								<input type="radio" id="" name="options[online_stealtholtime]" value="0" <!--{if $arrOptions['online_stealtholtime']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+								<div class="description"><!--<lang package='Template'>-->我们建议开启，不然可能影响会员的积极性<!--</lang>--></div>
+							</fieldset>
+						</div>
+						<div id="tab2" class="windsforce_tabcontent">
+							<fieldset class="fieldset_bordernone">
+								<label for="feed_keep_time"><!--<lang package='Template'>-->动态feed保存时间<!--</lang>--></label>
+								<select name="options[feed_keep_time]" id="feed_keep_time">
+									<option value="3600" <!--{if $arrOptions['feed_keep_time']==3600}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一小时<!--</lang>--></option>
+									<option value="86400" <!--{if $arrOptions['feed_keep_time']==86400}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一天<!--</lang>--></option>
+									<option value="604800" <!--{if $arrOptions['feed_keep_time']==604800}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一星期<!--</lang>--></option>
+									<option value="2592000" <!--{if $arrOptions['feed_keep_time']==2592000}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一月<!--</lang>--></option>
+									<option value="31536000" <!--{if $arrOptions['feed_keep_time']==31536000}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一年<!--</lang>--></option>
+								</select>
+								<div class="description"><!--<lang package='Template'>-->这里的时间为动态feed保存时间，如果为一星期，那么超过一星期的动态会被系统自动删除<!--</lang>--></div>
+							</fieldset>
+							<fieldset>
+								<label for="notice_keep_time"><!--<lang package='Template'>-->提醒notice保存时间<!--</lang>--></label>
+								<select name="options[notice_keep_time]" id="notice_keep_time">
+									<option value="3600" <!--{if $arrOptions['notice_keep_time']==3600}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一小时<!--</lang>--></option>
+									<option value="86400" <!--{if $arrOptions['notice_keep_time']==86400}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一天<!--</lang>--></option>
+									<option value="604800" <!--{if $arrOptions['notice_keep_time']==604800}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一星期<!--</lang>--></option>
+									<option value="2592000" <!--{if $arrOptions['notice_keep_time']==2592000}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一月<!--</lang>--></option>
+									<option value="31536000" <!--{if $arrOptions['notice_keep_time']==31536000}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一年<!--</lang>--></option>
+								</select>
+								<div class="description"><!--<lang package='Template'>-->这里的时间为提醒notice保存时间，如果为一星期，那么超过一星期的提醒会被系统自动删除<!--</lang>--></div>
+							</fieldset>
+						</div>
+					</div>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input id="submit_button" type="submit" class="alt_btn" value="<!--<lang package='Template'>-->发布<!--</lang>-->" />
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->" />
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

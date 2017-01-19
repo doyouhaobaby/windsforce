@@ -1,0 +1,102 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+$(document).ready(function() {
+	$("#uploadoption_tab ul").idTabs();
+});
+
+function option(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'update...' );
+	$("#submit_button").attr("disabled", false);
+	$('.validate')(0).submit();
+}
+
+checkForm(option);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->相册设置<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->相册设置<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->相册设置<!--</lang>--></h3>
+				<ul class="tabs">
+					<li><a href="<!--{:Q::U('uploadoption/index')}-->"><!--<lang package='Template'>-->基本设置<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('uploadoption/avatar')}-->"><!--<lang package='Template'>-->头像设置<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('uploadoption/show')}-->"><!--<lang package='Template'>-->媒体显示<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('uploadoption/ubb')}-->"><!--<lang package='Template'>-->Ubb设置<!--</lang>--></a></li>
+					<li class="active"><a href="<!--{:Q::U('uploadoption/attachment')}-->"><!--<lang package='Template'>-->相册<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="<!--{:Q::U('uploadoption/update_option')}-->" method="post" class="validate">
+				<div class="module_content"></div>
+				<div class="module_content">
+					<div id="uploadoption_tab" class="windsforce_tab">
+						<div class="windsforce_tabtitlebox">
+							<ul class="windsforce_tabtitle">
+								<li><a href="#tab1"><!--<lang package='Template'>-->基本<!--</lang>--></a></li>
+								<li><a href="#tab2"><!--<lang package='Template'>-->对话框<!--</lang>--></a></li>
+							</ul>
+						</div>
+
+						<div id="tab1" class="windsforce_tabcontent">
+							<fieldset class="fieldset_bordernone">
+								<label for="attachment_myattachmentnum"><!--<lang package='Template'>-->我的附件每页列表数量<!--</lang>--></label>
+								<input type="text" name="options[attachment_myattachmentnum]" id="attachment_myattachmentnum" size="60" value="<!--{$arrOptions['attachment_myattachmentnum']}-->" class="{required:true,digits:true,min:12,max:50}"/>
+								<div class="description input_tips"><!--<lang package='Template'>-->这里为相册中我的个人附件的每页分页数量<!--</lang>-->
+								</div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="attachment_mycategorynum"><!--<lang package='Template'>-->我的专辑每页列表数量<!--</lang>--></label>
+								<input type="text" name="options[attachment_mycategorynum]" id="attachment_mycategorynum" size="60" value="<!--{$arrOptions['attachment_mycategorynum']}-->" class="{required:true,digits:true,min:8,max:50}"/>
+								<div class="description input_tips"><!--<lang package='Template'>-->这里为相册中我的个人专辑的每页分页数量<!--</lang>-->
+								</div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="attachment_showimgnum"><!--<lang package='Template'>-->照片展示前后读取数量<!--</lang>--></label>
+								<input type="text" name="options[attachment_showimgnum]" id="attachment_showimgnum" size="60" value="<!--{$arrOptions['attachment_showimgnum']}-->" class="{required:true,digits:true,min:5,max:50}"/>
+								<div class="description input_tips"><!--<lang package='Template'>-->前台相片展示中的相关幻灯片前后照片读取数量<!--</lang>-->
+								</div>
+								<p class="input_errortips"></p>
+							</fieldset>
+						</div>
+						<div id="tab2" class="windsforce_tabcontent">
+							<fieldset class="fieldset_bordernone">
+								<label for="attachment_dialogmyattachmentnum"><!--<lang package='Template'>-->媒体对话框我的附件每页列表数量<!--</lang>--></label>
+								<input type="text" name="options[attachment_dialogmyattachmentnum]" id="attachment_dialogmyattachmentnum" size="60" value="<!--{$arrOptions['attachment_dialogmyattachmentnum']}-->" class="{required:true,digits:true,min:12,max:50}"/>
+								<div class="description input_tips"><!--<lang package='Template'>-->这里为媒体管理器中我的个人附件的每页分页数量<!--</lang>-->
+								</div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="attachment_dialogmycategorynum"><!--<lang package='Template'>-->媒体对话框我的专辑每页列表数量<!--</lang>--></label>
+								<input type="text" name="options[attachment_dialogmycategorynum]" id="attachment_dialogmycategorynum" size="60" value="<!--{$arrOptions['attachment_dialogmycategorynum']}-->" class="{required:true,digits:true,min:12,max:50}"/>
+								<div class="description input_tips"><!--<lang package='Template'>-->这里为媒体管理器中我的个人专辑的每页分页数量<!--</lang>-->
+								</div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="attachment_dialog_full"><!--<lang package='Template'>-->媒体对话框是否直接插入全路径<!--</lang>--></label>
+								<input type="radio" id="attachment_dialog_full" name="options[attachment_dialog_full]" value="1" <!--{if $arrOptions['attachment_dialog_full']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+								<input type="radio" id="" name="options[attachment_dialog_full]" value="0" <!--{if $arrOptions['attachment_dialog_full']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+								<div class="description"><!--<lang package='Template'>-->选择全路径插入可以减少不必要的数据库查询开销<!--</lang>--></div>
+							</fieldset>
+						</div>
+					</div>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input id="submit_button" type="submit" class="alt_btn" value="<!--<lang package='Template'>-->发布<!--</lang>-->" />
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->" />
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

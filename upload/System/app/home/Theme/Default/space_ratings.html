@@ -1,0 +1,49 @@
+<!--<include file="Core_Extend::template('header')" />-->
+	
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->系统等级<!--</lang>--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+		<div class="grid_9">
+			<div class="tips">
+				<!--<lang package='Template'>-->系统等级积分规则如下，只有用户的经验值达到该数字之间即可获得相应的等级。<!--</lang>--><br/>
+				<!--<lang package='Template'>-->等级代表了用户融入社区，了解的程度。<!--</lang>-->
+			</div>
+			
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th width="50px"><!--<lang package='Template'>-->等级ID<!--</lang>--></th>
+						<th><!--<lang package='Template'>-->等级名字<!--</lang>--></th>
+						<th width="150px"><!--<lang package='Template'>-->等级积分<!--</lang>--></th>
+					</tr>
+				</thead>
+				<tbody>
+					<!--<foreach for=arrRatings value=arrRating>-->
+					<tr>
+						<td><!--{$arrRating['rating_id']}--></td>
+						<td><!--{$arrRating['rating_name']}-->&nbsp;<img src="<!--{$arrRating['rating_icon']}-->"/>&nbsp;<!--{if $arrRating['rating_nikename']}-->&nbsp;(<!--{$arrRating['rating_nikename']}-->)<!--{/if}--></td>
+						<td><span class="badge"><!--{$arrRating['rating_creditstart']}--></span> - <span class="badge badge-success"><!--{$arrRating['rating_creditend']}--></span></td>
+					</tr>
+				</tbody>
+				<!--</foreach>-->
+			</table>
+		</div>
+
+		<div class="grid_3">
+			<h4><!--<lang package='Template'>-->等级分组<!--</lang>--></h4>
+			<p><ul class="nav-list">
+				<li <!--{if empty($nCId)}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://space/ratings')}-->"><!--<lang package='Template'>-->全部<!--</lang>--></a></li>
+				<!--<foreach for=arrRatinggroups value=oRatinggroup>-->
+				<li <!--{if $nCId==$oRatinggroup['ratinggroup_id']}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://space/ratings?cid='.$oRatinggroup['ratinggroup_id'])}-->"><!--{$oRatinggroup['ratinggroup_title']}-->&nbsp;(<!--{$oRatinggroup['ratinggroup_name']}-->)</a></li>
+				<!--</foreach>-->
+			</ul></p>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

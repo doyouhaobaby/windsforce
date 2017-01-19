@@ -1,0 +1,30 @@
+<td valign="top">
+	<select name="access" id="access" size="15" style="width:150px;height:200px;">
+		<!--<foreach for=arrAccessList>-->
+		<option value="<!--{$value['node_id']}-->"><!--{$value['node_name']}--></option>
+		<!--</foreach>-->
+	</select>
+</td>
+<td>
+	<input type="hidden" name="node_level" id="node_level" value="<!--{$nNodeLevel}-->">
+	<input type="hidden" name="node_parentid" id="node_parentid" value="0">
+	<p><input type="button" value="<!--<lang package='Template'>-->确定<!--</lang>-->" onclick="ok()" class="alt_btn" /></p>
+	<p><input type="button" value="<!--<lang package='Template'>-->取消<!--</lang>-->" onclick="ok(false)" class="alt_btn" /></p>
+</td>
+<!--{script}-->
+function ok(val){
+	if(val!=false){
+		var oObj = $WF('access');
+		oOptionObj = oObj.getElementsByTagName('option');
+		var nJ=0;
+		for(var nI=0;nI< oOptionObj.length;nI++){
+			if (oOptionObj[nI].selected==true){
+				$('#node_name').val(oOptionObj[nI].text+'@');
+				$('#node_parentid').val(oOptionObj[nI].value);
+				nJ++;
+			}
+		}
+	}
+	$("#ajaxSelect").css('display','none');
+}
+<!--{/script}-->

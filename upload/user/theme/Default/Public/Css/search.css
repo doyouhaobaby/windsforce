@@ -1,0 +1,35 @@
+/*
+File Name: search.css
+File Type: 必需
+Description: 搜索
+*/
+
+/**===============================
+           整体
+================================*/
+html{}
+body{background:transparent;}
+.form-actions{background:none;border:none;}
+
+/**===============================
+           细节修复
+================================*/
+.search_box{position: relative;padding: 60px 0;text-align: center;}
+.searchresult_box{position: relative;}
+
+.search_box .container_12,.searchresult_box .container_12{position: relative;z-index: 2;}
+.search_box:after,.searchresult_box:after{content: '';display: block;position: absolute;top: 0;right: 0;bottom: 0;left: 0;opacity: .4;}
+
+.search_header{padding: 60px 0 160px;width:960px;margin:0 auto;}
+.search_header .search-form{margin-top:30px;}
+.search_header .search-input,.searchresult_box .search-input{padding: 20px 24px;font-size: 15px;}
+.search_header .btn,.searchresult_box .btn{padding: 22px 24px;font-size: 15px;font-weight: 200;border: 0;}
+
+.search-menu{text-align:center;font-size:15px;margin-bottom:10px;}
+.search-menu a.search-active{font-weight:bold;color:#000;}
+.search-menu a:hover{text-decoration:none;}
+
+.searchresult_box .search-menu{text-align:left;font-size:15px;}
+
+.search_footer{padding: 15px 0;border-top: 2px dashed #ddd;color:#fff;}
+.search_footer a{color:#fff;}

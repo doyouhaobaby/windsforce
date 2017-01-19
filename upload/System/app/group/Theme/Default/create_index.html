@@ -1,0 +1,118 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{:Core_Extend::editorInclude()}-->
+<!--{:Core_Extend::emotion()}-->
+<!--{:Core_Extend::validate()}-->
+
+<!--{script}-->
+$(function(){
+	editor=loadEditor('group_description');
+	$(".face-icon").jqfaceedit({txtAreaObj:editor,containerObj:$('#emotion_parentcontainer'),top:25,left:-27});
+});
+
+function add(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( '<!--<lang package='Template'>-->创建小组<!--</lang>-->...' );
+	$('#group_description').val(editor.html());
+	Q.AjaxSubmit('creategroup_form','<!--{:Q::U('group://create/add')}-->','',complete);
+}
+
+function complete(data,status){
+	$("#submit_button").attr("disabled", false);
+	$("#submit_button").val( '<!--<lang package='Template'>-->创建小组<!--</lang>-->' );
+	if(status==1){
+		setTimeout(function(){window.location.href=data.url;},1000);
+	}
+}
+
+function insertGroupdescriptionattachment(nAttachmentid){
+	insertAttachment(editor,nAttachmentid);
+}
+
+function insertGroupdescriptionmusic(sContent){
+	insertMusic(editor,sContent);
+}
+
+function insertGroupdescriptionvideo(sContent){
+	insertVideo(editor,sContent);
+}
+
+checkForm(add);
+<!--{/script}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('group://public/index')}-->" title="<!--<lang package='Template'>-->小组<!--</lang>-->"><!--<lang package='Template'>-->小组<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->申请创建小组<!--</lang>--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+		<div class="grid_12">
+			<form class="form-horizontal validate" method='post' name="creategroup_form" id="creategroup_form">
+				<fieldset>
+					<div class="control-group">
+						<label class="control-label" for="group_nikename"><!--<lang package='Template'>-->小组名字<!--</lang>--><em class="red">*</em></label>
+						<div class="controls">
+							<input class="input-xlarge" id="group_nikename" name="group_nikename" type="text" value="" required title="<!--<lang package='Template'>-->小组名字不能为空，且最大长度为32个字符<!--</lang>-->">
+							<p class="input_tips"><!--<lang package='Template'>-->小组名字不能为空，且最大长度为32个字符<!--</lang>--></p>
+							<p class="input_errortips"></p>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="group_listdescription"><!--<lang package='Template'>-->小组列表简介<!--</lang>--><em class="red">*</em></label>
+						<div class="controls">
+							<input class="input-xlarge" id="group_listdescription" name="group_listdescription" type="text" value="" required title="<!--<lang package='Template'>-->小组列表简介是小组列表一个简短的介绍，且最大长度为300个字符<!--</lang>-->">
+							<p class="input_tips"><!--<lang package='Template'>-->小组列表简介是小组列表一个简短的介绍，且最大长度为300个字符<!--</lang>--></p>
+							<p class="input_errortips"></p>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="group_categoryid"><!--<lang package='Template'>-->小组分类<!--</lang>--></label>
+						<div class="controls">
+							<select name="group_categoryid" id="group_categoryid" >
+								<option value="0">- <!--<lang package='Template'>-->未分类<!--</lang>--> -</option>
+								<!--<foreach for=arrGroupCategorys value=arrGroupCategory>-->
+								<option value="<!--{$arrGroupCategory['groupcategory_id']}-->">- <!--{$arrGroupCategory['groupcategory_name']}--></option>
+									<!--<foreach for="arrGroupCategory['child']" value=arrChildGroupCategory>-->
+								<option value="<!--{$arrChildGroupCategory['groupcategory_id']}-->">--- <!--{$arrChildGroupCategory['groupcategory_name']}--></option>
+									<!--</foreach>-->
+								<!--</foreach>-->
+							</select>
+							<p class="help-block"><!--<lang package='Template'>-->小组分类方便对小组进行归类<!--</lang>--></p>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="group_description"><!--<lang package='Template'>-->小组简介<!--</lang>--></label>
+						<div class="controls">
+							<div id="groupdescription-media-box" class="common-media-box">
+								<a href="javascript:void(0);" class="face-icon icon_add_face" ><!--<lang package='__COMMON_LANG__@Common'>-->表情<!--</lang>--></a> 
+								<a href="javascript:void(0);" onclick="globalAddattachment('insertGroupdescriptionattachment');" class="icon_add_img"><!--<lang package='__COMMON_LANG__@Common'>-->媒体<!--</lang>--></a>
+								<a href="javascript:void(0);" onclick="addVideo('insertGroupdescriptionvideo');" class="icon_add_video" ><!--<lang package='__COMMON_LANG__@Common'>-->视频<!--</lang>--></a>
+								<a href="javascript:void(0);" onclick="addMusic('insertGroupdescriptionmusic');" class="icon_add_music"><!--<lang package='__COMMON_LANG__@Common'>-->音乐<!--</lang>--></a>
+							</div>
+							<p id="emotion_parentcontainer">
+								<textarea name="group_description" id="group_description" style="width:700px;height:300px;visibility:hidden;"></textarea>
+							</p>
+							<p class="help-block"><!--<lang package='Template'>-->详细的小组简介可以让人更好地了解小组的功能<!--</lang>-->&nbsp;<a href="<!--{:Core_Extend::windsforceOuter('app=home&c=misc&a=ubb')}-->" target="_blank"><!--<lang package='__COMMON_LANG__@Common'>-->查看内容支持的UBB代码<!--</lang>--></a></p>
+						</div>
+					</div>
+					<div class="control-group">
+						<div class="controls">
+							<label class="checkbox">
+								<input type="checkbox" class="input-short {required:true}" name="agreement" value="1" checked><!--<lang package='Template'>-->我已同意并且仔细阅读了用户协议，详细用户协议见网站底部。<!--</lang>-->
+								<p class="input_errortips"></p>
+							</label>
+						</div>
+					</div>
+					<div class="form-actions">
+						<input type="hidden" name="ajax" value="1">
+						<input type="submit" id="submit_button" class="btn" value="<!--<lang package='Template'>-->创建小组<!--</lang>-->" />
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

@@ -1,0 +1,48 @@
+<!--<include file="Core_Extend::template('header')" />-->
+	
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('home://space@?id='.$arrUserInfo['user_id'])}-->"><!--<lang package='Template'>-->个人空间<!--</lang>--></a> <span class="divider">/</span></li>
+			<li><!--<lang package='Template'>-->用户等级<!--</lang>--></li>
+		</ul>
+	</div>
+		
+	<div class="container_12 container_box">
+		<!--<include file="space+menu" />-->
+
+		<div class="grid_12">
+			<div class="tips">
+				<h5><a href="<!--{:Q::U('home://space@?id='.$arrUserInfo['user_id'])}-->"><!--{$arrUserInfo['user_name']}--></a>&nbsp;(<!--<lang package='Template'>-->当前积分<!--</lang>-->&nbsp;<!--{$nUserscore}-->)</h5>
+				<div class="current_ratinginfo">
+					<!--<lang package='__COMMON_LANG__@Common'>-->等级名字<!--</lang>-->&nbsp;<span class="badge"><!--{$arrRatinginfo['rating_name']}--></span>,<!--<lang package='__COMMON_LANG__@Common'>-->距离下一个等级<!--</lang>-->&nbsp;<span class="badge"><!--{$arrRatinginfo['next_rating']['rating_name']}--></span>&nbsp;<!--<lang package='__COMMON_LANG__@Common'>-->还差<!--</lang>-->&nbsp;<span class="badge badge-success"><!--{$arrRatinginfo['next_needscore']}--></span>&nbsp;<!--<lang package='__COMMON_LANG__@Common'>-->积分<!--</lang>-->
+				</div>
+				<p>
+					<div class="progress">
+						<div class="bar" style="width: <!--{$arrRatinginfo['next_progress']}-->%;"></div>
+					</div>
+				</p>
+				<div><img src="<!--{$arrRatinginfo['rating_icon']}-->"/></div>
+			</div>
+			<p><a href="<!--{:Q::U('home://space/ratings')}-->"><!--<lang package='Template'>-->了解等级规则<!--</lang>--></a></p>
+
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th><!--<lang package='Template'>-->积分类型<!--</lang>--></th>
+						<th><!--<lang package='Template'>-->积分数量<!--</lang>--></th>
+					</tr>
+				</thead>
+				<tbody>
+					<!--<foreach for=arrAvailableExtendCredits key=nAvailableExtendCredit value=arrAvailableExtendCredit>-->
+					<tr>
+						<td><!--{$arrAvailableExtendCredit['title']}--></td>
+						<td><span class="badge <!--{if $nAvailableExtendCredit==2}-->badge-success<!--{/if}-->"><!--{$arrUserInfo['usercount_extendcredit'.$nAvailableExtendCredit]}--></span></td>
+					</tr>
+				</tbody>
+				<!--</foreach>-->
+			</table>
+		</div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

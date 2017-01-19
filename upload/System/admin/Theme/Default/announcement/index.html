@@ -1,0 +1,185 @@
+<!--<include file="public+header" />-->
+
+<!--{~$sCalendarLang=Core_Extend::calendar()}-->
+<script type="text/javascript" src="<!--{:__PUBLIC__}-->/js/calendar/datepicker/WdatePicker.js"></script>
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->公告列表<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->公告列表<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->如果您不是站点管理员，您将只能对自己添加的项目进行编辑或删除。<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->注意，公告到期后会自动被删除。<!--</lang>--></li>
+				</ul>
+			</div>
+
+			<div class="module_content">
+				<form method='get' action="<!--{:Q::U( 'announcement/index' )}-->" class="quick_search">
+					<table cellspacing="3" cellpadding="3">
+						<tr>
+							<th><!--<lang package='Template'>-->编号<!--</lang>--></th>
+							<td><input type="text" name="announcement_id" title="<!--<lang package='Template'>-->编号<!--</lang>-->" value="<!--{:Q::G('announcement_id')}-->" onkeyup="this.value = this.value.replace(/[^-0-9]/g, '');" />
+							</td>
+							<th><!--<lang package='Template'>-->结果排序<!--</lang>--></th>
+							<td>
+								<select name="order_">
+									<option value="" <!--{if !Q+G('order_')}-->selected<!--{/if}-->><!--<lang package='Template'>-->排序字段<!--</lang>--></option>
+									<option value="announcement_id" <!--{if Q+G('order_')=='announcement_id'}-->selected<!--{/if}-->><!--<lang package='Template'>-->编号<!--</lang>--></option>
+									<option value="announcement_sort" <!--{if Q+G('order_')=='announcement_sort'}-->selected<!--{/if}-->><!--<lang package='Template'>-->序号<!--</lang>--></option>
+									<option value="announcement_status" <!--{if Q+G('order_')=='announcement_status'}-->selected<!--{/if}-->><!--<lang package='Template'>-->状态<!--</lang>--></option>
+									<option value="create_dateline" <!--{if Q+G('order_')=='create_dateline'}-->selected<!--{/if}-->><!--<lang package='Template'>-->添加时间<!--</lang>--></option>
+									<option value="announcement_title" <!--{if Q+G('order_')=='announcement_title'}-->selected<!--{/if}-->><!--<lang package='Template'>-->标题<!--</lang>--></option>
+									<option value="announcement_username" <!--{if Q+G('order_')=='announcement_username'}-->selected<!--{/if}-->><!--<lang package='Template'>-->作者<!--</lang>--></option>
+								</select>
+								<select name="sort_">
+									<option value="" <!--{if !Q+G('sort_')}-->selected<!--{/if}-->><!--<lang package='Template'>-->默认排序<!--</lang>--></option>
+									<option value="desc" <!--{if Q+G('sort_')=='desc'}-->selected<!--{/if}-->><!--<lang package='Template'>-->递增<!--</lang>--></option>
+									<option value="asc" <!--{if Q+G('sort_')=='asc'}-->selected<!--{/if}-->><!--<lang package='Template'>-->递减<!--</lang>--></option>
+								</select>
+								<select name="perpage">
+									<option value="" <!--{if !Q+G('perpage')}-->selected<!--{/if}-->><!--<lang package='Template'>-->默认每页数量<!--</lang>--></option>
+									<option value="10" <!--{if Q+G('perpage')==10}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(10)</option>
+									<option value="20" <!--{if Q+G('perpage')==20}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(20)</option>
+									<option value="50" <!--{if Q+G('perpage')==50}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(50)</option>
+									<option value="100" <!--{if Q+G('perpage')==100}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(100)</option>
+									<option value="200" <!--{if Q+G('perpage')==200}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(200)</option>
+									<option value="500" <!--{if Q+G('perpage')==500}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(500)</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th><!--<lang package='Template'>-->内容<!--</lang>--></th>
+							<td><input type="text" name="announcement_message" title="<!--<lang package='Template'>-->内容<!--</lang>-->" value="<!--{:Q::G('announcement_message')}-->"></td>
+							<th><!--<lang package='Template'>-->添加时间<!--</lang>--></th>
+							<td>
+								<input type="text" id="start_time" name="start_time" value="<!--{:Q::G('start_time')}-->" onfocus="WdatePicker({el:'start_time',skin:'ext',lang:'<!--{$sCalendarLang}-->',dateFmt:'yyyy-MM-dd'})">
+								&nbsp;~&nbsp;
+								<input type="text" id="end_time" name="end_time" value="<!--{:Q::G('end_time')}-->"  onfocus="WdatePicker({el:'end_time',skin:'ext',lang:'<!--{$sCalendarLang}-->',dateFmt:'yyyy-MM-dd'})">
+							</td>
+						</tr>
+						<tr>
+							<th><!--<lang package='Template'>-->状态<!--</lang>--></th>
+							<td><select name="announcement_status">
+									<option value="" <!--{if !isset($nIsStatus)}-->selected<!--{/if}-->><!--<lang package='Template'>-->全部<!--</lang>--></option>
+									<option value="1" <!--{if isset($nIsStatus) && $nIsStatus==1}-->selected<!--{/if}-->><!--<lang package='Template'>-->已审<!--</lang>--></option>
+									<option value="0" <!--{if isset($nIsStatus) && $nIsStatus===0}-->selected<!--{/if}-->><!--<lang package='Template'>-->待审<!--</lang>--></option>
+								</select>
+							</td>
+							<td colspan="2">
+								<input type="text" name="announcement_title" title="<!--<lang package='Template'>-->公告标题<!--</lang>-->" value="<!--{:Q::G('announcement_title')}-->" class="quicksearch_text">
+								&nbsp;<input type="submit" id="" value="<!--<lang package='Template'>-->查询<!--</lang>-->" onclick="" class="alt_btn">
+							</td>
+						</tr>
+					</table>
+					<!--{if isset($bIsRecycleList)}-->
+					<input type="hidden" name="recycle_" value="1"/>
+					<!--{/if}-->
+					<input type="hidden" name="c" value="<!--{:MODULE_NAME}-->"/>
+					<input type="hidden" name="a" value="<!--{:ACTION_NAME}-->"/>
+				</form>
+			</div>
+		</article>
+		
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><a href="<!--{:Q::U('announcement/index')}-->"><!--<lang package='Template'>-->公告列表<!--</lang>--></a>
+					<!--{if isset($bIsRecycleList)}-->&nbsp;<sup><a href="<!--{:Q::U(MODULE_NAME.'/index?recycle_=1')}-->" title="<!--<lang package='Template'>-->回收站<!--</lang>-->" style="color:red;">[<!--<lang package='Template'>-->回收站<!--</lang>-->]</a></sup>
+					<!--{/if}-->
+				</h3>
+				<ul class="tabs">
+					<!--{if isset($bIsRecycleList)}-->
+					<li><a class="tab_clearrecycle" href="javascript:void(0);" onclick="clearRecycle()"><!--<lang package='Template'>-->清空回收站<!--</lang>--></a></li>
+					<!--{/if}-->
+					<li><a class="tab_add" href="javascript:void(0);" onclick="add()"><!--<lang package='Template'>-->新增<!--</lang>--></a></li>
+					<li><a class="tab_edit" href="javascript:void(0);" onclick="edit()"><!--<lang package='Template'>-->编辑<!--</lang>--></a></li>
+					<li><a class="tab_delete" href="javascript:void(0);" onclick="foreverdel<!--{if isset($bIsRecycleList)}-->Deep<!--{/if}-->()"><!--{if isset($bIsRecycleList)}--><!--<lang package='Template'>-->彻底删除<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->删除<!--</lang>--><!--{/if}--></a></li>
+					<li><!--{if isset($bIsRecycleList)}-->
+						<a class="tab_list" href="<!--{:Q::U(MODULE_NAME.'/index')}-->" title="<!--<lang package='Template'>-->列表<!--</lang>-->"><img src="<!--{:At::path('icn_list.png')}-->"/></a>
+						<!--{d*else}-->
+						<a class="tab_recycle" href="<!--{:Q::U(MODULE_NAME.'/index?recycle_=1')}-->" title="<!--<lang package='Template'>-->回收站<!--</lang>-->"><img src="<!--{:At::path('icn_recycle.png')}-->"/></a>
+						<!--{/if}-->
+					</li>
+				</ul>
+			</header>
+			<div class="module_content">
+				<table class="tablesorter" cellspacing="0" id="checkList">
+					<thead>
+						<tr>
+							<th width="20"><input type="checkbox" onclick="checkAll('checkList')"></th> 
+							<th width="85"><a href="javascript:sortBy('announcement_id','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('announcement_id')}-->><!--<lang package='Template'>-->编号<!--</lang>--></a></th> 
+							<th width="350"><a href="javascript:sortBy('announcement_title','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('announcement_title')}-->><!--<lang package='Template'>-->标题<!--</lang>--></a></th>
+							<th width="110"><a href="javascript:sortBy('announcement_username','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('announcement_username')}-->><!--<lang package='Template'>-->作者<!--</lang>--></a></th>
+							<th width="90"><a href="javascript:sortBy('announcement_type','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('announcement_type')}-->><!--<lang package='Template'>-->类型<!--</lang>--></a></th>
+							<th><a href="javascript:sortBy('announcement_message','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('announcement_message')}-->><!--<lang package='Template'>-->内容<!--</lang>--></a></th>
+							<th width="100"><a href="javascript:sortBy('create_dateline','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('create_dateline')}-->><!--<lang package='Template'>-->起始时间<!--</lang>--></a></th>
+							<th width="100"><a href="javascript:sortBy('announcement_endtime','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('announcement_endtime')}-->><!--<lang package='Template'>-->终止时间<!--</lang>--></a></th>
+							<th width="50"><a href="javascript:sortBy('announcement_sort','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('announcement_sort')}-->><!--<lang package='Template'>-->序号<!--</lang>--></a></th>
+							<th width="50"><a href="javascript:sortBy('announcement_status','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('announcement_status')}-->><!--<lang package='Template'>-->状态<!--</lang>--></a></th>
+							<th width="70"><!--<lang package='Template'>-->操作<!--</lang>--></th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--{if is_array($arrLists)}-->
+						<!--<foreach for=arrLists>-->
+						<tr id="datalist-<!--{$value:announcement_id}-->">
+							<td><input type="checkbox" name="key" value="<!--{$value:announcement_id}-->"></td>
+							<td><!--{$value:announcement_id}--></td>
+							<td><!--{$value:announcement_title}-->
+								<div class="row-actions">
+									<span class='edit'><a href="javascript:edit('<!--{$value:announcement_id}-->')"><!--<lang package='Template'>-->编辑<!--</lang>--></a>|</span>
+									<span class='delete'><a href="javascript:foreverdel<!--{if isset($bIsRecycleList)}-->Deep<!--{/if}-->('<!--{$value:announcement_id}-->');"><!--{if isset($bIsRecycleList)}--><!--<lang package='Template'>-->彻底删除<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->删除<!--</lang>--><!--{/if}--></a></span>
+								</div>
+							</td>
+							<td><!--{$value['announcement_username']}--></td>
+							<td>
+								<!--{if $value['announcement_type']==0}-->
+								<!--<lang package='Template'>-->文字公告<!--</lang>-->
+								<!--{d*else}--><!--<lang package='Template'>-->网址链接<!--</lang>-->
+								<!--{/if}-->
+							</td>
+							<td><!--{$value:announcement_message}--></td>
+							<td><span class="<!--{:Admin_Extend::dateColor($value['create_dateline'])}-->"><!--{$value['create_dateline']|date='Y-m-d',**}--></span>
+							</td>
+							<td><span class="<!--{:Admin_Extend::dateColor($value['announcement_endtime'])}-->"><!--{$value['announcement_endtime']|date='Y-m-d',**}--></span>
+							</td>
+							<td class="pointer" title="<!--<lang package='Template'>-->点击修改数据<!--</lang>-->" id="announcement_sort_<!--{$value:announcement_id}-->" onClick="clickToInput('announcement_sort','<!--{$value:announcement_id}-->')"><!--{$value:announcement_sort}--></td>
+							<td><!--{:Admin_Extend::getStatus($value->announcement_status)}--></td>
+							<td><!--{if $value:announcement_status==1}-->
+								<a href="javascript:forbid('<!--{$value:announcement_id}-->')"><input type="image" src="<!--{:At::path('icn_trash.png')}-->" title="<!--<lang package='Template'>-->禁用<!--</lang>-->"></a>
+								<!--{d*else}-->
+								<a href="javascript:resume('<!--{$value:announcement_id}-->')"><input type="image" src="<!--{:At::path('icn_jump_back.png')}-->" title="<!--<lang package='Template'>-->恢复<!--</lang>-->"></a>
+								<!--{/if}-->
+								&nbsp;
+								<a href="javascript:edit('<!--{$value:announcement_id}-->')"><input type="image" src="<!--{:At::path('icn_edit.png')}-->" title="<!--<lang package='Template'>-->编辑<!--</lang>-->"></a>
+							</td>
+						</tr>
+						<!--</foreach>-->
+						<!--{d*else}-->
+						<tr>
+							<td colspan="11"><!--<lang package='Template'>-->暂时没有发现任何记录<!--</lang>--></td>
+						</tr>
+						<!--{/if}-->
+					</tbody>
+				</table>
+			</div>
+
+			<div class="module_content operate_box">
+				<div class="left">
+					<!--{$sPageNavbar}-->
+				</div>
+				<div class="right operate" style="text-align:right;">
+					<!--{if isset($bIsRecycleList)}--><input type="button" name="clear_recycle" value="<!--<lang package='Template'>-->清空回收站<!--</lang>-->" onclick="clearRecycle()">&nbsp;<!--{/if}-->
+					<input type="button" name="add" value="<!--<lang package='Template'>-->新增<!--</lang>-->" onclick="add()" class="alt_btn">&nbsp;
+					<input type="button" name="edit" value="<!--<lang package='Template'>-->编辑<!--</lang>-->" onclick="edit()" class="alt_btn">&nbsp;
+					<input type="button" name="delete" value="<!--{if isset($bIsRecycleList)}--><!--<lang package='Template'>-->彻底删除<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->删除<!--</lang>--><!--{/if}-->" onclick="foreverdel<!--{if isset($bIsRecycleList)}-->Deep<!--{/if}-->()" class="alt_btn">
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</article>
+
+<!--<include file="public+footer">-->

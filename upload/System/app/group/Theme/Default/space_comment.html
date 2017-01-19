@@ -1,0 +1,104 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{:Core_Extend::emotion()}-->
+
+<!--{script}-->
+$(function(){
+	$('.comment_content').emotionsToHtml();
+});
+<!--{/script}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('group://public/index')}-->" title="<!--<lang package='Template'>-->小组<!--</lang>-->"><!--<lang package='Template'>-->小组<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('group://space@?id='.$nId)}-->"><!--{$arrUserInfo.user_name}--></a> <span class="divider">/</span></li>
+			<li><!--<lang package='Template'>-->我的回帖<!--</lang>--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+		<!--<include file="space+menu" />-->
+		
+		<div class="grid_12">
+			<!--{if $nYouself}-->
+			<div class="tips">
+				<!--<lang package='Template'>-->你已经登录，你如果看到有高亮显示的回帖，他是有一定意义的。<!--</lang>--><br/>
+				<!--<lang package='Template'>-->关于这些回帖，如有疑问可以向相关管理员发送站内短消息提出。<!--</lang>-->&nbsp;<b><a href="<!--{:Q::U('home://pm/pmnew')}-->"><!--<lang package='Template'>-->发送短消息<!--</lang>--></a></b><br/>
+				<img src="<!--{:Appt::path('sign_deny.png')}-->" title="<!--<lang package='Template'>-->回收站帖子，这里仅你自己可见<!--</lang>-->"/>&nbsp;<!--<lang package='Template'>-->回收站帖子<!--</lang>-->&nbsp;<span class="pipe">|</span>
+				<img src="<!--{:Appt::path('sign_warning.png')}-->" title="<!--<lang package='Template'>-->待审核帖子，这里仅你自己可见<!--</lang>-->"/>&nbsp;<!--<lang package='Template'>-->待审核帖子<!--</lang>-->&nbsp;<span class="pipe">|</span>
+				<img src="<!--{:Appt::path('sign_remove.png')}-->" title="<!--<lang package='Template'>-->屏蔽帖子，这里仅你自己可见<!--</lang>-->"/>&nbsp;<!--<lang package='Template'>-->屏蔽帖子<!--</lang>-->
+			</div>
+			<!--{/if}-->
+			
+			<div id="topic_list_box" class="topic_list_box">
+				<table width="100%" class="table">
+					<thead>
+						<tr style="border-bottom:1px solid #eeeeee;">
+							<th style="width:45px;"><!--<lang package='Template'>-->发帖人<!--</lang>--></th>
+							<th style="text-align:left;font-weight:normal;" class="Sys-special_color"><!--<lang package='Template'>-->回帖内容<!--</lang>--></th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--{if !empty($arrGrouptopiccomments)}-->
+						<!--<foreach for=arrGrouptopiccomments value=arrGrouptopiccomment>-->
+						<tr <!--{if $arrGrouptopiccomment['grouptopiccomment_status']=='0' || $arrGrouptopiccomment['grouptopiccomment_status']==9 || $arrGrouptopiccomment['grouptopiccomment_ishide']=='1'}-->class="highlight"<!--{/if}-->>
+							<td class="author">
+								<!--{if $arrGrouptopiccomment['grouptopic_isanonymous']==1}-->
+								<!--<lang package='Template'>-->匿名<!--</lang>-->
+								<!--{d*else}-->
+								<a href="<!--{:Q::U('group://space@?id='.$arrGrouptopiccomment['user_id'])}-->">
+									<img class="thumbnail need_lazyload" src="<!--{:Core_Extend::avatar($arrGrouptopiccomment['user_id'],'small')}-->" width="45px" height="45px" />
+								</a>
+								<!--{/if}-->
+							</td>
+							<td class="subject">
+								<div class="title">
+									<!--{if $arrGrouptopiccomment['grouptopiccomment_status']==9}-->
+									<img src="<!--{:Appt::path('sign_deny.png')}-->" title="<!--<lang package='Template'>-->回收站帖子，这里仅你自己可见<!--</lang>-->"/>&nbsp;
+									<!--{/if}-->
+									<!--{if $arrGrouptopiccomment['grouptopiccomment_status']=='0'}-->
+									<img src="<!--{:Appt::path('sign_warning.png')}-->" title="<!--<lang package='Template'>-->待审核帖子，这里仅你自己可见<!--</lang>-->"/>&nbsp;
+									<!--{/if}-->
+									<!--{if $arrGrouptopiccomment['grouptopiccomment_ishide']=='1'}-->
+									<img src="<!--{:Appt::path('sign_remove.png')}-->" title="<!--<lang package='Template'>-->屏蔽帖子，这里仅你自己可见<!--</lang>-->"/>&nbsp;
+									<!--{/if}-->
+									<!--{if $arrGrouptopiccomment['grouptopiccategory_id']>0}-->
+									<em class="Sys-special_color">[<a href="<!--{:Group_Extend::getGroupurl($arrGrouptopiccomment,'&cid='.$arrGrouptopiccomment['grouptopiccategory_id'])}-->"><!--{$arrGrouptopiccomment['grouptopiccategory_name']}--></a>]</em>
+									<!--{/if}-->
+									<a href="<!--{:Group_Extend::getTopicurl($arrGrouptopiccomment)}-->" style="<!--{$arrGrouptopiccomment['grouptopic_color']|Grouptopic_Extend+grouptopicColor}-->;" title="<!--{$arrGrouptopiccomment['grouptopic_title']}-->"><!--{$arrGrouptopiccomment['grouptopic_title']|C+subString=0,50}--></a>
+								</div>
+								<div class="info">
+									<!--<lang package='Template'>-->楼主<!--</lang>-->&nbsp;<!--{if $arrGrouptopiccomment['grouptopic_isanonymous']==1}-->
+									<!--<lang package='Template'>-->匿名<!--</lang>-->
+									<!--{d*else}--><a href="<!--{:Q::U('group://space@?id='.$arrGrouptopiccomment['topic_user_id'])}-->" class="bind_hover_card" bm_user_id="<!--{$arrGrouptopiccomment['topic_user_id']}-->"><!--{$arrGrouptopiccomment['grouptopic_username']}--></a>
+									<!--{/if}-->&nbsp;
+									<span><!--{$arrGrouptopiccomment['topic_create_dateline']|Core_Extend+timeFormat}--></span>
+									<span class="pipe">|</span>
+									<!--<lang package='Template'>-->回复时间<!--</lang>-->&nbsp;<!--{$arrGrouptopiccomment['create_dateline']|Core_Extend+timeFormat}-->
+									<span class="pipe">|</span>
+									<a href="<!--{:Group_Extend::getTopiccommenturl($arrGrouptopiccomment)}-->"><!--<lang package='Template'>-->查看该回帖<!--</lang>--></a>
+								</div>
+								<div class="commentbox">
+									<!--{if $arrGrouptopiccomment['grouptopiccomment_title']}--><h6 style="margin:5px 0px;"><!--{$arrGrouptopiccomment['grouptopiccomment_title']}--></h6><!--{/if}-->
+									<div class="comment_content">
+										<!--{$arrGrouptopiccomment['grouptopiccomment_content']|Core_Extend+ubb}-->
+									</div>
+								</div>
+							</td>
+						</tr>
+						<!--</foreach>-->
+						<!--{d*else}-->
+						<tr>
+							<td colspan="3"><!--<lang package='Template'>-->暂时没有发现任何回帖<!--</lang>--></td>
+						</tr>
+						<!--{/if}-->
+					</tbody>
+				</table>
+			</div>
+
+			<!--{$sPageNavbar}-->
+		</div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

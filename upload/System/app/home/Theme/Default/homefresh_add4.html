@@ -1,0 +1,216 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<script src="<!--{:__APPPUB__}-->/Js/homefresh.js"></script>
+
+<!--{:Core_Extend::editorInclude()}-->
+<!--{:Core_Extend::emotion()}-->
+<!--{:Core_Extend::validate()}-->
+
+<!--{script}-->
+$(function(){
+	editor=loadEditorThin('homefresh_message');
+	$(".homefresh-face-icon").jqfaceedit({txtAreaObj:editor,containerObj:$('#emotion_parentcontainer'),top:25,left:-27});
+});
+
+function addHomefresh(){
+	$('#homefresh_message').val(editor.html());
+	if($('#homefresh_message').val()==''){
+		windsforceAlert('<!--<lang package='Template'>-->新鲜事内容不能为空<!--</lang>-->','',3);
+		return false;
+	}
+
+	var umus = '';
+	$('#musicList .list').each(function(){umus+= $(this).attr('data')+'[WF]';});
+	
+	if(umus==''){
+		windsforceAlert('<!--<lang package='Template'>-->发布列表为空<!--</lang>-->','',3);
+		return false; 
+	}
+
+	$('#urlmusic').val(umus);
+	
+	$("#submit_button").attr("disabled","disabled");
+	$("#submit_button").val('<!--<lang package='__COMMON_LANG__@Common'>-->发布<!--</lang>-->...');
+
+	Q.AjaxSubmit('homefreshAdd','<!--{:Q::U('home://ucenter/add_homefresh')}-->','',function(data,status){ 
+		$("#submit_button").attr("disabled",false);
+		$("#submit_button").val("<!--<lang package='__COMMON_LANG__@Common'>-->发布<!--</lang>-->");
+		if(status==1){
+			setTimeout(function(){window.location.replace(data.url);},1000);
+		}
+	});
+}
+
+function showHomefreshtitle(){
+	$('#homefresh-title-box').toggle('fast');
+}
+
+var oEditNewhomefreshtopic='';
+function addHomefreshtopic(){
+	oEditNewhomefreshtopic=windsforceAjax(Q.U('home://ucenter/homefreshtopic'),'<!--<lang package='Template'>-->插入话题<!--</lang>-->','','','',500,100,'',0,1);
+}
+
+function insertHomefreshtopic(sContent){
+	addEditorContent(editor,sContent);
+	oEditNewhomefreshtopic.close();
+}
+
+function musicMouse(thisa){
+	if($(thisa).val() == 'http://'){
+		$(thisa).val('');
+	}
+}
+
+function musicMosout(thisa,t){
+	if($(thisa).val() == '' && t=='u'){
+		$(thisa).val('http://');
+	}
+}
+
+function saveMusicList(){
+	var url = $('#musicurl').val();
+	if(url == 'http://'){
+		windsforceAlert('<!--<lang package='Template'>-->请填写一个引用地址<!--</lang>-->','',3);
+		return false;
+	}
+	
+	$('#musicFrom').disable();
+	$('#urlParseLoading').val('<!--<lang package='Template'>-->正在解析<!--</lang>-->...');
+
+	$.post(Q.U('home://ucenter/homefresh_parse?type=video'),{'url':url},function(result){
+		$('#musicFrom').enable();
+		$('#urlParseLoading').val('<!--<lang package='Template'>-->添加地址<!--</lang>-->');
+
+		var data = eval("(" + result + ")");
+
+		if(data.error != undefined){
+			windsforceAlert(data.error,'',3);
+			return false;
+		}
+
+		data.url = url;
+		temp=data.title.split("-");
+		if(temp[0] != undefined){
+			data.title = temp[0];
+		}
+		setHTML(data);
+		$('#homefresh_title').val(data.title);
+		$('#musicurl').val('http://');
+	})
+}
+
+function setHTML(r){
+	console.log(r);
+
+	if(r.id == undefined){
+		r.id = r.pid;
+	}
+
+	html = '<div class="list" data="'+r.type+'|'+r.img+'|'+r.id+'|'+r.title+'|'+r.url+'">'+
+				'<li><img src="'+r.img+'" /></li>';
+	html +=	 '<li><input type="text" class="m_title" name="item[]" value="'+r.title+'" size="60"></li>';
+	html += '<div class="delete"><a href="javascript:void(0)" onclick="musicDItem(this)">x</a></div>'+
+			'<div class="clearfix"></div></div>';
+
+	$('#musicList').append(html);
+}
+
+function musicDItem(that){
+	$(that).parent().parent().remove();
+}
+
+function insertHomefreshthumb(nAttachmentid){
+	insertAttachmentthumb('homefresh_thumb',nAttachmentid);
+}
+
+checkForm(addHomefresh);
+<!--{/script}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('home://ucenter/index')}-->"><!--<lang package='Template'>-->个人中心<!--</lang>--></a> <span class="divider">/</span></li>
+			<li><!--<lang package='Template'>-->分享视频<!--</lang>--></li>
+		</ul>
+	</div>
+	
+	<div class="container_12 container_box">
+		<div class="grid_12">
+			<h2 style="font-size:30px;"><!--<lang package='Template'>-->分享视频<!--</lang>--></h2>
+			<div class="homefresh-box" style="margin-top:5px;">
+				<form method="post" id="homefreshAdd" name="homefreshAdd" class="validate">
+					<div style="margin:15px 0;">
+						<div class="p_video" id="musicFrom">
+							<div id="musicNotice"><!--<lang package='Template'>-->请输入来自视频分享网站的播放页面地址,注意不是FLASH地址<!--</lang>-->&nbsp;(<!--<lang package='Template'>-->目前支持网站<!--</lang>-->&nbsp;<a href="http://youku.com" target="_blank"><!--<lang package='Template'>-->优酷<!--</lang>--></a>,<a href="http://tudou.com" target="_blank"><!--<lang package='Template'>-->土豆<!--</lang>--></a>,<a href="http://ku6.com" target="_blank"><!--<lang package='Template'>-->酷6<!--</lang>--></a>,<a href="http://56.com" target="_blank">56.com</a>,<a href="http://tv.sohu.com" target="_blank"><!--<lang package='Template'>-->搜狐<!--</lang>--></a><!--,<a href="http://video.sina.com.cn/" target="_blank"><!--<lang package='Template'>-->新浪<!--</lang>--></a>-->)</div>
+							<input type="text" onblur="musicMosout(this,'u')" onfocus="musicMouse(this)" value="http://" class="musicurl" id="musicurl" style="display:inline;width: 450px;">&nbsp;
+							<input type="button" class="mu_btn" onclick="saveMusicList($('#musicurl').val())" value="<!--<lang package='Template'>-->添加地址<!--</lang>-->" id="urlParseLoading">
+						</div>
+						<div id="musicList"></div>
+					</div>
+
+					<fieldset>
+						<div class="control-group">
+							<div class="controls">
+								<input type="text" name="homefresh_title" id="homefresh_title" value="" style="width:546px;" class="{required:true}">
+								<p class="input_errortips"></p>
+							</div>
+						</div>
+						<div class="control-group">
+							<table cellspacing="0" cellpadding="0">
+								<tr>
+									<td style="min-width:150px"><!--<lang package='Template'>-->文章分类<!--</lang>--></td>
+									<td><!--<lang package='Template'>-->缩略图<!--</lang>-->&nbsp;<span class="red" style="cursor:pointer;" onclick="$('#homefresh_thumb').val('');">x</span></td>
+								</tr>
+								<tr>
+									<td>
+										<select name="homefreshcategory_id" id="homefreshcategory_id" style="margin-top:10px;">
+											<option value="0">- <!--<lang package='Template'>-->选择分类<!--</lang>--> -</option>
+											<!--<foreach for=arrCategorys value=arrCategory>-->
+											<option value="<!--{$arrCategory['homefreshcategory_id']}-->"><!--{$arrCategory['homefreshcategory_name']}--></option>
+											<!--</foreach>-->
+										</select>
+									</td>
+									<td><input type="text" class="left" id="homefresh_thumb" name="homefresh_thumb" value="" readonly/>&nbsp;<a href="javascript:void(0);" onclick="globalAddattachment('insertHomefreshthumb',1,1);" class="btn"><!--<lang package='__COMMON_LANG__@Common'>-->媒体<!--</lang>--></a>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="pm_message"><!--<lang package='Template'>-->新鲜事内容<!--</lang>--><em class="red">*</em></label>
+							<div class="controls">
+								<div id="homefresh-media-box" class="common-media-box">
+									<a href="javascript:void(0);" class="homefresh-face-icon icon_add_face" ><!--<lang package='__COMMON_LANG__@Common'>-->表情<!--</lang>--></a> 
+									<a href="javascript:void(0);" onclick="addHomefreshtopic();" class="icon_add_topic"><!--<lang package='Template'>-->话题<!--</lang>--></a> 
+									<a href="javascript:void(0);" onclick="globalAddattachment('insertAttachment_');" class="icon_add_img"><!--<lang package='__COMMON_LANG__@Common'>-->媒体<!--</lang>--></a>
+									<a href="javascript:void(0);" onclick="addVideo('insertVideo_');" class="icon_add_video" ><!--<lang package='__COMMON_LANG__@Common'>-->视频<!--</lang>--></a>
+									<a href="javascript:void(0);" onclick="addMusic('insertMusic_');" class="icon_add_music"><!--<lang package='__COMMON_LANG__@Common'>-->音乐<!--</lang>--></a>
+								</div>
+								<div id="emotion_parentcontainer">
+									<textarea class="input-xlarge" name="homefresh_message" id="homefresh_message" rows="5" style="height:<!--{:Core_Extend::getEditor()}-->px;width:90%;"></textarea>
+								</div>
+							</div>
+						</div>
+						<!--{if $nDisplaySeccode==1}-->
+						<div class="control-group">
+							<label class="control-label" for="seccode"><!--<lang package='__COMMON_LANG__@Common'>-->验证码<!--</lang>--><em class="red">*</em></label>
+							<div class="controls">
+								<input name="seccode" id="seccode" type="text" class="input-small {required:true,remote:Q.U('home://public/validate_seccode'),messages:{remote:'<!--<lang package='__COMMON_LANG__@Common'>-->验证码错误<!--</lang>-->'}} left" value="">&nbsp;
+								<span class="validate_seccode"><span class="input_errortips"></span></span>
+								<p class="help-block" style="clear:both;padding-top:10px;"><span id="seccodeImage"><img style="cursor:pointer" onclick="updateSeccode()" src="<!--{:Q::U('home://public/seccode')}-->" /></span></p>
+							</div>
+						</div>
+						<!--{/if}-->
+						<div class="form-actions">
+							<input type="hidden" name="ajax" value="1">
+							<input type="hidden" id="urlmusic" name="urlmusic" value="" />
+							<input type="hidden" name="homefresh_type" value="<!--{$nType}-->">
+							<input type="submit" class="btn" id="submit_button" value="<!--<lang package='__COMMON_LANG__@Common'>-->发布<!--</lang>-->">
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

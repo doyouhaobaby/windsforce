@@ -1,0 +1,77 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+function validate(){
+	if($WF('sql').value==''){
+		alert('<!--<lang package='Template'>-->SQL语句不能为空<!--</lang>-->');
+		return false;
+	}
+	return true;
+}
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->运行SQL语句<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->运行SQL语句<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->在这里你可以直接用SQL 语句操作数据库<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->直接操作数据库是一个非常危险的事情，建议非专业人士请不要操作，否则将出现不可估量错误<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->优化操作<!--</lang>--></h3>
+				<ul class="tabs">
+					<li><a href="<!--{:Q::U('database/index')}-->"><!--<lang package='Template'>-->数据库备份<!--</lang>--></a></li>
+					<li class="active"><a href="<!--{:Q::U('database/restore')}-->"><!--<lang package='Template'>-->数据库恢复<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('database/optimize')}-->"><!--<lang package='Template'>-->数据库优化<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form method="post" action="" onsubmit="return validate()">
+				<div class="module_content">
+					<fieldset><label for="sql"><!--<lang package='Template'>-->运行SQL查询<!--</lang>--></label></td>
+						<textarea name="sql" id="sql" rows="6"><!--<if condition="isset( $sSql )">--><!--{$sSql}--><!--</if>--></textarea>
+						<div class="description"><!--<lang package='Template'>-->执行SQL将直接操作数据库，请谨慎使用<!--</lang>--></div>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="submit" value="<!--<lang package='Template'>-->运行sql语句<!--</lang>-->" class="alt_btn" />
+					</div>
+				</footer>
+			</form>
+		</article>
+
+		<!--<if condition="isset($nType)">-->
+		<article class="module width_full">
+			<!--<if condition="$nType==-1">-->
+			<header><h3><!--<lang package='Template'>-->执行错误<!--</lang>--></h3></header>
+			<div class="module_content">
+				<p style="color:red;font-weight:bold;"><!--{if $sError}-->
+					<!--{$sError}-->
+				<!--{d*else}-->
+					<!--<lang package='Template'>-->你的SQL语句执行遇到错误<!--</lang>-->
+				<!--{/if}--></p>
+			</div>
+			<!--<elseif condition="$nType==1 ">-->
+			<header><h3><!--<lang package='Template'>-->执行结果<!--</lang>--></h3></header>
+			<div class="module_content">
+				<p style="color:green;font-weight:bold;"><!--<lang package='Template'>-->SQL语句运行成功<!--</lang>--></p>
+			</div>
+			<!--<elseif condition="$nType==2">-->
+			<div class="module_content">
+				<p><!--{$sResult}--></p>
+			</div>
+			<!--</if>-->
+		</article>
+		<!--</if>-->
+
+<!--<include file="public+footer">-->

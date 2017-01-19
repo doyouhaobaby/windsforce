@@ -1,0 +1,211 @@
+<!--<include file="public+header" />-->
+
+<!--{~$sCalendarLang=Core_Extend::calendar()}-->
+<script type="text/javascript" src="<!--{:__PUBLIC__}-->/js/calendar/datepicker/WdatePicker.js"></script>
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='__APPEVENT_COMMON_LANG__@Template'>-->活动<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='__APPEVENT_COMMON_LANG__@Template'>-->活动<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='__APPEVENT_COMMON_LANG__@Template'>-->这里可以直接对活动进行管理<!--</lang>--></li>
+				</ul>
+			</div>
+
+			<div class="module_content">
+				<form method='get' action="<!--{:Q::U( 'app/config' )}-->" class="quick_search">
+					<table cellspacing="3" cellpadding="3">
+						<tr>
+							<th><!--<lang package='Template'>-->编号<!--</lang>--></th>
+							<td><input type="text" name="event_id" title="<!--<lang package='Template'>-->编号<!--</lang>-->" value="<!--{:Q::G('event_id')}-->" onkeyup="this.value = this.value.replace(/[^-0-9]/g, '');" />
+							</td>
+							<th><!--<lang package='Template'>-->结果排序<!--</lang>--></th>
+							<td>
+								<select name="order_">
+									<option value="" <!--{if !Q+G('order_')}-->selected<!--{/if}-->><!--<lang package='Template'>-->排序字段<!--</lang>--></option>
+									<option value="event_id" <!--{if Q+G('order_')=='event_id'}-->selected<!--{/if}-->><!--<lang package='Template'>-->编号<!--</lang>--></option>
+									<option value="event_status" <!--{if Q+G('order_')=='event_status'}-->selected<!--{/if}-->><!--<lang package='Template'>-->状态<!--</lang>--></option>
+									<option value="create_dateline" <!--{if Q+G('order_')=='create_dateline'}-->selected<!--{/if}-->><!--<lang package='Template'>-->添加时间<!--</lang>--></option>
+									<option value="event_starttime" <!--{if Q+G('order_')=='event_starttime'}-->selected<!--{/if}-->><!--<lang package='__APPEVENT_COMMON_LANG__@Template'>-->活动开始时间<!--</lang>--></option>
+									<option value="event_endtime" <!--{if Q+G('order_')=='event_endtime'}-->selected<!--{/if}-->><!--<lang package='__APPEVENT_COMMON_LANG__@Template'>-->活动结束时间<!--</lang>--></option>
+									<option value="event_title" <!--{if Q+G('order_')=='event_title'}-->selected<!--{/if}-->><!--<lang package='__APPEVENT_COMMON_LANG__@Template'>-->活动名称<!--</lang>--></option>
+								</select>
+								<select name="sort_">
+									<option value="" <!--{if !Q+G('sort_')}-->selected<!--{/if}-->><!--<lang package='Template'>-->默认排序<!--</lang>--></option>
+									<option value="desc" <!--{if Q+G('sort_')=='desc'}-->selected<!--{/if}-->><!--<lang package='Template'>-->递增<!--</lang>--></option>
+									<option value="asc" <!--{if Q+G('sort_')=='asc'}-->selected<!--{/if}-->><!--<lang package='Template'>-->递减<!--</lang>--></option>
+								</select>
+								<select name="perpage">
+									<option value="" <!--{if !Q+G('perpage')}-->selected<!--{/if}-->><!--<lang package='Template'>-->默认每页数量<!--</lang>--></option>
+									<option value="10" <!--{if Q+G('perpage')==10}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(10)</option>
+									<option value="20" <!--{if Q+G('perpage')==20}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(20)</option>
+									<option value="50" <!--{if Q+G('perpage')==50}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(50)</option>
+									<option value="100" <!--{if Q+G('perpage')==100}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(100)</option>
+									<option value="200" <!--{if Q+G('perpage')==200}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(200)</option>
+									<option value="500" <!--{if Q+G('perpage')==500}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(500)</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th><!--<lang package='__APPEVENT_COMMON_LANG__@Template'>-->活动类型<!--</lang>-->(EGT)</th>
+							<td>
+								<select name="eventcategory_id" id="eventcategory_id">
+									<option value="" <!--{if Q+G('eventcategory_id')===null || Q+G('eventcategory_id')==''}-->selected<!--{/if}-->>- <!--<lang package='__APPEVENT_COMMON_LANG__@Template'>-->请选择类型<!--</lang>--> -</option>
+									<!--{~$arrEventcategory=$oEventcategoryTree->getChilds()}-->
+									<!--<foreach for=arrEventcategory value=nCId>-->
+									<option value="<!--{$nCId}-->" <!--{if isset($_GET['eventcategory_id']) && $_GET['eventcategory_id']!='' && $_GET['eventcategory_id']==$nCId}-->selected<!--{/if}-->>|<!--{$oEventcategoryTree:getLayer( $nCId, '--' )}--><!--{$oEventcategoryTree:getValue( $nCId )}--></option>
+									<!--</foreach>-->
+								</select>
+							</td>
+							<th><!--<lang package='__APPEVENT_COMMON_LANG__@Template'>-->活动开始时间<!--</lang>--></th>
+							<td>
+								<input type="text" id="start_time" name="start_time" value="<!--{:Q::G('start_time')}-->" onfocus="WdatePicker({el:'start_time',skin:'ext',lang:'<!--{$sCalendarLang}-->',dateFmt:'yyyy-MM-dd'})">
+								&nbsp;~&nbsp;
+								<input type="text" id="end_time" name="end_time" value="<!--{:Q::G('end_time')}-->"  onfocus="WdatePicker({el:'end_time',skin:'ext',lang:'<!--{$sCalendarLang}-->',dateFmt:'yyyy-MM-dd'})">
+							</td>
+						</tr>
+						<tr>
+							<th><!--<lang package='Template'>-->状态<!--</lang>--></th>
+							<td><select name="event_status">
+									<option value="" <!--{if !isset($nIsStatus)}-->selected<!--{/if}-->><!--<lang package='Template'>-->全部<!--</lang>--></option>
+									<option value="1" <!--{if isset($nIsStatus) && $nIsStatus==1}-->selected<!--{/if}-->><!--<lang package='Template'>-->已审<!--</lang>--></option>
+									<option value="0" <!--{if isset($nIsStatus) && $nIsStatus===0}-->selected<!--{/if}-->><!--<lang package='Template'>-->待审<!--</lang>--></option>
+								</select>
+							</td>
+							<th><!--<lang package='__APPEVENT_COMMON_LANG__@Template'>-->活动结束时间<!--</lang>--></th>
+							<td>
+								<input type="text" id="start_time_2" name="start_time_2" value="<!--{:Q::G('start_time_2')}-->" onfocus="WdatePicker({el:'start_time_2',skin:'ext',lang:'<!--{$sCalendarLang}-->',dateFmt:'yyyy-MM-dd'})">
+								&nbsp;~&nbsp;
+								<input type="text" id="end_time_2" name="end_time_2" value="<!--{:Q::G('end_time_2')}-->"  onfocus="WdatePicker({el:'end_time_2',skin:'ext',lang:'<!--{$sCalendarLang}-->',dateFmt:'yyyy-MM-dd'})">
+							</td>
+						</tr>
+						<tr>
+							<th><!--<lang package='__APPEVENT_COMMON_LANG__@Template'>-->活动类型<!--</lang>--></th>
+							<td><input type="text" name="eventcategory_name" title="<!--<lang package='__APPEVENT_COMMON_LANG__@Template'>-->活动类型<!--</lang>-->" value="<!--{:Q::G('eventcategory_name')}-->"/>
+							</td>
+							<th><!--<lang package='Template'>-->添加时间<!--</lang>--></th>
+							<td>
+								<input type="text" id="start_time_3" name="start_time_3" value="<!--{:Q::G('start_time_3')}-->" onfocus="WdatePicker({el:'start_time_3',skin:'ext',lang:'<!--{$sCalendarLang}-->',dateFmt:'yyyy-MM-dd'})">
+								&nbsp;~&nbsp;
+								<input type="text" id="end_time_3" name="end_time_3" value="<!--{:Q::G('end_time_3')}-->"  onfocus="WdatePicker({el:'end_time_3',skin:'ext',lang:'<!--{$sCalendarLang}-->',dateFmt:'yyyy-MM-dd'})">
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<input type="text" name="event_title" title="<!--<lang package='__APPEVENT_COMMON_LANG__@Template'>-->活动名称<!--</lang>-->" value="<!--{:Q::G('event_title')}-->" class="quicksearch_text">
+								&nbsp;<input type="submit" id="" value="<!--<lang package='Template'>-->查询<!--</lang>-->" onclick="" class="alt_btn">
+							</td>
+						</tr>
+					</table>
+					<!--{if isset($bIsRecycleList)}-->
+					<input type="hidden" name="recycle_" value="1"/>
+					<!--{/if}-->
+					<input type="hidden" name="c" value="<!--{:MODULE_NAME}-->"/>
+					<input type="hidden" name="a" value="<!--{:ACTION_NAME}-->"/>
+					<input type="hidden" name="id" value="<!--{$_GET['id']}-->"/>
+					<input type="hidden" name="controller" value="event"/>
+				</form>
+			</div>
+		</article>
+		
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><a href="<!--{:Admin_Extend::base(array('controller'=>'event'))}-->"><!--<lang package='__APPEVENT_COMMON_LANG__@Template'>-->活动<!--</lang>--></a>
+					<!--{if isset($bIsRecycleList)}-->&nbsp;<sup><a href="<!--{:Admin_Extend::base(array('controller'=>'event','recycle_'=>1))}-->" title="<!--<lang package='Template'>-->回收站<!--</lang>-->" style="color:red;">[<!--<lang package='Template'>-->回收站<!--</lang>-->]</a></sup>
+					<!--{/if}-->
+				</h3>
+				<ul class="tabs">
+					<!--{if isset($oEventcategory)}-->
+					<li><a href="<!--{:Admin_Extend::base(array('controller'=>'event','cid'=>$oEventcategory['eventcategory_id']))}-->"><!--<lang package='__APPEVENT_COMMON_LANG__@Template'>-->活动类型<!--</lang>--> - <!--{$oEventcategory['eventcategory_name']}--></a></li>
+					<!--{/if}-->
+					<li class="active"><a href="<!--{:Admin_Extend::base()}-->"><!--<lang package='Template'>-->应用入口<!--</lang>--></a></li>
+					<!--{if isset($bIsRecycleList)}-->
+					<li><a class="tab_clearrecycle" href="javascript:void(0);" onclick="clearRecycle('<!--{$_GET['id']}-->','event')"><!--<lang package='Template'>-->清空回收站<!--</lang>--></a></li>
+					<!--{/if}-->
+					<li><a class="tab_add" href="javascript:void(0);" onclick="addApp('<!--{$_GET['id']}-->','event')"><!--<lang package='Template'>-->新增<!--</lang>--></a></li>
+					<li><a class="tab_edit" href="javascript:void(0);" onclick="editApp('<!--{$_GET['id']}-->','event')"><!--<lang package='Template'>-->编辑<!--</lang>--></a></li>
+					<li><a class="tab_delete" href="javascript:void(0);" onclick="foreverdelApp<!--{if isset($bIsRecycleList)}-->Deep<!--{/if}-->('<!--{$_GET['id']}-->','event')"><!--{if isset($bIsRecycleList)}--><!--<lang package='Template'>-->彻底删除<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->删除<!--</lang>--><!--{/if}--></a></li>
+					<li><!--{if isset($bIsRecycleList)}-->
+						<a class="tab_list" href="<!--{:Admin_Extend::base(array('controller'=>'event'))}-->" title="<!--<lang package='Template'>-->列表<!--</lang>-->"><img src="<!--{:At::path('icn_list.png')}-->"/></a>
+						<!--{d*else}-->
+						<a class="tab_recycle" href="<!--{:Admin_Extend::base(array('controller'=>'event','recycle_'=>1))}-->" title="<!--<lang package='Template'>-->回收站<!--</lang>-->"><img src="<!--{:At::path('icn_recycle.png')}-->"/></a>
+						<!--{/if}-->
+					</li>
+				</ul>
+			</header>
+			<div class="module_content">
+				<table class="tablesorter" cellspacing="0" id="checkList">
+					<thead>
+						<tr>
+							<th width="20"><input type="checkbox" class="input-short" onclick="checkAll('checkList')"></th> 
+							<th width="85"><a href="<!--{:Admin_Extend::soryBy('event_id',$sSortByUrl,array('controller'=>'event'))}-->" <!--{:Admin_Extend::sortField('event_id')}-->><!--<lang package='Template'>-->编号<!--</lang>--></a></th>
+							<th><a href="javascript:sortBy('event_title','<!--{$sSortByUrl}-->')<!--{:Admin_Extend::soryBy('event_id',$sSortByUrl,array('controller'=>'event'))}-->" <!--{:Admin_Extend::sortField('event_title')}-->><!--<lang package='__APPEVENT_COMMON_LANG__@Template'>-->活动名称<!--</lang>--></a></th>
+							<th width="130"><a href="<!--{:Admin_Extend::soryBy('event_parentid',$sSortByUrl,array('controller'=>'event'))}-->" <!--{:Admin_Extend::sortField('event_parentid')}-->><!--<lang package='__APPEVENT_COMMON_LANG__@Template'>-->活动类型<!--</lang>--></a></th>
+							<th width="110"><a href="<!--{:Admin_Extend::soryBy('event_starttime',$sSortByUrl,array('controller'=>'event'))}-->" <!--{:Admin_Extend::sortField('event_starttime')}-->><!--<lang package='__APPEVENT_COMMON_LANG__@Template'>-->活动开始时间<!--</lang>--></a></th>
+							<th width="110"><a href="<!--{:Admin_Extend::soryBy('event_endtime',$sSortByUrl,array('controller'=>'event'))}-->" <!--{:Admin_Extend::sortField('event_endtime')}-->><!--<lang package='__APPEVENT_COMMON_LANG__@Template'>-->活动结束时间<!--</lang>--></a></th>
+							<th width="100"><a href="<!--{:Admin_Extend::soryBy('create_dateline',$sSortByUrl,array('controller'=>'event'))}-->" <!--{:Admin_Extend::sortField('create_dateline')}-->><!--<lang package='Template'>-->添加时间<!--</lang>--></a></th>
+							<th width="50"><a href="<!--{:Admin_Extend::soryBy('event_status',$sSortByUrl,array('controller'=>'homehelp'))}-->" <!--{:Admin_Extend::sortField('event_status')}-->><!--<lang package='Template'>-->状态<!--</lang>--></a></th>
+							<th width="60"><!--<lang package='Template'>-->操作<!--</lang>--></th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--{if !empty($arrLists)}-->
+						<!--<foreach for=arrLists>-->
+						<tr id="datalist-<!--{$value.event_id}-->">
+							<td><input type="checkbox" class="input-short" name="key" value="<!--{$value.event_id}-->"></td>
+							<td><!--{$value.event_id}--></td>
+							<td><a href="javascript:editApp('<!--{$_GET['id']}-->','event','<!--{$value.event_id}-->')"><!--{$value.event_title}--></a>
+								<div class="row-actions">
+									<span class='view'><a href="<!--{:Core_Extend::windsforceOuter(array('app'=>'event','c'=>'event','a'=>'show','id'=>$value['event_id']))}-->" target="_blank"><!--<lang package='Template'>-->查看<!--</lang>--></a>|</span>
+									<span class='edit'><a href="javascript:editApp('<!--{$_GET['id']}-->','event','<!--{$value.event_id}-->')"><!--<lang package='Template'>-->编辑<!--</lang>--></a>|</span>
+									<span class='delete'><a href="javascript:foreverdelApp<!--{if isset($bIsRecycleList)}-->Deep<!--{/if}-->('<!--{$_GET['id']}-->','event','<!--{$value.event_id}-->')"><!--{if isset($bIsRecycleList)}--><!--<lang package='Template'>-->彻底删除<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->删除<!--</lang>--><!--{/if}--></a></span>
+									</span>
+								</div>
+							</td>
+							<td><a href="<!--{:Admin_Extend::base(array('controller'=>'event','cid'=>$value['eventcategory_id']))}-->"><!--{$value['eventcategory_name']}--></a></td>
+							<td><span class=""><!--{$value['event_starttime']|date='Y-m-d',**}--></span><br/>
+								<span class="smallDatecolor"><!--{$value['event_starttime']|date='H:i',**}--></span>
+							</td>
+							<td><span class=""><!--{$value['event_endtime']|date='Y-m-d',**}--></span><br/>
+								<span class="smallDatecolor"><!--{$value['event_endtime']|date='H:i',**}--></span>
+							</td>
+							<td><span class="<!--{:Admin_Extend::dateColor($value['create_dateline'])}-->"><!--{$value['create_dateline']|date='Y-m-d',**}--></span><br/>
+								<span class="smallDatecolor"><!--{$value['create_dateline']|date='H:i',**}--></span>
+							</td>
+							<td><!--{:Admin_Extend::getStatus($value['event_status'])}--></td>
+							<td>
+								<!--<if condition="$value['event_status'] eq 1" >--><a href="javascript:forbidApp('<!--{$_GET['id']}-->','event','<!--{$value.event_id}-->');"><input type="image" src="<!--{:At::path('icn_trash.png')}-->" title="<!--<lang package='Template'>-->禁用<!--</lang>-->"></a><!--<else/>-->
+								<a href="javascript:resumeApp('<!--{$_GET['id']}-->','event','<!--{$value.event_id}-->');"><input type="image" src="<!--{:At::path('icn_jump_back.png')}-->" title="<!--<lang package='Template'>-->恢复<!--</lang>-->"></a><!--</if>-->
+								<a href="javascript:editApp('<!--{$_GET['id']}-->','event','<!--{$value.event_id}-->')"><input type="image" src="<!--{:At::path('icn_edit.png')}-->" title="<!--<lang package='Template'>-->编辑<!--</lang>-->"></a>
+							</td>
+						</tr>
+						<!--</foreach>-->
+						<!--{d*else}-->
+						<tr>
+							<td colspan="9"><!--<lang package='Template'>-->暂时没有发现任何记录<!--</lang>--></td>
+						</tr>
+						<!--{/if}-->
+					</tbody>
+				</table>
+			</div>
+			
+			<div class="module_content operate_box">
+				<div class="left">
+					<!--{$sPageNavbar}-->
+				</div>
+				<div class="right operate" style="text-align:right;">
+					<!--{if isset($bIsRecycleList)}--><input type="button" name="clear_recycle" value="<!--<lang package='Template'>-->清空回收站<!--</lang>-->" onclick="clearRecycle('<!--{$_GET['id']}-->','event')">&nbsp;<!--{/if}-->
+					<input type="button" name="add" value="<!--<lang package='Template'>-->新增<!--</lang>-->" onclick="addApp('<!--{$_GET['id']}-->','event');" class="alt_btn">&nbsp;
+					<input type="button" name="edit" value="<!--<lang package='Template'>-->编辑<!--</lang>-->" onclick="editApp('<!--{$_GET['id']}-->','event')" class="alt_btn">&nbsp;
+					<input type="button" name="delete" value="<!--{if isset($bIsRecycleList)}--><!--<lang package='Template'>-->彻底删除<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->删除<!--</lang>--><!--{/if}-->" onclick="foreverdelApp<!--{if isset($bIsRecycleList)}-->Deep<!--{/if}-->('<!--{$_GET['id']}-->','event')" class="alt_btn">
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</article>
+
+<!--<include file="public+footer">-->

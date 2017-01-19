@@ -1,0 +1,135 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+function option(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'update...' );
+	$("#submit_button").attr("disabled", false);
+	$('.validate')(0).submit();
+}
+
+checkForm(option);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->全局设置<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->全局设置<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->全局设置<!--</lang>--></h3></header>
+			<form action="<!--{:Q::U('styleoption/update_option')}-->" method="post" class="validate">
+				<div class="module_content">
+					<fieldset>
+						<label for="site_logo"><!--<lang package='Template'>-->网站Logo<!--</lang>--></label>
+						<input type="text" name="options[site_logo]" id="site_logo" size="60" value="<!--{$arrOptions['site_logo']}-->"/>
+						<div class="description"><!--<lang package='Template'>-->如果不填，则为系统默认Logo，地址为user/theme/Default/Public/Images/logo.png<!--</lang>-->&nbsp;(<!--<lang package='Template'>-->优先级别最高,一旦设置其他地方将失效<!--</lang>-->)
+						<br/><img src="<!--{$sLogo}-->"/>
+						</div>
+					</fieldset>
+					<fieldset>
+						<label for="site_favicon"><!--<lang package='Template'>-->网站Favicon<!--</lang>--></label>
+						<input type="text" name="options[site_favicon]" id="site_favicon" size="60" value="<!--{$arrOptions['site_favicon']}-->"/>
+						<div class="description"><!--<lang package='Template'>-->如果不填，则为系统默认Favicon，地址为user/theme/Default/favicon.png<!--</lang>-->&nbsp;(<!--<lang package='Template'>-->优先级别最高,一旦设置其他地方将失效<!--</lang>-->)
+						<br/><img src="<!--{$sFavicon}-->"/>
+						</div>
+					</fieldset>
+					<fieldset>
+						<label for="image_max_width"><!--<lang package='Template'>-->网站图片最大宽度<!--</lang>--></label>
+						<input type="text" name="options[image_max_width]" id="image_max_width" size="60" value="<!--{$arrOptions['image_max_width']}-->" class="{required:true}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->网站图片宽度，如800或者80%<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="style_switch_on"><!--<lang package='Template'>-->是否启用前台主题切换<!--</lang>--></label>
+						<input type="radio" id="style_switch_on" name="options[style_switch_on]" value="1" <!--{if $arrOptions['style_switch_on']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[style_switch_on]" value="0" <!--{if $arrOptions['style_switch_on']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->你如果想关闭前台切换主题，请选择否<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="extendstyle_switch_on"><!--<lang package='Template'>-->是否启用前台主题扩展样式切换<!--</lang>--></label>
+						<input type="radio" id="extendstyle_switch_on" name="options[extendstyle_switch_on]" value="1" <!--{if $arrOptions['extendstyle_switch_on']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[extendstyle_switch_on]" value="0" <!--{if $arrOptions['extendstyle_switch_on']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->主题样式扩展是对前台主题的扩展，最大化简化主题的多样性<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="bgextend_on"><!--<lang package='Template'>-->是否启用前台主题扩展背景切换<!--</lang>--></label>
+						<input type="radio" id="bgextend_on" name="options[bgextend_on]" value="1" <!--{if $arrOptions['bgextend_on']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[bgextend_on]" value="0" <!--{if $arrOptions['bgextend_on']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->主题样式扩展背景将会展示主题华丽的一面<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="bgextend_time"><!--<lang package='Template'>-->主题样式扩展背景切换间隔时间<!--</lang>--></label>
+						<input type="text" name="options[bgextend_time]" id="bgextend_time" size="60" value="<!--{$arrOptions['bgextend_time']}-->" class="{required:true,digits:true,min:5}"/>
+						<div class="description input_tips"><!--<lang package='Template'>-->我们建立尽量不要将切换时间设置过短，间隔时间单位为秒<!--</lang>--></div>
+						<p class="input_errortips"></p>
+					</fieldset>
+					<fieldset>
+						<label for="bgextend_repeat"><!--<lang package='Template'>-->主题样式扩展背景重复设置<!--</lang>--></label>
+						<input type="radio" id="bgextend_repeat" name="options[bgextend_repeat]" value="repeat" <!--{if $arrOptions['bgextend_repeat']=='repeat'}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->平铺<!--</lang>-->
+						<input type="radio" id="" name="options[bgextend_repeat]" value="repeat-x" <!--{if $arrOptions['bgextend_repeat']=='repeat-x'}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->X方向平铺<!--</lang>-->
+						<input type="radio" id="" name="options[bgextend_repeat]" value="repeat-y" <!--{if $arrOptions['bgextend_repeat']=='repeat-y'}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->Y方向平铺<!--</lang>-->
+						<input type="radio" id="" name="options[bgextend_repeat]" value="no-repeat" <!--{if $arrOptions['bgextend_repeat']=='no-repeat'}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->不重复<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->你可以根据扩展背景的类型选择相应背景重复方式<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="admin_dialog_style"><!--<lang package='Template'>-->网站后台对话框皮肤<!--</lang>--></label>
+						<select name="options[admin_dialog_style]" id="admin_dialog_style">
+							<option value="default" <!--{if $arrOptions['admin_dialog_style']=='default'}-->selected<!--{/if}-->>default</option>
+							<option value="aero" <!--{if $arrOptions['admin_dialog_style']=='aero'}-->selected<!--{/if}-->>aero</option>
+							<option value="chrome" <!--{if $arrOptions['admin_dialog_style']=='chrome'}-->selected<!--{/if}-->>chrome</option>
+							<option value="opera" <!--{if $arrOptions['admin_dialog_style']=='opera'}-->selected<!--{/if}-->>opera</option>
+							<option value="simple" <!--{if $arrOptions['admin_dialog_style']=='simple'}-->selected<!--{/if}-->>simple</option>
+							<option value="idialog" <!--{if $arrOptions['admin_dialog_style']=='idialog'}-->selected<!--{/if}-->>idialog</option>
+							<option value="twitter" <!--{if $arrOptions['admin_dialog_style']=='twitter'}-->selected<!--{/if}-->>twitter</option>
+							<option value="blue" <!--{if $arrOptions['admin_dialog_style']=='blue'}-->selected<!--{/if}-->>blue</option>
+							<option value="black" <!--{if $arrOptions['admin_dialog_style']=='black'}-->selected<!--{/if}-->>black</option>
+							<option value="green" <!--{if $arrOptions['admin_dialog_style']=='green'}-->selected<!--{/if}-->>green</option>
+						</select>
+						<div class="description"><!--<lang package='Template'>-->网站后台专用对话框皮肤<!--</lang>-->&nbsp;
+							<a href="javascript:void(0);" onclick="windsforceAlert('后台皮肤测试效果','',3);">后台皮肤测试效果</a>
+						</div>
+					</fieldset>
+					<fieldset>
+						<label for="front_dialog_style"><!--<lang package='Template'>-->网站前台对话框皮肤<!--</lang>--></label>
+						<select name="options[front_dialog_style]" id="front_dialog_style">
+							<option value="default" <!--{if $arrOptions['front_dialog_style']=='default'}-->selected<!--{/if}-->>default</option>
+							<option value="aero" <!--{if $arrOptions['front_dialog_style']=='aero'}-->selected<!--{/if}-->>aero</option>
+							<option value="chrome" <!--{if $arrOptions['front_dialog_style']=='chrome'}-->selected<!--{/if}-->>chrome</option>
+							<option value="opera" <!--{if $arrOptions['front_dialog_style']=='opera'}-->selected<!--{/if}-->>opera</option>
+							<option value="simple" <!--{if $arrOptions['front_dialog_style']=='simple'}-->selected<!--{/if}-->>simple</option>
+							<option value="idialog" <!--{if $arrOptions['front_dialog_style']=='idialog'}-->selected<!--{/if}-->>idialog</option>
+							<option value="twitter" <!--{if $arrOptions['front_dialog_style']=='twitter'}-->selected<!--{/if}-->>twitter</option>
+							<option value="blue" <!--{if $arrOptions['front_dialog_style']=='blue'}-->selected<!--{/if}-->>blue</option>
+							<option value="black" <!--{if $arrOptions['front_dialog_style']=='black'}-->selected<!--{/if}-->>black</option>
+							<option value="green" <!--{if $arrOptions['front_dialog_style']=='green'}-->selected<!--{/if}-->>green</option>
+						</select>
+						<div class="description"><!--<lang package='Template'>-->网站前台专用对话框皮肤<!--</lang>--><br/>
+							<iframe id="frontdialogstyle_frame" frameborder="0" src="<!--{:Core_Extend::windsforceOuter('app=home&c=misc&a=dialogstyle')}-->" width="300" height="150" style="margin-top:5px;border:1px dashed #CCC;"></iframe>
+						</div>
+					</fieldset>
+					<fieldset>
+						<label for="js_lazyload_on"><!--<lang package='Template'>-->是否开启图片延迟加载<!--</lang>--></label>
+						<input type="radio" id="js_lazyload_on" name="options[js_lazyload_on]" value="1" <!--{if $arrOptions['js_lazyload_on']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[js_lazyload_on]" value="0" <!--{if $arrOptions['js_lazyload_on']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->图片延迟加载可以减少页面加载资源<!--</lang>--></div>
+					</fieldset>
+					<fieldset>
+						<label for="js_slimbox_on"><!--<lang package='Template'>-->是否开启 simplebox 图片效果<!--</lang>--></label>
+						<input type="radio" id="js_slimbox_on" name="options[js_slimbox_on]" value="1" <!--{if $arrOptions['js_slimbox_on']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+						<input type="radio" id="" name="options[js_slimbox_on]" value="0" <!--{if $arrOptions['js_slimbox_on']==0}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+						<div class="description"><!--<lang package='Template'>-->开启后，点击一个图片链接将会很酷<!--</lang>--></div>
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input id="submit_button" type="submit" class="alt_btn" value="<!--<lang package='Template'>-->发布<!--</lang>-->" />
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->" />
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

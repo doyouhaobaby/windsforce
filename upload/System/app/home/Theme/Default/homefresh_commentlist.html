@@ -1,0 +1,74 @@
+					<div id="homefreshviewcomment_box" class="commoncomment_box">
+						<a name="comments"></a>
+						<h3><!--<lang package='__COMMON_LANG__@Common'>-->总评论数<!--</lang>-->(<!--{$nTotalHomefreshcomment}-->)</h3>
+						<div class="commoncommentlist">
+							<!--{if !empty($arrHomefreshcommentLists)}-->
+							<table class="table">
+								<tbody>
+									<!--<foreach for=arrHomefreshcommentLists value=oHomefreshcommentList>-->
+									<tr>
+										<td style="width:48px;">
+											<a name="comment-<!--{$oHomefreshcommentList['homefreshcomment_id']}-->"></a>
+											<div style="text-align:center;">
+												<a href="<!--{:Q::U('home://space@?id='.$oHomefreshcommentList['user_id'])}-->"><img src="<!--{:Core_Extend::avatar($oHomefreshcommentList['user_id'],'small')}-->" width="48px" height="48px" class="thumbnail" /></a>
+											</div>
+										</td>
+										<td><h5><!--{$oHomefreshcommentList['user_id']|Core_Extend+getUsericon}-->&nbsp;<a href="<!--{:Q::U('home://space@?id='.$oHomefreshcommentList['user_id'])}-->"><!--{$oHomefreshcommentList['user_name']}--></a>&nbsp;<!--<lang package='__COMMON_LANG__@Common'>-->于<!--</lang>-->&nbsp;<!--{$oHomefreshcommentList['create_dateline']|Core_Extend+timeFormat}-->&nbsp;<!--<lang package='__COMMON_LANG__@Common'>-->发布<!--</lang>--><!--{:Core_Extend::newData($oHomefreshcommentList['create_dateline'],true)}-->
+											</h5>
+											<div class="homefreshcomment-content commoncomment-content">
+												<!--{$oHomefreshcommentList['homefreshcomment_content']|nl2br|Core_Extend+ubb=false}-->
+												<!--<if condition="$GLOBALS['_cache_']['home_option']['homefreshcomment_child']">-->
+												<!--{if $GLOBALS['___login___']!==false}-->
+												<span class="pipe">|</span>
+												<a href="javascript:void(0);" onclick="childcommentForm('<!--{$oHomefreshcommentList['homefresh_id']}-->','<!--{$oHomefreshcommentList['homefreshcomment_id']}-->');"><!--<lang package='__COMMON_LANG__@Common'>-->回复<!--</lang>--></a>
+												<!--{/if}-->
+												<br/>
+												<!--{~$arrHomefreshchildcommentData=Home_Extend::getNewchildcomment($oHomefresh['homefresh_id'],$oHomefreshcommentList['homefreshcomment_id'],true,intval(Q::G('commentpage_'.$oHomefreshcommentList['homefreshcomment_id'],'G')))}-->
+												<div id="homefreshchildcommentlistheader_<!--{$oHomefreshcommentList['homefreshcomment_id']}-->"></div>
+												<!--{script}-->
+												homefreshcommentAjaxpage('<!--{$oHomefreshcommentList['homefreshcomment_id']}-->');
+												<!--{/script}-->
+												<div id="loadinghomefreshchildcomments_<!--{$oHomefreshcommentList['homefreshcomment_id']}-->" class="loadinghomefreshchildcomments"><span><!--<lang package='__COMMON_LANG__@Common'>-->加载中<!--</lang>-->...</span></div>
+												<div id="homefreshchildcommentlist_<!--{$oHomefreshcommentList['homefreshcomment_id']}-->" class="homefreshchildcommentlist_box">
+													<!--{if $arrHomefreshchildcommentData[2]}-->
+													<div class="homefreshcommentitem_separator"></div>
+													<!--{/if}-->
+													<!--<foreach for="arrHomefreshchildcommentData[0]" value=oHomefreshchildcomment>-->
+													<a name="comment-<!--{$oHomefreshchildcomment['homefreshcomment_id']}-->"></a>
+													<div class="homefreshcomment_item homefreshcomment_itemchild" id="homefreshcommentitem_<!--{$oHomefreshchildcomment['homefreshcomment_id']}-->">
+														<div class="homefreshcomment_avatar">
+															<img src="<!--{:Core_Extend::avatar($oHomefreshchildcomment['user_id'],'small')}-->" width="48px" height="48px" class="thumbnail" />
+														</div>
+														<div class="homefreshcomment_content">
+															<p><!--{$oHomefreshchildcomment['user_id']|Core_Extend+getUsericon}-->&nbsp;<a href="<!--{:Q::U('home://space@?id='.$oHomefreshchildcomment['user_id'])}-->"><!--{$oHomefreshchildcomment['user_name']}--></a>:
+															<!--{$oHomefreshchildcomment['homefreshcomment_content']|nl2br|Core_Extend+ubb=false}-->
+															</p>
+															<p>
+																<em class="homefreshcomment_date"><!--{$oHomefreshchildcomment['create_dateline']|Core_Extend+timeFormat}--></em><!--{:Core_Extend::newData($oHomefreshchildcomment['create_dateline'],true)}-->
+																<!--{if $GLOBALS['___login___']!==false}-->
+																<span class="pipe">|</span>
+																<a href="javascript:void(0);" onclick="childcommentForm('<!--{$oHomefresh['homefresh_id']}-->','<!--{$oHomefreshchildcomment['homefreshcomment_parentid']}-->',1,'<!--{$oHomefreshchildcomment['user_name']}-->','<!--{$oHomefreshchildcomment['homefreshcomment_id']}-->');"><!--<lang package='__COMMON_LANG__@Common'>-->回复<!--</lang>--></a>
+																<!--{/if}-->
+															</p>
+														</div>
+													</div>
+													<div class="clear"></div>
+													<!--</foreach>-->
+
+													<!--{if $arrHomefreshchildcommentData[2]}-->
+													<!--{$arrHomefreshchildcommentData[1]}-->
+													<!--{/if}-->
+												</div>
+												<div id="homefreshchildcommentform_<!--{$oHomefreshcommentList['homefreshcomment_id']}-->" class="homefreshcomment_form">
+												</div>
+												<!--</if>-->
+											</div>
+										</td>
+									</tr>
+									<!--</foreach>-->
+								</tbody>
+							</table>
+							<!--{/if}-->
+						</div>
+						<!--{$sPageNavbar}-->
+					</div>

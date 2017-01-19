@@ -1,0 +1,38 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{:Core_Extend::emotion()}-->
+
+<!--{script}-->
+$(function(){
+	$('.homesite-content').emotionsToHtml();
+});
+<!--{/script}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--{$sTitle}--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+		<div class="grid_2">
+			<ul class="nav-list">
+				<li class="nav-header"><!--<lang package='__COMMON_LANG__@Common'>-->站点信息<!--</lang>--></li>
+				<!--<foreach for=arrHomesites value=oHomesite>-->
+				<!--{if $oHomesite['homesite_id']<=4}-->
+				<li <!--{if ACTION_NAME==$oHomesite['homesite_name']}-->class="active"<!--{/if}-->><a href="<!--{:Q::U(Q::C('DEFAULT_APP').'://homesite/'.$oHomesite['homesite_name'])}-->"><!--{$oHomesite['homesite_nikename']}--></a></li>
+				<!--{d*else}-->
+				<li <!--{if ACTION_NAME=='site' && Q+G('id','G')==$oHomesite['homesite_name']}-->class="active"<!--{/if}-->><a href="<!--{:Q::U(Q::C('DEFAULT_APP').'://site@?id='.$oHomesite['homesite_name'])}-->"><!--{$oHomesite['homesite_nikename']}--></a></li>
+				<!--{/if}-->
+				<!--</foreach>-->
+			</ul>
+			<div class="clearfix"></div>
+		</div>
+		<div class="grid_10">
+			<div class="homesite-content"><!--{$sContent|Core_Extend+ubb=false}--></div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

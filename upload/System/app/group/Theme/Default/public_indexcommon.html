@@ -1,0 +1,145 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{script}-->
+function setHomepagestyle(nStyle){
+	Q.AjaxSend(Q.U('group://public/set_homepagestyle?style='+nStyle),'','',completeSet);
+}
+
+function completeSet(data,status){
+	if(status==1){
+		setTimeout("window.location.replace(_SELF_);",1000);
+	}
+}
+<!--{/script}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('group://public/index')}-->" title="<!--<lang package='Template'>-->小组<!--</lang>-->"><!--<lang package='Template'>-->小组<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--{if ACTION_NAME==='index'}--><!--<lang package='Template'>-->首页<!--</lang>--><!--{d*else}--><!--{if $GLOBALS['_cache_']['group_option']['newtopic_default']==1}--><!--<lang package='Template'>-->小组<!--</lang>--><!--{d*else}--><!--<lang package='Template'>-->新帖<!--</lang>--><!--{/if}--><!--{/if}--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+		<div class="tips" style="width:97%;">
+			<div class="grid_5">
+				<!--<lang package='Template'>-->今日发贴<!--</lang>-->&nbsp;<b <!--{if $arrGroupOption[0]>0}-->class="public_todaynum"<!--{/if}-->><!--{$arrGroupOption[0]}--></b>&nbsp;<span class='divider'>=</span>&nbsp;
+				<!--<lang package='Template'>-->主题<!--</lang>-->&nbsp;<b <!--{if $arrGroupOption[1]>0}-->class="public_todaynum"<!--{/if}-->><!--{$arrGroupOption[1]}--></b>&nbsp;<span class='divider'>+</span>&nbsp;
+				<!--<lang package='Template'>-->回帖<!--</lang>-->&nbsp;<b <!--{if $arrGroupOption[2]>0}-->class="public_todaynum"<!--{/if}-->><!--{$arrGroupOption[2]}--></b>
+			</div>
+			<div class="grid_5" style="text-align:right;float:right;">
+				<!--{~$sGroupSiteKey='group_site'}-->
+				<!--<lang package='Template'>-->小组总数<!--</lang>-->&nbsp;<b><!--{$GLOBALS['_cache_'][$sGroupSiteKey]['group']}--></b>&nbsp;<span class='divider'>,</span>&nbsp;
+				<!--<lang package='Template'>-->主题总数<!--</lang>-->&nbsp;<b><!--{$GLOBALS['_cache_'][$sGroupSiteKey]['grouptopic']}--></b>&nbsp;<span class='divider'>,</span>&nbsp;
+				<!--<lang package='Template'>-->回帖总数<!--</lang>-->&nbsp;<b><!--{$GLOBALS['_cache_'][$sGroupSiteKey]['grouptopiccomment']}--></b>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+
+		<div class="grid_12">
+			<!--<include file="public+indexgroupmenu" />-->
+		</div>
+		<div class="clearfix"></div>
+
+		<div class="grid_12">
+			<div style="margin-bottom:30px;margin-top:5px;">
+				<span class="" style="float:left;margin-right:10px;"><a href="<!--{:Q::U('group://grouptopic/add')}-->" class="btn"><!--<lang package='Template'>-->发帖<!--</lang>--></a></span>
+				<!--{if $GLOBALS['___login___']===false}-->
+				<p><!--<lang package='Template'>-->你可以<!--</lang>-->&nbsp;<a href="<!--{:Core_Extend::windsforceReferer(true)}-->" rel="nofollow"><!--<lang package='Template'>-->注册<!--</lang>--></a>&nbsp;<!--<lang package='Template'>-->一个帐号，并以此<!--</lang>-->&nbsp;<a onclick="ajaxLogin('<!--{:__SELF__}-->');" href="javascript:void(0);"><!--<lang package='Template'>-->登录<!--</lang>--></a>&nbsp;，<!--<lang package='Template'>-->以浏览更多精彩内容，并随时发布观点，与大家交流。<!--</lang>--></p>
+				<!--{d*else}-->
+				<p><!--<lang package='Template'>-->欢迎回来<!--</lang>-->&nbsp;<a href="<!--{:Q::U('group://space@?id='.$GLOBALS['___login___']['user_id'])}-->" target="_blank"><!--{$GLOBALS['___login___']['user_name']}--></a>, <!--<lang package='Template'>-->你上次访问时间是在<!--</lang>-->&nbsp;<span title="<!--{$GLOBALS['___login___']['user_lastlogintime']|date='Y-m-d H:i:s',**}-->"><!--{$GLOBALS['___login___']['user_lastlogintime']|Core_Extend+timeFormat}--></span>
+				<span class="pipe">|</span><a href="<!--{:Q::U('group://space@?id='.$GLOBALS['___login___']['user_id'].'&type=group')}-->"><!--<lang package='Template'>-->我的小组<!--</lang>--></a>,&nbsp;
+				<a href="<!--{:Q::U('group://space@?id='.$GLOBALS['___login___']['user_id'])}-->" target="_blank"><!--<lang package='Template'>-->我的帖子<!--</lang>--></a>,&nbsp;<a href="<!--{:Q::U('group://public/'.($GLOBALS['_cache_']['group_option']['newtopic_default']==1?'index':'newtopic'))}-->"><!--<lang package='Template'>-->查看新帖<!--</lang>--></a></p>
+				<!--{/if}-->
+			</div>
+		</div>
+		<div class="clearfix"></div>
+
+		<!--{if Q+G('page','G')<2 && MODULE_NAME==='public' && ACTION_NAME==='index'}-->
+		<div class="grid_4"> 
+			<div class="callbacks_container">
+				<ul class="rslides slider_box">
+					<!--{if !empty($arrGrouptopicCaches['hot_thumb'])}-->
+					<!--<foreach for="arrGrouptopicCaches['hot_thumb']" value=arrGroupthumbtopic>-->
+					<li>
+						<a href="<!--{:Q::U('group://topic@?id='.$arrGroupthumbtopic['grouptopic_id'])}-->" title="<!--{$arrGroupthumbtopic['grouptopic_title']}-->" target="_blank"><img src="<!--{:Attachment_Extend::getPrefix().$arrGroupthumbtopic['grouptopic_thumb']}-->" style="width:100%;height:280px;"></a>
+						<p class="caption"><a href="<!--{:Q::U('group://topic@?id='.$arrGroupthumbtopic['grouptopic_id'])}-->" title="<!--{$arrGroupthumbtopic['grouptopic_title']}-->" target="_blank"><!--{$arrGroupthumbtopic['grouptopic_title']|C+subString=0,30}--></a></p>
+					</li>
+					<!--</foreach>-->
+					<!--{d*else}-->
+					<li>
+						<img src="<!--{:__APPPUB__}-->/Images/slide/1.jpg" style="width:100%;height:280px;">
+						<p class="caption"><a href="<!--{:Core_Extend::windsforceReferer(true)}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->注册<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->注册<!--</lang>--></a></p>
+					</li>
+					<li>
+						<img src="<!--{:__APPPUB__}-->/Images/slide/2.jpg" style="width:100%;height:280px;">
+						<p class="caption"><a onclick="ajaxLogin('<!--{:__SELF__}-->');" href="javascript:void(0);" title="<!--<lang package='__COMMON_LANG__@Common'>-->登录<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->登录<!--</lang>--></a></p>
+					</li>
+					<!--{/if}-->
+				</ul>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="grid_4">
+			<div style="margin-left:0px;" class="publicmodule_list publicmodule_list_sort publicmodule_list_line">
+				<ul>
+					<!--{if !empty($arrGrouptopicCaches['hot'])}-->
+					<!--<foreach for="arrGrouptopicCaches['hot']" value=arrGrouphottopic>-->
+					<li><a href="<!--{:Q::U('group://topic@?id='.$arrGrouphottopic['grouptopic_id'])}-->" target="_blank" ><!--{$arrGrouphottopic['grouptopic_title']|C+subString=0,30}--></a></li>
+					<!--</foreach>-->
+					<!--{d*else}-->
+					<li><!--<lang package='Template'>-->暂时没有发现任何帖子<!--</lang>-->&nbsp;<a href="<!--{:Q::U('group://grouptopic/add')}-->"><!--<lang package='Template'>-->我要发布<!--</lang>--></a></li>
+					<!--{/if}-->
+				</ul>
+			</div>
+		</div>
+		<div class="grid_4">
+			<div class="grouptopicrecommend_list">
+				<div class="nav_tabcontainer nav_tab">
+					<ul class="need_overtab">
+						<li class="active"><a href="javascript:void(0);" data-toggle="tab"><img src="<!--{:Appt::path('grouptopic/recommend_2.gif')}-->" />&nbsp;<!--<lang package='Template'>-->系统推荐<!--</lang>--></a></li>
+						<li><a href="javascript:void(0);" data-toggle="tab"><img src="<!--{:Appt::path('grouptopic/recommend_1.gif')}-->" />&nbsp;<!--<lang package='Template'>-->组长推荐<!--</lang>--></a></li>
+					</ul>
+				</div>
+				<div id="needTabContent" class="tab-content">
+					<div class="tab-pane fade in active" id="system_recommendtopic">
+						<div class="commonbox_mini commonbox_mini_gray">
+							<div class="commonlist">
+								<ul id="recommend_grouptopiclist_box" class="grouptopiclist_box">
+									<!--{if !empty($arrGrouptopicCaches['recommend_system'])}-->
+									<!--<foreach for="arrGrouptopicCaches['recommend_system']" value=arrSystemRecommendtopic>-->
+									<li>
+										<a href="<!--{:Q::U('group://topic@?id='.
+										$arrSystemRecommendtopic['grouptopic_id'])}-->"><!--{$arrSystemRecommendtopic['grouptopic_title']|C+subString=0,30}--></a>
+									</li>
+									<!--</foreach>-->
+									<!--{d*else}-->
+									<li><!--<lang package='Template'>-->暂时没有发现任何帖子<!--</lang>-->&nbsp;<a href="<!--{:Q::U('group://grouptopic/add')}-->"><!--<lang package='Template'>-->我要发布<!--</lang>--></a></li>
+									<!--{/if}-->
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane fade none" id="groupadmin_recommendtopic">
+						<div class="commonbox_mini commonbox_mini_gray">
+							<div class="commonlist">
+								<ul id="recommend_grouptopiclist_box" class="grouptopiclist_box">
+									<!--{if !empty($arrGrouptopicCaches['recommend'])}-->
+									<!--<foreach for="arrGrouptopicCaches['recommend']" value=arrGroupadminRecommendtopic>-->
+									<li>
+										<a href="<!--{:Q::U('group://topic@?id='.
+										$arrGroupadminRecommendtopic['grouptopic_id'])}-->"><!--{$arrGroupadminRecommendtopic['grouptopic_title']|C+subString=0,30}--></a>
+									</li>
+									<!--</foreach>-->
+									<!--{d*else}-->
+									<li><!--<lang package='Template'>-->暂时没有发现任何帖子<!--</lang>-->&nbsp;<a href="<!--{:Q::U('group://grouptopic/add')}-->"><!--<lang package='Template'>-->我要发布<!--</lang>--></a></li>
+									<!--{/if}-->
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<!--{/if}-->

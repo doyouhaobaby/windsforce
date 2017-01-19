@@ -1,0 +1,31 @@
+<!--<include file="header">-->
+
+<style type="text/css" id="internalStyle">
+.homefresh_title{padding: 5px 0 8px 0px;font-size:14px;font-weight:bold;}
+.homefresh_box{padding: 8px 0 8px 4px;word-wrap: break-word;}
+.homefresh_extend{padding:5px 5px 5px 0;}
+</style>
+
+	<div id="content">
+		<div class="homefresh_box">
+			<!--{if $arrHomefresh['homefresh_title']}-->
+			<div class="homefresh_title">
+				<!--{$arrHomefresh['homefresh_title']}-->
+			</div>
+			<!--{/if}-->
+			<div class="homefresh_content">
+				<!--{$arrHomefresh['homefresh_message']|Core_Extend+ubb=false}-->
+			</div>
+			<div class="homefresh_extend gray_color font_small">
+				<!--{$arrHomefresh['create_dateline']|Core_Extend+timeFormat}--> by <a href="<!--{:Q::U('wap://space@?id='.$arrHomefresh['user_id'])}-->"><!--{$arrHomefresh['user_name']}--></a>
+			</div>
+		</div>
+
+		<div class="link"><a href="<!--{:Q::U('wap://public/index')}-->"><!--<lang package='__COMMON_LANG__@Common'>-->返回首页<!--</lang>--></a>
+		<!--{if $GLOBALS['___login___']!==false}-->
+		<span class="pipe">|</span>
+		<a href="<!--{:Q::U('wap://ucenter/index')}-->"><!--<lang package='Template'>-->个人中心<!--</lang>--></a></div>
+		<!--{/if}-->
+	</div>
+
+<!--<include file="footer">-->

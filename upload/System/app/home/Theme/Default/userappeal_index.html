@@ -1,0 +1,50 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{:Core_Extend::validate()}-->
+
+<!--{script}-->
+checkForm();
+<!--{/script}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->用户申诉<!--</lang>--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+		<!--<include file="userappeal+menu" />-->
+		
+		<div class="grid_7">
+			<form class="form-horizontal validate" method='post' name="userappeal_form" id="userappeal_form" action="<!--{:Q::U('home://userappeal/step2')}-->">
+				<fieldset>
+					<div class="control-group">
+						<label class="control-label" for="user_name"><!--<lang package='Template'>-->用户名/用户ID<!--</lang>--></label>
+						<div class="controls">
+							<input class="input-xlarge {required:true}" id="user_name" name="user_name" type="text" value="" required>
+							<p class="input_errortips"></p>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="seccode"><!--<lang package='__COMMON_LANG__@Common'>-->验证码<!--</lang>--></label>
+						<div class="controls">
+							<input name="seccode" id="seccode" type="text" class="input-small {required:true,remote:Q.U('home://public/validate_seccode'),messages:{remote:'<!--<lang package='__COMMON_LANG__@Common'>-->验证码错误<!--</lang>-->'}} left" value="">&nbsp;
+							<span class="validate_seccode"><span class="input_errortips"></span></span>
+							<p class="help-block" style="clear:both;padding-top:10px;"><span id="seccodeImage"><img style="cursor:pointer" onclick="updateSeccode()" src="<!--{:Q::U('home://public/seccode')}-->" /></span></p>
+						</div>
+					</div>
+					<div class="form-actions">
+						<button type="submit" class="btn"><!--<lang package='__COMMON_LANG__@Common'>-->提交<!--</lang>--></button>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		<div class="grid_5">
+			<h3><!--<lang package='Template'>-->已经发送申诉请求？<!--</lang>--></h3>
+			<p><a href="<!--{:Q::U('home://userappeal/schedule')}-->" class="btn"><!--<lang package='Template'>-->查询申诉进度<!--</lang>--></a></p>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

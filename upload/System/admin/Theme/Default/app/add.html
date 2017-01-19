@@ -1,0 +1,158 @@
+<!--<include file="public+header">-->
+
+<!--{script}-->
+function add(){
+	if( $('#id').val()!='' && $('#id').val()!==null){
+		update();
+		return;
+	}
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'add...' );
+	Q.AjaxSubmit('appAdd','<!--{:Q::U('app/insert')}-->','',complete);
+}
+
+function update(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'update...' );
+	Q.AjaxSubmit('appAdd','<!--{:Q::U('app/update')}-->','',function(){
+		$("#submit_button").attr("disabled", false);
+		$("#submit_button").val( '<!--<lang package='Template'>-->更新<!--</lang>-->' );
+	});
+}
+
+function complete(data,status){
+	$("#submit_button").attr("disabled", false);
+	$("#submit_button").val( '<!--<lang package='Template'>-->发布<!--</lang>-->' );
+	if(status==1){
+		$('#id').val(data.app_id);
+	}
+}
+
+checkForm(<!--<if condition="!empty( $nId )" >-->update<!--<else/>-->add<!--</if>-->);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<if condition="empty( $nId )" >--><!--<lang package='Template'>-->添加应用<!--</lang>--><!--<else/>--><!--<lang package='Template'>-->编辑应用<!--</lang>--><!--</if>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<if condition="empty( $nId )" >--><!--<lang package='Template'>-->添加应用<!--</lang>--><!--<else/>--><!--<lang package='Template'>-->编辑应用<!--</lang>-->_<!--{$nId}--><!--</if>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->在这里你可以对应用信息进行修改，导出等操作<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->如果你不是应用作者，请不要修改应用信息<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->设计一个全新的应用是请注意尽量将应用唯一识别符加上你自己的信息，如companyapp来避免与其它应用命名冲突<!--</lang>--></li>
+					<li class="message-display common-message-display" style="list-style:none;"><a href="javascript:void(0);" onclick="messageDisplay();"><!--<lang package='Template'>-->展开更多<!--</lang>-->&gt;&gt;</a></li>
+					<div class="message_display none">
+						<li><!--<lang package='Template'>-->应用唯一识别符请使用小写英文字母，请不要在应用名字中加入下滑线或者短横线<!--</lang>--></li>
+						<li><!--<lang package='Template'>-->应用唯一识别符中的下滑线或者短横线将会被系统过滤<!--</lang>--></li>
+						<li style="list-style:none;" class="common_message_display"><a href="javascript:void(0);" onclick="messageDisplay();"><!--<lang package='Template'>-->收起<!--</lang>-->&lt;&lt;&lt;&lt;</a></li>
+					</div>
+				</ul>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<if condition="empty( $nId )" >--><!--<lang package='Template'>-->添加应用<!--</lang>--><!--<else/>--><!--<lang package='Template'>-->编辑应用<!--</lang>--><!--</if>--></h3>
+				<ul class="tabs">
+					<!--<if condition="!empty( $nId )" >-->
+					<li><a href="<!--{:Q::U('app/export?id='.$nId)}-->"><!--<lang package='Template'>-->导出当前应用<!--</lang>--></a></li>
+					<!--</if>-->
+					<li class="active"><a href="<!--{:Q::U('app/index')}-->"><!--<lang package='Template'>-->应用列表<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="<!--<if condition="empty( $nId )" >--><!--{:Q::U('app/insert')}--><!--<else/>--><!--{:Q::U('app/update')}--><!--</if>-->" method="post" id="appAdd" class="validate">
+				<div class="module_content">
+						<fieldset>
+							<label for="app_identifier"><!--<lang package='Template'>-->应用唯一识别符<!--</lang>--></label>
+							<input type="text" name="app_identifier" id="app_identifier" size="40" <!--<if condition="isset( $oValue ) && $oValue['app_id']<3">-->readonly<!--</if>--> value="<!--<if condition="isset( $oValue )">--><!--{$oValue:app_identifier}--><!--</if>-->" class="{required:true,stringCheckThree:true,remote:Q.U('app/check_identifier'<!--<if condition="!empty( $nId )" >-->+'?id=<!--{$nId}-->'<!--</if>-->),messages:{remote:'<!--<lang package='Template'>-->应用唯一识别符重复<!--</lang>-->'}}"/>
+							<div class="description input_tips"><!--<lang package='Template'>-->应用识别号无法编辑，不过可以通过修改应用xml配置文件来修改<!--</lang>--></div>
+							<p class="input_errortips"></p>
+						</fieldset>
+						<fieldset>
+							<label for="app_name"><!--<lang package='Template'>-->应用名<!--</lang>--></label>
+							<input type="text" name="app_name" id="app_name" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:app_name}--><!--</if>-->" class="{required:true}"/>
+							<div class="description input_tips"><!--<lang package='Template'>-->应用的名字，取一个人性化的名字有助于吸引用户<!--</lang>--></div>
+							<p class="input_errortips"></p>
+						</fieldset>
+						<fieldset>
+							<label for="app_name"><!--<lang package='Template'>-->版本<!--</lang>--></label>
+							<input type="text" name="app_version" id="app_version" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:app_version}--><!--</if>-->" class="{required:true,min:1.0,number:true}"/>
+							<p class="input_errortips"></p>
+						</fieldset>
+						<fieldset>
+							<label for="app_description"><!--<lang package='Template'>-->应用描述<!--</lang>--></label>
+							<textarea name="app_description" id="app_description" rows="5" class="{required:true}"><!--<if condition="isset( $oValue )">--><!--{$oValue:app_description}--><!--</if>--></textarea>
+							<div class="description input_tips"><!--<lang package='Template'>-->这里会详细描述应用的具体情况<!--</lang>--></div>
+							<p class="input_errortips"></p>
+						</fieldset>
+						<fieldset>
+							<label for="app_url"><!--<lang package='Template'>-->应用官方网站<!--</lang>--></label>
+							<input type="text" name="app_url" id="app_url" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:app_url}--><!--</if>-->" class="{required:true,url:true}"/>
+							<div class="description input_tips"><!--<lang package='Template'>-->应用开发的官方网站，有助于用户了解应用当前的状况<!--</lang>--></div>
+							<p class="input_errortips"></p>
+						</fieldset>
+						<fieldset>
+							<label for="app_email"><!--<lang package='Template'>-->应用作者Email<!--</lang>--></label>
+							<input type="text" name="app_email" id="app_email" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:app_email}--><!--</if>-->" class="{required:true,email:true}"/>
+							<div class="description input_tips"><!--<lang package='Template'>-->应用相关技术支持可以发送邮件给作者，以便于获得更多支持<!--</lang>--></div>
+							<p class="input_errortips"></p>
+						</fieldset>
+						<fieldset>
+							<label for="app_author"><!--<lang package='Template'>-->应用作者<!--</lang>--></label>
+							<input type="text" name="app_author" id="app_author" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:app_author}--><!--</if>-->" class="{required:true}"/>
+							<div class="description input_tips"><!--<lang package='Template'>-->应用作者名字，一个独特的名字能够让你在互联网留下自己灿烂的一页<!--</lang>--></div>
+							<p class="input_errortips"></p>
+						</fieldset>
+						<fieldset>
+							<label for="app_authorurl"><!--<lang package='Template'>-->应用作者个人主页<!--</lang>--></label>
+							<input type="text" name="app_authorurl" id="app_authorurl" size="40" value="<!--<if condition="isset( $oValue )">--><!--{$oValue:app_authorurl}--><!--</if>-->" class="{required:true,url:true}"/>
+							<div class="description input_tips"><!--<lang package='Template'>-->应用作者个人主页，填写能够为你的主页带来流量<!--</lang>--></div>
+							<p class="input_errortips"></p>
+						</fieldset>
+						<fieldset>
+							<label for="app_isadmin"><!--<lang package='Template'>-->应用是否需要管理项<!--</lang>--></label>
+							<input type="radio" id="app_isadmin" name="app_isadmin" value="1" <!--{if isset($oValue) && $oValue['app_isadmin']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+							<input type="radio" id="" name="app_isadmin" value="0" <!--{if !isset($oValue) || (isset($oValue) && $oValue['app_isadmin']==0)}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+							<div class="description"><!--<lang package='Template'>-->应用如果需要管理项，也就是管理入口，这里必须开启<!--</lang>--></div>
+						</fieldset>
+						<fieldset>
+							<label for="app_isinstall"><!--<lang package='Template'>-->应用是否需要安装<!--</lang>--></label>
+							<input type="radio" id="app_isinstall" name="app_isinstall" value="1" <!--{if isset($oValue) && $oValue['app_isinstall']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+							<input type="radio" id="" name="app_isinstall" value="0" <!--{if !isset($oValue) || (isset($oValue) && $oValue['app_isinstall']==0)}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+							<div class="description"><!--<lang package='Template'>-->开启本项后，如果还有安装文件，程序会执行安装文件以便于完成应用初始化<!--</lang>--></div>
+						</fieldset>
+						<fieldset>
+							<label for="app_isuninstall"><!--<lang package='Template'>-->应用是否需要卸载<!--</lang>--></label>
+							<input type="radio" id="app_isuninstall" name="app_isuninstall" value="1" <!--{if isset($oValue) && $oValue['app_isuninstall']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+							<input type="radio" id="" name="app_isuninstall" value="0" <!--{if !isset($oValue) || (isset($oValue) && $oValue['app_isuninstall']==0)}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+							<div class="description"><!--<lang package='Template'>-->开启本项后，如果还有卸载文件，程序会执行卸载文件以便于完成应用清理工作<!--</lang>--></div>
+						</fieldset>
+						<fieldset>
+							<label for="app_issystem"><!--<lang package='Template'>-->应用是否为系统应用<!--</lang>--></label>
+							<input type="radio" id="app_issystem" name="app_issystem" value="1" <!--{if isset($oValue) && $oValue['app_issystem']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+							<input type="radio" id="" name="app_issystem" value="0" <!--{if !isset($oValue) || (isset($oValue) && $oValue['app_issystem']==0)}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+							<div class="description"><!--<lang package='Template'>-->系统应用为整个系统支撑应用<!--</lang>--></div>
+						</fieldset>
+						<fieldset>
+							<label for="app_isappnav"><!--<lang package='Template'>-->应用是否允许写入导航<!--</lang>--></label>
+							<input type="radio" id="app_isappnav" name="app_isappnav" value="1" <!--{if isset($oValue) && $oValue['app_isappnav']==1}-->checked="checked"<!--{/if}-->/><!--<lang package='Template'>-->是<!--</lang>-->
+							<input type="radio" id="" name="app_isappnav" value="0" <!--{if !isset($oValue) || (isset($oValue) && $oValue['app_isappnav']==0)}-->checked="checked"<!--{/if}--> /><!--<lang package='Template'>-->否<!--</lang>-->
+							<div class="description"><!--<lang package='Template'>-->根据应用的不同可以自己设置,注意,有些应用是不需要写入<!--</lang>--></div>
+						</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="hidden" name="ajax" value="1">
+						<input type="hidden" name="id" id="id" value="<!--<if condition="isset( $nId )">--><!--{$nId}--><!--</if>-->"/>
+						<input type="submit" id="submit_button" value="<!--<if condition="!empty( $nId )" >--><!--<lang package='Template'>-->更新<!--</lang>--><!--<else/>--><!--<lang package='Template'>-->发布<!--</lang>--><!--</if>-->" class="alt_btn">
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->">
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

@@ -1,0 +1,29 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('home://space@?id='.$nId)}-->"><!--<lang package='Template'>-->个人空间<!--</lang>--></a> <span class="divider">/</span></li>
+			<li><!--<lang package='Template'>-->应用个人空间<!--</lang>--></li>
+		</ul>
+	</div>
+	
+	<div class="container_12 container_box">
+
+		<!--<include file="space+menu" />-->
+		
+		<div class="grid_12">
+			<ul class="thumbnails">
+				<!--<foreach for=arrAppinfos value=arrAppinfo>-->
+				<li class="grid_2">
+					<a href="<!--{:Q::U($arrAppinfo['app_identifier'].'://space@?id='.$nId,array(),($arrAppinfo['app_identifier']=='wap'?true:false))}-->" class="thumbnail">
+						<img src="<!--{$arrAppinfo['logo']}-->" alt="<!--{$arrAppinfo['app_name']}-->">
+					</a>
+					<h5 style="margin-top:5px;text-align:center;"><!--{$arrAppinfo['app_name']}--></a>&nbsp;(<!--{$arrAppinfo['app_identifier']}-->)</h5>
+				</li>
+				<!--</foreach>-->
+			</ul>
+		</div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

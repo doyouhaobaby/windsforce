@@ -1,0 +1,43 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->短消息<!--</lang>--></li>
+		</ul>
+	</div>
+		
+	<div class="container_12 container_box">
+		<!--<include file="pmnotice+menu" />-->
+		
+		<div class="grid_10">
+			<!--<include file="pm+menu" />-->
+			
+			<table class="table">
+				<colgroup>
+					<col width="70px"></col>
+					<col width="*"></col>
+				</colgroup>
+				<thead>
+					<tr>
+						<th colspan="2"><!--<lang package='Template'>-->发布者<!--</lang>-->&nbsp;<a href="<!--{:Q::U('home://space@?id='.$oPm->pm_msgfromid)}-->" target="_blank"><!--{$oPm:pm_msgfrom}--></a></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr id="pm_<!--{$oPm:pm_id}-->" class="pmlist-even">
+						<td width="70px"><img src="<!--{:__PUBLIC__}-->/images/common/pm.gif" /></td>
+						<td><!--{if $oPm['pm_subject']}--><h5><!--{$oPm['pm_subject']}--></h5><!--{/if}-->
+							<p class="pm-cite"><a href="<!--{:Q::U('home://space@?id='.$oPm->pm_msgfromid)}-->" target="_blank"><!--{$oPm:pm_msgfrom}--></a>&nbsp;<!--<lang package='Template'>-->发布<!--</lang>-->&nbsp;<em><!--{$oPm:create_dateline|Core_Extend+timeFormat}--></em></p>
+							<p class="pm-summary"><!--{$oPm:pm_message|Pm_Extend+ubb}--></p>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2"><a href="<!--{:Q::U('home://pm/index?type=system')}-->"><!--<lang package='Template'>-->公共消息<!--</lang>--></a></td>
+					<tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="<!--{:At::path('favicon.png')}-->">
+<title>$<!--{$GLOBALS['_option_']['windsforce_program_name']}-->&nbsp;<!--<lang package='Template'>-->后台管理<!--</lang>--></title>
+<!--{script}-->
+var __QEEPHP_JS_ENTER__='<!--{:__APP__}-->';
+<!--{/script}-->
+<script src="<!--{:__PUBLIC__}-->/js/jquery/jquery.js" type="text/javascript"></script>
+<script src="<!--{:__PUBLIC__}-->/js/common/Q.js" type="text/javascript"></script>
+<script src="<!--{:__PUBLIC__}-->/js/common/global.js" type="text/javascript"></script>
+<!--{script}-->
+var URL='<!--{:__URL__}-->';
+<!--{:App::U()}-->
+
+$(document).ready(function(){
+	<!--{if !empty($nFheader)}-->
+	window.frames["header"].location=Q.U( 'public/fheader?currentid=<!--{$nFheader}-->' );
+	<!--{/if}-->
+	<!--{if !empty($nFmenu)}-->
+	window.frames["menu"].location=Q.U( 'public/fmenu?tag=<!--{$nFmenu}-->&title='+encodeURIComponent('<!--{$sFmenutitle}-->')+'&notrefershmain=1&currentid=<!--{$nCurrentid}-->' );
+	<!--{/if}-->
+	<!--{if !empty($sFmainUrl)}-->
+	window.frames["main"].location='<!--{$sFmainUrl}-->';
+	<!--{/if}-->
+});
+<!--{/script}-->
+</head>
+
+<!-- 框架整体开始 -->
+<frameset frameborder=0 framespacing=0 border=0 rows="73, *" >
+	<!-- 框架头部-->
+	<frame src="<!--{:Q::U('public/fheader')}-->" name="header" frameborder=0 noresize scrolling='no' marginwidth='0' marginheight='0'>
+	<!-- 框架身体开始 -->
+	<frameset frameborder=0 framespacing=0 border=0 cols="120,*" id="body">
+		<!-- 框架菜单 -->
+		<frame src="<!--{:Q::U('public/fmenu')}-->" frameborder=0 id="menu" name="menu">
+		<!-- 框架主内容 -->
+		<frame src="<!--{:Q::U('public/fmain')}-->" frameborder=0 id="main" name="main" >
+	</frameset>
+	<!-- 框架身体结束 -->
+
+<!-- 框架整体结束 -->
+
+</html>

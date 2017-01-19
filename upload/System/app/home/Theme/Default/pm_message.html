@@ -1,0 +1,166 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{:Core_Extend::validate()}-->
+
+<!--{script}-->
+function truncatePms(id,userid,date){
+	windsforceConfirm(Q.L('确实要永久删除选择项吗？','Common'),function(){
+		window.location.href=Q.U('home://pm/truncatepm?id='+id+'&uid='+userid+'&date='+date);
+	});
+	return false;
+}
+
+function pmSend(){
+	$("#sendpm_submit").attr("disabled", "disabled");
+	$("#sendpm_submit").val('<!--<lang package='Template'>-->发送<!--</lang>-->...');
+	$("#sendpm_submit").attr("disabled", false);
+	Q.AjaxSubmit('sendpmform','<!--{:Q::U('home://pm/sendpm?type=back')}-->','result',complete);
+}
+
+function complete(data,status){
+	$("#sendpm_submit").attr("disabled", false);
+	$("#sendpm_submit").val('<!--<lang package='Template'>-->发送<!--</lang>-->');
+	if(status==1){
+		$('#pm_subject').val('');
+		$('#pm_message').val('');
+		setTimeout(function(){window.location.href='<!--{:Q::U('home://pm/show?id='.$oPm['pm_id'].'&uid='.$nUserId)}-->'+data.jumpurl;},1000);
+	}
+}
+
+checkForm(pmSend);
+<!--{/script}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->短消息<!--</lang>--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+		<!--<include file="pmnotice+menu" />-->
+		
+		<div class="grid_10">
+			<!--<include file="pm+menu" />-->
+			
+			<div class="tips">
+				<strong><!--<lang package='Template'>-->注意<!--</lang>--></strong>&nbsp;<!--<lang package='Template'>-->清空操作将会清空<!--</lang>-->&nbsp;<a href="<!--{:Q::U('home://space@?id='.$nUserId)}-->"><strong><!--{:Core_Extend::getUsernameById($nUserId)}--></strong></a>&nbsp;<!--<lang package='Template'>-->所有消息记录<!--</lang>-->
+			</div>
+			
+			<div>
+				<div class="right" style="margin-top:5px;"><!--<lang package='Template'>-->共有短消息<!--</lang>-->&nbsp;<span class="badge badge-inverse"><!--{$nTotalPm}--></span>
+					<span class="pipe">|</span>
+					<a href="<!--{:Q::U('home://pm/show?id='.$oPm['pm_id'].'&uid='.$nUserId.'&date='.$sDate.'&export=yes')}-->"><!--<lang package='Template'>-->导出<!--</lang>--></a>
+					<span class="pipe">|</span>
+					<a href="javascript:void(0);" onclick="truncatePms('<!--{$oPm['pm_id']}-->','<!--{$nUserId}-->','<!--{$sDate}-->');return false;"><!--<lang package='Template'>-->清空<!--</lang>--></a>
+					<span class="pipe">|</span>
+					<a href="javascript:history.go(-1);" class="back"><!--<lang package='Template'>-->返回<!--</lang>--></a>
+				</div>
+				
+				<div class="left" style="margin-top:5px;"><a href="<!--{:Q::U('home://space@?id='.$nUserId)}-->"><strong><!--{:Core_Extend::getUsernameById($nUserId)}--></strong></a>&nbsp;<!--<lang package='Template'>-->短消息记录<!--</lang>-->&nbsp;&nbsp;</div>
+
+				<div class="nav_tabcontainer nav_pills">
+					<ul>
+						<li <!--{if $sDate==3}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://pm/show?id='.$oPm['pm_id'].'&uid='.$nUserId.'&date=3')}-->"><!--<lang package='Template'>-->最近三天<!--</lang>--></a></li>
+						<li <!--{if $sDate==1}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://pm/show?id='.$oPm['pm_id'].'&uid='.$nUserId.'&date=1')}-->"><!--<lang package='Template'>-->今日<!--</lang>--></a></li>
+						<li <!--{if $sDate==7}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://pm/show?id='.$oPm['pm_id'].'&uid='.$nUserId.'&date=7')}-->"><!--<lang package='Template'>-->本周<!--</lang>--></a></li>
+						<li <!--{if $sDate=='all'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://pm/show?id='.$oPm['pm_id'].'&uid='.$nUserId.'&date=all')}-->"><!--<lang package='Template'>-->全部<!--</lang>--></a></li>
+					</ul>
+				</div>
+			</div>
+
+			<!--{if !empty($arrPms)}-->
+			<table class="table table-striped">
+				<colgroup>
+					<col width="*"></col>
+					<col width="70px"></col>
+				</colgroup>
+				<thead>
+					<tr>
+						<th colspan="2"><!--<lang package='Template'>-->短消息<!--</lang>--></th>
+					</tr>
+				</thead>
+				<tbody>
+					<!--<foreach for=arrPms value=arrPm>-->
+					<!--{~$sEven=$key%2==0?'pmlist-even':'pmlist-odd'}-->
+					<!--{if $nUserId!=$arrPm['pm_msgfromid']}-->
+					<tr id="pm_<!--{$arrPm['pm_id']}-->" class="<!--{$sEven}-->">
+						<td>
+							<p class="clear"><a name="pm-<!--{$arrPm['pm_id']}-->"></a></p>
+							<div class="left" style="width:90%;">
+								<!--{if $arrPm['pm_subject']}--><a href="<!--{:Q::U('home://pm/show?id='.$arrPm['pm_id'].'&muid='.$arrPm['pm_msgfromid'])}-->"><h5><!--{$arrPm['pm_subject']}--></h5></a><!--{/if}-->
+								<p class="pm-cite"><a href="<!--{:Q::U('home://space@?id='.$arrPm['pm_msgfromid'])}-->" target="_blank"><!--{$arrPm['pm_msgfrom']}--></a><!--{if $sType=='my'}-->&nbsp;<a href="<!--{:Q::U('home://space@?id='.$arrPm['pm_msgtoid'])}-->" target="_blank"><!--{:Core_Extend::getUsernameById($arrPm['pm_msgtoid'])}--></a><!--{/if}-->&nbsp;<em><!--{$arrPm['create_dateline']|Core_Extend+timeFormat}--></em>&nbsp;&nbsp;<a href="<!--{:Q::U('home://pm/show?id='.$arrPm['pm_id'].'&muid='.$arrPm['pm_msgfromid'])}-->"><!--<lang package='Template'>-->查看<!--</lang>--></a></p>
+								<p class="pm-summary"><!--{$arrPm['pm_message']|Pm_Extend+ubb}--></p>
+							</div>
+							<div class="right" style="width:60px;">
+								<img width="32" height="32" src="<!--{:Core_Extend::avatar( $arrPm['pm_msgfromid'],'small' )}-->" width="48px" height="48px" class="thumbnail need_lazyload" />
+							</div>
+						</td>
+						<td width="70px"><a href="<!--{:Q::U('home://pm/pmnew?pmid='.$arrPm['pm_id'])}-->"><!--<lang package='Template'>-->转发<!--</lang>--></a></td>
+					</tr>
+					<!--{d*else}-->
+					<tr id="pm_<!--{$arrPm['pm_id']}-->" class="<!--{$sEven}-->">
+						<td>
+							<div class="left" style="width:60px;">
+								<a href="<!--{:Q::U('home://space@?id='.$arrPm['pm_msgfromid'])}-->" target="_blank"><img src="<!--{:Core_Extend::avatar( $arrPm['pm_msgfromid'],'small' )}-->" width="48px" height="48px" class="thumbnail need_lazyload" /></a>
+							</div>
+							<div class="right" style="width:90%;">
+								<!--{if $arrPm['pm_subject']}--><a href="<!--{:Q::U('home://pm/show?id='.$arrPm['pm_id'].'&uid='.$arrPm['pm_msgfromid'])}-->"><h5><!--{$arrPm['pm_subject']}--></h5></a><!--{/if}-->
+								<p class="pm-cite"><a href="<!--{:Q::U('home://space@?id='.$arrPm['pm_msgfromid'])}-->" target="_blank"><!--{$arrPm['pm_msgfrom']}--></a><!--{if $sType=='my'}-->&nbsp;<a href="<!--{:Q::U('home://space@?id='.$arrPm['pm_msgtoid'])}-->" target="_blank"><!--{:Core_Extend::getUsernameById($arrPm['pm_msgtoid'])}--></a><!--{/if}-->&nbsp;<em><!--{$arrPm['create_dateline']|Core_Extend+timeFormat}--></em>&nbsp;&nbsp;<a href="<!--{:Q::U('home://pm/show?id='.$arrPm['pm_id'].'&uid='.$arrPm['pm_msgfromid'])}-->"><!--<lang package='Template'>-->查看<!--</lang>--></a></p>
+								<p class="pm-summary"><!--{$arrPm['pm_message']|Pm_Extend+ubb}--></p>
+							</div>
+						</td>
+						<td width="70px"><a href="<!--{:Q::U('home://pm/pmnew?pmid='.$arrPm['pm_id'])}-->"><!--<lang package='Template'>-->转发<!--</lang>--></a></td>
+					</tr>
+					<!--{/if}-->
+					<!--</foreach>-->
+				</tbody>
+			</table>
+			<!--{/if}-->
+			
+			<!--{$sPageNavbar}-->
+			<div class="clearfix" style="margin-bottom:15px;"></div>
+			
+			<form class="well form-horizontal validate" method='post' id="sendpmform" name="sendpmform">
+				<fieldset>
+					<div class="control-group">
+						<div class="controls">
+							<div id="result" class="none"></div>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="pm_subject"><!--<lang package='Template'>-->短消息主题<!--</lang>--></label>
+						<div class="controls">
+							<input class="input-xlarge" id="pm_subject" name="pm_subject" type="text">
+							<p class="help-block"><!--<lang package='Template'>-->短消息主题可以为空，其最大字符不能够超过225<!--</lang>--></p>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="pm_message"><!--<lang package='Template'>-->短消息内容<!--</lang>--><em class="red">*</em></label>
+						<div class="controls">
+							<textarea class="input-xlarge" id="pm_message" name="pm_message" rows="8" style="height:150px;width:70%;" <!--{if !$nDisplaySeccode}-->onkeypress="submitKeycode(event,pmSend);"<!--{/if}--> required title="<!--<lang package='Template'>-->短消息内容不能为空<!--</lang>-->"></textarea>
+							<p class="input_tips"><!--<lang package='Template'>-->短消息内容不能为空，且最大字符不能够超过1000<!--</lang>--></p>
+							<p class="input_errortips"></p>
+						</div>
+					</div>
+					<!--{if $nDisplaySeccode==1}-->
+					<div class="control-group">
+						<label class="control-label" for="seccode"><!--<lang package='__COMMON_LANG__@Common'>-->验证码<!--</lang>--><em class="red">*</em></label>
+						<div class="controls">
+							<input name="seccode" id="seccode" type="text" class="input-small" value="" onkeypress="submitKeycode(event,pmSend);" required>
+							<p class="help-block"><span id="seccodeImage"><img style="cursor:pointer" onclick="updateSeccode()" src="<!--{:Q::U('home://public/seccode')}-->" /></span></p>
+						</div>
+					</div>
+					<!--{/if}-->
+					<div class="form-actions">
+						<input type="hidden" name="ajax" value="1">
+						<input type="hidden" name="messageto" id="messageto" value="<!--{:Core_Extend::getUsernameById($nUserId)}-->">
+						<input type="submit" class="btn" id="sendpm_submit" value="<!--<lang package='Template'>-->发送<!--</lang>-->">
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

@@ -1,0 +1,51 @@
+<?php echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";?>
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/vnd.wap.wml; charset=utf-8" />
+<title><!--{:Core_Extend::title($TheController)}--></title>
+<meta name="keywords" content="<!--{:Core_Extend::keywords($TheController)}-->">
+<meta name="description" content="<!--{:Core_Extend::description($TheController)}-->">
+<link rel="shortcut icon" href="<!--{:__PUBLIC__}-->/images/common/favicon.png">
+<style type="text/css" id="internalStyle">
+body,div,p,a,table,textarea,form,input,img,ul,li{margin:0; padding:0;}
+body{font-size:14px;vertical-align:middle;margin:0;padding:0; background:#ffffff;-webkit-text-size-adjust: none;}
+a,a:link,.font-blue{color:#0051a4;text-decoration:none;}
+.gray_color{color: #706F6F;}
+.green_color{color:green;}
+.red_color{color:red;}
+.font_small{font-size:11px;}
+.pipe{color: #E6E7E1;margin: 0 5px;}
+.light_box{border-radius: 4px 4px 4px 4px;margin:5px 0px 10px 0px;padding: 8px 35px 8px 14px;background-color: #E1F1FE;color: #333333;}
+.content-list{border-bottom: 1px solid #E3E6EB;padding: 8px 0 8px 4px;word-wrap: break-word;}
+#top{background-color:#216FB9; padding:10px 8px;}
+#top #sitename{font-weight:bold; color:#FFFFFF; font-size:18px;}
+#navi{background:#EFEFEF; padding:5px 3px;}
+#navi a{ padding:5px; }
+#navi .active{color:#216FB9;font-weight:bold;}
+#content{padding:10px 2px;}
+.message{font-size:13px;padding:10px 0px;}
+.link{font-size:12px;}
+.link a{font-size:12px;}
+#page{margin: 0 0 5px;padding: 5px;background:#3773AB;}
+#page a{background-position:50% bottom;padding-left:3px;padding-bottom:2px;color:#fff;padding-top:2px;text-decoration:none;}
+#page a:hover{color:#fff;text-decoration:none;}
+#page a:active{background-image:none;color:#fff;}
+#page span.current{font-weight:bold;padding:2px 3px;color:#fff;}
+#page span.disabled{padding:2px 3px;color:#fff;}
+#footer{color:#666666; padding:3px;font-size:12px;}
+</style>
+</head>
+<body>
+<div id="top">
+	<div id="sitename"><!--{$GLOBALS['_option_']['site_name']}--></div>
+</div>
+<div id="navi">
+	<a href="<!--{:Q::U('wap://public/index')}-->" <!--{if MODULE_NAME==='public' && ACTION_NAME==='index'}-->class="active"<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->首页<!--</lang>--></a>
+	<a href="<!--{:Q::U('wap://apps/index')}-->" <!--{if MODULE_NAME==='apps' || APP_NAME!=='wap'}-->class="active"<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->应用<!--</lang>--></a>
+	<!--{if $GLOBALS['___login___']===false}-->
+	<a href="<!--{:Q::U('wap://public/login')}-->" <!--{if MODULE_NAME==='public' && ACTION_NAME==='login'}-->class="active"<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->登录<!--</lang>--></a>
+	<!--{d*else}-->
+	<a href="<!--{:Q::U('wap://ucenter/index')}-->" <!--{if MODULE_NAME==='ucenter'}-->class="active"<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->个人中心<!--</lang>--></a>
+	<a href="<!--{:Q::U('wap://public/logout')}-->"><!--<lang package='__COMMON_LANG__@Common'>-->注销<!--</lang>--></a>
+	<!--{/if}-->
+</div>

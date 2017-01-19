@@ -1,0 +1,24 @@
+				<form action="<!--{:Q::U('appconfigtool/save_appconfig')}-->" method="post" id="globalconfigAdd" name="globalconfigAdd" >
+					<div style="height: 300px; width: 100%; overflow:auto;">
+						<ul class="global_tips">
+							<li><!--<lang package='Template'>-->请直接在文本域中修改源代码，然后点击确定即可保存<!--</lang>--></li>
+							<li><!--<lang package='Template'>-->注意修改源代码的时候，一定要确保代码为正确的PHP脚本，否则将使系统崩溃<!--</lang>--></li>
+							<li><!--<lang package='Template'>-->如果因为修改配置文件源文件导致系统崩溃，你可以通过FTP来修改正确<!--</lang>--></li>
+							<li><!--<lang package='Template'>-->全局配置文件修改后，所有应用的配置缓存文件也会自动被删除，不用人工再次清理<!--</lang>--></li>
+						</ul>
+						<table class="tablesorter" cellspacing="0"> 
+							<thead>
+								<tr>
+									<th><!--<lang package='Template'>-->编辑全局配置文件<!--</lang>--></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><b><a href="javascript:void(0);" onclick="resizeUp('globalconfig');">[+]</a><a href="javascript:void(0);" onclick="resizeDown('globalconfig');">[-]</a></b>&nbsp;<!--<lang package='Template'>-->文件<!--</lang>--><!--{$sAppGlobalconfigFile}--><br/>
+										<textarea id="globalconfig" cols="85" rows="10" name="data" style="width:95%;height:250px;font: 12px 'Courier New';margin-left:-1px;"><!--{$sAppGlobalconfig}--></textarea>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</form>

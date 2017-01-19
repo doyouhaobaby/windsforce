@@ -1,0 +1,211 @@
+<link href="<!--{:__PUBLIC__}-->/js/swfupload/images/style.css" rel="stylesheet" type="text/css" />
+<script src="<!--{:__PUBLIC__}-->/js/swfupload/swfupload.js"></script>
+<script src="<!--{:__PUBLIC__}-->/js/swfupload/common.js"></script>
+<script src="<!--{:__PUBLIC__}-->/js/swfupload/handlers.js"></script>
+
+<!--{script}-->
+var uploadobject;
+var max_upload_size = '<!--{$nUploadfileMaxsize}-->b';
+var sAuth='<!--{$sAuth}-->';
+var sPHPSESSID='<!--{:session_id()}-->';
+var sAllAllowType='<!--{$sAllAllowType}-->';
+var uploaderMode=<!--{$nUploadFileMode}-->;
+var nUploadFlashLimit=<!--{$nUploadFlashLimit}-->;
+var nUserid=<!--{$GLOBALS['___login___']['user_id']}-->;
+var sUsername='<!--{$GLOBALS['___login___']['user_name']}-->';
+var nAttachmentcategoryId=0;
+var nUploadIsauto=<!--{$nUploadIsauto}-->;
+var insert_attach=0;
+var nDialog='<!--{if isset($bDialog)}-->1<!--{d*else}-->0<!--{/if}-->';
+var sFunction='<!--{if isset($sFunction)}--><!--{$sFunction}--><!--{/if}-->';
+var nFiletype='<!--{if isset($nFiletype)}--><!--{$nFiletype}--><!--{d*else}-->0<!--{/if}-->';
+var nFull='<!--{if isset($nFull)}--><!--{$nFull}--><!--{d*else}-->0<!--{/if}-->';
+
+jQuery(document).ready(function($){
+	uploadobject=new uploadPlugin("uploadobject");
+	uploadobject.Init();
+	uploaderMode=<!--{$nUploadFileMode}-->;
+	$('.upload-html-bypass a').click(function(){
+		uploaderMode=0;
+		swfuploadPreLoad();
+		return false;
+	});
+
+	$('.upload-flash-bypass a').click(function(){
+		uploaderMode=1;
+		swfuploadPreLoad();
+		return false;
+	});
+});
+
+function updateAttachmentinfo(){
+	$('#attachment_form').attr("action",Q.U('home://attachment/flashinfo'));
+	$('#attachment_form').submit();
+}
+
+var oEditNewattachmentcategory;
+
+function createAttachmentcategory(nSelectedIndex,sId){
+	if(nSelectedIndex=='new_category'){
+		oEditNewattachmentcategory=windsforceAjax(Q.U('home://attachment/new_attachmentcategory'),'<!--<lang package='Template'>-->新建专辑<!--</lang>-->','',saveNewattachmentcategory,cancelNewattachmentcategory,450,200);
+	}else{
+		uploadobject.addPostParam('attachmentcategory_id',nSelectedIndex);
+		nAttachmentcategoryId=nSelectedIndex;
+	}
+}
+
+function saveNewattachmentcategory(){
+	Q.AjaxSend(Q.U('home://attachment/new_attachmentcategorysave'),
+		'ajax=1&attachmentcategory_compositor='+encodeURIComponent($('#new_attachmentcategory_compositor').val())+
+		'&attachmentcategory_name='+encodeURIComponent( $('#new_attachmentcategory_name').val())+
+		'&attachmentcategory_description='+encodeURIComponent( $('#new_attachmentcategory_description').val()),'result',
+		function(data,status){
+			if(status==1){
+				$("#attachmentcategory_id").find("option:selected").val( data.attachmentcategory_id );
+				$("#attachmentcategory_id").find("option:selected").text( data.attachmentcategory_name );
+				$("#attachmentcategory_id_flash").find("option:selected").val( data.attachmentcategory_id );
+				$("#attachmentcategory_id_flash").find("option:selected").text( data.attachmentcategory_name );
+				uploadobject.addPostParam('attachmentcategory_id',data.attachmentcategory_id);
+				nAttachmentcategoryId=data.attachmentcategory_id;
+				oEditNewattachmentcategory.close();
+				return true;
+			}
+		}
+	);
+
+	return false;
+}
+
+function cancelNewattachmentcategory(){
+	if($('#new_attachmentcategory_name').val()!=''){
+		windsforceConfirm('<!--<lang package='Template'>-->你确定要放弃新建专辑?<!--</lang>-->',function(){
+			oEditNewattachmentcategory.close();
+			return true;
+		});
+		return false;
+	}
+}
+<!--{/script}-->
+
+				<form enctype="multipart/form-data" method="post" action="<!--{:Q::U('home://attachment/normal_upload')}-->" id="attachment_form" name="attachment_form">
+					<div id="flash-upload-ui" class="<!--{if $nUploadFileMode==1}-->none<!--{/if}-->" style="padding:5px 25px;">
+						<div><h3><!--<lang package='Template'>-->选择文件上传<!--</lang>--></h3>
+							<div class="attachment_flash_top">
+								<ul style="padding-left:22px;">
+									<li id="add" style="background-position:bottom;"><span id="selectfile"></span></li>
+									<li id="upload" style="display:none;"></li>
+									<li id="delete" style="display:none;"></li>
+								</ul>
+							</div>
+							<div class="attachment_flash_mainbox" style="display:none;">
+								<!--{if isset($bDialog)}-->
+								<div style="height: 80px; width: 100%;overflow-y:auto;overflow-x:hidden;boder:1px solid #fff;background:#fff;padding:5px;">
+								<!--{/if}-->
+									<table class="table" id="attachment_flash_box">
+										<thead>
+											<tr>
+												<th class="no" width="50px"><!--<lang package='Template'>-->序号<!--</lang>--></th>
+												<th class="status" width="50px"><!--<lang package='Template'>-->状态<!--</lang>--></th>
+												<th class="name"><!--<lang package='Template'>-->名称<!--</lang>--></th>
+												<th class="size" width="50px"><!--<lang package='Template'>-->大小<!--</lang>--></th>
+												<th class="flashprogress" width="250px"><!--<lang package='Template'>-->进度<!--</lang>--></th>
+												<th class="exec" width="100px"><!--<lang package='Template'>-->操作<!--</lang>--></th>
+											</tr>
+										</thead>
+									</table>
+								<!--{if isset($bDialog)}-->
+								</div>
+								<!--{/if}-->
+							</div>
+						</div>
+
+						<div id="messageinfo" class="tips"></div>
+
+						<table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+							<tbody>
+								<tr>
+									<td width="40%" >
+										<p><h3><!--<lang package='Template'>-->附件专辑<!--</lang>--></h3>
+											<select name="attachmentcategory_id_flash" id="attachmentcategory_id_flash" onchange="createAttachmentcategory(this.options[this.selectedIndex].value,'attachmentcategory_id_flash');" >
+												<option value="0" <!--{if $nAttachmentcategoryid===false}-->selected<!--{/if}-->><!--<lang package='Template'>-->请选择专辑<!--</lang>--></option>
+												<!--<foreach for=arrAttachmentcategorys value=oAttachmentcategory>-->
+												<option value="<!--{$oAttachmentcategory['attachmentcategory_id']}-->" <!--{if $nAttachmentcategoryid==$oAttachmentcategory['attachmentcategory_id']}-->selected<!--{/if}-->><!--{$oAttachmentcategory['attachmentcategory_name']}--></option>
+												<!--</foreach>-->
+												<!--{if !isset($bDialog)}--><option value='new_category'>[+]<!--<lang package='Template'>-->新建专辑<!--</lang>--></option><!--{/if}-->
+											</select>
+										</p>
+									</td>
+									<td width="60%" style="padding-left:10px;">
+										<p><h3><!--<lang package='Template'>-->允许的上传类型<!--</lang>--></h3>
+											<p class="upload_type"><!--<foreach for=arrAllowedTypes value=sAllowedType>-->
+												<a class="btn btn-mini"><!--{$sAllowedType}--></a>&nbsp;
+												<!--</foreach>-->
+											</p>
+										</p>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<p id="flash_upload_box"><input type="button" name="flash-upload" id="flash-upload" class="btn" onclick="updateAttachmentinfo();" value="<!--<lang package='Template'>-->更新附件信息<!--</lang>-->" disabled/>&nbsp;
+							<span class="clear"></span>
+							<span class="pipe">|</span>
+							<span class="media-upload-size"><!--<lang package='Template'>-->上传文件最大尺寸<!--</lang>-->&nbsp;<!--{:C::changeFileSize($nUploadfileMaxsize)}-->(<!--{$nUploadfileMaxsize}-->)</span>
+						</p>
+						<p class="upload-flash-bypass"><!--<lang package='Template'>-->Flash上传工具<!--</lang>--><span class="pipe">|</span><a href="?flash=0"><!--<lang package='Template'>-->浏览器上传工具<!--</lang>--></a></p>
+					</div>
+					<div id="html-upload-ui" class="<!--{if $nUploadFileMode==0}-->none<!--{/if}-->" style="padding:5px 25px;">
+						<h3><!--<lang package='Template'>-->上传<!--</lang>--></h3>
+						<p>
+							<!--{if isset($bDialog)}-->
+							<div style="height: 120px; width: 100%;overflow-y:auto;overflow-x:hidden;boder:1px solid #fff;background:#fff;padding:5px;">
+							<!--{/if}-->
+								<!--<for start='1' end='$nFileInputNum'>-->
+								<input type="file" name="newfile[]">
+								<!--</for>-->
+							<!--{if isset($bDialog)}-->
+							</div>
+							<!--{/if}-->
+						</p>
+
+						<table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+							<tbody>
+								<tr>
+									<td width="40%">
+										<p><h3><!--<lang package='Template'>-->附件专辑<!--</lang>--></h3>
+											<select name="attachmentcategory_id" id="attachmentcategory_id" onchange="createAttachmentcategory(this.options[this.selectedIndex].value,'attachmentcategory_id');" >
+												<option value="0" <!--{if $nAttachmentcategoryid===false}-->selected<!--{/if}-->><!--<lang package='Template'>-->请选择专辑<!--</lang>--></option>
+												<!--<foreach for=arrAttachmentcategorys value=oAttachmentcategory>-->
+												<option value="<!--{$oAttachmentcategory['attachmentcategory_id']}-->" <!--{if $nAttachmentcategoryid==$oAttachmentcategory['attachmentcategory_id']}-->selected<!--{/if}-->><!--{$oAttachmentcategory['attachmentcategory_name']}--></option>
+												<!--</foreach>-->
+												<!--{if !isset($bDialog)}--><option value='new_category'>[+]<!--<lang package='Template'>-->新建专辑<!--</lang>--></option><!--{/if}-->
+											</select>
+										</p>
+									</td>
+									<td width="60%" style="padding-left:10px;">
+										<p><h3><!--<lang package='Template'>-->允许的上传类型<!--</lang>--></h3>
+											<p class="upload_type"><!--<foreach for=arrAllowedTypes value=sAllowedType>-->
+												<a class="btn btn-mini"><!--{$sAllowedType}--></a>&nbsp;
+												<!--</foreach>-->
+											</p>
+										</p>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<p><input type="hidden" name="user_id" value="<!--{$GLOBALS['___login___']['user_id']}-->"/>
+							<!--{if isset($bDialog)}--><input type="hidden" name="dialog" value="1"/><!--{/if}-->
+							<input type="hidden" name="full" value="<!--{$nFull}-->"/>
+							<input type="hidden" name="multi" value="<!--{$nMulti}-->"/>
+							<input type="hidden" name="function" value="<!--{if isset($sFunction)}--><!--{$sFunction}--><!--{/if}-->"/>
+							<input type="hidden" name="function" value="<!--{if isset($sFunction)}--><!--{$sFunction}--><!--{/if}-->"/>
+							<input type="hidden" name="filetype" value="<!--{if isset($nFiletype)}--><!--{$nFiletype}--><!--{/if}-->"/>
+							<input type="hidden" name="user_name" value="<!--{$GLOBALS['___login___']['user_name']}-->"/>
+							<input type="submit" name="html-upload" id="html-upload" class="btn" value="<!--<lang package='Template'>-->上传<!--</lang>-->" />
+							<span class="clear"></span>&nbsp;&nbsp;
+							<span class="media-upload-size alert alert-success"><!--<lang package='Template'>-->上传文件最大尺寸<!--</lang>-->&nbsp;<!--{:C::changeFileSize($nUploadfileMaxsize)}-->(<!--{$nUploadfileMaxsize}-->)</span>
+						</p>
+						<p class="upload-html-bypass hide-if-no-js"><!--<lang package='Template'>-->浏览器上传工具<!--</lang>--><span class="pipe">|</span><a href="?flash=1"><!--<lang package='Template'>-->Flash上传工具<!--</lang>--></a></p>
+					</div>
+				</form>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><!--{$GLOBALS['_option_']['windsforce_program_name']}-->! <!--<lang package='Template'>-->管理平台<!--</lang>--></title>
+	<link rel="stylesheet" type="text/css" href="<!--{:Q::U('misc/index?type=css&file=style',array('rand'=>C::randString(4)),true)}-->"/>
+	<!--{script}-->
+	var __QEEPHP_JS_ENTER__='<!--{:__APP__}-->';
+	<!--{:App::U()}-->
+	<!--{/script}-->
+	<script src="<!--{:__PUBLIC__}-->/js/common/jquery/jquery.js" type="text/javascript"></script>
+	<script src="<!--{:__PUBLIC__}-->/js/common/Q.js" type="text/javascript"></script>
+	<!--[if IE 6]>
+	<!--{style}-->
+	html{overflow-y:scroll;}
+	<!--{/style}-->
+	<![endif]-->
+	<!--{style}-->
+	html{overflow-x:hidden;}
+	<!--{/style}-->
+	<link rel="shortcut icon" href="<!--{:__PUBLIC__}-->/images/common/favicon.png">
+	<base target="main" />
+</head>
+<body class="fmenu-body" style="margin-top:4px;">
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<div class="sidemenu_title">
+				<p><!--<if condition="Q+G('title')">--><!--{$Q.get.title}--><!--<else/>--><!--<lang package='Template'>-->首页<!--</lang>--><!--</if>--></p>
+			</div>
+		</div>
+	</section>
+	
+	<span class="clear"></span>
+
+	<!--{script}-->
+	function menuClicknum(nMenuId){
+		Q.Ajax.Get(Q.U('adminctrlmenu/clicknum?id='+nMenuId));
+	}
+	<!--{/script}-->
+
+	<aside id="sidebar" class="column">
+		<div id="sidemenu">
+			<!--[if IE 7]><!--><!--<![endif]-->
+			<!--[if lte IE 6]><table cellspacing="0"><tr><td><![endif]-->
+			<ul>
+				<li style="display:none;">&nbsp;</li>
+				<!--<if condition="!Q+G('title') || Q+G('title') eq Q+L('首页','Template')">-->
+				<li class=''><a onClick="refreshmainframe('<!--{:Q::U('public/fmain')}-->');currentClass(0);return false;" href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->管理中心主页<!--</lang>--></a></li>
+				<li class=''><a onClick="refreshmainframe('<!--{:Q::U('public/program_update')}-->');currentClass(1);return false;" href="<!--{:Q::U('public/program_update')}-->"><!--<lang package='Template'>-->程序升级<!--</lang>--><span id="update_num" >&nbsp;</span></a></li>
+				<li class=''><a onClick="refreshmainframe('<!--{:Q::U('public/profile')}-->');currentClass(2);return false;" href="<!--{:Q::U('public/profile')}-->"><!--<lang package='Template'>-->个人中心<!--</lang>--></a></li>
+				<li class=''><a onClick="refreshmainframe('<!--{:Q::U('adminctrlmenu/index')}-->');currentClass(3);return false;" href="<!--{:Q::U('adminctrlmenu/index')}-->"><!--<lang package='Template'>-->常用操作管理<!--</lang>--></a></li>
+				<!--<foreach for=arrAdminctrlmenus key=nAdminctrlmenu value=arrAdminctrlmenu>-->
+				<li class=''><a onClick="refreshmainframe('<!--{:__APP__}-->?<!--{$arrAdminctrlmenu['adminctrlmenu_url']}-->');currentClass(<!--{$nAdminctrlmenu+4}-->);menuClicknum(<!--{$arrAdminctrlmenu['adminctrlmenu_id']}-->);return false;" href="<!--{:__APP__}-->?<!--{$arrAdminctrlmenu['adminctrlmenu_url']}-->"><!--{$arrAdminctrlmenu['adminctrlmenu_title']}--></a></li>
+				<!--</foreach>-->
+				<!--</if>-->
+				<!--<assign name='nIndex' value="0" />-->
+				<!--<foreach for=arrMenuList >-->
+				<!--<php>-->
+					$arrNode=explode('@',$value['node_name']);
+					$sNodeName=$arrNode[1];
+				<!--</php>-->
+				<!--<if condition="$value['nodegroup_id'] eq $sMenuTag &&
+						strtolower( $sNodeName ) neq 'public' &&
+						strtolower( $sNodeName ) neq 'index' &&
+						$value['node_access']==1" >-->
+				<li class=''><a onClick="refreshmainframe('<!--{:Q::U($sNodeName.'/index')}-->');currentClass(<!--{$nIndex}-->);return false;" href="<!--{:Q::U($sNodeName.'/index')}-->"><!--{$value['node_title']|Q+L='Template'}--></a></li>
+				<!--{~$nIndex++}-->
+				<!--</if>-->
+				<!--</foreach>-->
+			</ul>
+			<!--[if lte IE 6]></td></tr></table><![endif]-->
+		</div>
+
+		<!--{script}-->
+		function refreshmainframe(url){
+			parent.main.document.location=url;
+		}
+
+		var oAnchor=document.anchors.length;
+		if(oAnchor.length>0 && document.anchors(0)){
+			refreshmainframe(document.anchors(0).href);
+		}
+
+		function getFirstLink(){
+			oLinks=document.getElementsByTagName('a');
+			nTotal=oLinks.length;
+			if(nTotal){
+				return oLinks[0];
+			}else{
+				return '';
+			}
+		}
+
+		function currentClass(n,bTopFirst){
+			if(bTopFirst===true){
+				var sFirstLink=getFirstLink();
+				if(sFirstLink){
+					refreshmainframe(sFirstLink);
+				}
+			}
+
+			var lis=document.getElementsByTagName('li');
+			for(var i=0;i< lis.length;i++){
+				lis[i].className='';
+			}
+
+			if(typeof lis[n+1]!="undefined"){
+				lis[n+1].className='active';
+			}
+		}
+
+		<!--{if Q+G('currentid','G')>0}-->
+		currentClass(<!--{:Q::G('currentid','G')}-->,<!--{if Q+G('notrefershmain','G')>0}-->false<!--{d*else}-->true<!--{/if}-->);
+		<!--{d*else}-->
+		currentClass(0,<!--{if Q+G('notrefershmain','G')>0}-->false<!--{d*else}-->true<!--{/if}-->);
+		<!--{/if}-->
+		<!--{/script}-->
+	</aside>
+
+<!--<include file="public+fffooter">-->

@@ -1,0 +1,129 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{:Core_Extend::emotion()}-->
+<!--{:Core_Extend::validate()}-->
+
+<script src="<!--{:__PUBLIC__}-->/js/jquery/jquery.insertcontent.js"></script>
+<script src="<!--{:__PUBLIC__}-->/js/jquery/autoresize/jquery.autoresize.js"></script>
+
+<!--{script}-->
+$(function(){
+	$('.attachmentcomment-content').emotionsToHtml();
+	
+	$('#attachmentcomment_content').autoResize({
+		onResize:function(){
+			$(this).css({opacity:0.8});
+		},
+		animateCallback:function(){
+			$(this).css({opacity:1});
+		},
+		animateDuration:300,
+		extraSpace:0,
+		min:'100px'
+	});
+
+	$(".face-icon").jqfaceedit({txtAreaObj:$("#attachmentcomment_content"),textareaid:'attachmentcomment_content',containerObj:$('#emotion_parentcontainer'),top:25,left:-27});
+});
+
+sCurrentTextareaContent='attachmentcomment_content';
+
+function commentSubmit(){
+	var comment_name=$.trim($('#attachmentcomment_name').val());
+	var comment_content=$.trim($("#attachmentcomment_content").val());
+	var bResult=commentCheckForm_(comment_name,comment_content);
+	if(bResult===false){
+		return false;
+	}
+
+	$("#comment-submit").val(Q.L('正在提交评论','Common'));
+	$("#comment-submit").attr("disabled", "disabled");
+	Q.AjaxSubmit('attachment-commentform',Q.U('home://attachment/add_attachmentcomment'),'',function(data,status){
+		$("#comment-submit").attr("disabled", false);
+		$("#comment-submit").val(Q.L('提交评论','Common'));
+		if(status==1){
+			setTimeout(function(){window.location.href=data.jumpurl;},1000);
+		}
+	});
+}
+
+checkForm(commentSubmit);
+<!--{/script}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('home://attachment/index')}-->"><!--<lang package='Template'>-->我的相册<!--</lang>--></a></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+		<!--<if condition="$GLOBALS['___login___'] neq false">-->
+		<!--<include file="attachment+menu" />-->
+		<!--</if>-->
+
+		<div class="grid_12">
+			<h6 class="attachment_showtitle tips"><!--{$arrAttachment['attachment_name']}--></h6>
+			<div class="tabbable" style="margin-bottom: 0px;">
+				<div class="nav_tabcontainer nav_tab">
+					<ul class="need_clicktab">
+						<li class="active"><a href="javascript:void(0);" data-toggle="tab"><!--<lang package='Template'>-->附件浏览<!--</lang>--></a></li>
+						<li><a href="javascript:void(0);" data-toggle="tab"><!--<lang package='Template'>-->附件详情<!--</lang>--></a></li>
+					</ul>
+				</div>
+				<div class="tab-content" style="padding-bottom: 0px;">
+					<div class="tab-pane active" id="attachment_view">
+						<p><!--{$TheController:show_attachment($arrAttachment)}--></p>
+					</div>
+					<div class="attachment_info tab-pane none" id="attachment_info">
+						<table class="table table-striped">
+							<tbody>
+								<tr>
+									<td width="120px"><!--<lang package='Template'>-->上传用户<!--</lang>--></td>
+									<td><!--{$arrAttachment['user_id']|Core_Extend+getUsericon}-->&nbsp;<a href="<!--{:Q::U('home://space@?id='.$arrAttachment['user_id'])}-->"><!--{$arrAttachment['attachment_username']}--></a></td>
+								</tr>
+								<tr>
+									<td><!--<lang package='Template'>-->所属专辑<!--</lang>--></td>
+									<td><!--{if $arrAttachment['attachmentcategory_id']>0}-->
+										<a href="<!--{:Q::U('home://attachment/index?cid='.$arrAttachment['attachmentcategory_id'])}-->"><!--{$arrAttachment['attachmentcategory_name']}--></a>
+										<!--{d*else}--><!--<lang package='Template'>-->默认专辑<!--</lang>-->
+										<!--{/if}-->
+									</td>
+								</tr>
+								<tr>
+									<td width="120px"><!--<lang package='Template'>-->上传时间<!--</lang>--></td>
+									<td><!--{$arrAttachment['create_dateline']|Core_Extend+timeFormat}--></td>
+								</tr>
+								<tr>
+									<td><!--<lang package='Template'>-->下载次数<!--</lang>--></td>
+									<td><!--{$arrAttachment.attachment_download}--></td>
+								</tr>
+								<tr>
+									<td><!--<lang package='Template'>-->附件大小<!--</lang>--></td>
+									<td><!--{$arrAttachment['attachment_size']|C+changeFileSize}--></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<!--{if $arrAttachment['user_sign']}-->
+			<div class="common_usersign">
+				<!--{$arrAttachment['user_sign']|Core_Extend+usersign}-->
+			</div>
+			<!--{/if}-->
+			
+			<div class="common_share">
+				<!--{:Core_Extend::share()}-->
+			</div>
+			<div class="clearfix"></div>
+
+			<!--{# 评论列表}-->
+			<!--<include file="attachment+commentlist" />-->
+
+			<!--{# 评论表单}-->
+			<!--<include file="attachment+commentform" />-->
+		</div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

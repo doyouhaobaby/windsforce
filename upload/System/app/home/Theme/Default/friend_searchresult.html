@@ -1,0 +1,64 @@
+<!--<include file="Core_Extend::template('header')" />-->
+	
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->好友搜索结果<!--</lang>--></li>
+		</ul>
+	</div>
+	
+	<div class="container_12 container_box">
+		<!--<include file="friend+menu" />-->
+
+		<div class="grid_10">
+			<!--{if $arrUsers}-->
+			<div class="tips">
+				<!--<lang package='Template'>-->以下是查找到的用户列表<!--</lang>-->&nbsp;(<b><!--{$nTotalUser}--></b>)&nbsp;<b><a href="<!--{:Q::U('home://friend/search')}-->"><!--<lang package='Template'>-->换个条件试试<!--</lang>--></a></b>
+			</div>
+			<div>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th width="50px"><!--<lang package='Template'>-->用户名<!--</lang>--></th>
+							<th></th>
+							<th width="60"><!--<lang package='Template'>-->性别<!--</lang>--></th>
+							<th width="120"><!--<lang package='Template'>-->注册日期<!--</lang>--></th>
+							<th width="120"><!--<lang package='Template'>-->上次访问<!--</lang>--></th>
+							<th width="80"><!--<lang package='Template'>-->登陆次数<!--</lang>--></th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--<foreach for=arrUsers value=arrUser>-->
+						<tr>
+							<td><a href="<!--{:Q::U('home://space@?id='.$arrUser['user_id'])}-->"><img src="<!--{:Core_Extend::avatar( $arrUser['user_id'],'small' )}-->" width="48px" height="48px" class="thumbnail need_lazyload" /></a></td>
+							<td><p style="margin-bottom:10px;"><!--{$arrUser['user_id']|Core_Extend+getUsericon}-->&nbsp;<a href="<!--{:Q::U('home://space@?id='.$arrUser['user_id'])}-->" class="bind_hover_card" bm_user_id="<!--{$arrUser['user_id']}-->" title="<!--{if $arrUser['user_nikename']}--><!--{$arrUser['user_nikename']}--><!--{d*else}--><!--{$arrUser['user_name']}--><!--{/if}-->"><!--{$arrUser['user_name']|Core_Extend+highlight=$sKey}--></a>&nbsp;<!--{$arrUser['user_id']|Core_Extend+getUseronlineicon}--></p>
+								<!--{if $GLOBALS['___login___']!==false}-->
+								<!--{~$nAlreadyFriendId=Core_Extend::isAlreadyFriend($arrUser['user_id'])}-->
+								<!--{if $nAlreadyFriendId==1}--><span class="label label-warning"><a href="javascript:void(0);" onclick="deleteFriend('<!--{$arrUser['user_id']}-->','0');return false;"><!--<lang package='Template'>-->取消关注<!--</lang>--></a></span>
+								<!--{elseif $nAlreadyFriendId==2}--><span class="label"><!--<lang package='Template'>-->你自己<!--</lang>--></span>
+								<!--{elseif $nAlreadyFriendId==3}--><span class="label" ><!--<lang package='Template'>-->你粉丝<!--</lang>--></span><p style="margin-top:10px;"><span><a href="javascript:void(0);" onclick="addFriend('<!--{$arrUser['user_id']}-->');return false;"><!--<lang package='Template'>-->关注<!--</lang>--></a></span>&nbsp;<span class="label label-warning"><a href="javascript:void(0);" onclick="deleteFriend('<!--{$arrUser['user_id']}-->','1');return false;"><!--<lang package='Template'>-->移除粉丝<!--</lang>--></a></span></p>
+								<!--{elseif $nAlreadyFriendId==4}--><span class="label" ><!--<lang package='Template'>-->相互关注<!--</lang>--></span><p style="margin-top:10px;"><span class="label label-warning"><a href="javascript:void(0);" onclick="deleteFriend('<!--{$arrUser['user_id']}-->','0');return false;"><!--<lang package='Template'>-->取消关注<!--</lang>--></a></span>&nbsp;<span class="label label-warning"><a href="javascript:void(0);" onclick="deleteFriend('<!--{$arrUser['user_id']}-->','1');return false;"><!--<lang package='Template'>-->移除粉丝<!--</lang>--></a></span></p>
+								<!--{d*else}--><span><a href="javascript:void(0);" onclick="addFriend('<!--{$arrUser['user_id']}-->');return false;"><!--<lang package='Template'>-->关注<!--</lang>--></a></span>
+								<!--{/if}-->&nbsp;<span class="pipe">|</span>&nbsp;
+								<span><a href="<!--{:Q::U('home://pm/pmnew?uid='.$arrUser['user_id'])}-->"><!--<lang package='Template'>-->发送短消息<!--</lang>--></a></span>
+								<!--{/if}-->
+							</td>
+							<td><img src="<!--{$arrUser['userprofile_gender']|Profile_Extend+getUserprofilegender}-->" border="0" align="absmiddle" />&nbsp;<!--{$arrUser['userprofile_gender']|Profile_Extend+getGender}--></td>
+							<td><!--{$arrUser['create_dateline']|Core_Extend+timeFormat}--></td>
+							<td><!--{if $arrUser['user_lastlogintime']}--><!--{$arrUser['user_lastlogintime']|Core_Extend+timeFormat}--><!--{d*else}--><!--<lang package='Template'>-->注册访问<!--</lang>--><!--{/if}--></td>
+							<td><span class="badge badge-label-info"><!--{$arrUser['user_logincount']}--></span></td>
+						</tr>
+						<!--</foreach>-->
+					</tbody>
+				</table>
+
+				<p><!--{$sPageNavbar}--></p>
+			</div>
+			<!--{d*else}-->
+			<p class="hero-unit"><!--<lang package='Template'>-->没有查找到任何用户<!--</lang>-->&nbsp;<a href="<!--{:Q::U('home://friend/search')}-->"><!--<lang package='Template'>-->换个条件试试<!--</lang>--></a></p>
+			<!--{/if}-->
+		</div>
+		<div class="clearfix"></div>
+	</div>
+		
+<!--<include file="Core_Extend::template('footer')" />-->

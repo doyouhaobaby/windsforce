@@ -1,0 +1,47 @@
+/*
+File Name: ie6.css
+File Type: 非必需
+Description: IE6兼容性处理
+*/
+
+/**===============================
+           基础
+================================*/
+body { padding-top:0; }
+input, textarea, select{display:block;height:18px;line-height:18px;margin:0;padding:8px 12px;border:1px solid #ccc;outline:0;font-size:14px;}
+input.input-short {width:20px;}
+button, .btn, .pagination a{display:inline-block;padding: 7px 12px;color:#fff;-moz-border-radius: 2px;-webkit-border-radius: 2px;border-radius: 2px;background: none repeat scroll 0 0 #95B93D;border: medium none;cursor: pointer;text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);}
+.btn,.pagination a{padding:8px 12px;}
+button:hover, .btn:hover, .pagination a:hover {background-color:#9FC25B;text-decoration:none;color:#fff;}
+button:active, .btn:active {background:  #95B93D;}
+button[disabled],.btn[disabled],button[readonly],.btn[readonly] {background-color: #badf72;box-shadow: none;cursor: not-allowed;opacity: 0.65;pointer-events: none;}
+textarea{height:auto;}
+.btn-large {padding: 8px 5px;line-height: 45px;text-align: center;font-size: 25px;}
+.btn-large:active{ padding: 8px 5px;}
+.btn-small {padding: 5px 9px;font-size: 11px;line-height: 16px;}
+.btn-mini {padding: 2px 6px;font-size: 11px;line-height: 14px;}
+
+/**===============================
+           头部
+================================*/
+.header { position: static; *overflow:hidden; height:50px; border-width:2px; }
+.header .nav li { display:inline-block; }
+.header .nav li a { display:inline-block; }
+.header .nav li a {line-height:50px;padding:0px 14px 50px 14px;margin:0px 1px 0px 1px;}
+.header .nav li img{ display:none; }
+.header .header_caret {display:none;}
+.header .nav .header_dropdown ul {}
+.header .nav .header_dropdown ul li a { display:block;}
+.header .nav .header_dropdown a.title-active{border:none;}
+.header .nav .header_dropdown ul.header_dropchild { width:80px; }
+
+/**===============================
+           其它
+================================*/
+/* 登录 */
+.loginviewbox{margin-top:60px;}
+#loginview-content{margin-top:-90px;}
+#footerviewlogin{margin-top:350px;}
+
+/* 消息 */
+#result,.QEEPHPAjaxResult{padding:5px 30px 35px 30px;}

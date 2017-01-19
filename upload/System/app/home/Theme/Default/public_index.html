@@ -1,0 +1,345 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<script src="<!--{:__ROOT__}-->/System/extension/socialization/static/js/socia.js"></script>
+<!--{:Core_Extend::emotion()}-->
+<script src="<!--{:__APPPUB__}-->/Js/homefresh.js"></script>
+
+<!--{script}-->
+$(document).ready(function(){
+	$('.homefresh-content').emotionsToHtml();
+	
+	<!--{if $GLOBALS['_option_']['index_display_page']==0}-->
+	<!--{~$nType=$nType?'&model='.$nType:''}-->
+	<!--{~$nCid=$nCid?'&cid='.$nCid:''}-->
+	var nPage=1;
+	var nTotalpage=<!--{$nTotalpage+1}-->;
+	var bMaxnum=false;
+	
+	function lastAddedLiveFunc(){
+		$('div#lastPostsLoader').html('<img src="<!--{:__PUBLIC__}-->/images/common/ajax/loading.gif">');
+		$.get(Q.U('home://public/gethomefresh?page='+nPage+'<!--{$nType}--><!--{$nCid}-->'),
+			function(data){
+				setTimeout(function(){
+					if (data != "") {
+						$(".homefresh-layer:last").after(data);
+						$('.homefresh-content').emotionsToHtml();
+					}
+					$('div#lastPostsLoader').empty();
+				},2000);
+				
+			}
+		);
+	};
+	
+	$(window).scroll(function(){
+		if(nPage>6){
+			if(nPage< 7 && bMaxnum===false){
+				$(".homefresh-layer:last").after('<div class="tips"><!--<lang package='Template'>-->暂时没有发现任何新鲜事<!--</lang>--></div>');
+				bMaxnum=true;
+			}
+			return false;
+		}else{
+			if(nPage< nTotalpage){
+				if($(window).scrollTop()==$(document).height()-$(window).height()){
+					nPage++;
+					lastAddedLiveFunc();
+				}
+			}
+		}
+	});
+	<!--{/if}-->
+});
+
+function toggleOnline(){
+	$('#indexonline_box').toggle('slow');
+}
+
+function goodnum(id){
+	Q.AjaxSend(Q.U('home://ucenter/update_homefreshgoodnum'),'ajax=1&id='+id,'',function(data,status,info){
+		if(status==1){
+			$('#goodnum_'+id).text(data.num);
+			$('#goodnum_'+id).addClass('goodnum_click');
+		}
+	});
+}
+<!--{/script}-->
+
+	<!--{if !empty($GLOBALS['_cache_']['announcement'])}-->
+	<div class="container_12">
+		<div class="grid_10">
+			<div id="announcement-scroll" class="announcement-container">
+				<ul>
+					<!--<foreach for="GLOBALS['_cache_']['announcement']" value=arrAnnouncement>-->
+					<li><a href="<!--{$arrAnnouncement['announcement_url']}-->" target="_blank"><!--{$arrAnnouncement['announcement_title']|C+subString=0,15}--></a>&nbsp;(<!--{$arrAnnouncement['create_dateline']|Core_Extend+timeFormat}-->)</li>
+					<!--</foreach>-->
+				</ul>
+			</div>
+			<script src="<!--{:__PUBLIC__}-->/js/common/announcement.js"></script>
+		</div>
+		<div class="grid_2" style="text-align:right;">
+			<h6 style="margin-right:10px;"><a href="<!--{:Q::U('home://announcement/index')}-->"><!--<lang package='Template'>-->站点公告<!--</lang>--></a></h6>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<!--{/if}-->
+
+	<div class="container_12 container_box">
+		<div class="tips" style="width:97%;">
+			<div class="grid_5">
+				<!--<lang package='Template'>-->今日发布<!--</lang>-->&nbsp;<b <!--{if $GLOBALS['_option_']['todaytotalnum']>0}-->class="public_todaynum"<!--{/if}-->><!--{$GLOBALS['_option_']['todaytotalnum']}--></b>&nbsp;<span class='divider'>=</span>&nbsp;
+				<!--<lang package='Template'>-->新鲜事<!--</lang>-->&nbsp;<b <!--{if $GLOBALS['_option_']['todayhomefreshnum']>0}-->class="public_todaynum"<!--{/if}-->><!--{$GLOBALS['_option_']['todayhomefreshnum']}--></b>&nbsp;<span class='divider'>+</span>&nbsp;
+				<!--<lang package='Template'>-->新注册会员<!--</lang>-->&nbsp;<b <!--{if $GLOBALS['_option_']['todayusernum']>0}-->class="public_todaynum"<!--{/if}-->><!--{$GLOBALS['_option_']['todayusernum']}--></b>
+			</div>
+			<div class="grid_5" style="text-align:right;float:right;padding-right:20px;">
+				<!--<lang package='Template'>-->应用<!--</lang>-->&nbsp;<a href="<!--{:Q::U('home://apps/index')}-->"><b><!--{$arrSite['app']}--></b></a>
+				&nbsp;<span class='divider'>|</span>&nbsp;
+				<!--<lang package='Template'>-->会员<!--</lang>-->&nbsp;<b><!--{$arrSite['user']}--></b>&nbsp;<span class='divider'>|</span>&nbsp;
+				<!--<lang package='Template'>-->新鲜事<!--</lang>-->&nbsp;<b><!--{$arrSite['homefresh']}--></b>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="clearfix"></div>
+		
+		<div class="grid_8">
+			<!--{if !isset($_GET['page']) || $_GET['page']<2}-->
+			<div class="callbacks_container">
+				<ul class="rslides slider_box">
+					<!--<foreach for=arrSlides value=arrSlide>-->
+					<li>
+						<img src="<!--{$arrSlide['slide_img']}-->" alt="<!--{$arrSlide['slide_title']}-->" title="<!--{$arrSlide['slide_title']}-->" style="width:620px;height:250px;">
+						<p class="caption"><a href="<!--{$arrSlide['slide_url']}-->" title="<!--{$arrSlide['slide_title']}-->"><!--{$arrSlide['slide_title']}--></a></p>
+					</li>
+					<!--</foreach>-->
+				</ul>
+			</div>
+			<div class="clearfix"></div>
+			<!--{/if}-->
+			
+			<!--{if !empty($arrCategorys)}-->
+			<div class="commonbox">
+				<div class="commonboxtitle">新鲜事分类</div>
+				<div class="homefreshcategoryindex_box">
+					<!--<foreach for=arrCategorys value=arrCategory>-->
+					<a href="<!--{:Q::U('home://list@?page=[page:1]&cid='.$arrCategory['homefreshcategory_id'])}-->" class="<!--{if Q+G('cid')==$arrCategory['homefreshcategory_id']}-->active<!--{/if}--> common_tag"><!--{$arrCategory['homefreshcategory_name']}--></a>&nbsp;&nbsp;
+					<!--</foreach>-->
+				</div>
+			</div>
+			<!--{/if}-->
+			
+			<div class="commonbox">
+				<div class="commonboxtitle"><!--<lang package='Template'>-->新鲜事<!--</lang>--></div>
+				<div id="homefreshindex_box">
+					<div class="mode">
+						<table cellspacing="0" cellpadding="0" border="0" class="homefreshindex_table">
+							<tbody>
+								<tr>
+									<td>
+										<div class="list <!--{if $nType && $nType==1}-->mode_current<!--{/if}-->">
+											<a class="text" href="<!--{:Q::U('home://list@?page=[page:1]&model=1')}-->"><span><!--<lang package='Template'>-->文字<!--</lang>--></span></a>
+											<div class="postline"></div>
+										</div>
+									</td>
+									<td>
+										<div class="list <!--{if $nType && $nType==2}-->mode_current<!--{/if}-->">
+											<a class="music" href="<!--{:Q::U('home://list@?page=[page:1]&model=2')}-->"><span><!--<lang package='Template'>-->音乐<!--</lang>--></span>
+											</a>
+											<div class="postline"></div>
+										</div>
+									</td>
+									<td>
+										<div class="list <!--{if $nType && $nType==3}-->mode_current<!--{/if}-->">
+											<a class="photo" href="<!--{:Q::U('home://list@?page=[page:1]&model=3')}-->"><span><!--<lang package='Template'>-->图片<!--</lang>--></span></a>
+											<div class="postline"></div>
+										</div>
+									</td>
+									<td>
+										<div class="list <!--{if $nType && $nType==4}-->mode_current<!--{/if}-->">
+											<a class="video" href="<!--{:Q::U('home://list@?page=[page:1]&model=4')}-->"><span><!--<lang package='Template'>-->视频<!--</lang>--></span></a>
+											<div class="postline"></div>
+										</div>
+									</td>
+									<td>
+										<div class="list <!--{if $nType && $nType==5}-->mode_current<!--{/if}-->">
+											<a class="movie_" href="<!--{:Q::U('home://list@?page=[page:1]&model=5')}-->"><span><!--<lang package='Template'>-->电影<!--</lang>--></span></a>
+											<!--<div class="postline"></div>-->
+										</div>
+									</td>
+									<!--<td>
+										<div class="list <!--{if $nType && $nType==6}-->mode_current<!--{/if}-->">
+											<a class="shoping" href="<!--{:Q::U('home://list@?page=[page:1]&model=6')}-->"><span><!--<lang package='Template'>-->购物<!--</lang>--></span></a>
+										</div>
+									</td>-->
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<!--{if !empty($arrHomefreshs)}-->
+				<!--<foreach for=arrHomefreshs value=oHomefresh>-->
+				<div homefreshdata-id="<!--{$oHomefresh['homefresh_id']}-->" class="homefresh-layer clearfix">
+					<div class="homefresh-header clearfix">
+						<div class="img"><img src="<!--{:Core_Extend::avatar($oHomefresh['user_id'],'small')}-->" width="48px" height="48px" class="need_lazyload"/></div>
+						<div class="info">
+							<p class="homefresh-title"><a href="<!--{:Home_Extend::getHomefreshLink($oHomefresh)}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->阅读全文<!--</lang>-->" target="_blank"><!--{$oHomefresh['homefresh_title']}--></a></p>
+							<p class="homefresh-footer">
+								<!--{$oHomefresh['user_id']|Core_Extend+getUsericon}-->&nbsp;<a href="<!--{:Q::U('home://space@?id='.$oHomefresh['user_id'])}-->" class="bind_hover_card" bm_user_id="<!--{$oHomefresh['user_id']}-->" target="_blank"><!--{$oHomefresh['user_name']}--></a>
+								<span class="homefresh-time">
+								<!--{$oHomefresh['create_dateline']|Core_Extend+timeFormat}--></span>&nbsp;<!--{:Core_Extend::newData($oHomefresh['create_dateline'],true)}-->
+							</p>
+						</div>
+					</div>
+					<div class="homefresh-content">
+						<!--{~$sHomefreshAttribute=Home_Extend::parse($oHomefresh['homefresh_attribute'],$oHomefresh['homefresh_type'],$oHomefresh['homefresh_id'])}-->
+						<!--{if $sHomefreshAttribute}-->
+						<div class="homefresh-attribute"><!--{$sHomefreshAttribute}--></div>
+						<!--{/if}-->
+						<!--{if $oHomefresh['homefresh_thumb']}-->
+						<div class="homefresh-thumb"><img src="<!--{:Attachment_Extend::getPrefix()}--><!--{$oHomefresh['homefresh_thumb']}-->" class="need_lazyload" /></div>
+						<!--{/if}-->
+						<div><!--{$oHomefresh['homefresh_message']|Core_Extend+subString=500,false,1,true,false}--></div>
+						<div class="clearfix"></div>
+					</div>
+					<!--{if !empty($oHomefresh['homefreshcategory_name'])}-->
+					<div class="homefresh-left">
+						<a href="<!--{:Q::U('home://list@?page=[page:1]&cid='.$oHomefresh['homefreshcategory_id'])}-->" class="common_tag"><!--{$oHomefresh['homefreshcategory_name']}--></a>
+					</div>
+					<!--{/if}-->
+					<div class="homefresh-count">
+						<a href="javascript:void(0);" onclick="goodnum('<!--{$oHomefresh['homefresh_id']}-->');"><!--<lang package='__COMMON_LANG__@Common'>-->赞<!--</lang>-->(<span id="goodnum_<!--{$oHomefresh['homefresh_id']}-->" <!--{if in_array($oHomefresh['homefresh_id'],$arrGoodCookie)}-->class="goodnum_click"<!--{/if}-->><!--{$oHomefresh['homefresh_goodnum']}--></span>)</a>
+						<span class="pipe">|</span>
+						<a href="<!--{:Home_Extend::getHomefreshLink($oHomefresh)}-->#comments" target="_blank"><!--<lang package='__COMMON_LANG__@Common'>-->评论<!--</lang>-->(<span id="homefreshcomment_<!--{$oHomefresh['homefresh_id']}-->"><!--{$oHomefresh['homefresh_commentnum']}--></span>)</a>
+						<span class="pipe">|</span>
+						<a href="<!--{:Home_Extend::getHomefreshLink($oHomefresh)}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->阅读全文<!--</lang>-->" target="_blank"><!--<lang package='__COMMON_LANG__@Common'>-->阅读全文<!--</lang>-->(<!--{$oHomefresh['homefresh_viewnum']}--></span>)</a>
+					</div>
+				</div>
+				<!--</foreach>-->
+
+				<!--{if $GLOBALS['_option_']['index_display_page']==1}-->
+				<div style="padding:0px 0px 30px 0px;">
+					<!--{$sPageNavbar}-->
+				</div>
+				<!--{d*else}-->
+				<div id="lastPostsLoader"></div>
+				<!--{/if}-->
+
+				<!--{d*else}-->
+				<div class="tips"><!--<lang package='Template'>-->暂时没有发现任何新鲜事<!--</lang>--></div>
+				<!--{/if}-->
+			</div>
+		</div>
+		<div class="grid_4">
+			<div class="commonbox">
+				<div class="commonboxtitle"><!--{$GLOBALS['_option_']['home_title']}--></div>
+				<div class="tips site_introduction">
+					<p><!--{$sHomeDescription}--></p>
+					<p><blockquote>
+						<small><!--{$GLOBALS['_option_']['site_description']}--></small>
+						</blockquote>
+					</p>
+				</div>
+			</div>
+			<div class="commonbox userlist clearfix">
+				<div>
+					<a href="<!--{:Q::U('home://ucenter/post?model=1')}-->" class="btn">&nbsp;&nbsp;&nbsp;&nbsp;添加新鲜事&nbsp;&nbsp;&nbsp;&nbsp;</a>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="commonbox userlist clearfix">
+				<div class="commonboxtitle"><!--<lang package='Template'>-->活跃会员<!--</lang>--></div>
+				<!--{if is_array($arrActiveusers)}-->
+				<!--<foreach for=arrActiveusers value=oActiveuser>-->
+				<div class="user smalluser">
+					<a href="<!--{:Q::U('home://space@?id='.$oActiveuser['user_id'])}-->"><img src="<!--{:Core_Extend::avatar($oActiveuser['user_id'],'small')}-->" width="100%" title="<!--<lang package='Template'>-->会员<!--</lang>-->&nbsp;<!--{$oActiveuser['user_name']}--> | <!--<lang package='Template'>-->时间<!--</lang>-->&nbsp;<!--{$oActiveuser['user_lastlogintime']|Core_Extend+timeFormat}-->" alt="<!--<lang package='Template'>-->会员<!--</lang>--> <!--{$oActiveuser['user_name']}-->" ></a>
+					<a href="<!--{:Q::U('home://space@?id='.$oActiveuser['user_id'])}-->" class="need_tips" tips="<!--<lang package='Template'>-->会员<!--</lang>-->&nbsp;<!--{$oActiveuser['user_name']}-->&nbsp;,&nbsp;<!--<lang package='Template'>-->时间<!--</lang>-->&nbsp;<!--{$oActiveuser['user_lastlogintime']|Core_Extend+timeFormat}-->"><!--{$oActiveuser['user_name']|C+subString=0,3}--></a>
+				</div>
+				<!--</foreach>-->
+				<!--{d*else}-->
+				<p><!--<lang package='Template'>-->暂时没有发现任何新会员<!--</lang>-->&nbsp;<a href="<!--{:Q::U('home://public/register')}-->"><!--<lang package='Template'>-->注册<!--</lang>--></a></p>
+				<!--{/if}-->
+				<div class="clearfix"></div>
+			</div>
+
+			<div class="commonbox userlist clearfix">
+				<div class="commonboxtitle"><!--<lang package='Template'>-->最新会员<!--</lang>--></div>
+				
+				<!--{if is_array($arrNewusers)}-->
+				<!--<foreach for=arrNewusers value=oNewuser>-->
+				<div class="user smalluser">
+					<a href="<!--{:Q::U('home://space@?id='.$oNewuser['user_id'])}-->"><img src="<!--{:Core_Extend::avatar($oNewuser['user_id'],'small')}-->" width="100%" title="<!--<lang package='Template'>-->会员<!--</lang>-->&nbsp;<!--{$oNewuser['user_name']}--> | <!--<lang package='Template'>-->时间<!--</lang>-->&nbsp;<!--{$oNewuser['create_dateline']|Core_Extend+timeFormat}-->" alt="<!--<lang package='Template'>-->会员<!--</lang>--> <!--{$oNewuser['user_name']}-->" ></a>
+					<a class="need_tips" href="<!--{:Q::U('home://space@?id='.$oNewuser['user_id'])}-->" tips="<!--<lang package='Template'>-->会员<!--</lang>-->&nbsp;<!--{$oNewuser['user_name']}-->&nbsp;,&nbsp;<!--<lang package='Template'>-->时间<!--</lang>-->&nbsp;<!--{$oNewuser['create_dateline']|Core_Extend+timeFormat}-->"><!--{$oNewuser['user_name']|C+subString=0,3}--></a>
+				</div>
+				<!--</foreach>-->
+				<!--{d*else}-->
+				<p><!--<lang package='Template'>-->暂时没有发现任何新会员<!--</lang>-->&nbsp;<a href="<!--{:Q::U('home://public/register')}-->"><!--<lang package='Template'>-->注册<!--</lang>--></a></p>
+				<!--{/if}-->
+				<div class="clearfix"></div>
+			</div>
+
+			<div class="commonbox">
+				<div class="commonboxtitle"><!--<lang package='Template'>-->关注我们<!--</lang>--></div>
+				<div class="commonlist">
+					<ul id="home_followus_box" class="home_followus_box">
+						<!--{if !empty($GLOBALS['_option_']['home_followus_tqqcom'])}-->
+						<li><a href="<!--{$GLOBALS['_option_']['home_followus_tqqcom']}-->" target="_blank"><img src="<!--{:__PUBLIC__}-->/images/common/followus/tqqcom.gif" border="0">&nbsp;<!--<lang package='Template'>-->腾讯微博<!--</lang>--></a></li>
+						<!--{/if}-->
+						<!--{if !empty($GLOBALS['_option_']['home_followus_renren'])}-->
+						<li><a href="<!--{$GLOBALS['_option_']['home_followus_renren']}-->" target="_blank"><img src="<!--{:__PUBLIC__}-->/images/common/followus/renren.gif" border="0">&nbsp;<!--<lang package='Template'>-->人人主页<!--</lang>--></a></li>
+						<!--{/if}-->
+						<!--{if !empty($GLOBALS['_option_']['home_followus_weibo'])}-->
+						<li><a href="<!--{$GLOBALS['_option_']['home_followus_weibo']}-->" target="_blank"><img src="<!--{:__PUBLIC__}-->/images/common/followus/weibo.gif" border="0">&nbsp;<!--<lang package='Template'>-->新浪微博<!--</lang>--></a></li>
+						<!--{/if}-->
+						<!--{if !empty($GLOBALS['_option_']['home_followus_qq'])}-->
+						<li><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=<!--{$GLOBALS['_option_']['home_followus_qq']}-->&amp;site=qq&amp;menu=yes"><img src="http://wpa.qq.com/pa?p=2:<!--{$GLOBALS['_option_']['home_followus_qq']}-->:41" alt="<!--<lang package='Template'>-->点击这里给我发消息<!--</lang>-->" title="<!--<lang package='Template'>-->点击这里给我发消息<!--</lang>-->" border="0"></a></li>
+						<!--{/if}-->
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+
+		<!--{if !isset($_GET['page']) || $_GET['page']<2}-->
+		<!--{if $GLOBALS['_option_']['online_on']==1 && $GLOBALS['_option_']['online_indexon']==1}-->
+		<div class="grid_12 commonbox">
+			<div class="commonboxtitle" <!--{if $GLOBALS['_option_']['online_indexmost']>0}-->onclick="toggleOnline();" style="cursor:pointer;"<!--{/if}-->><!--<lang package='Template'>-->在线会员<!--</lang>--></div>
+			<div class="tips">
+				<a href="<!--{:Q::U('home://online/index')}-->"><b><!--<lang package='Template'>-->在线会员<!--</lang>--></b></a> - <b><!--{$arrOnlinedata['online_allnum']}--></b>&nbsp;<!--<lang package='Template'>-->人在线<!--</lang>--> - <b><!--{$arrOnlinedata['online_usernum']}--></b>&nbsp;<!--<lang package='Template'>-->会员<!--</lang>-->(<b><!--{$arrOnlinedata['online_stealthusernum']}--></b>&nbsp;<!--<lang package='Template'>-->隐身<!--</lang>-->), <b><!--{$arrOnlinedata['online_guestnum']}--></b>&nbsp;<!--<lang package='Template'>-->位游客<!--</lang>--> - <!--<lang package='Template'>-->最高记录是<!--</lang>-->&nbsp;<b><!--{$arrOnlinedata['online_totalmostnum']}--></b>&nbsp;<!--<lang package='Template'>-->于<!--</lang>-->&nbsp;<b><!--{$arrOnlinedata['online_mosttime']}--></b>.
+			</div>
+			<!--{if $GLOBALS['_option_']['online_indexmost']>0}-->
+			<div id="indexonline_box" class="none">
+				<div class="index_online">
+					<img src="<!--{:__ROOT__}-->/Public/images/common/usericon/online_admin.gif" border="0" align="absmiddle" />&nbsp;<!--<lang package='Template'>-->管理员<!--</lang>-->&nbsp;&nbsp;
+					<img src="<!--{:__ROOT__}-->/Public/images/common/usericon/online_member.gif" border="0" align="absmiddle" />&nbsp;<!--<lang package='Template'>-->会员<!--</lang>-->&nbsp;&nbsp;
+					<img src="<!--{:__ROOT__}-->/Public/images/common/usericon/online_guest.gif" border="0" align="absmiddle" />&nbsp;<!--<lang package='Template'>-->游客<!--</lang>-->&nbsp;<!--{if $GLOBALS['_option_']['online_indexgueston']==0}-->(><!--<lang package='Template'>-->未列出<!--</lang>-->)<!--{/if}-->
+				</div>
+				<div class="index_online_list">
+					<!--{if is_array($arrOnlines)}-->
+					<ul>
+						<!--<foreach for=arrOnlines value=oOnline>-->
+						<li>
+							<!--{$oOnline['user_id']|Core_Extend+getUsericon}-->&nbsp;
+							<!--{if $oOnline['user_id']>0}-->
+							<a href='<!--{:Q::U('home://space@?id='.$oOnline['user_id'])}-->' target='_blank' title='<!--<lang package='Template'>-->最后活动<!--</lang>-->:<!--{$oOnline['online_activetime']|Core_Extend+timeFormat}--><!--{if $GLOBALS['_option_']['online_indexshowip']==1}--> | <!--<lang package='Template'>-->访问IP地址<!--</lang>-->:<!--{$oOnline['online_ip']}-->&nbsp;<!--{$oOnline['online_ip']|Core_Extend+convertIp}--><!--{/if}-->'><!--{$oOnline['online_username']}--></a>
+							<!--{d*else}-->
+							<span title="<!--<lang package='Template'>-->最后活动<!--</lang>-->:<!--{$oOnline['online_activetime']|Core_Extend+timeFormat}--> | <!--<lang package='Template'>-->访问IP地址<!--</lang>-->:<!--{$oOnline['online_ip']}-->&nbsp;<!--{$oOnline['online_ip']|Core_Extend+convertIp}-->"><!--<lang package='Template'>-->游客<!--</lang>--></span>
+							<!--{/if}-->
+						</li>
+						<!--</foreach>-->
+					</ul>
+					<!--{d*else}-->
+					<p><!--<lang package='Template'>-->暂无任何在线用户<!--</lang>--></p>
+					<!--{/if}-->
+				</div>
+			</div>
+			<!--{/if}-->
+		</div>
+		<!--{/if}-->
+
+		<!--{ifQ+C('DEFAULT_APP')===APP_NAME}-->
+		<!--<include file="link" />-->
+		<!--{/if}-->
+		
+		<!--{/if}-->
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

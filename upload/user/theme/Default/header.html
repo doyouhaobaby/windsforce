@@ -1,0 +1,128 @@
+<!--<include file="Core_Extend::template('cheader')" />-->
+
+<!--{if $GLOBALS['_option_']['bgextend_on']==1}-->
+<!--{script}-->
+$(document).ready(function(){
+	setInterval("changeGlobalbg();",<!--{$GLOBALS['_option_']['bgextend_time']*1000}-->);
+});
+<!--{/script}-->
+<!--{/if}-->
+
+<!--<include file="Core_Extend::template('headertop')" />-->
+
+<div class="header_logobox">
+	<div class="container_12">
+		<div class="grid_6">
+			<a class="logo" style="background: url('<!--{:Core_Extend::getLogo()}-->') no-repeat 0px 8px;" href="<!--{:Q::U(Q::C('DEFAULT_APP').'://public/index')}-->" title="<!--{$GLOBALS['_option_']['site_name']}-->"></a>
+		</div>
+		<div class="grid_6">
+			<div class="searchheader_box" style="position:relative;z-index:1;">
+				<div class="search">
+					<form action="<!--{:Q::U('group://search/index')}-->" method="get">
+						<input type="text" name="key" class="keyword" value="" autocomplete="off">
+						<input type="submit" class="submit" value="搜 索">
+						<input type="hidden" name="app" value="group" />
+						<input type="hidden" name="c" value="search" />
+						<input type="hidden" name="a" value="index" />
+					</form>
+					<div class="suggest" style="display: none; ">
+						<a href="" class="current">auto</a>
+					</div>
+				</div>
+				<div class="hotkeywords">
+					热门搜索：
+					<a target="_blank" href="<!--{:Q::U('group://search/index?key='.urlencode('社区'),array(),true)}-->" title="社区">社区</a>
+					<a target="_blank" href="<!--{:Q::U('group://search/index?key='.urlencode('科技'),array(),true)}-->" title="国际">科技</a>
+					<a target="_blank" href="<!--{:Q::U('group://search/index?key='.urlencode('创意'),array(),true)}-->" title="创意">创意</a>
+					<a target="_blank" href="<!--{:Q::U('group://search/index?key='.urlencode('新闻'),array(),true)}-->" title="新闻">新闻</a>
+					<a target="_blank" href="<!--{:Q::U('group://search/index?key='.urlencode('生活'),array(),true)}-->" title="生活">生活</a>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+</div>
+
+<div class="header">
+	<div class="container_12">
+		<div class="globa-nav">
+			<div class="shadow"></div>
+			<div class="w">
+				<div class="allMenu left">
+					<a href="<!--{:Q::U(Q::C('DEFAULT_APP').'://public/index')}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->首页<!--</lang>-->" class="index <!--{if Q+C('DEFAULT_APP')===APP_NAME && MODULE_NAME==='public' && ACTION_NAME=='index'}-->current<!--{/if}-->"><!--<lang package='__COMMON_LANG__@Common'>-->首页<!--</lang>--></a>
+					<!--{~$arrMainNavs=$GLOBALS['_cache_']['nav']['main']}-->
+					<!--<foreach for=arrMainNavs value=arrMainNav>-->
+					<!--{if $arrMainNav['sub']}-->
+					<span class="header_dropdown">
+						<a <!--{$arrMainNav['style']}--> title="<!--{$arrMainNav['description']}-->" href="javascript:void(0);" <!--{$arrMainNav['target']}--> <!--{if $arrMainNav['app']===APP_NAME}-->current_<!--{/if}-->>
+							<!--{$arrMainNav['title']}-->&nbsp;<b class="header_caret"></b>
+						</a>
+						<ul class="header_dropchild">
+							<li <!--{if $arrMainNav['app']===APP_NAME}-->class="active"<!--{/if}-->>
+								<a <!--{$arrMainNav['style']}--> title="<!--{$arrMainNav['description']}-->" href="<!--{$arrMainNav['link']}-->" <!--{$arrMainNav['target']}-->><!--{$arrMainNav['title']}--></a>
+							</li>
+							<!--{~$arrMainSubNavs=$arrMainNav['sub']}-->
+							<!--<foreach for=arrMainSubNavs value=arrMainSubNav>-->
+							<li <!--{if $arrMainSubNav['app']===APP_NAME}-->class="active"<!--{/if}-->>
+								<a <!--{$arrMainSubNav['style']}--> title="<!--{$arrMainSubNav['description']}-->" href="<!--{$arrMainSubNav['link']}-->" <!--{$arrMainSubNav['target']}-->><!--{$arrMainSubNav['title']}--></a>
+							</li>
+							<!--</foreach>-->
+						</ul>
+					</span>
+					<!--{d*else}-->
+					<a <!--{$arrMainNav['style']}--> title="<!--{$arrMainNav['description']}-->" href="<!--{$arrMainNav['link']}-->" <!--{if $arrMainNav['app']===APP_NAME}-->class="current_"<!--{/if}--> <!--{$arrMainNav['target']}-->><!--{$arrMainNav['title']}--></a>
+					<!--{/if}-->
+					<!--</foreach>-->
+				</div>
+				<!--{~$sModuleAndAction=MODULE_NAME.'@'.ACTION_NAME}-->
+				<div class="sideMenu2 right">
+					<a class="menu" href="<!--{:Q::U('home://public/index')}-->" title="新鲜事" style="position:relative;display:inline-block;">新鲜事<img src="<!--{:__PUBLIC__}-->/images/common/hot.gif" style="position:absolute;background:none;right:0px;top: -5px;"></a>
+					<!--<a class="menu" href="<!--{:Q::U(Q::C('DEFAULT_APP').'://tools/index')}-->" title="装修工具">工具</a>-->
+					<!--{if $GLOBALS['___login___']===false}-->
+					<span class="header_dropdown">
+						<a class="menu" href="javascript:void(0);"><!--<lang package='__COMMON_LANG__@Common'>-->未登录<!--</lang>-->&nbsp;<span class="header_caret"></span></a>
+						<ul class="header_dropchild">
+							<li <!--{if $sModuleAndAction=='public@login'}-->class="active"<!--{/if}-->><a href="<!--{:Core_Extend::windsforceReferer()}-->" rel="nofollow"><!--<lang package='__COMMON_LANG__@Common'>-->会员登录<!--</lang>--></a></li>
+							<li <!--{if $sModuleAndAction=='public@register'}-->class="active"<!--{/if}-->><a href="<!--{:Core_Extend::windsforceReferer(true)}-->" rel="nofollow"><!--<lang package='__COMMON_LANG__@Common'>-->注册帐号<!--</lang>--></a></li>
+							<li <!--{if $sModuleAndAction=='public@option'}-->class="active"<!--{/if}-->><a title="<!--<lang package='__COMMON_LANG__@Common'>-->设置中心<!--</lang>-->" href="<!--{:Q::U('home://public/option')}-->"><!--<lang package='__COMMON_LANG__@Common'>-->设置中心<!--</lang>--></a></li>
+						</ul>
+					</span>
+					<!--{d*else}-->
+					<span class="header_dropdown" id="header-messagecenter">
+						<a class="menu" href="javascript:void(0);"><!--<lang package='__COMMON_LANG__@Common'>-->提醒<!--</lang>-->&nbsp;<span class="header_caret"></span></a>
+						<ul class="header_dropchild">
+							<li id="new-notice-box" <!--{if MODULE_NAME==='notice'}-->class="active"<!--{/if}-->>
+								<a title="<!--<lang package='__COMMON_LANG__@Common'>-->提醒<!--</lang>-->" href="<!--{:Q::U('home://notice/index')}-->"><!--<lang package='__COMMON_LANG__@Common'>-->提醒<!--</lang>--></a>
+							</li>
+							<li id="new-message-box" <!--{if MODULE_NAME==='pm'}-->class="active"<!--{/if}-->>
+								<a title="<!--<lang package='__COMMON_LANG__@Common'>-->短消息<!--</lang>-->" href="<!--{:Q::U('home://pm/index')}-->"><!--<lang package='__COMMON_LANG__@Common'>-->短消息<!--</lang>--></a>
+							</li>
+						</ul>
+					</span>
+					<span class="header_dropdown">
+						<a rel="nofollow" href="<!--{:Q::U('home://ucenter/index')}-->" title="<!--{$GLOBALS['___login___']['user_name']}-->&nbsp;<!--<lang package='__COMMON_LANG__@Common'>-->个人中心<!--</lang>-->" class="menu"><!--{$GLOBALS['___login___']['user_name']}-->&nbsp;<b class="header_caret"></b>
+						</a>
+						<ul class="header_dropchild">
+							<!--{if Core_Extend+isAdmin()}-->
+							<li><a rel="nofollow" href="<!--{:__ROOT__}-->/user/url/admin.php" target="_blank"><!--<lang package='__COMMON_LANG__@Common'>-->管理中心<!--</lang>--></a></li>
+							<!--{/if}-->
+							<li <!--{if $sModuleAndAction=='ucenter@index'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://ucenter/index')}-->"><!--<lang package='__COMMON_LANG__@Common'>-->个人中心<!--</lang>--></a></li>
+							<li <!--{if MODULE_NAME=='spaceadmin'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://spaceadmin/index')}-->"><!--<lang package='__COMMON_LANG__@Common'>-->修改资料<!--</lang>--></a></li>
+							<!--{~$arrMenuinfo=Core_Extend::getMenu()}-->
+							<!--{if $arrMenuinfo}-->
+							<!--<foreach for=arrMenuinfo key=sMenuinfoKey value=sMenuinfo>-->
+							<li><a href="<!--{:Q::U($sMenuinfoKey)}-->"><!--{$sMenuinfo}--></a></li>
+							<!--</foreach>-->
+							<!--{/if}-->
+							<li <!--{if $sModuleAndAction=='public@option'}-->class="active"<!--{/if}-->><a title="<!--<lang package='__COMMON_LANG__@Common'>-->设置中心<!--</lang>-->" href="<!--{:Q::U('home://public/option')}-->"><!--<lang package='__COMMON_LANG__@Common'>-->设置中心<!--</lang>--></a></li>
+							<li><a href="<!--{:Q::U('home://public/logout?referer=1')}-->"><!--<lang package='__COMMON_LANG__@Common'>-->注销<!--</lang>--></a></li>
+						</ul>
+					</span>
+					<!--{/if}-->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="wrap_content">

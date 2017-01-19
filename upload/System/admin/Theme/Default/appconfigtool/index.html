@@ -1,0 +1,205 @@
+<!--<include file="public+header">-->
+
+<!--{script}-->
+var oEditAppconfig='';
+function editGlobalconfig(){
+	oEditGlobalconfig=windsforceAjax(Q.U('appconfigtool/edit_globalconfig'),'<!--<lang package='Template'>-->编辑全局配置<!--</lang>-->','',saveGlobalconfig,cancelGlobalconfig);
+}
+
+function saveGlobalconfig(){
+	Q.AjaxSubmit('globalconfigAdd','<!--{:Q::U('appconfigtool/save_globalconfig')}-->','',function(data,status,info){
+		if(status==1){
+			oEditGlobalconfig.close();
+		}else{
+			windsforceAlert(info);
+		}
+		return true;
+	});
+	return false;
+}
+
+function cancelGlobalconfig(){
+	windsforceConfirm('<!--<lang package='Template'>-->你确定放弃修改配置文件？<!--</lang>-->',function(){
+		oEditGlobalconfig.close();
+		return true;
+	});
+	return false;
+}
+
+function viewGlobaldefaultconfig(){
+	$("#ajaxGlobaldefaultconfig").css('display','block');
+	sHtml=windsforceAjaxhtml("<!--{:Q::U('appconfigtool/default_config')}-->");
+	$("#ajaxGlobaldefaultconfig").html(sHtml);
+}
+
+function closeGlobaldefaultconfig(){
+	$("#ajaxGlobaldefaultconfig").css('display','none');
+}
+
+function viewAppconfig(sApp,type){
+	windsforceAjax(Q.U('appconfigtool/app_config?app='+sApp+(type==1?'&type=file':'')),sApp+' '+(type==1?'<!--<lang package='Template'>-->配置文件<!--</lang>-->':'<!--<lang package='Template'>-->缓存文件<!--</lang>-->'));
+}
+
+function deleteAppconfig(sApp){
+	window.location.href=Q.U('appconfigtool/delete_appconfig?app='+sApp);
+}
+
+function deleteAppconfigs(){
+	$WF('configList').submit();
+}
+
+var oEditAppconfig='';
+function editAppconfig(sApp){
+	oEditAppconfig=windsforceAjax(Q.U('appconfigtool/edit_appconfig?app='+sApp),'<!--<lang package='Template'>-->编辑应用配置<!--</lang>-->'+'  '+sApp,'',saveAppconfig,cancelAppconfig);
+}
+
+function saveAppconfig(){
+	Q.AjaxSubmit('appconfigAdd','<!--{:Q::U('appconfigtool/save_appconfig')}-->','',function(data,status,info){
+		if(status==1){
+			oEditAppconfig.close();
+		}else{
+			windsforceAlert(info);
+		}
+		return true;
+	});
+	return false;
+}
+
+function cancelAppconfig(){
+	windsforceConfirm('<!--<lang package='Template'>-->你确定放弃修改配置文件？<!--</lang>-->',function(){
+		oEditAppconfig.close();
+		return true;
+	});
+	return false;
+}
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->应用配置<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->应用配置<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->WindsForce采用QeePHP框架开发，通过改变框架的配置可以实现很多功能<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->这里将会向你展示完善的整个系统的配置数据，让你心中有数<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+		
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->当前全局应用配置<!--</lang>--></h3></header>
+			<div class="module_content">
+				<a name="changeappconfig"></a>
+				<ul class="global_tips">
+					<li><!--<lang package='Template'>-->全局应用配置中存放着数据库连接等系统核心配置，所有应用中的配置都会加载它<!--</lang>-->&nbsp;<!--{$sAppGlobalconfigFile}-->&nbsp;&nbsp;<a href="javascript:void(0);" onclick="editGlobalconfig();"><!--<lang package='Template'>-->修改全局配置<!--</lang>--></a></li>
+					<li><!--<lang package='Template'>-->全局配置数据最初由安装程序根据全局惯性配置加上一些初始化数据生成<!--</lang>-->&nbsp;<!--{$sAppGlobaldefaultconfigFile}-->&nbsp;&nbsp;<a href="javascript:void(0);" onclick="viewGlobaldefaultconfig();"><!--<lang package='Template'>-->查看全局惯性配置<!--</lang>--></a></li>
+				</ul>
+				<table class="tablesorter" cellspacing="0">
+					<thead>
+						<tr>
+							<th width="50%"><!--<lang package='Template'>-->配置文件信息<!--</lang>--></th>
+							<th width="50%"><!--<lang package='Template'>-->配置文件数据值<!--</lang>--></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr style="background:none;" >
+							<td>
+								<div style="height: 200px; width: 100%; overflow:auto;"><!--{$sAppGlobalconfig}--></div>
+							</td>
+							<td>
+								<div style="height: 200px; width: 100%; overflow:auto;">
+									<table class="tablesorter" cellspacing="0">
+										<thead>
+											<tr>
+												<th><!--<lang package='Template'>-->配置项<!--</lang>--></th>
+												<th><!--<lang package='Template'>-->配置值<!--</lang>--></th>
+											</tr>
+										</thead>
+										<tbody>
+											<!--<foreach for=arrAppGlobalconfigs >-->
+											<tr style="background:none;">
+												<td><!--{$key}--></td>
+												<td><!--{$TheController->filter_value($value)}--></td>
+											</tr>
+											<!--</foreach>-->
+										</tbody>
+									</table>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<p class="none" id="ajaxGlobaldefaultconfig">
+					<img src="<!--{:At::path('ajaxloading.gif')}-->"></img>
+					<span><!--<lang package='Template'>-->全局惯性配置数据加载中<!--</lang>-->...</span>
+				</p>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->系统所有应用配置值<!--</lang>--></h3>
+				<ul class="tabs">
+					<li><a class="tab_delete" href="javascript:void(0);" onclick="deleteAppconfigs()"><!--<lang package='Template'>-->删除<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<div class="module_content">
+				<ul class="global_tips">
+					<li><!--<lang package='Template'>-->注意配置缓存文件删除后，下次访问的时候将会重建<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->文件后面有一个删除图标的表示该文件已经不存在<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->注意admin应用配置在执行删除后，看起来没有删除是因为admin应用一直处于运行中会自动创建<!--</lang>--></li>
+				</ul>
+				<a name="apps"></a>
+				<form action="<!--{:Q::U('appconfigtool/delete_appconfigs')}-->" method="post" id="configList" name="configList" >
+					<table class="tablesorter" cellspacing="0" id="checkList">
+						<thead>
+							<tr>
+								<th width="50"><input type="checkbox" onclick="checkAll('checkList')"></th>
+								<th colspan="2" width="200"><!--<lang package='Template'>-->应用名<!--</lang>--></th>
+								<th><!--<lang package='Template'>-->应用配置文件<!--</lang>--></th>
+								<th width="170"><!--<lang package='Template'>-->应用配置数据值<!--</lang>--></th>
+								<th width="70"><!--<lang package='Template'>-->操作<!--</lang>--></th>
+							</tr>
+						</thead>
+						<tbody>
+							<!--<foreach for=arrLists value=oList >-->
+							<tr <!--{if $oList['app_identifier']=='admin'}-->class="warning"<!--{/if}-->>
+								<td><input type="checkbox" name="key[]" value="<!--{$oList['app_identifier']}-->" <!--{if $oList['config_cache_file_exist']===false}-->disabled="true"<!--{/if}-->></td>
+								<td width="42"><img src="<!--{$oList['logo']}-->" /></td>
+								<td><!--{$oList['app_name']}-->&nbsp;[<!--{$oList['app_identifier']}-->]</td>
+								<td><p><!--<lang package='Template'>-->配置文件<!--</lang>--> <!--{$oList['config_file']}--><!--{if $oList['config_file_exist']===false}--><img src="<!--{:At::path('no.gif')}-->"/><!--{/if}-->&nbsp;&nbsp;
+									<a href="javascript:void(0);" onclick="editAppconfig('<!--{$oList['app_identifier']}-->')" title="<!--<lang package='Template'>-->编辑应用配置文件<!--</lang>-->"><!--<lang package='Template'>-->编辑配置<!--</lang>--></a>
+									</p>
+									<p><!--<lang package='Template'>-->缓存文件<!--</lang>--> <!--{$oList['config_cache_file']}-->
+									<!--{if $oList['config_cache_file_exist']===false}-->&nbsp;<img src="<!--{:At::path('no.gif')}-->"/><!--{/if}--></p>
+								</td>
+								<td><a href="javascript:void(0);" onclick="viewAppconfig('<!--{$oList['app_identifier']}-->','1')"><!--<lang package='Template'>-->查看文件<!--</lang>--></a> | <a href="javascript:void(0);" onclick="viewAppconfig('<!--{$oList['app_identifier']}-->')"><!--<lang package='Template'>-->查看结果<!--</lang>--></a></td>
+								<td><!--{if $oList['config_cache_file_exist']}-->
+									<a href="javascript:void(0);" onclick="deleteAppconfig('<!--{$oList['app_identifier']}-->')"><!--<lang package='Template'>-->删除缓存<!--</lang>--></a>
+									<!--{d*else}-->
+									<!--<lang package='Template'>-->已删除<!--</lang>-->
+									<!--{/if}-->
+								</td>
+							</tr>
+							<!--</foreach>-->
+						</tbody>
+					</table>
+				</form>
+			</div>
+		
+			<div class="module_content operate_box">
+				<div class="left">
+					<!--{$sPageNavbar}-->
+				</div>
+				<div class="right operate" style="text-align:right;">
+					<input type="button" name="delete" value="<!--<lang package='Template'>-->删除<!--</lang>-->" onclick="deleteAppconfigs()" class="alt_btn">
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</article>
+
+<!--<include file="public+footer">-->

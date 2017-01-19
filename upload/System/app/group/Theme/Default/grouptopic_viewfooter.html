@@ -1,0 +1,135 @@
+			<!--{if Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic) || Groupadmin_Extend+checkTopicmove()}-->
+			<div class="grid_12">
+				<div style="margin-bottom:15px;">
+					<!--{if Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic,array('group@grouptopicadmin@deletetopic'))}-->
+					<a onclick="modTopicdelete();" href="javascript:void(0);"><!--<lang package='Template'>-->删除主题<!--</lang>--></a>
+					<span class="pipe">|</span>
+					<!--{/if}-->
+					<!--{if Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic,array('group@grouptopicadmin@closetopic'))}-->
+					<!--{if $arrGrouptopic['grouptopic_isclose']=='0'}-->
+					<a onclick="modTopicclose(1);" href="javascript:void(0);"><!--<lang package='Template'>-->关闭<!--</lang>--></a>
+					<!--{d*else}-->
+					<a onclick="modTopicclose(0);" href="javascript:void(0);"><!--<lang package='Template'>-->打开<!--</lang>--></a>
+					<!--{/if}-->
+					<span class="pipe">|</span>
+					<!--{/if}-->
+					<!--{if Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic,array('group@grouptopicadmin@sticktopic'))}-->
+					<a onclick="modTopicstick(<!--{if $arrGrouptopic['grouptopic_sticktopic']>0}--><!--{$arrGrouptopic['grouptopic_sticktopic']}--><!--{d*else}-->0<!--{/if}-->);" href="javascript:void(0);"><!--<lang package='Template'>-->置顶<!--</lang>--></a>
+					<span class="pipe">|</span>
+					<!--{/if}-->
+					<!--{if Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic,array('group@grouptopicadmin@digesttopic'))}-->
+					<a onclick="modTopicdigest(<!--{if $arrGrouptopic['grouptopic_addtodigest']>0}--><!--{$arrGrouptopic['grouptopic_addtodigest']}--><!--{d*else}-->0<!--{/if}-->);" href="javascript:void(0);"><!--<lang package='Template'>-->精华<!--</lang>--></a>
+					<span class="pipe">|</span>
+					<!--{/if}-->
+					<!--{if Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic,array('group@grouptopicadmin@recommendtopic'))}-->
+					<a onclick="modTopicrecommend(<!--{if $arrGrouptopic['grouptopic_isrecommend']>0}--><!--{$arrGrouptopic['grouptopic_isrecommend']}--><!--{d*else}-->0<!--{/if}-->);" href="javascript:void(0);"><!--<lang package='Template'>-->推荐<!--</lang>--></a>
+					<span class="pipe">|</span>
+					<!--{/if}-->
+					<!--{if Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic,array('group@grouptopicadmin@hidetopic'))}-->
+					<!--{if $arrGrouptopic['grouptopic_isshow']=='0'}-->
+					<a onclick="modTopicstatus(1);" href="javascript:void(0);"><!--<lang package='Template'>-->显示<!--</lang>--></a>
+					<!--{d*else}-->
+					<a onclick="modTopicstatus(0);" href="javascript:void(0);"><!--<lang package='Template'>-->隐藏<!--</lang>--></a>
+					<!--{/if}-->
+					<span class="pipe">|</span>
+					<!--{/if}-->
+					<!--{if Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic,array('group@grouptopicadmin@categorytopic'))}-->
+					<a onclick="modTopiccategory(<!--{$arrGrouptopic['grouptopiccategory_id']}-->);" href="javascript:void(0);"><!--<lang package='Template'>-->分类<!--</lang>--></a>
+					<span class="pipe">|</span>
+					<!--{/if}-->
+					<!--{if Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic,array('group@grouptopicadmin@tagtopic'))}-->
+					<a onclick="modTopictag();" href="javascript:void(0);"><!--<lang package='Template'>-->标签<!--</lang>--></a>
+					<span class="pipe">|</span>
+					<!--{/if}-->
+					<!--{if Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic,array('group@grouptopicadmin@colortopic'))}-->
+					<a onclick="modTopiccolor();" href="javascript:void(0);"><!--<lang package='Template'>-->高亮<!--</lang>--></a>
+					<span class="pipe">|</span>
+					<!--{/if}-->
+					<!--{if Groupadmin_Extend+checkTopicadminRbac($arrGrouptopic,array('group@grouptopicadmin@uptopic'))}-->
+					<a onclick="modTopicup();" href="javascript:void(0);"><!--<lang package='Template'>-->提升下沉<!--</lang>--></a>
+					<span class="pipe">|</span>
+					<!--{/if}-->
+					<!--{if Groupadmin_Extend+checkTopicmove()}-->
+					<a onclick="modTopicmove();" href="javascript:void(0);"><!--<lang package='Template'>-->帖子移动<!--</lang>--></a>
+					<span class="pipe">|</span>
+					<!--{/if}-->
+					<!--{if Core_Extend+isAdmin()}-->
+					<img src="<!--{:Appt::path('recyclebin.gif')}-->" style="position:relative;top:-2px;" />&nbsp;
+					<a href="<!--{:Core_Extend::adminUrl('app/config?id=3&controller=grouptopiccomment&tid='.$arrGrouptopic['grouptopic_id'].'&recycle_=1')}-->" target="_blank"><!--<lang package='Template'>-->回帖回收站<!--</lang>--></a>&nbsp;<span><a href="<!--{:Core_Extend::windsforceOuter('c=app&a=config&id=3&controller=grouptopiccomment&tid='.$arrGrouptopic['grouptopic_id'].'&recycle_=1','admin.php')}-->" target="_blank" <!--{if $nTotalRecyclebinComment>0}-->style="color:red;font-weight:bold;"<!--{/if}-->>(<!--{$nTotalRecyclebinComment}-->)</a></span>
+					<!--{/if}-->
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<!--{/if}-->
+
+			<!--{if $arrGrouptopic['grouptopic_iscomment']==1 && $arrGrouptopic['grouptopic_isclose']=='0'}-->
+			<div class="grid_12">
+				<div class="floor">
+					<table width="100%" class="floor_table floor_footerpostcontenttable WindsforceSystem-interval_line_color-border">
+						<tr>
+							<td class="floor_left floor_footerposttitle WindsforceSystem-special_bg" width="350px"><!--<lang package='Template'>-->快捷回复<!--</lang>--></td>
+							<td class="floor_right floor_footerposttitle WindsforceSystem-special_bg"></td>
+						</tr>
+						<tr>
+							<td class="floor_left floor_footerpostcontenttd1 WindsforceSystem-common_background_color WindsforceSystem-interval_line_color-border" width="350px">
+								<div class="avatar">
+									<img src="<!--{:Core_Extend::avatar($GLOBALS['___login___']!==false?$GLOBALS['___login___']['user_id']:0,'middle')}-->" width="120px" class="group_avatar need_lazyload">
+									<!--{if $GLOBALS['___login___']!==false}-->
+									<p>
+									<a href="<!--{:Q::U('group://space@?id='.$GLOBALS['___login___']['user_id'])}-->" target="_blank"><!--{$GLOBALS['___login___']['user_name']}--></a>
+									<!--{/if}-->
+									</p>
+								</div>
+							</td>
+							<td class="floor_right">
+								<form method="post" name="grouptopiccomment_form" id="grouptopiccomment_form" class="grouptopiccomment_form validate">
+									<!--{if $GLOBALS['___login___']!==false}-->
+									<div id="emotion_parentcontainer">
+										<textarea class="input-xlarge" name="simple_grouptopiccomment_message" id="simple_grouptopiccomment_message" rows="8" style="width:100%;"></textarea>
+									</div>
+
+									<div class="right" style="margin-top:10px;">
+										<input type="hidden" name="ajax" value="1">
+										<input type="hidden" name="simple_comment" id="simple_comment" value="0">
+										<input type="hidden" name="tid" value="<!--{$arrGrouptopic['grouptopic_id']}-->">
+										<a href="<!--{:Q::U('group://grouptopic/reply?id='.$arrGrouptopic['grouptopic_id'])}-->" ><!--<lang package='Template'>-->进入高级模式<!--</lang>-->&gt;&gt;</a>
+										<span class="pipe">|</span>
+										<input id="submit_button" type="submit" class="btn btn-middle" style="margin-left:0px;" value="<!--<lang package='Template'>-->发布<!--</lang>-->">
+									</div>
+									
+									<div id="simple-grouptopiccomment-media-box" class="common-media-box">
+										<a href="javascript:void(0);" class="face-icon icon_add_face" ><!--<lang package='__COMMON_LANG__@Common'>-->表情<!--</lang>--></a>
+										<a href="javascript:void(0);" onclick="globalAddattachment('insertGrouptopicattachmentSimple');" class="icon_add_img"><!--<lang package='__COMMON_LANG__@Common'>-->媒体<!--</lang>--></a>
+										<a href="javascript:void(0);" onclick="addVideo('insertGrouptopicvideoSimple');" class="icon_add_video" ><!--<lang package='__COMMON_LANG__@Common'>-->视频<!--</lang>--></a>
+										<a href="javascript:void(0);" onclick="addMusic('insertGrouptopicmusicSimple');" class="icon_add_music"><!--<lang package='__COMMON_LANG__@Common'>-->音乐<!--</lang>--></a>
+									</div>
+
+									<!--{if $nDisplaySeccode==1}-->
+									<input name="seccode" id="seccode" type="text" class="input-small {required:true,remote:Q.U('home://public/validate_seccode'),messages:{remote:'<!--<lang package='__COMMON_LANG__@Common'>-->验证码错误<!--</lang>-->'}} left" value="">&nbsp;
+									<span class="validate_seccode"><span class="input_errortips"></span></span>
+									<p class="help-block" style="clear:both;padding-top:10px;padding-bottom:5px;"><span id="seccodeImage_grouptopic"><img style="cursor:pointer" onclick="updateSeccode('seccodeImage_grouptopic')" src="<!--{:Q::U('home://public/seccode')}-->" /></span></p>
+									<!--{/if}-->
+
+									<input type="hidden" name="simple_grouptopiccomment_name" id="simple_grouptopiccomment_name" value="<!--{$GLOBALS['___login___']['user_name']}-->" class="grouptopiccomment_name">
+									<!--{d*else}-->
+									<div class="commoncommentform_needloginbox">
+										<div class="commoncommentform_needloginboxinner">
+											<a onclick="ajaxLogin('<!--{:__SELF__}-->');" href="javascript:void(0);"><!--<lang package='__COMMON_LANG__@Common'>-->登录<!--</lang>--></a> 
+											<span class="pipe">|</span> 
+											<a href="<!--{:Core_Extend::windsforceReferer(true)}-->" rel="nofollow"><!--<lang package='__COMMON_LANG__@Common'>-->用户注册<!--</lang>--></a>
+										</div>
+									</div>
+									<!--{/if}-->
+								</form>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="space"></div>
+			</div>
+			<div class="clearfix"></div>
+			<!--{/if}-->
+		</div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

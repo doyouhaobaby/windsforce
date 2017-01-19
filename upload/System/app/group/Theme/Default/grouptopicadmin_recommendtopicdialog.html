@@ -1,0 +1,11 @@
+	<!--<include file="grouptopicadmin+header" />-->
+
+		<p>
+			<!--{if Core_Extend+isAdmin()}-->
+			<input type="radio" class="input-short" name="status" value="2" <!--{if isset($nStatus) && $nStatus==0}-->checked<!--{/if}-->><!--<lang package='Template'>-->系统推荐主题<!--</lang>-->&nbsp;<img src="<!--{:Appt::path('grouptopic/recommend_2.gif')}-->" />&nbsp;&nbsp;
+			<!--{/if}-->
+			<input type="radio" class="input-short" name="status" value="1" <!--{if !isset($nStatus) || (isset($nStatus) && $nStatus==0)}-->checked<!--{/if}-->><!--<lang package='Template'>-->组长推荐主题<!--</lang>-->&nbsp;<img src="<!--{:Appt::path('grouptopic/recommend_1.gif')}-->" />&nbsp;&nbsp;
+			<input type="radio" class="input-short" name="status" value="0" <!--{if isset($nStatus) && $nStatus>0}-->checked<!--{/if}-->><!--<lang package='Template'>-->取消推荐主题<!--</lang>-->
+		</p>
+
+	<!--<include file="grouptopicadmin+footer" />-->

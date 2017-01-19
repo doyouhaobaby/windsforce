@@ -1,0 +1,45 @@
+<div class="headertop_box">
+	<div class="headertop-inner">
+		<div class="headertop-city">
+			<!--{~$arrHeaderNavs=$GLOBALS['_cache_']['nav']['header']}-->
+			<!--<foreach for=arrHeaderNavs value=arrHeaderNav>-->
+			<a <!--{$arrHeaderNav['style']}--> title="<!--{$arrHeaderNav['description']}-->" href="<!--{$arrHeaderNav['link']}-->" <!--{$arrHeaderNav['target']}-->><!--{$arrHeaderNav['title']}--></a>&nbsp;&nbsp;
+			<!--</foreach>-->
+		</div>
+		<div class="headtop-menu">
+			<ul class="headtop-menu-list">
+				<li>
+					<a title="<!--<lang package='__COMMON_LANG__@Common'>-->搜索<!--</lang>-->" href="<!--{:Q::U('home://search/index')}-->" class="menu-item"><!--<lang package='__COMMON_LANG__@Common'>-->搜索<!--</lang>--></a>
+				</li>
+				<li>
+					<a title="<!--<lang package='__COMMON_LANG__@Common'>-->应用<!--</lang>-->" href="<!--{:Q::U('home://apps/index')}-->" class="menu-item"><!--<lang package='__COMMON_LANG__@Common'>-->应用<!--</lang>--></a>
+				</li>
+				<li>
+					<a title="<!--<lang package='__COMMON_LANG__@Common'>-->帮助<!--</lang>-->" href="<!--{:Q::U('homehelp/index')}-->" class="menu-item"><!--<lang package='__COMMON_LANG__@Common'>-->帮助<!--</lang>--></a>
+				</li>
+			</ul>
+		</div>
+		<div class="headtop-right">
+			<div class="left">
+				<div class="menu-item">
+					<a title="语言 & 主题" href="<!--{:Q::U('home://public/option')}-->">
+						Language
+					</a>
+				</div>
+			</div>
+			<div class="left registerlogin_box">
+				<span class="registerlogin_btn">
+					<!--{if $GLOBALS['___login___']===false}-->
+					<a rel="nofollow" title="<!--<lang package='__COMMON_LANG__@Common'>-->注册账户<!--</lang>-->" href="<!--{:Core_Extend::windsforceReferer(true)}-->"
+					class="Sys-special_color_deep"><!--<lang package='__COMMON_LANG__@Common'>-->注册<!--</lang>--></a>
+					<a rel="nofollow" title="<!--<lang package='__COMMON_LANG__@Common'>-->会员登录<!--</lang>-->" href="<!--{:Core_Extend::windsforceReferer()}-->"
+					class="Sys-special_color_deep"><!--<lang package='__COMMON_LANG__@Common'>-->登录<!--</lang>--></a>
+					<!--{d*else}-->
+					<a rel="nofollow" href="<!--{:Q::U('home://ucenter/index')}-->" title="<!--{$GLOBALS['___login___']['user_name']}-->&nbsp;<!--<lang package='__COMMON_LANG__@Common'>-->个人中心<!--</lang>-->" class="Sys-special_color_deep">会员[<!--{$GLOBALS['___login___']['user_name']}-->]</a>
+					<a href="<!--{:Q::U('home://public/logout?referer=1')}-->"><img src="<!--{:__PUBLIC__}-->/images/common/logout.png" style="position:relative;top:-2px;"/></a>
+					<!--{/if}-->
+				</span>
+			</div>
+		</div>
+	</div>
+</div>

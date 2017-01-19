@@ -1,0 +1,255 @@
+<!--<include file="public+header" />-->
+
+<!--{script}-->
+$(document).ready(function(){
+	$("#homeoption_tab ul").idTabs();
+	$("#homemain_tab ul").idTabs();
+});
+
+function option(){
+	$("#submit_button").attr("disabled", "disabled");
+	$("#submit_button").val( 'update...' );
+	$("#submit_button").attr("disabled", false);
+	$('.validate')(0).submit();
+}
+
+checkForm(option);
+<!--{/script}-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->主页入口<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->主页入口<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->主页入口<!--</lang>-->&nbsp;&nbsp;<a href="javascript:void(0);" onclick="showMianmenu();"><img src="<!--{:At::path('map.gif')}-->" style="margin-bottom:-3px;"/></a>&nbsp;<a href="javascript:void(0);" onclick="showMianmenu();"><!--<lang package='Template'>-->应用地图<!--</lang>--></a></h3>
+				<ul class="tabs">
+					<li><a href="<!--{:Admin_Extend::base(array('controller'=>'homefresh'))}-->"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->新鲜事<!--</lang>--></a></li>
+					<li><a href="<!--{:Admin_Extend::base(array('controller'=>'homesite'))}-->"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->站点信息<!--</lang>--></a></li>
+					<li><a href="<!--{:Admin_Extend::base(array('controller'=>'homehelp'))}-->"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->站点帮助<!--</lang>--></a></li>
+					<li><a href="<!--{:Admin_Extend::base(array('controller'=>'hometag'))}-->"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->用户标签列表<!--</lang>--></a></li>
+					<li class="active"><a href="<!--{:Admin_Extend::base()}-->"><!--<lang package='Template'>-->应用入口<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('app/index')}-->"><!--<lang package='Template'>-->应用列表<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="<!--{:Q::U('app/config?id='.$nId.'&action=update_option')}-->" method="post" class="validate">
+				<div class="module_content"></div>
+				<div class="module_content">
+					<div id="main-menu" class="none">
+						<div id="homemain_tab" class="windsforce_tab">
+							<ul class="windsforce_tabtitle">
+								<li><a href="#mian_tab1"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->主页入口<!--</lang>--></a></li>
+								<li><a href="#mian_tab2"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->新鲜事<!--</lang>--></a></li>
+								<li><a href="#mian_tab3"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->站点信息<!--</lang>--></a></li>
+								<li><a href="#mian_tab4"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->站点帮助<!--</lang>--></a></li>
+								<li><a href="#mian_tab5"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->用户标签列表<!--</lang>--></a></li>
+							</ul>
+							<div id="mian_tab1" class="windsforce_tabcontent">
+								<div class="content-tab-box content-tab-line">
+									<a href="<!--{:Admin_Extend::base(array('controller'=>'homefresh'))}-->" class="content-tab"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->新鲜事<!--</lang>--></a>
+									<a href="<!--{:Admin_Extend::base(array('controller'=>'homefreshtag'))}-->" class="content-tab"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->新鲜事话题<!--</lang>--></a>
+									<a href="<!--{:Admin_Extend::base(array('controller'=>'homefreshcomment'))}-->" class="content-tab"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->新鲜事评论<!--</lang>--></a>
+									<p class="content-tab-separationline"></p>
+									<a href="<!--{:Admin_Extend::base(array('controller'=>'homesite'))}-->" class="content-tab"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->站点信息<!--</lang>--></a>
+									<p class="content-tab-separationline"></p>
+									<a href="<!--{:Admin_Extend::base(array('controller'=>'homehelp'))}-->" class="content-tab"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->站点帮助<!--</lang>--></a>
+									<a href="<!--{:Admin_Extend::base(array('controller'=>'homehelpcategory'))}-->" class="content-tab"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->站点帮助分类<!--</lang>--></a>
+									<p class="content-tab-separationline"></p>
+									<a href="<!--{:Admin_Extend::base(array('controller'=>'hometag'))}-->" class="content-tab"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->用户标签列表<!--</lang>--></a>
+								</div>
+							</div>
+							<div id="mian_tab2" class="windsforce_tabcontent">
+								<div class="content-tab-box content-tab-line">
+									<a href="<!--{:Admin_Extend::base(array('controller'=>'homefresh'))}-->" class="content-tab"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->新鲜事<!--</lang>--></a>
+									<a href="<!--{:Admin_Extend::base(array('controller'=>'homefreshcategory'))}-->" class="content-tab"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->新鲜事分类<!--</lang>--></a>
+									<a href="<!--{:Admin_Extend::base(array('controller'=>'homefreshtag'))}-->" class="content-tab"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->新鲜事话题<!--</lang>--></a>
+									<a href="<!--{:Admin_Extend::base(array('controller'=>'homefreshcomment'))}-->" class="content-tab"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->新鲜事评论<!--</lang>--></a>
+								</div>
+							</div>
+							<div id="mian_tab3" class="windsforce_tabcontent">
+								<div class="content-tab-box content-tab-line">
+									<a href="<!--{:Admin_Extend::base(array('controller'=>'homesite'))}-->" class="content-tab"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->站点信息<!--</lang>--></a>
+								</div>
+							</div>
+							<div id="mian_tab4" class="windsforce_tabcontent">
+								<div class="content-tab-box content-tab-line">
+									<a href="<!--{:Admin_Extend::base(array('controller'=>'homehelp'))}-->" class="content-tab"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->站点帮助<!--</lang>--></a>
+									<a href="<!--{:Admin_Extend::base(array('controller'=>'homehelpcategory'))}-->" class="content-tab"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->站点帮助分类<!--</lang>--></a>
+								</div>
+							</div>
+							<div id="mian_tab5" class="windsforce_tabcontent">
+								<div class="content-tab-box content-tab-line">
+									<a href="<!--{:Admin_Extend::base(array('controller'=>'hometag'))}-->" class="content-tab"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->用户标签列表<!--</lang>--></a>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<!--<include file="Admin_Extend::template('home','homeoption/menu')" />-->
+
+					<div id="homeoption_tab" class="windsforce_tab">
+						<div class="windsforce_tabtitlebox">
+							<ul class="windsforce_tabtitle">
+								<li><a href="#tab1"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->基本<!--</lang>--></a></li>
+								<li><a href="#tab2"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->广场<!--</lang>--></a></li>
+								<li><a href="#tab3"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->短消息<!--</lang>-->&nbsp;&&nbsp;<!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->提醒<!--</lang>--></a></li>
+								<li><a href="#tab4"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->好友<!--</lang>--></a></li>
+								<li><a href="#tab5"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->帮助<!--</lang>--></a></li>
+							</ul>
+						</div>
+
+						<div id="tab1" class="windsforce_tabcontent">
+							<fieldset>
+								<label for="homefresh_audit"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->新鲜事是否进行审核<!--</lang>--></label>
+								<select name="options[homefresh_audit]" id="homefresh_audit">
+									<option value="0" <!--{if $arrOptions['homefresh_audit']==0}-->selected<!--{/if}-->><!--<lang package='Template'>-->否<!--</lang>--></option>
+									<option value="1" <!--{if $arrOptions['homefresh_audit']==1}-->selected<!--{/if}-->><!--<lang package='Template'>-->是<!--</lang>--></option>
+								</select>
+								<div class="description"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->开启后，发布的新鲜事只有审核通过了才能够浏览<!--</lang>-->
+								</div>
+							</fieldset>
+							<fieldset>
+								<label for="homefresh_frontadd"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->前台是否可以发布新鲜事<!--</lang>--></label>
+								<select name="options[homefresh_frontadd]" id="homefresh_frontadd">
+									<option value="0" <!--{if $arrOptions['homefresh_frontadd']==0}-->selected<!--{/if}-->><!--<lang package='Template'>-->否<!--</lang>--></option>
+									<option value="1" <!--{if $arrOptions['homefresh_frontadd']==1}-->selected<!--{/if}-->><!--<lang package='Template'>-->是<!--</lang>--></option>
+								</select>
+								<div class="description"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->如果关闭，那么前台将无法发布新鲜事<!--</lang>-->
+								</div>
+							</fieldset>
+							<fieldset>
+								<label for="homefresh_edit_limittime"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->新鲜事发布后用户多长时间可以编辑<!--</lang>--></label>
+								<select name="options[homefresh_edit_limittime]" id="homefresh_edit_limittime">
+									<option value="3600" <!--{if $arrOptions['homefresh_edit_limittime']==3600}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一小时<!--</lang>--></option>
+									<option value="86400" <!--{if $arrOptions['homefresh_edit_limittime']==86400}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一天<!--</lang>--></option>
+									<option value="604800" <!--{if $arrOptions['homefresh_edit_limittime']==604800}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一星期<!--</lang>--></option>
+									<option value="2592000" <!--{if $arrOptions['homefresh_edit_limittime']==2592000}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一月<!--</lang>--></option>
+									<option value="31536000" <!--{if $arrOptions['homefresh_edit_limittime']==31536000}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一年<!--</lang>--></option>
+								</select>
+								<div class="description"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->用户发布新鲜事后一般一天之内可以编辑<!--</lang>-->
+								</div>
+							</fieldset>
+							<fieldset class="fieldset_bordernone">
+								<label for="homefresh_list_num"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->新鲜事每页列表数量<!--</lang>--></label>
+								<input type="text" id="homefresh_list_num" name="options[homefresh_list_num]" value="<!--{$arrOptions['homefresh_list_num']}-->" class="{required:true,digits:true,min: 2,max:50}"/>
+								<div class="description input_tips"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->可以将新鲜事的每页列表数量设置大一点，方便一次读取更多的数据<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="homefreshcomment_list_num"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->新鲜事评论每页数量<!--</lang>--></label>
+								<input type="text" id="homefreshcomment_list_num" name="options[homefreshcomment_list_num]" value="<!--{$arrOptions['homefreshcomment_list_num']}-->" class="{required:true,digits:true,min: 2,max:30}"/>
+								<div class="description input_tips"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->这个不要设置过大，以免影响用户阅读新鲜事<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="feed_list_num"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->用户动态每页列表数量<!--</lang>--></label>
+								<input type="text" id="feed_list_num" name="options[feed_list_num]" value="<!--{$arrOptions['feed_list_num']}-->" class="{required:true,digits:true,min: 2,max:50}"/>
+								<div class="description input_tips"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->可以将用户动态的每页列表数量设置大一点，方便一次读取更多的数据<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="homefreshtag_list_num"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->新鲜事话题每页列表数量<!--</lang>--></label>
+								<input type="text" id="homefreshtag_list_num" name="options[homefreshtag_list_num]" value="<!--{$arrOptions['homefreshtag_list_num']}-->" class="{required:true,digits:true,min: 2,max:50}"/>
+								<div class="description input_tips"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->可以将新鲜事话题的每页列表数量设置大一点，方便一次读取更多的数据<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="homefreshtag_hot_num"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->新鲜事话题排行榜数量<!--</lang>--></label>
+								<input type="text" id="homefreshtag_hot_num" name="options[homefreshtag_hot_num]" value="<!--{$arrOptions['homefreshtag_hot_num']}-->" class="{required:true,digits:true,min: 2,max:30}"/>
+								<div class="description input_tips"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->新鲜事话题排行榜的每一项读取的数据<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="homefresh_dialoghottagnum"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->对话框热门话题<!--</lang>--></label>
+								<input type="text" id="homefresh_dialoghottagnum" name="options[homefresh_dialoghottagnum]" value="<!--{$arrOptions['homefresh_dialoghottagnum']}-->" class="{required:true,digits:true,min: 2,max:50}"/>
+								<div class="description input_tips"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->这是插入话题对话框中的热门话题数量<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="homefresh_ucenterhottagnum"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->侧边栏热门话题<!--</lang>--></label>
+								<input type="text" id="homefresh_ucenterhottagnum" name="options[homefresh_ucenterhottagnum]" value="<!--{$arrOptions['homefresh_ucenterhottagnum']}-->" class="{required:true,digits:true,min: 2,max:30}"/>
+								<div class="description input_tips"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->个人中心侧边栏中的热门话题数量<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="home_hothomefreshtag_date"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->首页热门话题调用时间<!--</lang>--></label>
+								<select name="options[home_hothomefreshtag_date]" id="home_hothomefreshtag_date">
+									<option value="3600" <!--{if $arrOptions['home_hothomefreshtag_date']==3600}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一小时<!--</lang>--></option>
+									<option value="86400" <!--{if $arrOptions['home_hothomefreshtag_date']==86400}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一天<!--</lang>--></option>
+									<option value="604800" <!--{if $arrOptions['home_hothomefreshtag_date']==604800}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一星期<!--</lang>--></option>
+									<option value="2592000" <!--{if $arrOptions['home_hothomefreshtag_date']==2592000}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一月<!--</lang>--></option>
+									<option value="31536000" <!--{if $arrOptions['home_hothomefreshtag_date']==31536000}-->selected<!--{/if}-->><!--<lang package='__COMMON_LANG__@Common'>-->一年<!--</lang>--></option>
+								</select>
+								<div class="description"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->这里的时间为热门话题调用时间，如果为一星期，那么热门帖子只会从当前一个星期中取出<!--</lang>--></div>
+							</fieldset>
+						</div>
+						<div id="tab2" class="windsforce_tabcontent">
+							<fieldset class="fieldset_bordernone">
+								<label for="topuser_num"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->广场会员排行榜数量<!--</lang>--></label>
+								<input type="text" id="topuser_num" name="options[topuser_num]" value="<!--{$arrOptions['topuser_num']}-->" class="{required:true,digits:true,min: 2,max:30}"/>
+								<div class="description input_tips"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->排行榜代表着对网站做出贡献的一些用户数据<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+						</div>
+						<div id="tab3" class="windsforce_tabcontent">
+							<fieldset class="fieldset_bordernone">
+								<label for="pm_list_num"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->短消息每页列表数量<!--</lang>--></label>
+								<input type="text" id="pm_list_num" name="options[pm_list_num]" value="<!--{$arrOptions['pm_list_num']}-->" class="{required:true,digits:true,min: 2,max:50}"/>
+								<div class="description input_tips"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->这个可以调整大一些，将展示更多的短消息<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="pm_list_substring_num"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->短消息列表摘要截取数量<!--</lang>--></label>
+								<input type="text" id="pm_list_substring_num" name="options[pm_list_substring_num]" value="<!--{$arrOptions['pm_list_substring_num']}-->" class="{required:true,digits:true,min: 20,max:500}"/>
+								<div class="description input_tips"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->这个可以不要设置过大，提供一个预览即可<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="pm_single_list_num"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->短消息用户聊天界面短消息每页数量<!--</lang>--></label>
+								<input type="text" id="pm_single_list_num" name="options[pm_single_list_num]" value="<!--{$arrOptions['pm_single_list_num']}-->" class="{required:true,digits:true,min: 2,max:50}"/>
+								<div class="description input_tips"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->这个将是一个非常重要的环节，将短消息变成聊天室<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="notice_list_num"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->提醒每页列表数量<!--</lang>--></label>
+								<input type="text" id="notice_list_num" name="options[notice_list_num]" value="<!--{$arrOptions['notice_list_num']}-->" class="{required:true,digits:true,min: 2,max:50}"/>
+								<div class="description input_tips"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->这个可以调整大一些，将展示更多的提醒<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+						</div>
+						<div id="tab4" class="windsforce_tabcontent">
+							<fieldset class="fieldset_bordernone">
+								<label for="friend_list_num"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->好友每页列表数量<!--</lang>--></label>
+								<input type="text" id="friend_list_num" name="options[friend_list_num]" value="<!--{$arrOptions['friend_list_num']}-->" class="{required:true,digits:true,min: 2,max:50}"/>
+								<div class="description input_tips"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->将控制着前台好友和粉丝每页分页数量<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+							<fieldset>
+								<label for="my_friend_limit_num"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->个人空间中的关注好友数量<!--</lang>--></label>
+								<input type="text" id="my_friend_limit_num" name="options[my_friend_limit_num]" value="<!--{$arrOptions['my_friend_limit_num']}-->" class="{required:true,digits:true,min: 2,max:50}"/>
+								<div class="description input_tips"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->这个数量可以根据实际进行调整<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+						</div>
+						<div id="tab5" class="windsforce_tabcontent">
+							<fieldset class="fieldset_bordernone">
+								<label for="homehelp_list_num"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->帮助文章每页列表数量<!--</lang>--></label>
+								<input type="text" id="homehelp_list_num" name="options[homehelp_list_num]" value="<!--{$arrOptions['homehelp_list_num']}-->" class="{required:true,digits:true,min: 2,max:50}"/>
+								<div class="description input_tips"><!--<lang package='__APPHOME_COMMON_LANG__@Template'>-->这将控制这前台帮助文件每页的数量<!--</lang>--></div>
+								<p class="input_errortips"></p>
+							</fieldset>
+						</div>
+					</div>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input id="submit_button" type="submit" class="alt_btn" value="<!--<lang package='Template'>-->发布<!--</lang>-->" />
+						&nbsp;<input type="reset" value="<!--<lang package='Template'>-->重置<!--</lang>-->" />
+					</div>
+				</footer>
+			</form>
+		</article>
+
+<!--<include file="public+footer">-->

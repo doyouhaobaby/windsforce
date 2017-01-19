@@ -1,0 +1,15 @@
+/*
+File Name: common.css
+File Type: 不必需
+Description: Group应用基本css元素
+*/
+
+/**===============================
+           基础
+================================*/
+
+/**===============================
+           通用加入小组或者退出小组
+================================*/
+.commonjoinleave_group a{color:{NOTICETEXT_COLOR};}
+.commonjoinleave_group a:hover{text-decoration:none;}

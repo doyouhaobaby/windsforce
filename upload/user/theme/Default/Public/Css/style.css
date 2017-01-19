@@ -1,0 +1,432 @@
+/*
+Style Name: 默认主题
+Style URI: http://qeephp.114.ms/
+Description: 这是由WindsForce 的系统自带主题
+Author: 小牛哥QEEPHP
+Author URI: http://www.114.ms/app/home/space/3.html
+Version: 2.0
+License: BSD
+License URI: http://qeephp.114.ms/page/license.html
+Tags: green, light ,morecolor
+*/
+
+/**===============================
+           多媒体公用CSS
+================================*/
+[CURSCRIPT=@media,home::ucenter::index,home::ucenter::view,home::ucenter::post,home::ucenter::edit,home::attachment::show,home::space::index,home::public::index]
+.common-media-box{margin:8px 0 8px 0px;}
+.icon_add_face,.icon_add_topic,.icon_add_img,.icon_add_video,.icon_add_music{background-image: url('{__ROOT__}/Public/images/common/homefresh_icon.png');background-repeat:no-repeat;width: 22px;height: 22px;padding:4px 0px 4px 20px;line-height:22px;margin-right:5px;}
+.icon_add_face{background-position: 0px 2px;}
+.icon_add_topic{background-position: 0px -21px;}
+.icon_add_img{background-position: 0px -47px;}
+.icon_add_video{background-position: 0px -73px;}
+.icon_add_music{background-position: 0px -98px;}
+[/CURSCRIPT]
+
+/**===============================
+           评论公用CSS
+================================*/
+[CURSCRIPT=@comment,home::ucenter,home::public::index,home::stat::explore,home::attachment::show,home::space]
+.commoncomment_box{margin-top:15px;}
+.commoncommentlist{margin-top:10px;}
+.commoncomment-content{ table-layout:fixed; word-break: break-all; overflow:hidden;padding:10px 0px 10px 5px;}
+.commoncommentform_content{height:100px;width:80%;}
+.commoncommentform_box{margin-top:20px;}
+.commoncommentform_needloginbox{padding:5px 0px;margin:5px 0;}
+.commoncommentform_needloginboxinner{padding:10px 0;}
+[/CURSCRIPT]
+
+/**===============================
+           轻博客图标
+================================*/
+[CURSCRIPT=home::public::index,home::ucenter::index]
+#homefreshindex_box {margin: 0;position: relative;width: 620px;margin-bottom:5px;}
+#homefreshindex_box .mode {background-color: #FFFFFF;border-radius: 3px 3px 3px 3px;height: 100px;margin-left: 0px;position: relative;width: 620px;}
+#homefreshindex_box .homefreshindex_table {height: 100px;margin: 0;overflow: hidden;width: 620px;}
+#homefreshindex_box .mode .list {height: 100px;position: relative;width: 100%;}
+#homefreshindex_box .mode .list a {display: block;height: 100px;width: 100%;}
+#homefreshindex_box .mode .list a span {bottom: 15px; color: #666666;display: block;position: absolute;text-align: center;width: 100%;}
+#homefreshindex_box .mode .mode_current a span{font-weight:bold;}
+#homefreshindex_box .mode .list .postline {background: url("{IMG_DIR}/seg.jpg") no-repeat scroll right top transparent;height: 100px;position: absolute;right: 0; top: 0;width: 1px;}
+#homefreshindex_box .mode .list a.text { background: url("{IMG_DIR}/homefresh.png") no-repeat scroll center 0 transparent;transition: all 0.3s ease-out 0s;}
+#homefreshindex_box .mode .list a.text:hover { background: url("{IMG_DIR}/homefresh.png") no-repeat scroll center -80px transparent;}
+#homefreshindex_box .mode .list a.photo {background: url("{IMG_DIR}/homefresh.png") no-repeat scroll center -160px transparent;transition: all 0.3s ease-out 0s;}
+#homefreshindex_box .mode .list a.photo:hover {background: url("{IMG_DIR}/homefresh.png") no-repeat scroll center -240px transparent;}
+#homefreshindex_box .mode .list a.music {background: url("{IMG_DIR}/homefresh.png") no-repeat scroll center -320px transparent;transition: all 0.3s ease-out 0s;}
+#homefreshindex_box .mode .list a.music:hover {background: url("{IMG_DIR}/homefresh.png") no-repeat scroll center -400px transparent;}
+#homefreshindex_box .mode .list a.video {background: url("{IMG_DIR}/homefresh.png") no-repeat scroll center -480px transparent;transition: all 0.3s ease-out 0s;}
+#homefreshindex_box .mode .list a.video:hover { background: url("{IMG_DIR}/homefresh.png") no-repeat scroll center -560px transparent;}
+#homefreshindex_box .mode .list a.product {background: url("{IMG_DIR}/homefresh.png") no-repeat scroll center -640px transparent;transition: all 0.3s ease-out 0s;}
+#homefreshindex_box .mode .list a.product:hover {background: url("{IMG_DIR}/homefresh.png") no-repeat scroll center -720px transparent;}
+#homefreshindex_box .mode .list a.movie_ {background: url("{IMG_DIR}/homefresh.png") no-repeat scroll center -800px transparent;transition: all 0.3s ease-out 0s;}
+#homefreshindex_box .mode .list a.movie_:hover {background: url("{IMG_DIR}/homefresh.png") no-repeat scroll center -880px transparent;}
+#homefreshindex_box .mode .list a.shoping {background: url("{IMG_DIR}/homefresh.png") no-repeat scroll center -640px transparent;transition: all 0.3s ease-out 0s;}
+#homefreshindex_box .mode .list a.shoping:hover {background: url("{IMG_DIR}/homefresh.png") no-repeat scroll center -720px transparent;}
+[/CURSCRIPT]
+
+/**===============================
+           发布轻博客CSS
+================================*/
+[CURSCRIPT=home::ucenter::post]
+/* 搜索框 */
+#musicFrom,#musicSearch {background:repeat-x scroll 0 -60px #EBEBEB;border: 1px solid #CCCCCC;border-radius: 5px 5px 5px 5px;display: block;padding: 15px;position: relative;}
+
+/* 加载状态 */
+#loadProcess {float: right;padding: 0 0 0 20px;}
+
+/* 搜索到列表 */
+#music_search_list {display: none;margin: 0;width: 548px;}
+#music_search_list ul {float: left;margin: 0 0 10px;padding: 0;}
+#music_search_list ul li.music_list_li { border-color: #FFFFFF #CCCCCC #CCCCCC; border-style: solid; border-width: 1px;cursor: pointer; font-size: 12px;height: 30px;line-height: 30px;list-style: none outside none;padding: 0 10px;width: 546px;}
+
+/* 分页按钮 */
+div.flickr {float: right;margin-right: -20px;}
+div.flickr a { border: 1px solid #AAAAAA; border-radius: 5px 5px 5px 5px; box-shadow: 0 1px 0 #FFFFFF;color: #666666;font-size: 14px; font-weight: 700; margin: 0 5px;padding: 5px 10px;text-shadow: 0 1px 0 #FFFFFF;}
+
+.musicurl {border: 1px solid #AAAAAA; border-radius: 3px 3px 3px 3px; box-shadow: 0 1px 0 #FFFFFF; color: #666666; font-size: 18px;font-weight: 700;height: 30px;line-height: 30px; padding: 5px;width: 556px;}
+
+/* 插入预览列表 */
+#musicList .list { background-color: #EBEBEB;border-radius: 5px 5px 5px 5px; margin: 10px 0 0; padding: 10px; position: relative;}
+#musicList .list li {float: left; list-style: none outside none; margin-right: 10px;}
+#musicList .list img { border-radius: 5px 5px 5px 5px; margin-bottom: -4px; max-width: 120px;}
+#musicList .list .delete a { background: url("{IMG_DIR}/delete.gif") no-repeat scroll rgba(0, 0, 0, 0); display: block; height: 15px; overflow: hidden; position: absolute; right: 10px; text-indent: 9999em; top: 10px; width: 14px;}
+#musicList a, #musicList a:hover { color: #999999;}
+
+/* 上传图片 */
+.upimgBar {height: 40px; width: 100%;margin:15px 0;}
+#divAddFiles { float: left;width: 80px;}
+#upimgText {background-color: #E3E3E3;border-radius: 5px 5px 5px 5px;float: left;height: 32px; line-height: 32px;margin: 0px auto 5px 10px; padding: 0 10px; position: relative;text-shadow: 0 1px 0 #FFFFFF;}
+#upimgText .upimg_corner { background: url("{IMG_DIR}/corner.gif") no-repeat scroll rgba(0, 0, 0, 0); height: 10px;left: -5px; position: absolute;top: 10px; width: 5px;}
+#musicNotice {color: #666666;margin-bottom: 15px;}
+
+/* 电影 */
+#movieList .list { background-color: #EBEBEB; border-radius: 5px 5px 5px 5px;margin: 10px 0 0; padding: 10px; position: relative;}
+#movieList .list .m_img { float: left; margin: 0; width: 120px;}
+#movieList .list img {border-radius: 5px 5px 5px 5px;margin-bottom: -4px; max-width: 120px;}
+#movieList .list .m_list { margin: 0; width: 460px; padding-left:130px;}
+#movieList .list li { color: #666666; line-height: 22px; list-style: none outside none; margin: 0;}
+#movieList .list .m_title { color: #666666;font-size: 16px;line-height: 30px;}
+#movieList .list font { color: #333333; margin-left: 5px;}
+#movieList .list span { background-color: #F88217; border: 1px solid #F66300; border-radius: 5px 5px 5px 5px; box-shadow: 0 1px 0 #FAB35A inset; color: #FFFFFF; font-size: 14px; height: 23px; line-height: 23px; margin-left: 10px; padding: 0 5px;text-shadow: 0 -1px 0 #F5500E;}
+#movieList .list .delete a {background: url("{IMG_DIR}/delete.gif") no-repeat scroll rgba(0, 0, 0, 0); display: block; height: 15px; overflow: hidden; position: absolute;right: 10px;text-indent: 9999em;top: 10px; width: 14px;}
+[/CURSCRIPT]
+
+/**===============================
+           首页在线用户
+================================*/
+[CURSCRIPT=home::public::index,home::online::index]
+.index_online{margin:0 5px 10px 3px;}
+.index_online_list{border-top: 1px dotted #E0E0E0; margin: 0 3px;padding: 10px 3px;}
+.index_online_list ul,.index_online_list li{list-style: none outside none;margin: 0;padding: 0;}
+.index_online_list li{display: block;float: left;height: 28px;overflow: hidden;width: 150px;}
+[/CURSCRIPT]
+
+/**===============================
+           新鲜事
+================================*/
+[CURSCRIPT=home::ucenter,home::public::index,home::search::result]
+/* 主容器 */
+.homefresh-box{table-layout:fixed; word-break: break-all; overflow:hidden;}
+.homefresh-box .max-limit-doing{ margin:5px 70px 0px 0px; }
+.homefresh-content{table-layout:fixed; word-break: break-all; overflow:hidden;margin:0px 0px;padding:8px 0px 5px 0px;}
+.homefresh-layer{border-bottom:1px dashed #F2F2F2;margin-bottom: 15px;overflow: hidden; padding: 17px 0 0;}
+.homefresh-header{padding: 0 20px 5px; position: relative;}
+.homefresh-header .img{float: left; padding-right: 10px;}
+.homefresh-header .info{float: left;}
+.homefresh-title{font-weight:bold;font-size:15px;margin:2px 0 6px 0;}
+.homefresh-title a{color:#333;}
+.homefresh-footer{}
+.homefresh-time{font-style:italic;color:#CCC;margin:0px 10px;}
+.homefresh-layer .homefresh-header{padding-left:0px;}
+.homefresh-count{text-align:right;padding:10px;}
+.homefresh-count{margin:5px;}
+.homefresh-count a{font-size:12px;}
+.homefresh-thumb{margin-bottom:10px;}
+.homefresh-left{float:left;position:relative;top:10px;}
+
+/* 新鲜事标题 */
+#homefresh-title-box{margin-top:0px;}
+.homefresh-pubtime{font-size:12px;color:#CCC;font-weight:500;font-style:italic;}
+.homefresh-pubtime a{font-size:14px;font-style:normal;}
+
+/* 列表容器 */
+.message-box{ table-layout:fixed; word-break: break-all; overflow:hidden;}
+.message-box .table tbody tr:hover td,
+.message-box .table tbody tr:hover th {background:none;}
+.message-box ul{list-style:none;padding-left:10px;}
+.message-box .homefresh-header{padding-left:80px;padding-bottom:10px;}
+.message-box .homefresh-header h3{margin-bottom:0px;font-size:15px;}
+.message-box .homefresh-header ul li{margin:10px 0px;}
+.message-box .homefresh-author-avatar{position:absolute;margin-left:-80px;}
+
+/* 评论相关 */
+.homefreshcomment_div{border:1px solid {INTERVAL_LINE_COLOR};padding:2px 2px;width:99%;}
+.homefreshcomment_div .homefreshcomment_isay{color:#CCC;font-size:12px;}
+.homefreshcomment_form{}
+.homefreshcomment_form .homefreshcommentform_area{width:99%;height:80px;}
+.homefreshcomment_item{position:relative;}
+.homefreshcomment_avatar{position:absolute;top:0px;margin-right:10px;}
+.homefreshcomment_avatar img{width:32px;height:32px;}
+.homefreshcomment_content{position:relative;padding-left:50px;}
+.homefreshcommentform_btn{margin-bottom:20px;}
+.homefreshcommentlist_headerarrow{background:#FFF url('{IMG_DIR}/arrow_bg.png') no-repeat 20px 0px;height:6px;margin-left:-15px;margin-bottom:5px;}
+.homefreshcommentlist_box{padding:3px 3px 0px 3px;}
+.homefreshcomment_view{margin-bottom:10px;margin-top:2px;}
+.homefreshcomment_date{}
+.homefreshcommentitem_separator{width:100%;margin-top:9px;margin-bottom:8px;border-bottom:1px dashed {INTERVAL_LINE_COLOR};}
+.homefreshchildcommentlist_box{margin-top:15px;}
+
+/* 新鲜事已赞 */
+.goodnum_click{color:#4A4A4A;}
+[/CURSCRIPT]
+
+/**===============================
+           新鲜事属性解析
+================================*/
+[CURSCRIPT=home::ucenter::index,home::ucenter::view,home::public::index,home::search::result]
+/* 音乐 */
+.album {height: 102px;margin: 0 0 10px;width: 100%;}
+.album .cover {float: left;height: 102px;position: relative;width: 140px;}
+.album .cover_img {background: url("{IMG_DIR}/album.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);height: 100px;left: 1px;position: absolute;top: 1px;width: 140px;}
+.album .cover img {border: 1px solid #666666;float: left;height: 100px;margin: 0;width: 100px;}
+.album .cover_title {height: 30px;line-height: 30px;margin: 0;overflow: hidden;padding-left: 10px; width: 360px;}
+.album .cover_fun {height: 30px; line-height: 30px;margin-left: 10px; width: 360px;}
+.album embed { margin: 9px auto 0 10px;}
+.album .cover_fun {height: 30px; line-height: 30px; margin-left: 10px; width: 360px;}
+.album .cover_fun a .eject {background: url("{IMG_DIR}/outer_player.gif") no-repeat scroll rgba(0, 0, 0, 0); padding-left: 13px;}
+.album .cover_fun a{ color: #999999; font-size: 12px; margin-left: 10px;}
+
+/* 视频 */
+.video {float: left;overflow: hidden;padding: 0;position: relative;}
+.w240 {margin: 0 7px 15px;width: 240px;}
+.video .video_bg { float: left; margin: 0; padding: 0; width: 100%;}
+.video .video_song { background-color: #4BB2EA; border-radius: 0 5px 5px 0; color: #FFFFFF; font-size: 14px; height: 30px; left: 122px; line-height: 30px;  max-width: 118px; overflow: hidden; padding: 0 5px; position: absolute; top: 5px;}
+.video .video_name {background-color: #F98080; border-radius: 0 5px 5px 0; color: #FFFFFF; font-size: 12px; height: 25px; left: 122px; line-height: 25px; max-width: 118px; overflow: hidden; padding: 0 5px; position: absolute; top: 40px;}
+.video .video_title { background-color: #AAAAAA; border-radius: 0 5px 5px 0; color: #FFFFFF; float: left; font-size: 12px; left: 122px;line-height: 25px; max-height: 75px; max-width: 118px;overflow: hidden; padding: 0 5px; position: absolute;top: 5px;}
+.video a .video_play {background: url("{IMG_DIR}/player.gif") no-repeat scroll rgba(0, 0, 0, 0); bottom: 5px; display: none; height: 30px; left: 5px;position: absolute;width: 30px;z-index: 1;}
+.video a:hover .video_play {display: block;}
+.video .video_bg img { border: 1px solid #666666;border-radius: 4px 4px 4px 4px; float: left;margin: 0; padding: 0;width: 120px;}
+.video_info { float: left; height: 30px;margin: 0;width: 510px;}
+.video_info .video_cover {color: #999999;float: right; height: 30px; line-height: 30px;width: 200px;}
+.video_info .video_cover a { color: #999999; float: right; font-size: 12px;margin: 0 0 0 10px;}
+.video_info .video_cover a .away {background: url("{IMG_DIR}/hide.gif") no-repeat scroll rgba(0, 0, 0, 0);padding-left: 13px;}
+.video_info .video_cover a { color: #999999; float: right; font-size: 12px;margin: 0 0 0 10px;}
+.video_info .video_title { color: #333333; float: left; font-size: 12px; font-weight: 120; height: 30px; line-height: 30px; overflow: hidden;width: 300px;}
+.video_windows embed {margin: 0 0 10px;}
+
+/* 右下角弹出播放视频 */
+.btn_bottom { bottom: -3px; padding: 0; position: fixed; right: 1px; width: 510px; z-index: 1000;}
+.btn_bottom .shoot_title { background: url("{IMG_DIR}/nav_bg.png") repeat-x scroll 0 0 rgba(0, 0, 0, 0); border: 1px solid #AAAAAA; border-radius: 5px 5px 5px 5px; color: #666666;float: left; font-weight: 700; height: 30px;
+ line-height: 30px; margin: 0 0 10px; max-width: 480px;overflow: hidden; padding: 0 10px; text-shadow: 0 1px 0 #FFFFFF;}
+.btn_bottom .shoot_close { float: left; height: 25px; margin: 3px 0 0 10px;width: 25px;}
+.btn_bottom .shoot_close a { background: url("{IMG_DIR}/close.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0); display: block; height: 25px;outline: medium none;width: 25px;}
+
+/* 电影 */
+.movie { border-bottom: 1px dashed #E3E3E3; margin: 0 0 10px; padding: 5px 0 10px; position: relative; width: 100%;}
+.movie .mov_img { float: left; margin-left: 10px; max-width: 104px; position: relative;}
+.movie .score { background-color: #F88217; border: 1px solid #F66300;border-radius: 5px 5px 5px 5px; box-shadow: 0 1px 0 #FAB35A inset;color: #FFFFFF; font-size: 14px;height: 23px;left: -10px;line-height: 23px; padding: 0 5px; position: absolute; text-shadow: 0 -1px 0 #F5500E;top: -10px; z-index: 2;}
+.movie .mov_yy { background-color: #FFFFFF; height: 1px;  left: 0; opacity: 0.4; position: absolute; top: 1px; width: 104px;z-index: 1;}
+.movie img { border: 1px solid #333333; border-radius: 4px 4px 4px 4px;margin: 0 0 -4px; max-width: 102px;}
+.movie .mov_info {  float: left; margin-left: 15px;position: relative; width: 370px;}
+.movie .mov_info li { color: #666666; font-size: 12px; line-height: 22px; list-style: none outside none; margin: 0;}
+.movie .mov_info .mov_title { font-size: 18px; line-height: 35px;}
+.movie .mov_info font { color: #333333;margin-left: 10px;}
+[/CURSCRIPT]
+
+/**===============================
+           新鲜事对话框热门话题
+================================*/
+[CURSCRIPT=home::ucenter::index]
+.homefresh_topic{width:100%;}
+.tags_list{line-height: 150%;}
+.tags_list a.tagslist_size{font-size: 12px;}
+.tags_list a{margin: 10px 0 0;}
+.tags_list a{display: inline-block;margin: 0 8px 10px 0;word-wrap: break-word;}
+[/CURSCRIPT]
+
+/**===============================
+           首页其它
+================================*/
+[CURSCRIPT=home::public::index]
+.message-box{border:1px solid #EEEEEE;padding:10px;margin-bottom:20px;-webkit-border-radius:5px 5px 5px 5px;-moz-border-radius:5px 5px 5px 5px;border-radius: 5px 5px 5px 5px;}
+.site_introduction h1{color:#000;font-size:16px;}
+.site_introduction blockquote{margin-top:10px;background:#FFF;padding:5px 5px;}
+.public_todaynum{color:{NOTICETEXT_COLOR};}
+a.public_todaynum{color:{NOTICETEXT_COLOR};}
+
+/* 用户公告 */
+.announcement-container{font-size:12px;height:24px;overflow:hidden;margin:0px 0 5px 0;-webkit-border-radius:5px 5px 5px 5px;-moz-border-radius:5px 5px 5px 5px;border-radius: 5px 5px 5px 5px;}
+.announcement-container ul{list-style-type:none;margin:0;padding:0;}
+.announcement-container ul li{height:24px;line-height:24px;width:45%;float:left;display:inline;}
+
+/* 首页新鲜事分类 */
+.homefreshcategoryindex_box {word-break:break-all;word-wrap:break-word;width:550px;}
+.homefreshcategoryindex_box a{line-height:35px;}
+.homefreshcategoryindex_box a.active{ background:#ED145B;color:#FFF; }
+[/CURSCRIPT]
+
+/**===============================
+           选择城市
+================================*/
+[CURSCRIPT=@site]
+#header-index {background: white;width: 100%;border-bottom: 2px dashed #EEE;margin-top:35px;}
+#headerinside-index {height: 150px;position: relative;width: 960px;margin: 0 auto;z-index: 10000;}
+#header-description {width: 450px;height: 160px;position: absolute;right: -20px;bottom: 0;line-height: 26px;padding: 20px 10px 0 60px;z-index: 666;background:url({IMG_DIR}/index_header.gif) no-repeat;}
+#header-description .header-description-inner{width:400px;}
+.indexenter_box {margin: 0;text-align: left;overflow: hidden;padding: 10px 0px 20px 0px;padding-right: 0;border-bottom: 1px dashed #EEE;margin-bottom:20px;}
+.indexenter_box a {margin-right: 8px;}
+.indexenter_box a.entrance {width: 350px;margin: 0;font-size: 18px;line-height: 40px;text-align: center;color: white;display: block;margin-bottom:15px;}
+.indexblock_box {font-size: 12px;height: 20px;line-height: 20px;}
+.indexblock_box .indexblock_title {float: left;margin-right: 12px;color: black;font-weight:bold;}
+.indexblock_box a {float: left;font-size: 12px;margin-right: 8px;}
+.citys-box{margin-top: 32px;border-top: 1px dashed #EEE;padding-top: 20px;background:url({__ROOT__}/Public/images/common/home.gif) no-repeat right 50px;}
+.citysbox-block {clear: both;}
+.citys-box ul {display: inline;list-style: none outside none; margin: 0; padding: 0; white-space: nowrap;}
+.citys-box li {float: left; height: 40px; line-height: 40px; margin-right: 8px; white-space: nowrap; width: auto;}
+.citys-box .letter { font-size: 18px;font-weight: bold; text-align: left; width: 20px;color:gainsboro;}
+.citys-box a {font-size: 13px;}
+[/CURSCRIPT]
+
+/**===============================
+           友情链接&其它
+================================*/
+[CURSCRIPT=@link,home::public::index,home::index::index]
+.home-links, .home-img-link, .home-txt-link { padding: 2px; }
+.home-links ul li { list-style:none;float: left; width: 49%; height: 50px; line-height: 1.4em; }
+.home-img-link a { margin-right: 8px; }
+.home-img-link img { margin: 1px 0; }
+.home-logo { float: left; padding-top: 2px; width: 100px; }
+.home-content { padding-right: 18px; height: 50px; }
+.home-content p { overflow: hidden; height: 17px; color: {LIGHT_TEXTCOLOR}; }
+.home-txt-link li { float: left; margin-right: 2px; width: 8em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#home_slidebox_container{height:300px;overflow:hidden;}
+[/CURSCRIPT]
+
+/**===============================
+           公告
+================================*/
+[CURSCRIPT=home::announcement::show]
+.announcement_title{margin:5px auto 10px auto;color:#999;}
+.announcement-content{margin-bottom:15px;}
+[/CURSCRIPT]
+
+/**===============================
+           最新照片
+================================*/
+[CURSCRIPT=home::public::index]
+.home_attachmentlist_box{margin-bottom:20px;}
+#slidedeck_frame{width: 93%;height: 330px;}
+[/CURSCRIPT]
+
+/**===============================
+           首页推荐小组列表
+================================*/
+[CURSCRIPT=@groups]
+.groups {margin:5px 0 0 0;width:100%;overflow:hidden;color:#666;}
+.groups li {list-style:none;_display:inline;float:left;margin-right:3%;padding:10px 0;width:46%;height:70px;}
+.grouplist_pic {_display:inline;float:left;margin-right:12px}
+.grouplist_txt {overflow:hidden;*zoom:1;padding:0px 3px 0px 8px;-webkit-border-radius:3px 3px 3px 3px;-moz-border-radius:3px 3px 3px 3px;border-radius: 3px 3px 3px 3px;}
+.grouplist_txt:hover{background:#f5f5f5;}
+.grouplist_txt h3{margin-right:4px;display:inline;}
+.grouplist_txt h3 .grouplist_todaynum{font-size:13px;font-weight:bold;color:{NOTICETEXT_COLOR};}
+.grouplist_txt span {color:#999;}
+.grouplist_description {margin-top:5px;color:#666;}
+.grouplist_txt h3 a{font-size:13px;}
+.grouplist_title{margin-bottom:20px;}
+[/CURSCRIPT]
+
+/**===============================
+           主页头像
+================================*/
+[CURSCRIPT=@userhome,home::ucenter]
+.userinfo .user_name p{line-height:20px;margin:0;}
+.userinfo{padding:0 0 10px 10px;overflow:hidden;*zoom:1}
+.userinfo .userpic{width:50px;height:50px;float:left;position:relative;}
+.userinfo .userpic span {}
+.userinfo .userpic span img {border:#fff solid 1px;width:50px;height:50px}
+.userinfo .user_name{margin-left:70px}
+.userinfo .user_name a span,.userinfo .user_name a span{font-size:12px;margin:0;}
+.userinfo .user_name p a {}
+.userinfo .user_follow{padding:0}
+.userinfo .user_follow a:link,.userinfo .user_follow a:visited{}
+.userinfo .user_follow span{display:inline-block;width:45px;*width:45px;text-align:center;padding:5px 0;margin:1px 0 0 0}
+[/CURSCRIPT]
+
+/**===============================
+           短消息
+================================*/
+[CURSCRIPT=home::pm]
+.reply-pm blockquote{color:#999999;}
+[/CURSCRIPT]
+
+
+/**===============================
+           用户提醒
+================================*/
+[CURSCRIPT=home::notice::index]
+.notice_addhomefresh{}
+.notice_title{}
+.notice_content{color: #505050;padding: 5px 15px 5px 0px;}
+.notice_action{padding: 3px 0px;font-size:12px;}
+.notice_action a{padding:1px 5px;background-color:#ccc;color:#505050;-moz-border-radius: 2px;-khtml-border-radius: 2px;-webkit-border-radius: 2px;border-radius: 2px;}
+.notice_quote{background: url("{IMG_DIR}/quotel.gif") no-repeat scroll left 4px transparent;margin: 8px 0 0 0px;overflow: hidden;padding: 0 24px 5px 15px;width: auto;word-wrap: break-word;
+}
+.notice_quote .notice_quoteinfo{color: #999999;background: url("{IMG_DIR}/quoter.gif") no-repeat scroll right bottom transparent;display: inline-block;padding-right: 15px;}
+.notice-note{color:#a6a6a4;font-size:12px;}
+[/CURSCRIPT]
+
+/**===============================
+           上传附件
+================================*/
+[CURSCRIPT=home::attachment::add,home::attachment::dialog_add]
+#flash-upload-ui li{list-style:none;}
+.upload_type a{margin-bottom:5px;}
+[/CURSCRIPT]
+
+/**===============================
+           列表缩略图公用
+================================*/
+[CURSCRIPT=home::attachment::lists,home::attachment::index]
+#imgdescription-box{width:auto;position:absolute;opacity:0.5;background:black;color:#FFF;padding:20px 30px;font-size:15px;display:none;}
+.thumbnail .img{display:block;overflow:hidden;outline:none;text-align:center;margin:auto;}
+.dialogattachmentcategory_thumb{}
+.dialogattachment_thumb{}
+.thumbnail .attachmentcategory_thumb{}
+.thumbnail .attachment_thumb{}
+[/CURSCRIPT]
+
+/**===============================
+           附件信息保存
+================================*/
+[CURSCRIPT=home::attachment::attachmentinfo]
+.attachment_item{margin-bottom:10px;}
+[/CURSCRIPT]
+
+/**===============================
+           首页附件缩略
+================================*/
+[CURSCRIPT=home::attachment::show]
+#gallery {padding:2%;background: #e1eef5;width:95%;height:610px;}
+.attachment_showtitle{margin:5px 0 10px 0;font-weight:normal;}
+[/CURSCRIPT]
+
+/**===============================
+           用户动态
+================================*/
+[CURSCRIPT=home::space::index,home::ucenter::feed,home::public::index]
+.feed_addhomefresh{}
+.feed_title{}
+.feed_content{color: #505050;padding: 5px 15px 5px 0px;}
+.feed_action{padding: 3px 0px;font-size:12px;}
+.feed_action a{padding:1px 5px;background-color:#ccc;color:#505050;-moz-border-radius: 2px;-khtml-border-radius: 2px;-webkit-border-radius: 2px;border-radius: 2px;}
+.feed_quote{background: url("{IMG_DIR}/quotel.gif") no-repeat scroll left 4px transparent;margin: 8px 0 0 0px;overflow: hidden;padding: 0 24px 5px 15px;width: auto;word-wrap: break-word;
+}
+.feed_quote .feed_quoteinfo{color: #999999;background: url("{IMG_DIR}/quoter.gif") no-repeat scroll right bottom transparent;display: inline-block;padding-right: 15px;}
+[/CURSCRIPT]
+
+/**===============================
+           应用列表
+================================*/
+[CURSCRIPT=home::apps::index]
+.apps_info{position:relative;padding-left:50px;}
+[/CURSCRIPT]

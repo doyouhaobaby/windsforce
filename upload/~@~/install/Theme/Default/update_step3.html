@@ -1,0 +1,59 @@
+<include file="common+header">
+
+	<ul class="breadcrumb">
+		<li><a href="{:__APP__}" title="<lang package='Template/Default/Common'>主页</lang>"><lang package='Template/Default/Common'>主页</lang></a>&nbsp;<span class="divider">/</span></li>
+		<li><lang package='Template/Default/Update'>升级数据库确认</lang></li>
+	</ul>
+
+	<include file="update+process">
+
+	<div class="row">
+		<div class="span12">
+			<h2><lang package='Template/Default/Update'>你认真看看数据库连接信息是否是你需要的</lang></h2>
+			<p><span style="color:#f00;"><lang package='Template/Default/Update'>这是升级前的最后一次检查，请确保社区的数据库正确，以免覆盖其它程序。</lang></span></p>
+			<div class="alert"><span style="color:#f00;font-weight:700;"><lang package='Template/Default/Update'>再次提醒，升级前必须备份数据！</lang></span></div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="span12">
+			<h2><lang package='Template/Default/Update'>当前连接的社区设置信息如下</lang></h2>
+			<p><table border="0" align="center" cellpadding="0" cellspacing="0" class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th width="300px" align="center"><lang package='Template/Default/Update'>设置名称</lang></th>
+							<th><lang package='Template/Default/Update'>设置值</lang></strong></th>
+						</tr>
+					</thead>
+					<tbody>
+						<foreach for=arrConfig>
+						<tr>
+							<td><strong>{$key}</strong></td>
+							<td>{$value}</td>
+						</tr>
+						</foreach>
+					</tbody>
+				</table>
+			</p>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="span12">
+			<h2><lang package='Template/Default/Update'>确认开始升级</lang></h2>
+			<p><lang package='Template/Default/Update'>如果你没有了疑问，那么请点击升级数据即可（注意请备份老的数据库）。</lang></p>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="span12">
+			<div class="well">
+				<p><input type="button" class="btn" value="<lang package='Template/Default/Common'>后退</lang>" onclick="window.location.href='{:Q::U( 'update/step2' )}';" />
+					<span class="pipe">|</span>
+					<input type="button" class="btn btn-success" value="<lang package='Template/Default/Update'>升级数据</lang>" onclick="window.location.href='{:Q::U( 'update/first' )}'" />
+				</p>
+			</div>
+		</div>
+	</div>
+
+<include file="common+footer">

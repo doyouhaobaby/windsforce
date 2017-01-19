@@ -1,0 +1,83 @@
+<!--{:Core_Extend::validate()}-->
+
+<!--{script}-->
+function toggleAttachment(id){
+	if($('#attachment_action_'+id).text()=='<!--<lang package='Template'>-->隐藏<!--</lang>-->'){
+		$('#attachment_action_'+id).text('<!--<lang package='Template'>-->显示<!--</lang>-->');
+	}else{
+		$('#attachment_action_'+id).text('<!--<lang package='Template'>-->隐藏<!--</lang>-->');
+	}
+
+	$('#attachment_item_'+id).toggle();
+}
+
+function saveAttachmentinfo(){
+	var nAttachmentcategory=$('#attachmentcategory_id').val();
+
+	Q.AjaxSubmit('attachmentinfo_form','<!--{:Q::U('home://attachment/attachmentinfo_save')}-->','',
+		function(data,status){
+			if(status==1){
+				if($('#dialog').val()==1){
+					setTimeout(function(){window.location.href=Q.U('home://attachment/lists?cid='+nAttachmentcategory+'&dialog=1&function='+$('#function').val()+'&filetype='+$('#filetype').val()+'&full='+$('#full').val()+'&multi='+$('#multi').val());},1000);
+				}else{
+					setTimeout(function(){window.location.href=Q.U('home://attachment/lists?cid='+nAttachmentcategory);},1000);
+				}
+			}
+		}
+	);
+}
+
+function myAttachment(){
+	window.location.href="<!--{:Q::U('home://attachment/index?cid='.$nAttachmentcategoryid.($nDialog==1?'&dialog=1':'').($sFunction?'&function='.$sFunction.'&filetype='.$nFiletype.'&full='.$nFull.'&multi='.$nMulti:''))}-->";
+}
+
+checkForm(saveAttachmentinfo);
+<!--{/script}-->
+				
+				<form method="post" class="form-horizontal validate" action="<!--{:Q::U('home://attachment/attachmentinfo_save')}-->" id="attachmentinfo_form" name="attachmentinfo_form">
+					<!--<foreach for=arrAttachments value=oAttachment>-->
+					<div class="attachment_item">
+						<div style="margin-bottom:0px;border-bottom:none;background:#F3F3F3;padding:5px 15px;">
+							<div class="left"><span class="title"><!--{$oAttachment['attachment_name']}--></span></div>
+							<a class="right" onclick="toggleAttachment(<!--{$oAttachment['attachment_id']}-->);" href="javascript:void(0);"><span id="attachment_action_<!--{$oAttachment['attachment_id']}-->"><!--<lang package='Template'>-->隐藏<!--</lang>--></span></a>
+							<div class="clearfix"></div>
+						</div>
+						<div id="attachment_item_<!--{$oAttachment['attachment_id']}-->">
+							<table class="table table-striped">
+								<tr valign="top">
+									<td width="100px"><p><a href="javascript:void(0);" target="_blank"><img class="thumbnail" src="<!--{:Attachment_Extend::getAttachmentPreview($oAttachment)}-->" alt="" width="46" height="60"></a>
+										</p>
+									</td>
+									<td><p><strong><!--<lang package='Template'>-->文件名<!--</lang>-->：</strong> <!--{$oAttachment['attachment_name']}--></p>
+										<p><strong><!--<lang package='Template'>-->文件类型<!--</lang>-->：</strong> <!--{$oAttachment['attachment_type']}--></p>
+										<p><strong><!--<lang package='Template'>-->上传日期<!--</lang>-->：</strong> <!--{$oAttachment['create_dateline']|Core_Extend+timeFormat}--></p>
+									</td>
+								</tr>
+								<tbody>
+									<tr>
+										<td><!--<lang package='Template'>-->标题<!--</lang>--><em class="red">*</em></td>
+										<td><input class="span5" id="attachments[<!--{$oAttachment['attachment_id']}-->][attachment_name]" name="attachments[<!--{$oAttachment['attachment_id']}-->][attachment_name]" value="<!--{$oAttachment['attachment_name']}-->" type="text" required title="<!--<lang package='Template'>-->附件标题不能为空<!--</lang>-->">
+											<p class="input_errortips"></p>
+										</td>
+									</tr>
+									<tr>
+										<td><!--<lang package='Template'>-->文件地址<!--</lang>--></td>
+										<td><input class="span5" value="<!--{:Attachment_Extend::getAttachmenturl($oAttachment)}-->" type="text" disabled="disabled"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<!--</foreach>-->
+					<div class="form-actions">
+						<input type="hidden" id="dialog" name="dialog" value="<!--{if $nDialog==1}-->1<!--{d*else}-->0<!--{/if}-->"/>
+						<input type="hidden" id="function" name="function" value="<!--{if $sFunction}--><!--{$sFunction}--><!--{/if}-->"/>
+						<input type="hidden" name="filetype" value="<!--{$nFiletype}-->">
+						<input type="hidden" name="full" value="<!--{$nFull}-->">
+						<input type="hidden" name="multi" value="<!--{$nMulti}-->">
+						<input type="hidden" name="ajax" value="1"/>
+						<input type="hidden" name="attachmentcategory_id" id="attachmentcategory_id" value="<!--{$nAttachmentcategoryid}-->"/>
+						<input type="submit" class="btn" value="<!--<lang package='Template'>-->保存附件信息<!--</lang>-->">&nbsp;
+						<input type="button" class="btn" onclick="myAttachment();" value="<!--<lang package='Template'>-->我的附件<!--</lang>-->">
+					</div>
+				</form>

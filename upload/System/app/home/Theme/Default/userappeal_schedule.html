@@ -1,0 +1,55 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{:Core_Extend::validate()}-->
+
+<!--{script}-->
+checkForm();
+<!--{/script}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->申诉进度查询<!--</lang>--></li>
+		</ul>
+	</div>
+		
+	<div class="container_12 container_box">
+		<div class="grid_7">
+			<form class="form-horizontal validate" method='post' name="getprogress_form" id="getprogress_form" action="<!--{:Q::U('home://userappeal/schedule_result')}-->">
+				<fieldset>
+					<div class="control-group">
+						<label class="control-label" for="appeal_receiptnumber"><!--<lang package='Template'>-->申诉回执编号<!--</lang>--><em class="red">*</em></label>
+						<div class="controls">
+							<input class="input-xlarge {required:true}" id="appeal_receiptnumber" name="appeal_receiptnumber" type="text" value="" required>
+							<p class="input_errortips"></p>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="appeal_email"><!--<lang package='Template'>-->接受申诉结果的邮箱<!--</lang>--><em class="red">*</em></label>
+						<div class="controls">
+							<input class="input-xlarge {required:true,email:true}" id="appeal_email" name="appeal_email" type="text" value="">
+							<p class="input_errortips"></p>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="seccode"><!--<lang package='__COMMON_LANG__@Common'>-->验证码<!--</lang>--></label>
+						<div class="controls">
+							<input name="seccode" id="seccode" type="text" class="input-small {required:true,remote:Q.U('home://public/validate_seccode'),messages:{remote:'<!--<lang package='__COMMON_LANG__@Common'>-->验证码错误<!--</lang>-->'}} left" value="">&nbsp;
+							<span class="validate_seccode"><span class="input_errortips"></span></span>
+							<p class="help-block" style="clear:both;padding-top:10px;"><span id="seccodeImage"><img style="cursor:pointer" onclick="updateSeccode()" src="<!--{:Q::U('home://public/seccode')}-->" /></span></p>
+						</div>
+					</div>
+					<div class="form-actions">
+						<button type="submit" class="btn"><!--<lang package='__COMMON_LANG__@Common'>-->提交<!--</lang>--></button>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		<div class="grid_5">
+			<h3><!--<lang package='Template'>-->申诉不成功？<!--</lang>--></h3>
+			<p><a href="<!--{:Q::U('home://userappeal/index')}-->" class="btn"><!--<lang package='Template'>-->重新申诉<!--</lang>--></a></p>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

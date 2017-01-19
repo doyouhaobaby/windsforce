@@ -1,0 +1,154 @@
+<!--<include file="public+header" />-->
+
+<!--{~$sCalendarLang=Core_Extend::calendar()}-->
+<script type="text/javascript" src="<!--{:__PUBLIC__}-->/js/calendar/datepicker/WdatePicker.js"></script>
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->多媒体专辑列表<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->多媒体专辑列表<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->这里对多媒体专辑进行统一管理<!--</lang>--></li>
+				</ul>
+			</div>
+
+			<div class="module_content">
+				<form method='get' action="<!--{:Q::U( 'attachmentcategory/index' )}-->" class="quick_search">
+					<table cellspacing="3" cellpadding="3">
+						<tr>
+							<th><!--<lang package='Template'>-->编号<!--</lang>--></th>
+							<td><input type="text" name="attachmentcategory_id" title="<!--<lang package='Template'>-->编号<!--</lang>-->" value="<!--{:Q::G('attachmentcategory_id')}-->" onkeyup="this.value = this.value.replace(/[^-0-9]/g, '');" />
+							</td>
+							<th><!--<lang package='Template'>-->结果排序<!--</lang>--></th>
+							<td>
+								<select name="order_">
+									<option value="" <!--{if !Q+G('order_')}-->selected<!--{/if}-->><!--<lang package='Template'>-->排序字段<!--</lang>--></option>
+									<option value="attachmentcategory_id" <!--{if Q+G('order_')=='attachmentcategory_id'}-->selected<!--{/if}-->><!--<lang package='Template'>-->编号<!--</lang>--></option>
+									<option value="attachmentcategory_sort" <!--{if Q+G('order_')=='attachmentcategory_sort'}-->selected<!--{/if}-->><!--<lang package='Template'>-->序号<!--</lang>--></option>
+									<option value="attachmentcategory_recommend" <!--{if Q+G('order_')=='attachmentcategory_recommend'}-->selected<!--{/if}-->><!--<lang package='Template'>-->是否推荐<!--</lang>--></option>
+									<option value="create_dateline" <!--{if Q+G('order_')=='create_dateline'}-->selected<!--{/if}-->><!--<lang package='Template'>-->添加时间<!--</lang>--></option>
+								</select>
+								<select name="sort_">
+									<option value="" <!--{if !Q+G('sort_')}-->selected<!--{/if}-->><!--<lang package='Template'>-->默认排序<!--</lang>--></option>
+									<option value="desc" <!--{if Q+G('sort_')=='desc'}-->selected<!--{/if}-->><!--<lang package='Template'>-->递增<!--</lang>--></option>
+									<option value="asc" <!--{if Q+G('sort_')=='asc'}-->selected<!--{/if}-->><!--<lang package='Template'>-->递减<!--</lang>--></option>
+								</select>
+								<select name="perpage">
+									<option value="" <!--{if !Q+G('perpage')}-->selected<!--{/if}-->><!--<lang package='Template'>-->默认每页数量<!--</lang>--></option>
+									<option value="10" <!--{if Q+G('perpage')==10}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(10)</option>
+									<option value="20" <!--{if Q+G('perpage')==20}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(20)</option>
+									<option value="50" <!--{if Q+G('perpage')==50}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(50)</option>
+									<option value="100" <!--{if Q+G('perpage')==100}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(100)</option>
+									<option value="200" <!--{if Q+G('perpage')==200}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(200)</option>
+									<option value="500" <!--{if Q+G('perpage')==500}-->selected<!--{/if}-->><!--<lang package='Template'>-->每页数量<!--</lang>-->(500)</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>UID</th>
+							<td><input type="text" name="user_id" title="UID" value="<!--{:Q::G('user_id')}-->" onkeyup="this.value = this.value.replace(/[^-0-9]/g,'');" /></td>
+							<th><!--<lang package='Template'>-->添加时间<!--</lang>--></th>
+							<td>
+								<input type="text" id="start_time" name="start_time" value="<!--{:Q::G('start_time')}-->" onfocus="WdatePicker({el:'start_time',skin:'ext',lang:'<!--{$sCalendarLang}-->',dateFmt:'yyyy-MM-dd'})">
+								&nbsp;~&nbsp;
+								<input type="text" id="end_time" name="end_time" value="<!--{:Q::G('end_time')}-->"  onfocus="WdatePicker({el:'end_time',skin:'ext',lang:'<!--{$sCalendarLang}-->',dateFmt:'yyyy-MM-dd'})">
+							</td>
+						</tr>
+						<tr>
+							<th><!--<lang package='Template'>-->创建用户<!--</lang>--></th>
+							<td><input type="text" name="attachmentcategory_username" title="<!--<lang package='Template'>-->创建用户<!--</lang>-->" value="<!--{:Q::G('attachmentcategory_username')}-->"></td>
+							<td colspan="2">
+								<input type="text" name="attachmentcategory_name" title="<!--<lang package='Template'>-->多媒体专辑名字<!--</lang>-->" value="<!--{:Q::G('attachmentcategory_name')}-->" class="quicksearch_text">
+								&nbsp;<input type="submit" id="" value="<!--<lang package='Template'>-->查询<!--</lang>-->" onclick="" class="alt_btn">
+							</td>
+						</tr>
+					</table>
+					<input type="hidden" name="c" value="<!--{:MODULE_NAME}-->"/>
+					<input type="hidden" name="a" value="<!--{:ACTION_NAME}-->"/>
+				</form>
+			</div>
+		</article>
+		
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><a href="<!--{:Q::U('attachmentcategory/index')}-->"><!--<lang package='Template'>-->多媒体专辑列表<!--</lang>--></a></h3>
+				<ul class="tabs">
+					<!--{if isset($oUser)}-->
+					<li><a href="<!--{:Q::U('attachmentcategory/index?uid='.$oUser['user_id'])}-->"><!--<lang package='Template'>-->用户<!--</lang>-->&nbsp;(<!--{$oUser['user_name']}-->)</a></li>
+					<!--{/if}-->
+					<li class="active"><a href="<!--{:Q::U('attachment/index')}-->"><!--<lang package='Template'>-->多媒体列表<!--</lang>--></a></li>
+					<li><a class="tab_add" href="javascript:void(0);" onclick="add()"><!--<lang package='Template'>-->新增<!--</lang>--></a></li>
+					<li><a class="tab_edit" href="javascript:void(0);" onclick="edit()"><!--<lang package='Template'>-->编辑<!--</lang>--></a></li>
+					<li><a class="tab_delete" href="javascript:void(0);" onclick="foreverdel()"><!--<lang package='Template'>-->删除<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<div class="module_content">
+				<table class="tablesorter" cellspacing="0" id="checkList">
+					<thead>
+						<tr>
+							<th width="20"><input type="checkbox" onclick="checkAll('checkList')"></th> 
+							<th width="85"><a href="javascript:sortBy('attachmentcategory_id','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('attachmentcategory_id')}-->><!--<lang package='Template'>-->编号<!--</lang>--></a></th>
+							<th width="50"><!--<lang package='Template'>-->封面<!--</lang>--></th>
+							<th><a href="javascript:sortBy('attachmentcategory_name','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('attachmentcategory_name')}-->><!--<lang package='Template'>-->专辑名字<!--</lang>--></a></th>
+							<th width="160"><a href="javascript:sortBy('user_id','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('user_id')}-->><!--<lang package='Template'>-->创建用户<!--</lang>--></a></th>
+							<th width="100"><a href="javascript:sortBy('attachmentcategory_attachmentnum','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('attachmentcategory_attachmentnum')}-->><!--<lang package='Template'>-->附件数量<!--</lang>--></a></th>
+							<th width="50"><a href="javascript:sortBy('attachmentcategory_sort','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('attachmentcategory_sort')}-->><!--<lang package='Template'>-->序号<!--</lang>--></a></th>
+							<th width="100"><a href="javascript:sortBy('create_dateline','<!--{$sSortByUrl}-->')" <!--{:Admin_Extend::sortField('create_dateline')}-->><!--<lang package='Template'>-->添加时间<!--</lang>--></a></th>
+							<th width="40"><!--<lang package='Template'>-->操作<!--</lang>--></th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--{if is_array($arrLists)}-->
+						<!--<foreach for=arrLists>-->
+						<tr id="datalist-<!--{$value:attachmentcategory_id}-->">
+							<td width="15px"><input type="checkbox" name="key" value="<!--{$value:attachmentcategory_id}-->"></td>
+							<td width="35px"><!--{$value:attachmentcategory_id}--></td>
+							<td width="50px"><img src="<!--{:Attachment_Extend::getAttachmentcategoryPreview($value)}-->" width="46" height="60" title="<!--<lang package='Template'>-->封面<!--</lang>-->&nbsp;<!--{$value:attachmentcategory_cover}-->">
+								<!--{if $value['attachmentcategory_cover']}-->
+								<a href="<!--{:Q::U('attachmentcategory/uncover?id='.$value['attachmentcategory_id'])}-->"><!--<lang package='Template'>-->删除封面<!--</lang>--></a>
+								<!--{/if}-->
+							</td>
+							<td><a href="javascript:edit('<!--{$value:attachmentcategory_id}-->')"><!--{$value:attachmentcategory_name}--></a>
+								<div class="row-actions">
+									<span class='edit'><a href="javascript:edit('<!--{$value:attachmentcategory_id}-->')"><!--<lang package='Template'>-->编辑<!--</lang>--></a>|</span>
+									<span class='delete'><a href="javascript:foreverdel('<!--{$value:attachmentcategory_id}-->');"><!--<lang package='Template'>-->删除<!--</lang>--></a></span>
+								</div>
+							</td>
+							<td><a href="<!--{:Q::U('attachmentcategory/index?uid='.$value['user_id'])}-->"><!--{$value:user_id|Core_Extend+getUsernameById}--></a></td>
+							<td><a href="<!--{:Q::U('attachment/index?cid='.$value['attachmentcategory_id'])}-->"><!--{$value:attachmentcategory_attachmentnum}--></a></td>
+							<td class="pointer" title="<!--<lang package='Template'>-->点击修改数据<!--</lang>-->" id="attachmentcategory_sort_<!--{$value:attachmentcategory_id}-->" onClick="clickToInput('attachmentcategory_sort','<!--{$value:attachmentcategory_id}-->')"><!--{$value:attachmentcategory_sort}--></td>
+							<td><span class="<!--{:Admin_Extend::dateColor($value['create_dateline'])}-->"><!--{$value['create_dateline']|date='Y-m-d',**}--></span><br/>
+								<span class="smallDatecolor"><!--{$value['create_dateline']|date='H:i',**}--></span>
+							</td>
+							<td><a href="javascript:edit('<!--{$value:attachmentcategory_id}-->')"><input type="image" src="<!--{:At::path('icn_edit.png')}-->" title="<!--<lang package='Template'>-->编辑<!--</lang>-->"></a>
+							</td>
+						</tr>
+						<!--</foreach>-->
+						<!--{d*else}-->
+						<tr>
+							<td colspan="10"><!--<lang package='Template'>-->暂时没有发现任何记录<!--</lang>--></td>
+						</tr>
+						<!--{/if}-->
+					</tbody>
+				</table>
+			</div>
+
+			<div class="module_content operate_box">
+				<div class="left">
+					<!--{$sPageNavbar}-->
+				</div>
+				<div class="right operate" style="text-align:right;">
+					<input type="button" name="add" value="<!--<lang package='Template'>-->新增<!--</lang>-->" onclick="add()" class="alt_btn">&nbsp;
+					<input type="button" name="edit" value="<!--<lang package='Template'>-->编辑<!--</lang>-->" onclick="edit()" class="alt_btn">&nbsp;
+					<input type="button" name="delete" value="<!--<lang package='Template'>-->删除<!--</lang>-->" onclick="foreverdel()" class="alt_btn">
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</article>
+
+<!--<include file="public+footer">-->

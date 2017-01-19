@@ -1,0 +1,16 @@
+/*
+File Name: controlpanel.css
+File Type: 必须
+Description: 控制面板样式
+*/
+
+/**===============================
+           基本样式
+================================*/
+.controlpanel-button {border: 1px solid #ccc;background: #f7f7f7 url('{controlpanel-button-bg.gif}') top left no-repeat;display: block;width: 120px;margin: 0 0 10px 0;  -moz-border-radius: 6px;-webkit-border-radius: 6px;border-radius: 6px;}
+.controlpanel-button span {border: 1px solid #fff;display:block;padding: 15px 10px 15px 10px;text-align: center;color: #555;font-size: 13px;line-height: 1.3em; -moz-border-radius: 7px;-webkit-border-radius: 7px;border-radius: 7px;}
+.controlpanel-button span img {margin-bottom: 10px;}
+.controlpanel-button:hover {background: #fff;}
+.controlpanel-button span:hover {color: #058bb4;}
+a.controlpanel-button:hover {text-decoration:none;}
+ul.controlpanel-buttons-set li {float: left;margin: 0 15px 0 0;padding: 0 !important;background: 0;list-style:none;}

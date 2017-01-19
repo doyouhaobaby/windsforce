@@ -1,0 +1,59 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--{if isset($arrRole)}--><!--<lang package='Template'>-->角色权限<!--</lang>-->&nbsp;(<!--{$arrRole['role_name']}-->)<!--{d*else}--><!--<lang package='Template'>-->我的权限<!--</lang>--><!--{/if}--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+		<div class="grid_12">
+			<!--{if !isset($arrRole)}-->
+			<!--<include file="public+myrbacrolemenu" />-->
+
+			<!--{if !empty($arrUserroles)}-->
+			<!--<foreach for=arrUserroles value=arrUserrole>-->
+			<a href="<!--{:Q::U('home://public/myrbac?rid='.$arrUserrole['role_id'])}-->" class="btn" title="<!--<lang package='Template'>-->角色权限<!--</lang>-->"><!--{$arrUserrole['role_name']}--></a>&nbsp;&nbsp;
+			<!--</foreach>-->
+			<!--{d*else}-->
+			<p><!--<lang package='Template'>-->暂时没有发现任何角色<!--</lang>--></p>
+			<!--{/if}-->
+			<!--{d*else}-->
+			<a href="<!--{:Q::U('home://public/myrbac?rid='.$arrRole['role_id'])}-->" class="btn" title="<!--<lang package='Template'>-->角色权限<!--</lang>-->"><!--{$arrRole['role_name']}--></a>&nbsp;&nbsp;
+			<a href="<!--{:Q::U('home://public/myrbac')}-->" class="btn"><!--<lang package='Template'>-->我的权限<!--</lang>--></a>
+			&nbsp;&nbsp;
+			<a href="<!--{:Q::U('home://public/role')}-->" class="btn"><!--<lang package='Template'>-->全部角色<!--</lang>--></a>
+			<!--{/if}-->
+			
+			<div style="margin-top:10px;">
+				<!--<foreach for=arrAccessListall value=arrValue>-->
+				<table class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th><!--{$arrValue['title']}-->&nbsp;(<!--{$key}-->)</th>
+							<th width="25px"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--{~$arrAccessdata=$arrValue['data']}-->
+						<!--<foreach for=arrAccessdata key=nKey value=arrTemp>-->
+						<!--{~$bAccess=Core_Extend::isAdmin() && !$nRId?true:in_array($arrTemp['name'],$arrMyaccesslist)}-->
+						<tr>
+							<td><!--{$arrTemp['title']}--></td>
+							<td><img src="<!--{:__PUBLIC__}-->/images/common/data_<!--{if $bAccess}-->valid<!--{d*else}-->invalid<!--{/if}-->.gif" /></td>
+						</tr>
+						<!--</foreach>-->
+					</tbody>
+				</table>
+				<!--</foreach>-->
+			</div>
+
+			<p>
+				<img src="<!--{:__PUBLIC__}-->/images/common/data_valid.gif" />&nbsp;<!--<lang package='Template'>-->表示拥有权限<!--</lang>-->&nbsp;&nbsp;
+				<img src="<!--{:__PUBLIC__}-->/images/common/data_invalid.gif" />&nbsp;<!--<lang package='Template'>-->表示没有权限<!--</lang>-->
+			</p>
+		</div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

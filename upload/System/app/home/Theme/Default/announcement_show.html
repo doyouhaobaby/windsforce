@@ -1,0 +1,25 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('home://announcement/index')}-->" title="<!--<lang package='Template'>-->公告中心<!--</lang>-->"><!--<lang package='Template'>-->公告中心<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->公告浏览<!--</lang>--></li>
+		</ul>
+	</div>
+		
+	<div class="container_12 container_box">
+		<div class="grid_12">
+			<h3><!--{$arrAnnouncement['announcement_title']}--></h3>
+			<div class="announcement_title"><!--{$arrAnnouncement['announcement_username']}-->&nbsp;<!--<lang package='Template'>-->发表于<!--</lang>-->&nbsp;<span><!--{$arrAnnouncement['create_dateline']|Core_Extend+timeFormat}--></span></div>
+
+			<div class="announcement-content"><!--{$arrAnnouncement['announcement_message']|Core_Extend+replaceSiteVar}--></div>
+
+			<div class="common_share">
+				<!--{:Core_Extend::share()}-->
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

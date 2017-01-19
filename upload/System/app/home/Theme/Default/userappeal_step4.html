@@ -1,0 +1,40 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+<!--{script}-->
+function appealTocomputer(id){
+	window.location.href=Q.U('home://userappeal/tocomputer?id='+id+'&user_id=<!--{$sUserid|urlencode}-->');
+}
+
+function appealTomail(id){
+	window.location.href=Q.U('home://userappeal/tomail?id='+id+'&user_id=<!--{$sUserid|urlencode}-->');
+}
+<!--{/script}-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><!--<lang package='Template'>-->获取申诉回执编号<!--</lang>--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+		<!--<include file="userappeal+menu" />-->
+		
+		<div class="grid_12">
+			<div class="tips">
+				<h3><!--<lang package='Template'>-->申诉表已提交<!--</lang>--></h3>
+				<p><!--<lang package='Template'>-->本次申诉回执编号<!--</lang>-->:<em class="red"><!--{$oAppeal['appeal_receiptnumber']}--></em></p>
+				<hr/>
+				<h3><!--<lang package='Template'>-->保存回执编码<!--</lang>--></h3>
+				<p><input class="btn" id="appeal_tocomputer" name="appeal_tocomputer" type="button" value="<!--<lang package='Template'>-->保存回执到电脑<!--</lang>-->"  onclick="appealTocomputer('<!--{$oAppeal->appeal_id}-->');">
+					<span class="pipe">|</span>
+					<input class="btn" id="appeal_tomail" name="appeal_tomail" type="button" value="<!--<lang package='Template'>-->发送回执到邮箱<!--</lang>-->"  onclick="appealTomail('<!--{$oAppeal->appeal_id}-->');">
+				</p>
+				<p><!--<lang package='Template'>-->回执编号很重要，请牢记<!--</lang>--></p>
+			</div>
+			<p><a href="<!--{:Q::U('home://public/index')}-->" class="btn"><!--<lang package='__COMMON_LANG__@Common'>-->返回首页<!--</lang>--></a></p>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

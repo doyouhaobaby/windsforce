@@ -1,0 +1,54 @@
+<!--<include file="Core_Extend::template('header')" />-->
+
+	<div class="container_12">
+		<ul class="breadcrumb">
+			<li><a href="<!--{:__APP__}-->" title="<!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>-->"><!--<lang package='__COMMON_LANG__@Common'>-->主页<!--</lang>--></a>&nbsp;<span class="divider">/</span>&nbsp;</li>
+			<li><a href="<!--{:Q::U('home://spaceadmin/index')}-->"><!--<lang package='Template'>-->用户资料<!--</lang>--></a> <span class="divider">/</span></li>
+			<li><!--<lang package='Template'>-->访问推广<!--</lang>--></li>
+		</ul>
+	</div>
+
+	<div class="container_12 container_box">
+		<!--<include file="spaceadmin+menu" />-->
+
+		<div class="grid_12">
+			<p><!--<lang package='Template'>-->如果您的朋友通过下面链接访问站点，您将获得积分奖励<!--</lang>-->&nbsp;
+				<span>
+				<!--<foreach for="arrCreditdata['promotion_visit']" value=arrData>-->
+				<!--{$arrData['title']}-->&nbsp;<!--{if $arrData['data']>=0}-->+<!--{/if}--><!--{$arrData['data']}-->&nbsp;
+				<!--</foreach>-->
+				</span>
+			</p>
+			<p><!--<lang package='Template'>-->如果您的朋友不但访问并且注册成为会员，您将再获得积分奖励<!--</lang>-->&nbsp;
+				<span>
+				<!--<foreach for="arrCreditdata['promotion_register']" value=arrData>-->
+				<!--{$arrData['title']}-->&nbsp;<!--{if $arrData['data']>=0}-->+<!--{/if}--><!--{$arrData['data']}-->&nbsp;
+				<!--</foreach>-->
+				</span>
+			</p>
+			<table class="table">
+				<thead>
+					<tr>
+						<th colspan="2"><!--<lang package='Template'>-->方式一<!--</lang>--></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td width="100px"><!--<lang package='Template'>-->推广链接<!--</lang>--></td>
+						<td>
+							<input type="text" class="input-xlarge left" value="<!--{$sUserName}--><!--<lang package='Template'>-->邀请您访问<!--</lang>--><!--{$sSiteName}--> @ <!--{$sSiteUrl}-->/index.php?fromuid=<!--{$nUserId}-->" size="50" style="display:inline;" />&nbsp;
+							<button type="button" class="btn btn-small" onclick="copy('<!--{$sUserName}--><!--<lang package='Template'>-->邀请您访问<!--</lang>--><!--{$sSiteName}-->'+'\n'+'<!--{$sSiteUrl}-->/index.php?fromuid=<!--{$nUserId}-->','<!--<lang package='Template'>-->推广链接复制成功<!--</lang>-->');" type="submit"><!--<lang package='Template'>-->复制<!--</lang>--></button>
+						</td>
+					</tr>
+					<tr>
+						<th colspan="2"><!--<lang package='Template'>-->方式二<!--</lang>--></th>
+					</tr>
+					<tr>
+						<td colspan="2"><!--<lang package='Template'>-->你可以可以访问网站其他应用推出的类似服务来推广，推广成功后也可以获得积分奖励<!--</lang>--></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+<!--<include file="Core_Extend::template('footer')" />-->

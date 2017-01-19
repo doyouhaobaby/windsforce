@@ -1,0 +1,83 @@
+<!--<include file="public+header" />-->
+
+	<section class="secondary_bar">
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="<!--{:Q::U('public/fmain')}-->"><!--<lang package='Template'>-->主页<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a class="current"><!--<lang package='Template'>-->数据库优化<!--</lang>--></a> <div class="breadcrumb_divider"></div> <a href="javascript:void(0);" onclick="adminctrlmenuAdd('<!--{:__SELF__}-->','<!--<lang package='Template'>-->数据库优化<!--</lang>-->')" title="<!--<lang package='Template'>-->添加到快捷导航<!--</lang>-->">[+]</a></article>
+		</div>
+	</section>
+
+	<section id="main" class="column">
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->操作提示<!--</lang>--></h3></header>
+			<div class="module_content">
+				<ul>
+					<li><!--<lang package='Template'>-->这里你可以对当前数据库进行优化，优化操作将会清除碎片<!--</lang>--></li>
+					<li><!--<lang package='Template'>-->优化数据库可以大大提高数据的运行速度和稳定性<!--</lang>--></li>
+				</ul>
+			</div>
+		</article>
+
+		<article class="module width_full">
+			<header><h3 class="tabs_involved"><!--<lang package='Template'>-->优化操作<!--</lang>--></h3>
+				<ul class="tabs">
+					<li><a href="<!--{:Q::U('database/index')}-->"><!--<lang package='Template'>-->数据库备份<!--</lang>--></a></li>
+					<li class="active"><a href="<!--{:Q::U('database/restore')}-->"><!--<lang package='Template'>-->数据库恢复<!--</lang>--></a></li>
+					<li><a href="<!--{:Q::U('database/runsql')}-->"><!--<lang package='Template'>-->运行SQL语句<!--</lang>--></a></li>
+				</ul>
+			</header>
+			<form action="<!--{:Q::U('database/run_optimize')}-->" method="post" id="tableList" >
+				<div class="module_content">
+					<fieldset>
+						<label for="num"><!--<lang package='Template'>-->总碎片数<!--</lang>--></label>
+						<div class="description"><!--<lang package='Template'>-->当前数据库的总碎片数量<!--</lang>-->（<!--{$nNum}-->）</div>
+					</fieldset>
+					<fieldset>
+						<label><!--<lang package='Template'>-->优化相关动作<!--</lang>--></label>
+						<input name="do[]" value="check" checked="checked" type="checkbox"><!--<lang package='Template'>-->检查表<!--</lang>-->
+						<input name="do[]" value="repair" checked="checked" type="checkbox"><!--<lang package='Template'>-->修复表<!--</lang>-->
+						<input name="do[]" value="analyze" checked="checked" type="checkbox"><!--<lang package='Template'>-->分析表<!--</lang>-->
+						<input name="do[]" value="optimize" checked="checked" type="checkbox" disabled><!--<lang package='Template'>-->优化表<!--</lang>-->
+					</fieldset>
+				</div>
+				<footer>
+					<div class="submit_link">
+						<input type="hidden" name="num" value="<!--{$nNum}-->">
+						<input type="submit" value="<!--<lang package='Template'>-->优化<!--</lang>-->" class="alt_btn" />
+					</div>
+				</footer>
+			</form>
+		</article>
+		
+		<article class="module width_full">
+			<header><h3><!--<lang package='Template'>-->数据库列表<!--</lang>--></h3></header>
+			<div class="module_content">
+				<table class="tablesorter" cellspacing="0" id="checkList">
+					<thead>
+						<tr>
+							<th><!--<lang package='Template'>-->数据表<!--</lang>--></th>
+							<th width="130"><!--<lang package='Template'>-->数据表类型<!--</lang>--></th>
+							<th width="110"><!--<lang package='Template'>-->记录数<!--</lang>--></th>
+							<th width="110"><!--<lang package='Template'>-->数据<!--</lang>--></th>
+							<th width="90"><!--<lang package='Template'>-->碎片<!--</lang>--></th>
+							<th width="140"><!--<lang package='Template'>-->字符集<!--</lang>--></th>
+							<th width="50"><!--<lang package='Template'>-->状态<!--</lang>--></th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--<foreach for=arrList>-->
+						<tr>
+							<td><!--{$value['table']}--></td>
+							<td><!--{$value['type']}--></td>
+							<td><!--{$value['rec_num']}--></td>
+							<td><!--{$value['rec_size']}--></td>
+							<td><!--{$value['rec_chip']}--></td>
+							<td><!--{$value['charset']}--></td>
+							<td><!--{$value['status']}--></td>
+						</tr>
+						<!--</foreach>-->
+					</tbody>
+				</table>
+			</div>
+		</article>
+
+<!--<include file="public+footer">-->

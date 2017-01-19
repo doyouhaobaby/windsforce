@@ -1,0 +1,6 @@
+		<div class="nav_tabcontainer nav_tab">
+			<ul>
+				<li <!--{if $sType=='new'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://notice/index?type=new')}-->"><!--<lang package='Template'>-->未读提醒<!--</lang>--><span id="usernew-notice-num">&nbsp;</span></a></li>
+				<li <!--{if $sType=='isread'}-->class="active"<!--{/if}-->><a href="<!--{:Q::U('home://notice/index?type=isread')}-->"><!--<lang package='Template'>-->已读提醒<!--</lang>--></a></li>
+			</ul>
+		</div>
